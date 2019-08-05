@@ -1,0 +1,31 @@
+$menuItemActiveFontColor: $fullBlack;
+
+nb-sidebar {
+  nb-sidebar-header {
+    display: none !important;
+  }
+
+  nb-menu {
+    .menu-items {
+      .menu-item {
+        a {
+          .menu-icon {
+            font-size: 1.3rem;
+          }
+          .menu-title {
+            &:after {
+              content: none !important;
+            }
+          }
+
+          &.active {
+            color: $menuItemActiveFontColor !important;
+            .menu-icon {
+              color: $menuItemActiveFontColor !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

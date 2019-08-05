@@ -1,0 +1,30 @@
+$headerBackgroundColor: $mainColor;
+$headerFontColor: $fullWhite;
+
+nb-layout-header {
+  nav {
+    background-color: $headerBackgroundColor !important;
+
+    ngx-header {
+      .header-container {
+        nb-actions {
+          nb-action {
+            .icon-container {
+              color: $headerFontColor !important;
+
+              i {
+                color: $headerFontColor !important;
+              }
+            }
+
+            nb-search {
+              .start-search {
+                color: $headerFontColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

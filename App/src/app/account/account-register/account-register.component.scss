@@ -1,0 +1,68 @@
+@import '../../../sass/colors/_colors';
+@import '../../../sass/variables/_variables';
+
+.account {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  &__bg {
+    min-height: 100vh;
+    background-image: url('/assets/img/other/bg-account.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($mainColor, .6);
+      z-index: 100;
+    }
+  }
+
+  &__form {
+    min-height: 100vh;
+  }
+
+  a {
+    color: #5dcfe3 !important;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+
+  .card {
+    background-color: $fullWhite;
+    position: relative;
+    z-index: 110;
+    border: none;
+
+    .card-body {
+      h4, h5 {
+        position: relative;
+
+        &:before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: -5px;
+          width: 30px;
+          height: 2px;
+          background: $grey600;
+        }
+      }
+    }
+  }
+}

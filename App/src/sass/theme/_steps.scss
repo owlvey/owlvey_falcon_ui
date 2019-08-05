@@ -1,0 +1,53 @@
+.steps-tabset {
+  ngb-tabset {
+    display: flex;
+
+    .nav {
+      padding-left: 0 !important;
+      width: 200px;
+      min-width: 200px;
+      padding-right: 15px;
+      border: none;
+
+      .nav-item {
+        margin-bottom: 10px;
+
+        .nav-link {
+          border: none;
+          color: $grey700;
+
+          &.active {
+            color: $primary;
+            background: $grey100;
+          }
+
+          .tab {
+            &-title {
+              font-weight: bold;
+            }
+
+            &-description {
+              font-size: 12px;
+            }
+
+            &.success {
+              .tab-title {
+                color: $success;
+              }
+            }
+
+            &.error {
+              .tab-title {
+                color: $danger;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tab-content {
+      width: 100%;
+    }
+  }
+}

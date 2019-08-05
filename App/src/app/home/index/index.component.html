@@ -1,0 +1,119 @@
+<div class="ps-layout home">
+  <div class="row">
+    <div class="col">
+      <app-loading [loading]="loading"></app-loading>
+    </div>
+  </div>
+  <div>
+    <!--<button class="btn btn-main" (click)="x()">xxxx</button>-->
+  </div>
+  <div *ngIf="!loading"> 
+    <div *ngIf="!isGetStarted">
+      <div class="row">
+        <div class="col text-right">
+          <a class="btn btn-sm btn-main" [routerLink]="['/organizations/create']" routerLinkActive="router-link-active">Create new Organization</a>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="card bgc-primary">
+                    <div class="card-body">
+                      <div class="home__info-card">
+                        <i class="fas fa-landmark home__info-card__icon"></i>
+                        <div class="home__info-card__title">Organizations</div>
+                        <div class="home__info-card__count">{{formViewModel?.stats.currentOrganization}}</div>
+                        <div class="home__info-card__description">{{formViewModel?.stats.organizationCapacityUsed}}% of the plan capacity</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card bgc-success">
+                    <div class="card-body">
+                      <div class="home__info-card">
+                        <i class="fas fa-rocket home__info-card__icon"></i>
+                        <div class="home__info-card__title">Projects</div>
+                        <div class="home__info-card__count">{{formViewModel?.stats.currentProjects}}</div>
+                        <div class="home__info-card__description">{{formViewModel?.stats.pipesCapacityUsed}}% of the plan capacity</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card bgc-warning">
+                    <div class="card-body">
+                      <div class="home__info-card">
+                        <i class="fas fa-project-diagram home__info-card__icon"></i>
+                        <div class="home__info-card__title">Pipes</div>
+                        <div class="home__info-card__count">{{formViewModel?.stats.currentPipes}}</div>
+                        <div class="home__info-card__description">{{formViewModel?.stats.pipesCapacityUsed}}% of the plan capacity</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card bgc-danger">
+                    <div class="card-body">
+                      <div class="home__info-card">
+                        <i class="far fa-lightbulb home__info-card__icon"></i>
+                        <div class="home__info-card__title">Features</div>
+                        <div class="home__info-card__count">{{formViewModel?.stats.currentFeatures}}</div>
+                        <div class="home__info-card__description">{{formViewModel?.stats.featuresCapacityUsed}}% of the plan capacity</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5>Project's Capacity</h5>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Organization/Project</th>
+                    <th>Progress</th>
+                    <th>Pipe Capactity</th>
+                    <th>Feature Capacity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of formViewModel?.stats.projectCapacityItems">
+                    <td>{{item.name}}</td>
+                    <td>
+                      <div class="progress" style="height: 9px;">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{'width': item.progress}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td>{{item.pipeCapacity}}</td>
+                    <td>{{item.featureCapacity}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isGetStarted">
+      <div class="row">
+        <div class="col">
+          <app-get-started></app-get-started>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+
+
