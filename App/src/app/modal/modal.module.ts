@@ -4,6 +4,7 @@ import { ModalComponent } from './modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ModalSidebarComponent } from './modal-sidebar/modal-sidebar.component';
+import { CreateCustomerComponent } from '../customer/create-customer/create-customer.component';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { ModalSidebarComponent } from './modal-sidebar/modal-sidebar.component';
     ModalSidebarComponent
   ],
   entryComponents: [
-    
+    CreateCustomerComponent
   ]
 })
 export class ModalModule { }

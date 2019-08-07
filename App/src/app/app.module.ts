@@ -37,6 +37,7 @@ import { TourNgBootstrapModule } from 'ngx-tour-ng-bootstrap';
 import { InitialsPipe } from './initials.pipe';
 import { AuthenticationService } from './core/auth/authentication.service';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { CustomerModule } from './customer/customer.module';
 
 const routes: Routes = [
   { path: 'signin-oidc', component: AuthCallbackComponent },
@@ -61,18 +62,12 @@ const routes: Routes = [
     AccountModule,
     DashboardModule,
     HomeModule,
+    CustomerModule,
     ModalModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       preventDuplicates: true,
-      //iconClasses: {
-      //  error: 'fas fa-times-circle',
-      //  info: 'fas fa-info-circle',
-      //  success: 'fas fa-check-circle',
-      //  warning: 'fas fa-exclamation-circle'
-      //}
     })
-    //TourNgBootstrapModule.forRoot()
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

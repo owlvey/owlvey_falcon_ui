@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { EventHandlerService } from '../../event-handler.service';
+import { CreateCustomerComponent } from 'src/app/customer/create-customer/create-customer.component';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -17,8 +18,8 @@ export class ModalComponent implements OnInit {
     this.eventHandlerService.event.subscribe((event: any) => {
       let component: any = null;
 
-      if (event.name === 'createGitProvider') {
-        //component = AppCOmponent;
+      if (event.name === 'createCustomer') {
+        component = CreateCustomerComponent;
       }
 
       let options: NgbModalOptions = {
@@ -43,7 +44,6 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log('Modal Up');
   }
 
 }

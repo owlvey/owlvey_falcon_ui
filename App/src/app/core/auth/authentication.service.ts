@@ -85,8 +85,9 @@ export class AuthenticationService {
 
   getAuthenticationToken(): string {
     let token: AuthorizationToken = this.getTokenModel();
-
-    return `${token.token_type} ${token.access_token}`;
+    if (token)
+      return `${token.token_type} ${token.access_token}`;
+    return "";
   }
 
   getUserInfo(data: AuthorizationToken) {

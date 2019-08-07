@@ -8,6 +8,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { OrderByPipe } from './order-by.pipe';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     NgbAccordionModule,
     NgbPopoverModule,
     DragAndDropModule,
-    MonacoEditorModule.forRoot()
+    MonacoEditorModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     NgbTabsetModule,
@@ -43,7 +46,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     LoadingComponent,
     DragAndDropModule,
     OrderByPipe,
-    MonacoEditorModule
+    MonacoEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }
