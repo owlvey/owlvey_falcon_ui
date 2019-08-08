@@ -15,6 +15,7 @@ export class CreateCustomerComponent implements OnInit {
   createForm: FormGroup;
   data: any;
   type: string;
+  isLoading: boolean;
 
   constructor(
     public modal: NgbActiveModal,
@@ -29,6 +30,7 @@ export class CreateCustomerComponent implements OnInit {
       description: [''],
       avatar: [''],
     });
+    this.isLoading = false;
   }
 
   ngOnInit() {
@@ -56,6 +58,7 @@ export class CreateCustomerComponent implements OnInit {
 
     let defer = null;
 
+    this.isLoading = true;
     if (this.type === "create")
       defer = this.customerService.createCustomer(this.createForm.value);
     else
@@ -67,7 +70,9 @@ export class CreateCustomerComponent implements OnInit {
         this.modal.close();
         this.eventHandler.event.next({name: "reloadCustomers"})
       }, (error) => {
+        this.isLoading = false;
         console.error(error);
+        this.toastr.warning("Something went wrong, please try again.")
       });
   }
 }
