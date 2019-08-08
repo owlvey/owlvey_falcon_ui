@@ -21,7 +21,7 @@ export class RealtimeService {
     this.headers = this.headers.set('Content-Type', 'application/json');
     this.headers = this.headers.set('Accept', 'application/json');
 
-    this.startUp();
+    //this.startUp();
   }
 
   startUp() {

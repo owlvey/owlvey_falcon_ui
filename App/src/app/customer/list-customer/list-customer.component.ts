@@ -37,7 +37,6 @@ export class ListCustomerComponent implements OnInit {
     this.isLoading = true;
     this.customerService.getCustomers()
       .subscribe((data: any[]) => {
-        console.log(data);
         this.customers = data;
         this.isLoading = false;
       }, (error) => {
@@ -66,7 +65,6 @@ export class ListCustomerComponent implements OnInit {
   }
 
   openCreateModal() {
-    console.log("asdas")
     this.eventHandler.event.next({
       name: 'createCustomer'
     })
