@@ -93,4 +93,25 @@
       }
     }
   }
+
+  &__table {
+    thead {
+      tr {
+        th {
+          min-height: 55px;
+          vertical-align: middle;
+          padding-top: 25px;
+          padding-bottom: 25px;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
 }

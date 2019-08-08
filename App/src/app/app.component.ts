@@ -29,6 +29,15 @@ export class AppComponent implements OnInit {
         title: 'Dashboard',
         icon: 'fas fa-chart-line',
         link: '/'
+      },
+      {
+        title: 'OPTIONS',
+        group: true,
+      },
+      {
+        title: 'Customers',
+        icon: 'fas fa-building',
+        link: '/customer'
       }
     ];
   }

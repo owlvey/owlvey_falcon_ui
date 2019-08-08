@@ -19,4 +19,16 @@ export class CustomerService {
   createCustomer(model: any) {
     return this.http.post(this.baseUrl + 'customers', model);
   }
+
+  updateCustomer(id: string, model: any) {
+    return this.http.put(this.baseUrl + 'customers/' + id, model);
+  }
+
+  deleteCustomer(id: string) {
+    return this.http.delete(this.baseUrl + 'customers/' + id);
+  }
+
+  getCustomers() {
+    return this.http.get(this.baseUrl + 'customers');
+  }
 }

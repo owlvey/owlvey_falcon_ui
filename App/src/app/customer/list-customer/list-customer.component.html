@@ -10,9 +10,42 @@
       </div>
     </div>
   </div>
-  <div class="card">
+  <app-loading [loading]="loading"></app-loading>
+  <div class="card ps-layout__table" *ngIf="!isLoading">
     <div class="card-body">
-      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Created Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of customers">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="avatar mr-3">
+                  <img [src]="item.avatar" [alt]="item.name" />
+                </div>
+                <div>{{item.name}}</div>
+              </div>
+            </td>
+            <td>{{item.createdOn | date: 'short'}}</td>
+            <td class="text-right">
+              <button class="btn btn-outline-secondary btn-sm mr-2" (click)="editCustomer(item)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger btn-sm" appConfirmDelete
+                      [item]="item"
+                      [title]="'Are you sure to delete the Customer?'"
+                      (callParentMethod)="deleteCustomer($event);">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
