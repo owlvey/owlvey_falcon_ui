@@ -13,7 +13,11 @@
   <app-loading [loading]="loading"></app-loading>
   <div class="card ps-layout__table" *ngIf="!isLoading">
     <div class="card-body">
-      <table class="table table-striped">
+      <div class="text-center">
+        <p class="text-center">There is not any customer.</p>
+        <button class="btn btn-outline-main btn-sm" (click)="openCreateModal()">Add Customer</button>
+      </div>
+      <table class="table table-striped" *ngIf="customers.length > 0">
         <thead>
           <tr>
             <th>Customer</th>
