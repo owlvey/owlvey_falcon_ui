@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  applicationName: 'Falcon.com',
-  clientId: 'pswebadmin',
-  authority: 'http://localhost:55800/',
-  api: 'http://localhost:55800/',
+  applicationName: "Falcon.com",
+  clientId: "pswebadmin",
+  authority: "http://localhost:55800/",
+  api: "https://localhost:5001/"
 };

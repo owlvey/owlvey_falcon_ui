@@ -1,48 +1,51 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { AnalyticsService } from './@core/utils/analytics.service';
-import { NbMenuItem } from '@nebular/theme';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { UtilsService } from './utils.service';
-import { EventHandlerService } from './event-handler.service';
+import { Component, OnInit, HostListener } from "@angular/core";
+import { AnalyticsService } from "./@core/utils/analytics.service";
+import { NbMenuItem } from "@nebular/theme";
+import { Router, NavigationEnd, NavigationStart } from "@angular/router";
+import { UtilsService } from "./utils.service";
+import { EventHandlerService } from "./event-handler.service";
 //import { TourService } from 'ngx-tour-core';
 
 @Component({
-  selector: 'ngx-app',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "ngx-app",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-
   menu: NbMenuItem[] = [];
   x: string = "";
 
   isAccountView: boolean = false;
-  organizationId: string = '';
+  organizationId: string = "";
 
   constructor(
     private analytics: AnalyticsService,
     private utilService: UtilsService,
     private eventHandlerService: EventHandlerService,
-    private router: Router) {
+    private router: Router
+  ) {
     this.menu = [
       {
-        title: 'Dashboard',
-        icon: 'fas fa-chart-line',
-        link: '/'
+        title: "Dashboard",
+        icon: "fas fa-chart-line",
+        link: "/"
       },
       {
-        title: 'OPTIONS',
-        group: true,
+        title: "OPTIONS",
+        group: true
       },
       {
-        title: 'Customers',
-        icon: 'fas fa-building',
-        link: '/customer'
+        title: "Customers",
+        icon: "fas fa-building",
+        link: "/customer"
+      },
+      {
+        title: "Features",
+        icon: "fas fa-building",
+        link: "/feature"
       }
     ];
   }
-
-
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
