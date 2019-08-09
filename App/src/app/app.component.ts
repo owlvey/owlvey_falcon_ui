@@ -43,6 +43,11 @@ export class AppComponent implements OnInit {
         title: "Features",
         icon: "fas fa-building",
         link: "/feature"
+      },
+      {
+        title: "Squads",
+        icon: "fas fa-building",
+        link: "/squad"
       }
     ];
   }
