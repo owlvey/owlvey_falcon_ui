@@ -55,7 +55,11 @@ export class FormSquadComponent implements OnInit {
     let defer = null;
     this.isLoading = true;
     if (!this.opts.isEditing) {
-      defer = this.squadService.createSquad(this.createForm.value);
+      console.log("this.createForm.value: ", this.createForm.value);
+      defer = this.squadService.createSquad({
+        ...this.createForm.value,
+        customerId: 1
+      });
     } else {
       defer = this.squadService.updateSquad(
         this.createForm.get("id").value,
