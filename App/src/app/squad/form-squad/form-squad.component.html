@@ -1,6 +1,8 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="createForm">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Create Squad</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ opts.isEditing ? "Edit" : "Create" }} Squad
+    </h4>
     <button
       type="button"
       class="close"
@@ -20,18 +22,6 @@
             type="text"
             name="name"
             formControlName="name"
-            class="form-control"
-          />
-        </div>
-      </div>
-      <div class="w-100"></div>
-      <div class="col">
-        <div class="form-group">
-          <label>Avatar</label>
-          <input
-            type="text"
-            name="avatar"
-            formControlName="avatar"
             class="form-control"
           />
         </div>

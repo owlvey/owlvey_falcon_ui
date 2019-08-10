@@ -49,8 +49,9 @@ export class ListSquadComponent implements OnInit {
 
   editSquad(item: any) {
     this.eventHandler.event.next({
-      name: "createSqud",
-      data: item
+      name: "formSquad",
+      data: item,
+      opts: { isEditing: true }
     });
   }
 
@@ -70,7 +71,7 @@ export class ListSquadComponent implements OnInit {
 
   openCreateModal() {
     this.eventHandler.event.next({
-      name: "createSquad"
+      name: "formSquad"
     });
   }
 }

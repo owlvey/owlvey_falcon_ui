@@ -6,14 +6,15 @@ import { SquadService } from "../squad.service";
 import { EventHandlerService } from "./../../event-handler.service";
 
 @Component({
-  selector: "app-create-squad",
-  templateUrl: "./create-squad.component.html",
-  styleUrls: ["./create-squad.component.scss"],
+  selector: "app-form-squad",
+  templateUrl: "./form-squad.component.html",
+  styleUrls: ["./form-squad.component.scss"],
   providers: [SquadService]
 })
-export class CreateSquadComponent implements OnInit {
+export class FormSquadComponent implements OnInit {
   createForm: FormGroup;
   data: any;
+  opts: any;
   type: string;
   isLoading: boolean;
 
@@ -34,11 +35,11 @@ export class CreateSquadComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.loadSquadInfo();
   }
 
   loadSquadInfo() {
+    console.log("opts: ", this.opts);
     if (!this.data) {
       this.type = "create";
     } else {
@@ -47,6 +48,8 @@ export class CreateSquadComponent implements OnInit {
       this.createForm.get("id").setValue(this.data.id);
       this.createForm.get("name").setValue(this.data.name);
       this.createForm.get("avatar").setValue(this.data.avatar);
+      this.createForm.get("description").setValue(this.data.description);
+      console.log("data: ", this.data);
     }
   }
 
@@ -59,7 +62,7 @@ export class CreateSquadComponent implements OnInit {
     let defer = null;
 
     this.isLoading = true;
-    if (this.type === "create")
+    if (!this.opts.isEditing)
       defer = this.squadService.createSquad(this.createForm.value);
     else
       defer = this.squadService.updateSquad(

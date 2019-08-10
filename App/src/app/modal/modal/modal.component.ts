@@ -3,7 +3,7 @@ import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { EventHandlerService } from "../../event-handler.service";
 import { CreateCustomerComponent } from "src/app/customer/create-customer/create-customer.component";
 import { CreateFeatureComponent } from "src/app/feature/create-feature/create-feature.component";
-import { CreateSquadComponent } from "src/app/squad/create-squad/create-squad.component";
+import { FormSquadComponent } from "src/app/squad/form-squad/form-squad.component";
 
 @Component({
   selector: "app-modal",
@@ -28,8 +28,8 @@ export class ModalComponent implements OnInit {
         case "createFeature":
           component = CreateFeatureComponent;
           break;
-        case "createSquad":
-          component = CreateSquadComponent;
+        case "formSquad":
+          component = FormSquadComponent;
           break;
       }
 
@@ -46,10 +46,8 @@ export class ModalComponent implements OnInit {
       let modal: any = null;
       if (component) {
         modal = this.modalService.open(component, options);
-      }
-
-      if (modal && event.data) {
         modal.componentInstance.data = event.data;
+        modal.componentInstance.opts = event.opts || {};
       }
     });
   }
