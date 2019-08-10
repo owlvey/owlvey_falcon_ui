@@ -39,17 +39,11 @@ export class FormSquadComponent implements OnInit {
   }
 
   loadSquadInfo() {
-    console.log("opts: ", this.opts);
-    if (!this.data) {
-      this.type = "create";
-    } else {
-      this.type = "update";
-
+    if (this.opts.isEditing) {
       this.createForm.get("id").setValue(this.data.id);
       this.createForm.get("name").setValue(this.data.name);
       this.createForm.get("avatar").setValue(this.data.avatar);
       this.createForm.get("description").setValue(this.data.description);
-      console.log("data: ", this.data);
     }
   }
 
@@ -58,18 +52,16 @@ export class FormSquadComponent implements OnInit {
       this.toastr.warning("Please check the form fields are filled correctly.");
       return;
     }
-
     let defer = null;
-
     this.isLoading = true;
-    if (!this.opts.isEditing)
+    if (!this.opts.isEditing) {
       defer = this.squadService.createSquad(this.createForm.value);
-    else
+    } else {
       defer = this.squadService.updateSquad(
         this.createForm.get("id").value,
         this.createForm.value
       );
-
+    }
     defer.subscribe(
       data => {
         console.log(data);
