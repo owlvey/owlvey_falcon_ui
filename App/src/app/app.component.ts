@@ -40,6 +40,11 @@ export class AppComponent implements OnInit {
         link: "/customer"
       },
       {
+        title: "Sources",
+        icon: "fas fa-building",
+        link: "/source"
+      },
+      {
         title: "Features",
         icon: "fas fa-building",
         link: "/feature"

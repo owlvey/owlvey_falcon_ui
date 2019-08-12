@@ -40,7 +40,7 @@ import { MonacoEditorModule } from "ngx-monaco-editor";
 import { CustomerModule } from "./customer/customer.module";
 import { FeatureModule } from "./feature/feature.module";
 import { SquadModule } from "./squad/squad.module";
-
+import { SourceModule } from "./source/source.module"
 const routes: Routes = [
   { path: "signin-oidc", component: AuthCallbackComponent },
   { path: "forbidden", component: AuthNotAuthorizedComponent }
@@ -67,6 +67,7 @@ const routes: Routes = [
     CustomerModule,
     FeatureModule,
     SquadModule,
+    SourceModule,
     ModalModule,
     ToastrModule.forRoot({
       positionClass: "toast-top-center",
