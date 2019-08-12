@@ -3,6 +3,7 @@ import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { EventHandlerService } from "../../event-handler.service";
 import { CreateCustomerComponent } from "src/app/customer/create-customer/create-customer.component";
 import { CreateFeatureComponent } from "src/app/feature/create-feature/create-feature.component";
+import { CreatePortfolioComponent } from "src/app/portfolio/create-portfolio/create-portfolio.component";
 import { FormSquadComponent } from "src/app/squad/form-squad/form-squad.component";
 
 @Component({
@@ -27,6 +28,9 @@ export class ModalComponent implements OnInit {
           break;
         case "createFeature":
           component = CreateFeatureComponent;
+          break;
+          case "createPortfolio":
+          component = CreatePortfolioComponent;
           break;
         case "formSquad":
           component = FormSquadComponent;

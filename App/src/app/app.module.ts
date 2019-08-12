@@ -41,6 +41,8 @@ import { CustomerModule } from "./customer/customer.module";
 import { FeatureModule } from "./feature/feature.module";
 import { SquadModule } from "./squad/squad.module";
 import { SourceModule } from "./source/source.module"
+import { PortfolioModule } from "./portfolio/portfolio.module";
+
 const routes: Routes = [
   { path: "signin-oidc", component: AuthCallbackComponent },
   { path: "forbidden", component: AuthNotAuthorizedComponent }
@@ -67,7 +69,11 @@ const routes: Routes = [
     CustomerModule,
     FeatureModule,
     SquadModule,
+<<<<<<< HEAD
     SourceModule,
+=======
+    PortfolioModule,
+>>>>>>> 53f1df02dff2f7381f37863bda89db253b3edcbb
     ModalModule,
     ToastrModule.forRoot({
       positionClass: "toast-top-center",

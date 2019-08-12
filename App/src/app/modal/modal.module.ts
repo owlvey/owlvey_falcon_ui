@@ -6,6 +6,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ModalSidebarComponent } from "./modal-sidebar/modal-sidebar.component";
 import { CreateCustomerComponent } from "../customer/create-customer/create-customer.component";
 import { CreateFeatureComponent } from "src/app/feature/create-feature/create-feature.component";
+import { CreatePortfolioComponent } from "src/app/portfolio/create-portfolio/create-portfolio.component";
 import { FormSquadComponent } from "src/app/squad/form-squad/form-squad.component";
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormSquadComponent } from "src/app/squad/form-squad/form-squad.componen
   entryComponents: [
     CreateCustomerComponent,
     CreateFeatureComponent,
-    FormSquadComponent
+    FormSquadComponent,
+    CreatePortfolioComponent
   ]
 })
 export class ModalModule {}
