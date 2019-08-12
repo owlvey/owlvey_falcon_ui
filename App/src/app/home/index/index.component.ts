@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrganizationDashboardService } from '../../dashboard/organization-dashboard.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CustomersGateway } from './../../@core/data/customers.gateway';
 
 @Component({
   selector: 'app-index',
@@ -18,6 +19,7 @@ export class IndexComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
+    private customersGateway: CustomersGateway
   ) {
     this.formViewModel = {
       stats: {}
@@ -30,7 +32,9 @@ export class IndexComponent implements OnInit {
   //}
 
   ngOnInit() {
+    this.customersGateway.getCustomers().subscribe(data=>{
 
+    });
   }
 
   loadStats() {

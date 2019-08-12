@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {
+import {    
   NbActionsModule,
   NbCardModule,
   NbLayoutModule,
@@ -17,7 +17,7 @@ import {
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
-  NbProgressBarModule,
+  NbProgressBarModule,    
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -54,6 +54,7 @@ import { SharedModule } from '../shared/shared.module';
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
+
   NbCardModule,
   NbLayoutModule,
   NbTabsetModule,

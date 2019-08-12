@@ -5,6 +5,8 @@ import { ConfirmDeleteDirective } from './../../../directives/confirm-delete.dir
 import { ToastrService } from 'ngx-toastr';
 import { SessionService } from "./../../core/session/session.service"
 import { Session } from 'inspector';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+
 
 @Component({
   selector: 'app-list-Source',
@@ -18,24 +20,12 @@ export class ListSourceComponent implements OnInit {
   actionConfirmWord: string;
 
   constructor(private eventHandler: EventHandlerService,
+    private location: Location,
     private sourceService: SourceService,
     private sessionService: SessionService,
     private toastr: ToastrService) { }
   
-  ngOnInit() {
-    this.getSources();    
+  ngOnInit() {    
+      
   }
-
-  getSources() {
-    this.isLoading = true;
-    this.sourceService.getSources(this.sessionService.customer.id)
-      .subscribe((data: any[]) => {
-        this.sources = data;
-        this.isLoading = false;
-      }, (error) => {
-        console.error(error);
-        this.isLoading = false;
-      })
-  }
-
 }
