@@ -69,11 +69,8 @@ const routes: Routes = [
     CustomerModule,
     FeatureModule,
     SquadModule,
-<<<<<<< HEAD
     SourceModule,
-=======
     PortfolioModule,
->>>>>>> 53f1df02dff2f7381f37863bda89db253b3edcbb
     ModalModule,
     ToastrModule.forRoot({
       positionClass: "toast-top-center",
