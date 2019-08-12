@@ -1,20 +1,19 @@
 import { Component, EventEmitter, Input, OnDestroy, Output, OnInit, ElementRef, ViewChild, AfterViewInit, QueryList, ViewChildren, ChangeDetectorRef  } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbSelectComponent } from '@nebular/theme';
-
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
-  
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit { 
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
@@ -63,39 +62,13 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
               private breakpointService: NbMediaBreakpointsService,
               private customerGateway: CustomersGateway,
               private productGateway: ProductsGateway,
+              private activatedRoute: ActivatedRoute,
               private cdRef:ChangeDetectorRef) {
-    
+      this.currentCustomer = this.activatedRoute.snapshot.params.customerId;
+      this.currentProduct = this.activatedRoute.snapshot.params.productId;   
   }
-
-  getCustomers(){
-    this.customerGateway.getCustomers().subscribe(data=>{      
-      this.customers = data;                  
-      this.cdRef.detectChanges();      
-      this.setCustomer(data[0]);            
-    });
-  }
-  getProducts(customerId: number){    
-    this.productGateway.getProducts(customerId).subscribe(data=>{
-      this.products = data;
-      setTimeout(() => {
-        this.setProduct(data[0]);
-      }, 100);
-    });
-  }  
-
-  private setCustomer(customer){
-    this.currentCustomer = customer.id;
-    sessionStorage.setItem("currentCustomer", JSON.stringify(customer));
-    this.getProducts(customer.id)
-  }
-  private setProduct(product){
-    this.currentProduct = product.id;
-    sessionStorage.setItem("currentProduct", JSON.stringify(product));    
-  }
-
   ngOnInit() {        
     this.getCustomers();       
-
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
@@ -115,6 +88,43 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe(themeName => this.currentTheme = themeName);    
   }
+  
+
+  getCustomers(){
+    this.customerGateway.getCustomers().subscribe(data=>{      
+      this.customers = data;                  
+      this.cdRef.detectChanges();            
+      if (this.currentCustomer){
+        this.setCustomer(data.find(x => x.id == this.currentCustomer));            
+      }
+      else{
+        this.setCustomer(data[0]);
+      }      
+    });
+  }
+  getProducts(){    
+    this.productGateway.getProducts(this.currentCustomer).subscribe(data=>{
+      this.products = data;
+      setTimeout(() => {
+        if (this.currentProduct){          
+          this.setProduct(data.find(x => x.id == this.currentProduct));
+        }
+        else{
+          this.setProduct(data[0]);
+        }        
+      }, 100);
+    });
+  }  
+
+  private setCustomer(customer){
+    this.currentCustomer = customer.id;
+    sessionStorage.setItem("currentCustomer", JSON.stringify(customer));
+    this.getProducts()
+  }
+  private setProduct(product){
+    this.currentProduct = product.id;
+    sessionStorage.setItem("currentProduct", JSON.stringify(product));    
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -126,10 +136,17 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeCustomer(customer: any) {
-    this.getProducts(customer);    
+    this.currentCustomer = customer;
+    this.currentProduct = null;
+    this.customers.forEach(c=>{
+      if (c.id === customer){
+        this.setCustomer(c);
+      }
+    });
   }
-  changeProduct(product: any) {
 
+  changeProduct(product: any) {
+    this.currentProduct = product;    
     this.products.forEach(c=>{
       if (c.id === product){
         this.setProduct(c);
