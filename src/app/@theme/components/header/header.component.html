@@ -3,10 +3,22 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">ngx-<span>admin</span></a>
+    <a class="logo" href="#" (click)="navigateHome()">Owlvey</a>
   </div>
   <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+  </nb-select>
+  <br/>
+  <nb-select [(selected)]="currentCustomer" (selectedChange)="changeCustomer($event)" status="primary" >
+    <nb-option *ngFor="let customer of customers" [value]="customer.value"> {{ customer.name }}</nb-option>
+  </nb-select>
+  <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
+    <nb-option value="">Option empty</nb-option>
+    <nb-option value="0">Option 0</nb-option>
+    <nb-option value="1">Option 1</nb-option>
+    <nb-option value="2">Option 2</nb-option>
+    <nb-option value="3">Option 3</nb-option>
+    <nb-option value="4">Option 4</nb-option>
   </nb-select>
 </div>
 

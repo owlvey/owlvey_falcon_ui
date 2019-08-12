@@ -50,6 +50,7 @@ import { CountryOrderService } from './mock/country-order.service';
 import { StatsProgressBarService } from './mock/stats-progress-bar.service';
 import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
+import { CustomersGateway }  from './data/customers.gateway';
 import { MockDataModule } from './mock/mock-data.module';
 
 const socialLinks = [
@@ -90,6 +91,7 @@ const DATA_SERVICES = [
   { provide: StatsProgressBarData, useClass: StatsProgressBarService },
   { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
+  { provide: CustomersGateway, useClass: CustomersGateway },
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

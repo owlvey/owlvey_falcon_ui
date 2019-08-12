@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, OnInit  } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { CustomersGateway } from './../../../@core/data/customers.gateway';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  customers: Array<any> =  [];
 
   themes = [
     {
@@ -36,7 +38,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'default';  
+
+  @Input() @Output() currentCustomer: string = 'default';
 
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
@@ -45,10 +49,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private customerGateway: CustomersGateway) {
+    
   }
+  
+  ngOnInit() {        
 
-  ngOnInit() {
+    this.customerGateway.getCustomers().subscribe(data=>{
+      //this.customers = data.map((_c: any)=>{ return { value: _c.id, name: _c.name, selected:false }; });       
+      //this.customers[0].selected = true;                 
+      this.customers = this.themes;      
+      this.currentTheme = this.themeService.currentTheme;
+    });
+    
+    this.currentCustomer = this.themeService.currentTheme; 
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()
@@ -78,6 +93,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeTheme(themeName: string) {
     this.themeService.changeTheme(themeName);
+  }
+  changeCustomer(customerName: string) {
+    
   }
 
   toggleSidebar(): boolean {
