@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   isAccountView: boolean = false;
   organizationId: string = "";
 
-  constructor(
+  constructor( 
     private menuService: NbMenuService,
     private analytics: AnalyticsService,
     private utilService: UtilsService,

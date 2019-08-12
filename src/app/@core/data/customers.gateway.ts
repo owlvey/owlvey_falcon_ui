@@ -14,4 +14,8 @@ export class CustomersGateway{
         return this.http.get(this.baseUrl + 'customers');
     }
 
+    getCustomer(customerId: number): Observable<any> {
+        return this.http.get(this.baseUrl + `customers/${customerId}`);
+    }
+
 }

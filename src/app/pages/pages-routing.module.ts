@@ -19,6 +19,10 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
+      path: 'customers/:customerId/products/:productId/sources',
+      loadChildren: () => import('./source/source.module').then(m => m.SourceModule),
+    },    
+    {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),

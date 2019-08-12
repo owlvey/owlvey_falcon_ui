@@ -13,4 +13,7 @@ export class ProductsGateway{
     getProducts(customerId: number): Observable<any>{
         return this.http.get(this.baseUrl + `products?customerId=${customerId}`);
     }
+    getProduct(productId: number): Observable<any>{
+        return this.http.get(this.baseUrl + `products/${productId}`);
+    }
 }

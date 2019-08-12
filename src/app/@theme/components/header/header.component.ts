@@ -85,12 +85,12 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private setCustomer(customer){
     this.currentCustomer = customer.id;
-    sessionStorage.setItem("currentCustomer", customer);
+    sessionStorage.setItem("currentCustomer", JSON.stringify(customer));
     this.getProducts(customer.id)
   }
   private setProduct(product){
     this.currentProduct = product.id;
-    sessionStorage.setItem("currentProduct", product);    
+    sessionStorage.setItem("currentProduct", JSON.stringify(product));    
   }
 
   ngOnInit() {        
@@ -129,7 +129,12 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getProducts(customer);    
   }
   changeProduct(product: any) {
-    alert(product);
+
+    this.products.forEach(c=>{
+      if (c.id === product){
+        this.setProduct(c);
+      }
+    });
   }
 
   toggleSidebar(): boolean {
