@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -28,7 +28,8 @@ export class ListCustomerComponent implements OnInit {
       id: {
         title: 'Id',
         type: 'number',
-        filter: true
+        filter: true,
+        width: '3em',
       },
       name: {
         title: 'Name',
@@ -44,7 +45,8 @@ export class ListCustomerComponent implements OnInit {
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,    
+    private sourcesGateway: SourcesGateway,   
+    private router: Router, 
     private activatedRoute: ActivatedRoute) {             
     }        
   ngOnInit() {    
@@ -56,6 +58,9 @@ export class ListCustomerComponent implements OnInit {
     });
   }
   onUserRowSelect(event): void {
-    console.log(event);
+    let customerId = event.data.id;
+    this.router.navigate([`/pages/customers/${customerId}`], {
+      queryParams: {refresh: new Date().getTime()}
+    });        
   }
 }
