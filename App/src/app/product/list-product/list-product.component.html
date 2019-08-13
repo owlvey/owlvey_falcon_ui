@@ -1,3 +1,66 @@
-<p>
-  list-product works!
-</p>
+<div class="ps-layout">
+  <div class="card mb-3">
+    <div class="card-body ps-layout__header">
+      <i class="fas fa-capsules ps-layout__header__icon"></i>
+      <div class="ps-layout__header__actions">
+        <strong>Products List</strong>
+        <div class="ps-layout__header__actions__right">
+          <button
+            class="btn btn-outline-main btn-sm"
+            (click)="openCreateModal()">
+            Add Squad
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loading [loading]="loading"></app-loading>
+  <div class="card ps-layout__table" *ngIf="!isLoading">
+    <div class="card-body">
+      <div class="text-center">
+        <p class="text-center">There are no products</p>
+        <button class="btn btn-outline-main btn-sm" (click)="openCreateModal()">
+          Add Product
+        </button>
+      </div>
+      <table class="table table-striped" *ngIf="products && products.length > 0">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Created Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of products">
+            <td>
+              <div class="d-flex align-items-center">
+                {{ item.name }}
+              </div>
+            </td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.createdOn | date: "short" }}</td>
+            <td class="text-right">
+              <button
+                class="btn btn-outline-secondary btn-sm mr-2"
+                (click)="editProduct(item)"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                appConfirmDelete
+                [item]="item"
+                [title]="'Are you sure to delete the Product?'"
+                (callParentMethod)="deleteProduct($event)"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
