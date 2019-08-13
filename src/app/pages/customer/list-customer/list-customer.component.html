@@ -1,12 +1,12 @@
 <nb-card>
-    <nb-card-header>
-      Customers
-    </nb-card-header>  
+  <nb-card-header>
+    Customers
+    <a [routerLink]="['create']" class="btn btn-sm btn-outline-primary float-right">Create</a>
+  </nb-card-header>
 
-    <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source">
-        </ng2-smart-table>
-      </nb-card-body>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (edit)="onEdit($event)" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
 
 </nb-card>
-  
