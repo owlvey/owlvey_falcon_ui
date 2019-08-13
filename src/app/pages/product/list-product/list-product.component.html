@@ -1,0 +1,12 @@
+<nb-card>
+    <nb-card-header>
+      Products: Customer {{currentCustomer.name}} Product {{ currentProduct.name }}
+    </nb-card-header>  
+
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source">
+        </ng2-smart-table>
+      </nb-card-body>
+
+</nb-card>
+  

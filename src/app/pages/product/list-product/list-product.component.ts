@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CustomersGateway } from './../../../@core/data/customers.gateway';
-import { SourcesGateway } from './../../../@core/data/sources.gateway';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
+import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 
 
 @Component({
-  selector: 'app-list-Source',
-  templateUrl: './list-source.component.html',
-  styleUrls: ['./list-source.component.scss']
+  selector: 'app-list-product',
+  templateUrl: './list-product.component.html',
+  styleUrls: ['./list-product.component.scss']
 })
-export class ListSourceComponent implements OnInit {
+export class ListProductComponent implements OnInit {
 
   isLoading: boolean = false;
   sources: any[];
