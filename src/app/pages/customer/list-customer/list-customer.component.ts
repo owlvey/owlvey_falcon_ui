@@ -55,4 +55,7 @@ export class ListCustomerComponent implements OnInit {
       this.source.load(data);
     });
   }
+  onUserRowSelect(event): void {
+    console.log(event);
+  }
 }

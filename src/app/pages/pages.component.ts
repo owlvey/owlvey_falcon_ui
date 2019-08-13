@@ -32,7 +32,7 @@ export class PagesComponent implements OnInit {
           this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products/${currentProduct.id}/sources`);
         }
         if (e.item.title == "Products"){          
-          this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products/${currentProduct.id}`);
+          this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products`);
         }
         if (e.item.title == "Customers"){          
           this.router.navigateByUrl(`/pages/customers`);
