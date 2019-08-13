@@ -19,6 +19,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Customers',
     icon: 'layout-outline',
+    link: '/pages/customers'
   },
   {
     title: 'Squads',
