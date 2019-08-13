@@ -34,6 +34,9 @@ export class PagesComponent implements OnInit {
         if (e.item.title == "Products"){          
           this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products/${currentProduct.id}`);
         }
+        if (e.item.title == "Customers"){          
+          this.router.navigateByUrl(`/pages/customers`);
+        }
       }      
     });
   }

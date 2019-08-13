@@ -6,7 +6,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
               private customerGateway: CustomersGateway,
               private productGateway: ProductsGateway,
               private activatedRoute: ActivatedRoute,
+              private router: Router,
               private cdRef:ChangeDetectorRef) {
       this.currentCustomer = this.activatedRoute.snapshot.params.customerId;
       this.currentProduct = this.activatedRoute.snapshot.params.productId;   
@@ -116,7 +117,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }  
 
-  private setCustomer(customer){
+  private setCustomer(customer){    
     this.currentCustomer = customer.id;
     sessionStorage.setItem("currentCustomer", JSON.stringify(customer));
     this.getProducts()
@@ -136,22 +137,16 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeCustomer(customer: any) {
-    this.currentCustomer = customer;
-    this.currentProduct = null;
-    this.customers.forEach(c=>{
-      if (c.id === customer){
-        this.setCustomer(c);
-      }
-    });
+    this.router.navigate([`/pages/customers/${customer}`], {
+      queryParams: {refresh: new Date().getTime()}
+    });    
   }
 
   changeProduct(product: any) {
-    this.currentProduct = product;    
-    this.products.forEach(c=>{
-      if (c.id === product){
-        this.setProduct(c);
-      }
-    });
+    this.router.navigate([`/pages/customers/${this.currentCustomer}/products/${product}`], {
+      queryParams: {refresh: new Date().getTime()}
+    });    
+    
   }
 
   toggleSidebar(): boolean {
