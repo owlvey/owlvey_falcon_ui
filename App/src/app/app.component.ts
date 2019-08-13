@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   isAccountView: boolean = false;
   organizationId: string = "";
 
-  constructor( 
+  constructor(
     private menuService: NbMenuService,
     private analytics: AnalyticsService,
     private utilService: UtilsService,
@@ -30,16 +30,16 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private customersGateway: CustomersGateway
-  ) { 
+  ) {
 
     menuService.onItemClick().subscribe((e) => {
-      
+
     });
-    
+
     this.menu = [
       {
         title: "Dashboard",
-        icon: "fas fa-chart-line"        
+        icon: "fas fa-chart-line"
       },
       {
         title: "OPTIONS",
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: "Products",
-        icon: "fas fa-building",
+        icon: "fas fa-capsules",
         link: "/product"
       },
       {
@@ -79,8 +79,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.analytics.trackPageViews();    
-    //this.location.path('/customer/' + data[0].id);      
-    //this.router.navigateByUrl('/customer/' + data[0].id);    
+    this.analytics.trackPageViews();
+    //this.location.path('/customer/' + data[0].id);
+    //this.router.navigateByUrl('/customer/' + data[0].id);
   }
 }
