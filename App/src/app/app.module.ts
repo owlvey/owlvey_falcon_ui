@@ -42,6 +42,7 @@ import { FeatureModule } from "./feature/feature.module";
 import { SquadModule } from "./squad/squad.module";
 import { SourceModule } from "./source/source.module"
 import { PortfolioModule } from "./portfolio/portfolio.module";
+import { ProductModule } from "./product/product.module";
 
 const routes: Routes = [
   { path: "signin-oidc", component: AuthCallbackComponent },
@@ -69,6 +70,7 @@ const routes: Routes = [
     CustomerModule,
     FeatureModule,
     SquadModule,
+    ProductModule,
     SourceModule,
     PortfolioModule,
     ModalModule,

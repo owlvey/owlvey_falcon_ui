@@ -29,16 +29,21 @@ export class ListSourceComponent implements OnInit {
       edit:false,
       delete:false
     },
+    pager: {
+      perPage: 20
+    },
     columns: {
       id: {
         title: 'Id',
         type: 'number',
-        filter: false
+        filter: true,
+        width: '3em',
+        editable: false
       },
       name: {
         title: 'Name',
         type: 'string',
-        filter: false
+        filter: true
       },      
     },
   };

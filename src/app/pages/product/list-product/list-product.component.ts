@@ -56,21 +56,14 @@ export class ListProductComponent implements OnInit {
       this.customerGateway = customerGateway;
     }        
   ngOnInit() {    
-     this.getCustomer(this.customerId);
-     this.getProduct(this.productId);
-  }
-
-  getProduct(productId: number){
-    this.productGateway.getProduct(productId).subscribe(data=>{
-      this.currentProduct = data;
-      this.sourcesGateway.getSources(productId).subscribe(sources=>{
-        this.source.load(sources);
-      });
-    });     
+     this.getCustomer(this.customerId);     
   }
   getCustomer(customerId: number){
     this.customerGateway.getCustomer(customerId).subscribe(data=>{
       this.currentCustomer = data;      
+    });
+    this.productGateway.getProducts(customerId).subscribe(data=>{
+      this.source.load(data);
     });
   }
 

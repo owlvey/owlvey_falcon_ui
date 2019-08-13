@@ -17,7 +17,7 @@
         <p class="text-center">There is not any customer.</p>
         <button class="btn btn-outline-main btn-sm" (click)="openCreateModal()">Add Customer</button>
       </div>
-      <table class="table table-striped" *ngIf="customers.length > 0">
+      <table class="table table-striped" *ngIf="customers && customers.length > 0">
         <thead>
           <tr>
             <th>Customer</th>
