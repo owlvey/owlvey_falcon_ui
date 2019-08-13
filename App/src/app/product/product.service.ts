@@ -26,6 +26,6 @@ export class ProductService {
   }
 
   getProducts(customerId: number) {
-    return this.http.get(this.baseUrl + "products");
+    return this.http.get(this.baseUrl + "products/" + customerId);
   }
 }
