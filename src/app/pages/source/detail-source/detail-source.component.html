@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>Inline form</nb-card-header>
+        <nb-card-body>
+          <form class="form-inline">
+              <input nbInput placeholder="Start Date" [nbDatepicker]="startpicker"  [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}">
+              <nb-datepicker #startpicker></nb-datepicker>
+
+              <input nbInput placeholder="End Date" [nbDatepicker]="endpicker" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}">
+              <nb-datepicker #endpicker></nb-datepicker>
+
+              <input nbInput placeholder="period default(1 day)"  [(ngModel)]="period" [ngModelOptions]="{standalone: true}">
+
+              <button type="button" nbButton status="primary" (click)="handleClick($event)"> Submit </button>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+            Source {{ currentSource.name }}
+        </nb-card-header>
+        <nb-card-body>
+          detail
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>
+
+
+
+<nb-card>
+  <nb-card-header>
+    Daily Report
+  </nb-card-header>  
+
+  <nb-card-body>      
+      <ngx-daily-chart [options]="options" ></ngx-daily-chart>          
+  </nb-card-body>
+
+</nb-card>
+
+
