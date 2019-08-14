@@ -80,7 +80,7 @@ export class ListSourceComponent implements OnInit {
   }
   onUserRowSelect(event): void {    
     let sourceId = event.data.id;
-    this.router.navigate([`/pages/customers/${this.customerId}/products/${this.productId}/sources/${sourceId}`], {
+    this.router.navigate([`/pages/customers/${this.customerId}/products/${this.productId}/sources/${sourceId}/detail`], {
       queryParams: {refresh: new Date().getTime()}
     });        
   }

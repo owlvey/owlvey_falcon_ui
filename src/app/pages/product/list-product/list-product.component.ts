@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -18,10 +18,8 @@ export class ListProductComponent implements OnInit {
   sources: any[];
   actionConfirmWord: string;
 
-  currentCustomer = {};
-  currentProduct = {};
-  customerId = 0;
-  productId = 0;
+  currentCustomer = {};  
+  customerId = 0;  
 
   settings = {    
     actions:{
@@ -51,17 +49,16 @@ export class ListProductComponent implements OnInit {
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
     private activatedRoute: ActivatedRoute) { 
-      this.customerId = activatedRoute.snapshot.params.customerId;
-      this.productId = activatedRoute.snapshot.params.productId;
-      this.customerGateway = customerGateway;
+      
+      
     }        
   ngOnInit() {    
-     this.getCustomer(this.customerId);     
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                  
+      this.customerId = parseInt(paramMap.get('customerId'));            
+      this.getProduct(this.customerId);           
+    });     
   }
-  getCustomer(customerId: number){
-    this.customerGateway.getCustomer(customerId).subscribe(data=>{
-      this.currentCustomer = data;      
-    });
+  getProduct(customerId: number){    
     this.productGateway.getProducts(customerId).subscribe(data=>{
       this.source.load(data);
     });

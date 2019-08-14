@@ -104,38 +104,18 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   getCustomers() {
     this.customerGateway.getCustomers().subscribe(data => {
       this.customers = data;
-      this.cdRef.detectChanges();
-      if (this.currentCustomer) {
-        this.setCustomer(data.find(x => x.id == this.currentCustomer));
-      }
-      else {
-        this.setCustomer(data[0]);
-      }
+      this.cdRef.detectChanges();      
     });
   }
   getProducts() {
     this.productGateway.getProducts(this.currentCustomer).subscribe(data => {
       this.products = data;
       setTimeout(() => {
-        if (this.currentProduct) {
-          this.setProduct(data.find(x => x.id == this.currentProduct));
-        }
-        else {
-          this.setProduct(data[0]);
-        }
+        
       }, 100);
     });
   }
-
-  private setCustomer(customer) {
-    this.currentCustomer = customer.id;
-    sessionStorage.setItem("currentCustomer", JSON.stringify(customer));
-    this.getProducts()
-  }
-  private setProduct(product) {
-    this.currentProduct = product.id;
-    sessionStorage.setItem("currentProduct", JSON.stringify(product));
-  }
+ 
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -146,19 +126,19 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.themeService.changeTheme(themeName);
   }
 
-  changeCustomer(customer: any) {    
-    this.currentProduct = null; 
+  changeCustomer(customer: any) {   
+    this.currentCustomer = customer;     
     this.getProducts();
-    this.router.navigate([`/pages/customers/detail/${customer}`], {
-      queryParams: { refresh: new Date().getTime() }
+    this.router.navigate([`/pages/customers/detail`], {
+      queryParams: { refresh: new Date().getTime(), customerId: customer }
     });
   }
 
   changeProduct(product: any) {
-    this.router.navigate([`/pages/customers/${this.currentCustomer}/products/${product}`], {
-      queryParams: { refresh: new Date().getTime() }
+    this.currentProduct = product;
+    this.router.navigate([`/pages/products/detail`], {
+      queryParams: { refresh: new Date().getTime(), productId: product }
     });
-
   }
 
   toggleSidebar(): boolean {

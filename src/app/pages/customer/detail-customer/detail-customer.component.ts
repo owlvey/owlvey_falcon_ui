@@ -28,12 +28,10 @@ export class DetailCustomerComponent implements OnInit {
     private sourcesGateway: SourcesGateway,    
     private activatedRoute: ActivatedRoute) {       
     }        
-  ngOnInit() {         
-     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {      
-      const refresh = paramMap.get('refresh');
-      if (refresh) {
-        this.getCustomer(this.activatedRoute.snapshot.params.customerId);     
-      }
+  ngOnInit() {              
+     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {            
+      this.customerId = parseInt(paramMap.get('customerId'));      
+      this.getCustomer(this.customerId);           
     });
   }  
   getCustomer(customerId: number){

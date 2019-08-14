@@ -21,23 +21,28 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.menuService.onItemClick().subscribe((e) => {      
-      let currentCustomer = JSON.parse(sessionStorage.getItem("currentCustomer"));
-      let currentProduct = JSON.parse(sessionStorage.getItem("currentProduct"));
-      if (!currentCustomer || !currentProduct){
-        return;
+    this.menuService.onItemClick().subscribe((e) => {            
+      const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
+      const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
+      if (e.item.title == "Sources"){                    
+        if (currentProduct){
+          this.router.navigateByUrl(`/pages/sources?customerId=${currentCustomer}&productId=${currentProduct}`);
+        }
+        else{
+          alert('please select product');          
+        }                
       }
-      else{
-        if (e.item.title == "Sources"){          
-          this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products/${currentProduct.id}/sources`);
+      if (e.item.title == "Products"){      
+        if (currentCustomer){
+          this.router.navigateByUrl(`/pages/products?customerId=${currentCustomer}`);
         }
-        if (e.item.title == "Products"){          
-          this.router.navigateByUrl(`/pages/customers/${currentCustomer.id}/products`);
-        }
-        if (e.item.title == "Customers"){          
-          this.router.navigateByUrl(`/pages/customers`);
-        }
-      }      
+        else{
+          alert('please select customer');          
+        }        
+      }
+      if (e.item.title == "Customers"){          
+        this.router.navigateByUrl(`/pages/customers`);
+      }            
     });
   }
 }

@@ -5,7 +5,7 @@ import { ListSourceComponent } from './list-source/list-source.component';
 
 const routes: Routes = [
   { path: '', component: ListSourceComponent },
-  { path: ':sourceId', component: DetailSourceComponent}  
+  { path: ':sourceId/detail', component: DetailSourceComponent}  
 ];
 
 @NgModule({

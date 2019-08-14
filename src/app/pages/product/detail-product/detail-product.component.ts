@@ -28,7 +28,7 @@ export class DetailProductComponent implements OnInit {
     }        
   ngOnInit() {         
      this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {      
-      const refresh = paramMap.get('refresh');
+      const refresh = paramMap.get('refresh');      
       if (refresh) {
         this.getProduct(this.activatedRoute.snapshot.params.customerId, this.activatedRoute.snapshot.params.productId);        
       }

@@ -8,54 +8,77 @@ import { NbThemeService } from '@nebular/theme';
   `,
 })
 export class DailyChartComponent implements AfterViewInit, OnDestroy {
-  @Input() options: any = {};
+
+  options: any = {};
   themeSubscription: any;
 
   constructor(private theme: NbThemeService) {
   }
+  private _dataItems : Array<any>; 
 
-  ngAfterViewInit() {
+  private formatDate(date){
+    const target = new Date(date);
+    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');    
+  }
+  
+  get dataItems(){
+    return this._dataItems;
+  }  
+
+  @Input()
+  set dataItems(data: Array<any>){
+    const line = data.map(c=>{ return { name: c.date, value:[ this.formatDate(c.date), 100 * c.availability]}});
+    const dates = data.map(c=> new Date(c.date));
+    const points = [{
+         name : "Availability", 
+         type : 'line', 
+         data: line, 
+         showSymbol: true, 
+         hoverAnimation: true,
+         markLine: {
+                silent: true,
+                data: [{
+                    yAxis: 20
+                }, {
+                    yAxis: 40
+                }, {
+                    yAxis: 60
+                }, {
+                    yAxis: 80
+                }]
+          },
+        } 
+      ];      
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
       const colors: any = config.variables;
       const echarts: any = config.variables.echarts;
-
       this.options = {
-        backgroundColor: echarts.bg,
+        backgroundColor: echarts.bg,      
         color: [colors.danger, colors.primary, colors.info],
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c}',
+          formatter: '{a} <br/> {c}',
         },
         legend: {
           left: 'left',
-          data: ['Line 1', 'Line 2', 'Line 3'],
+          data: ['source'],
           textStyle: {
             color: echarts.textColor,
           },
         },
         xAxis: [
           {
-            type: 'category',
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-            axisTick: {
-              alignWithLabel: true,
-            },
-            axisLine: {
-              lineStyle: {
-                color: echarts.axisLineColor,
-              },
-            },
-            axisLabel: {
-              textStyle: {
-                color: echarts.textColor,
-              },
-            },
+            type: 'time',            
+            splitLine: {
+              show: false
+            }           
           },
         ],
         yAxis: [
           {
-            type: 'log',
+            type: 'value',
+            min: 0, 
+            max: 100,
             axisLine: {
               lineStyle: {
                 color: echarts.axisLineColor,
@@ -73,31 +96,43 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
             },
           },
         ],
+        visualMap: {
+          top: 1,
+          right: 1,
+          pieces: [{
+              gt: 80,
+              lte: 100,
+              color: '#096'
+          }, {
+              gt: 60,
+              lte: 80,
+              color: '#ffde33'
+          }, {
+              gt: 40,
+              lte: 60,
+              color: '#ff9933'
+          }, {
+              gt: 0,
+              lte: 40,
+              color: '#cc0033'
+          }],
+          outOfRange: {
+              color: '#999'
+          }
+        },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '5%',
+          right: '6%',
+          bottom: '5%',
           containLabel: true,
         },
-        series: [
-          {
-            name: 'Line 1',
-            type: 'line',
-            data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
-          },
-          {
-            name: 'Line 2',
-            type: 'line',
-            data: [1, 2, 4, 8, 16, 32, 64, 128, 256],
-          },
-          {
-            name: 'Line 3',
-            type: 'line',
-            data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512],
-          },
-        ],
-      };
-    });
+        series: points,
+      };  
+    });       
+  }  
+
+  ngAfterViewInit() {
+
   }
 
   ngOnDestroy(): void {
