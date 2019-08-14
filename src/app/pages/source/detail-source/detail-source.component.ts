@@ -19,8 +19,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
-  currentSource : any= {};  
-  customerId = 0;
+  currentSource : any= {};    
   productId = 0;
   sourceId = 0;
   themeSubscription: any;
@@ -43,10 +42,11 @@ export class DetailSourceComponent implements OnInit, AfterViewInit, OnDestroy {
     }        
 
   ngOnInit() {         
-    this.customerId = this.activatedRoute.snapshot.params.customerId;
-    this.productId = this.activatedRoute.snapshot.params.productId;
-    this.sourceId = this.activatedRoute.snapshot.params.sourceId;    
-    this.getSource();
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
+      this.productId = parseInt(paramMap.get('productId'));            
+      this.sourceId = parseInt(paramMap.get('sourceId'));                  
+      this.getSource();
+    });          
   }  
 
   getSource(){

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -15,11 +15,8 @@ export class ListSourceComponent implements OnInit {
 
   isLoading: boolean = false;
   sources: any[];
-  actionConfirmWord: string;
-
-  currentCustomer = {};
-  currentProduct = {};
-  customerId = 0;
+  actionConfirmWord: string;  
+  currentProduct = {};  
   productId = 0;
 
   settings = {    
@@ -56,13 +53,13 @@ export class ListSourceComponent implements OnInit {
     private sourcesGateway: SourcesGateway,    
     private router: Router, 
     private activatedRoute: ActivatedRoute) { 
-      this.customerId = activatedRoute.snapshot.params.customerId;
-      this.productId = activatedRoute.snapshot.params.productId;      
-      this.customerGateway = customerGateway;
+      
     }        
   ngOnInit() {    
-     this.getCustomer(this.customerId);
-     this.getProduct(this.productId);
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
+      this.productId = parseInt(paramMap.get('productId'));            
+      this.getProduct(this.productId);
+    });          
   }
 
   getProduct(productId: number){
@@ -73,15 +70,11 @@ export class ListSourceComponent implements OnInit {
       });
     });     
   }
-  getCustomer(customerId: number){
-    this.customerGateway.getCustomer(customerId).subscribe(data=>{
-      this.currentCustomer = data;      
-    });
-  }
+
   onUserRowSelect(event): void {    
     let sourceId = event.data.id;
-    this.router.navigate([`/pages/customers/${this.customerId}/products/${this.productId}/sources/${sourceId}/detail`], {
-      queryParams: {refresh: new Date().getTime()}
+    this.router.navigate([`/pages/sources/detail`], {
+      queryParams: {refresh: new Date().getTime(), sourceId: sourceId}
     });        
   }
 

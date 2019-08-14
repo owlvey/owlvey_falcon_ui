@@ -26,7 +26,7 @@ export class PagesComponent implements OnInit {
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
       if (e.item.title == "Sources"){                    
         if (currentProduct){
-          this.router.navigateByUrl(`/pages/sources?customerId=${currentCustomer}&productId=${currentProduct}`);
+          this.router.navigateByUrl(`/pages/sources?productId=${currentProduct}`);
         }
         else{
           alert('please select product');          
