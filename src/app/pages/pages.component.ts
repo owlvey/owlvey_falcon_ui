@@ -25,11 +25,11 @@ export class PagesComponent implements OnInit {
       const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
       if (e.item.title == "Sources"){                    
-        if (currentProduct){
-          this.router.navigateByUrl(`/pages/sources?productId=${currentProduct}`);
+        if (currentProduct && currentCustomer){
+          this.router.navigateByUrl(`/pages/sources?productId=${currentProduct}&customerId=${currentCustomer}`);
         }
         else{
-          alert('please select product');          
+          alert('please select customer and product');          
         }                
       }
       if (e.item.title == "Products"){      
