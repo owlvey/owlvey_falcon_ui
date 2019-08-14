@@ -19,7 +19,8 @@ export class DetailProductComponent implements OnInit {
 
   currentCustomer = {};  
   currentProduct ={};
-  
+  productId: number;
+  customerId: number;
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -29,9 +30,9 @@ export class DetailProductComponent implements OnInit {
   ngOnInit() {         
      this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {      
       const refresh = paramMap.get('refresh');      
-      if (refresh) {
-        this.getProduct(this.activatedRoute.snapshot.params.customerId, this.activatedRoute.snapshot.params.productId);        
-      }
+      this.productId = parseInt(paramMap.get('productId'));         
+      this.customerId = parseInt(paramMap.get('customerId'));         
+      this.getProduct(this.customerId, this.productId);              
     });
   }  
   getProduct(customerId: number, productId: number){    
