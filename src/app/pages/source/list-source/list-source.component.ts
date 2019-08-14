@@ -18,6 +18,7 @@ export class ListSourceComponent implements OnInit {
   actionConfirmWord: string;  
   currentProduct = {};  
   productId = 0;
+  customerId = 0;
 
   settings = {    
     actions:{
@@ -58,6 +59,7 @@ export class ListSourceComponent implements OnInit {
   ngOnInit() {    
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
+      this.customerId = parseInt(paramMap.get('customerId'));      
       this.getProduct(this.productId);
     });          
   }
@@ -74,7 +76,7 @@ export class ListSourceComponent implements OnInit {
   onUserRowSelect(event): void {    
     let sourceId = event.data.id;
     this.router.navigate([`/pages/sources/detail`], {
-      queryParams: {refresh: new Date().getTime(), sourceId: sourceId}
+      queryParams: {refresh: new Date().getTime(), sourceId: sourceId, customerId: this.customerId, productId: this.productId}
     });        
   }
 

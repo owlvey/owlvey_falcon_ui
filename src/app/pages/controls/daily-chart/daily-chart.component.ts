@@ -61,7 +61,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         },
         legend: {
           left: 'left',
-          data: ['source'],
+          data: ['Availability'],
           textStyle: {
             color: echarts.textColor,
           },
