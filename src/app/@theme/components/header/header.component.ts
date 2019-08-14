@@ -6,8 +6,9 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router, ParamMap } from '@angular/router';
 import { EventHandlerService } from '../../../event-handler.service';
+import { debug } from 'util';
 
 @Component({
   selector: 'ngx-header',
@@ -79,6 +80,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
   ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                  
+      this.currentCustomer = parseInt(paramMap.get('customerId'));         
+      this.currentProduct = parseInt(paramMap.get('productId'));               
+    });
     this.getCustomers();
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
