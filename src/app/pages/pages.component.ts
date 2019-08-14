@@ -16,12 +16,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PagesComponent implements OnInit {  
   menu = MENU_ITEMS;
-  constructor(private menuService: NbMenuService,private router: Router, activatedRoute: ActivatedRoute) {
+  constructor(private menuService: NbMenuService,private router: Router, private activatedRoute: ActivatedRoute) {
     
   }
 
   ngOnInit(){
-    this.menuService.onItemClick().subscribe((e) => {
+    this.menuService.onItemClick().subscribe((e) => {      
       let currentCustomer = JSON.parse(sessionStorage.getItem("currentCustomer"));
       let currentProduct = JSON.parse(sessionStorage.getItem("currentProduct"));
       if (!currentCustomer || !currentProduct){

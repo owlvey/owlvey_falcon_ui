@@ -149,7 +149,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   changeCustomer(customer: any) {    
     this.currentProduct = null; 
     this.getProducts();
-    this.router.navigate([`/pages/customers/${customer}`], {
+    this.router.navigate([`/pages/customers/detail/${customer}`], {
       queryParams: { refresh: new Date().getTime() }
     });
   }

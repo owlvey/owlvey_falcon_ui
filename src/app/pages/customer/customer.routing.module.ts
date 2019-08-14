@@ -2,12 +2,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
+import { CreateCustomerComponent } from './create-customer/create-customer.component';
 import { DetailCustomerComponent } from './detail-customer/detail-customer.component';
 
 const routes: Routes = [
   { path: '', component: ListCustomerComponent},
-  { path: ':customerId', component: DetailCustomerComponent },
-  { path: 'create', component: DetailCustomerComponent }  
+  { path: 'detail/:customerId', component: DetailCustomerComponent },
+  { path: 'create', component: CreateCustomerComponent }  
 ];
 
 @NgModule({
@@ -19,4 +20,5 @@ export class CustomerRoutingModule { }
 export const routedComponents = [
   ListCustomerComponent,
   DetailCustomerComponent,  
+  CreateCustomerComponent
 ];
