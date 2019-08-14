@@ -5,14 +5,14 @@
     </a>
     <a class="logo" href="#" (click)="navigateHome()">Owlvey</a>
   </div>
-  <nb-select placeholder="themes" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+  <nb-select class="mr-2" placeholder="themes" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
   <br/>
-  <nb-select placeholder="customers" [(selected)]="currentCustomer"  (selectedChange)="changeCustomer($event)" status="primary" >
+  <nb-select class="mr-2" placeholder="customers" [(selected)]="currentCustomer"  (selectedChange)="changeCustomer($event)" status="primary" >
     <nb-option *ngFor="let customer of customers" [value]="customer.id"> {{ customer.name }}</nb-option>
   </nb-select>
-  <nb-select placeholder="products" [(selected)]="currentProduct"  (selectedChange)="changeProduct($event)" status="primary" >
+  <nb-select class="mr-2" placeholder="products" [(selected)]="currentProduct"  (selectedChange)="changeProduct($event)" status="primary" >
     <nb-option *ngFor="let product of products" [value]="product.id"> {{ product.name }}</nb-option>
   </nb-select>
 </div>

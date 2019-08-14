@@ -5,9 +5,11 @@ import { DetailCustomerComponent } from './detail-customer/detail-customer.compo
 import { CustomerRoutingModule } from "./customer.routing.module";
 import { NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '../forms/forms.module';
 
 @NgModule({
   declarations: [DetailCustomerComponent, ListCustomerComponent],
-  imports: [CommonModule, CustomerRoutingModule, Ng2SmartTableModule, NbCardModule]
+  imports: [CommonModule, CustomerRoutingModule, Ng2SmartTableModule, NbCardModule, ReactiveFormsModule, FormsModule]
 })
 export class CustomerModule { }

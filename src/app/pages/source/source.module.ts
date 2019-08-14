@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateSourceComponent } from './create-source/create-source.component';
@@ -33,3 +34,28 @@ export class SourceModule { }
 
 
 
+=======
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { CreateSourceComponent } from "./create-source/create-source.component";
+import { ListSourceComponent } from "./list-source/list-source.component";
+import { SourceRoutingModule } from "./source.routing.module";
+import {
+  NbCardModule,
+  NbIconModule,
+  NbInputModule,
+  NbTreeGridModule
+} from "@nebular/theme";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+
+@NgModule({
+  declarations: [CreateSourceComponent, ListSourceComponent],
+  imports: [
+    CommonModule,
+    SourceRoutingModule,
+    Ng2SmartTableModule,
+    NbCardModule
+  ]
+})
+export class SourceModule {}
+>>>>>>> 06135fc8b2059ae4ddb56b851e645ae5cccf2d3e
