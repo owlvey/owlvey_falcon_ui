@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CreateSourceComponent } from './create-source/create-source.component';
-import { ListSourceComponent } from './list-source/list-Source.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { CreateSourceComponent } from "./create-source/create-source.component";
+import { ListSourceComponent } from "./list-source/list-source.component";
 import { SourceRoutingModule } from "./source.routing.module";
 import { SharedModule } from "../shared/shared.module";
 
@@ -9,4 +9,4 @@ import { SharedModule } from "../shared/shared.module";
   declarations: [CreateSourceComponent, ListSourceComponent],
   imports: [CommonModule, SharedModule, SourceRoutingModule]
 })
-export class SourceModule { }
+export class SourceModule {}
