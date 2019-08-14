@@ -37,6 +37,18 @@ export class ListProductComponent implements OnInit {
     );
   }
 
+  editProduct(item: any){
+
+  }
+
+  deleteProduct(item: any){
+
+  }
+
+  openCreateModal(){
+
+  }
+
   ngOnInit() {
     this.getProducts();
   }
