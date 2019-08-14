@@ -54,6 +54,7 @@ import { CustomersGateway }  from './data/customers.gateway';
 import { ProductsGateway }  from './data/products.gateway';
 import { SourcesGateway }  from './data/sources.gateway';
 import { MockDataModule } from './mock/mock-data.module';
+import { FeaturesGateway } from './data/features.gateway';
 
 const socialLinks = [
   {
@@ -95,7 +96,8 @@ const DATA_SERVICES = [
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
   { provide: CustomersGateway, useClass: CustomersGateway },
   { provide: ProductsGateway, useClass: ProductsGateway },
-  { provide: SourcesGateway, useClass: SourcesGateway }
+  { provide: SourcesGateway, useClass: SourcesGateway },
+  { provide: FeaturesGateway, useClass: FeaturesGateway }
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

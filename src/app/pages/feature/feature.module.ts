@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateSourceComponent } from './create-source/create-source.component';
-import { ListSourceComponent } from './list-source/list-source.component';
-import { DetailSourceComponent } from './detail-source/detail-source.component';
-import { SourceRoutingModule } from "./source.routing.module";
+import { ListFeatureComponent } from './list-feature/list-feature.component';
+import { DetailFeatureComponent } from './detail-feature/detail-feature.component';
+import { FeatureRoutingModule } from "./feature.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -27,9 +26,9 @@ import {
 
 
 @NgModule({
-  declarations: [CreateSourceComponent, DetailSourceComponent, ListSourceComponent],
-  imports: [FormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule, ControlsModule]
+  declarations: [DetailFeatureComponent, ListFeatureComponent],
+  imports: [FormsModule, FeatureRoutingModule, CommonModule,  Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule, ControlsModule]
 })
-export class SourceModule { }
+export class FeatureModule { }
 
 

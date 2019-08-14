@@ -40,6 +40,14 @@ export class PagesComponent implements OnInit {
           alert('please select customer');          
         }        
       }
+      if (e.item.title == "Features"){      
+        if (currentProduct && currentCustomer){
+          this.router.navigateByUrl(`/pages/features?productId=${currentProduct}&customerId=${currentCustomer}`);
+        }
+        else{
+          alert('please select customer and product');          
+        }                
+      }
       if (e.item.title == "Customers"){          
         this.router.navigateByUrl(`/pages/customers`);
       }            
