@@ -13,7 +13,7 @@ import { NbThemeService } from '@nebular/theme';
   templateUrl: './detail-source.component.html',
   styleUrls: ['./detail-source.component.scss']
 })
-export class DetailSourceComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DetailSourceComponent implements OnInit, AfterViewInit {
   
 
   isLoading: boolean = false;
@@ -44,7 +44,10 @@ export class DetailSourceComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {         
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
-      this.sourceId = parseInt(paramMap.get('sourceId'));                  
+      this.sourceId = parseInt(paramMap.get('sourceId'));   
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));
+      this.period = parseInt(paramMap.get('period'));
       this.getSource();
     });          
   }  
@@ -59,11 +62,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate, this.period).subscribe(data=>{      
       this.series = data.items;      
     });
-  }
-
-  ngOnDestroy(): void {
-    
-  }     
+  }  
   
   ngAfterViewInit() {    
     

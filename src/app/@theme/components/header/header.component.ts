@@ -6,9 +6,8 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
-import { ActivatedRoute, Route, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Route, Router, ParamMap, Params } from '@angular/router';
 import { EventHandlerService } from '../../../event-handler.service';
-import { debug } from 'util';
 
 @Component({
   selector: 'ngx-header',
@@ -22,6 +21,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   user: any;
   customers: Array<any> = [];
   products: Array<any> = [];
+  startDate: Date; 
+  endDate: Date;
+  period: number;
+  pperiod: string = "test";
 
   themes = [
     {
@@ -44,15 +47,12 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   currentTheme = 'default';
   currentCustomer: number;
-  currentProduct: number;
+  currentProduct: number;    
+  refresh : any= new Date().getTime();
 
-  @ViewChildren(NbSelectComponent) customerSelect: QueryList<any>;
+  @ViewChildren(NbSelectComponent) headerSelectors: QueryList<any>;
 
   @ViewChild(NbSelectComponent, { static: false }) otherCustomerSelect: any;
-
-  ngAfterViewInit(): void {
-
-  }
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
@@ -68,26 +68,92 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private eventHandler: EventHandlerService
-  ) {
-    this.currentCustomer = this.activatedRoute.snapshot.params.customerId;
-    this.currentProduct = this.activatedRoute.snapshot.params.productId;
-    this.eventHandler.event.subscribe((event) => {
-      if (event) {
-        if (event.name == "reloadCustomers") {
-          this.getCustomers();
-        }
-      }
-    })
+  ) {    
   }
-  ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                  
-      this.currentCustomer = parseInt(paramMap.get('customerId'));         
-      this.currentProduct = parseInt(paramMap.get('productId'));               
+
+  onFirstLoadWithOutData(){
+    this.currentCustomer = null;
+    this.currentProduct = null;
+    this.customerGateway.getCustomers().subscribe(data=>{
+      this.customers = data;            
+      this.products = null;            
     });
-    this.getCustomers();
+  }
+  onCustomerAndProduct(custId, prodId){    
+    this.customerGateway.getCustomers().subscribe(data=>{
+      this.customers = data;           
+      this.cdRef.detectChanges();            
+      this.currentCustomer = custId;
+      this.productGateway.getProducts(custId).subscribe(products=>{
+        this.products = products;        
+        this.cdRef.detectChanges();            
+        this.currentProduct = prodId;                
+      });
+    });
+  }
+  onCustomer(custId){
+    this.customerGateway.getCustomers().subscribe(data=>{
+      this.customers = data;           
+      this.cdRef.detectChanges();            
+      this.currentCustomer = custId;
+      this.productGateway.getProducts(custId).subscribe(products=>{
+        this.products = products;    
+        this.currentProduct = null;                            
+      });
+    });
+  }
+  onNavigation(){
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
+    const qcustomerId = parseInt(snapshot.get('customerId'));         
+    const qproductId = parseInt(snapshot.get('productId'));                
+    if(!qcustomerId) {
+      this.onFirstLoadWithOutData();
+    }
+    else if(qcustomerId && qproductId){
+      this.onCustomerAndProduct(qcustomerId, qproductId);        
+    }
+    else {
+      this.onCustomer(qcustomerId);
+    }    
+  }
+
+  onChangeRoute(){
+    this.refresh = new Date().getTime();
+    this.onNavigateRoute();
+  }
+  onNavigateRoute(){
+    let target = [this.router.url.split('?')[0]];
+    let queryParams: Params = { 
+      customerId: this.currentCustomer, 
+      productId: this.currentProduct,
+      start: this.startDate.toISOString(), 
+      end: this.endDate.toISOString(), 
+      period: this.period };    
+    this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                
+  }
+
+  ngAfterViewInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                                    
+      if (this.refresh !== parseInt(paramMap.get("refresh"))){        
+        this.onNavigateRoute();
+      }      
+    });    
+  }
+  ngOnInit() {                 
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;        
+    const qperiod = parseInt(snapshot.get('period'));    
+    this.period = qperiod? qperiod : 1;    
+    this.endDate = new Date();
+    this.startDate = new Date();
+    this.startDate.setDate(this.startDate.getDate() - 365);       
+    
+    this.onNavigation();
+
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
+
+
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -103,25 +169,22 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
-  }
-
-
-  getCustomers() {
-    this.customerGateway.getCustomers().subscribe(data => {
-      this.customers = data;
-      this.cdRef.detectChanges();      
-    });
-  }
+  } 
+/*
   getProducts() {
-    this.productGateway.getProducts(this.currentCustomer).subscribe(data => {
+    this.productGateway.getProducts(this.currentCustomer).subscribe(data => {      
       this.products = data;
-      setTimeout(() => {
-        
+      setTimeout(() => {        
+        this.headerSelectors.forEach(c=>{        
+          if (c.placeholder === "products")
+          { 
+            c.setSelection(this.currentProduct);
+          }
+        });      
       }, 100);
     });
-  }
- 
-
+  } 
+*/
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -131,19 +194,17 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.themeService.changeTheme(themeName);
   }
 
-  changeCustomer(customer: any) {   
-    this.currentCustomer = customer;     
-    this.getProducts();
-    this.router.navigate([`/pages/customers/detail`], {
-      queryParams: { refresh: new Date().getTime(), customerId: customer }
+  changeCustomer(customer: any) {                
+    this.currentProduct = null; 
+    this.productGateway.getProducts(customer).subscribe(data=>{
+      this.products=data;
+      this.onChangeRoute();      
     });
+    
   }
 
-  changeProduct(product: any) {
-    this.currentProduct = product;
-    this.router.navigate([`/pages/products/detail`], {
-      queryParams: { refresh: new Date().getTime(), productId: product, customerId: this.currentCustomer }
-    });
+  changeProduct(product: any) {               
+    this.onChangeRoute();      
   }
 
   toggleSidebar(): boolean {
@@ -155,5 +216,16 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  onPeriodChange(){          
+    console.log("aaa");
+    this.onChangeRoute();      
+  }
+  onStartChange(start: Date){    
+    this.onChangeRoute();      
+  }
+  onEndChange(end: Date){           
+    this.onChangeRoute();      
   }
 }

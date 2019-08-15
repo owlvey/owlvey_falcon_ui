@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuItem, NbMenuService } from "@nebular/theme";
+import { NbMenuItem, NbMenuService, NbThemeService } from "@nebular/theme";
 
 import { MENU_ITEMS } from './pages-menu';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'ngx-pages',
@@ -16,17 +16,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PagesComponent implements OnInit {  
   menu = MENU_ITEMS;
-  constructor(private menuService: NbMenuService,private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private menuService: NbMenuService,private router: Router, private activatedRoute: ActivatedRoute, 
+    private themeService: NbThemeService) {
     
   }
 
   ngOnInit(){
+    this.themeService.changeTheme("dark");
     this.menuService.onItemClick().subscribe((e) => {            
       const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
       if (e.item.title == "Sources"){                    
         if (currentProduct && currentCustomer){
-          this.router.navigateByUrl(`/pages/sources?productId=${currentProduct}&customerId=${currentCustomer}`);
+          let queryParams: Params = { };
+          this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                          
         }
         else{
           alert('please select customer and product');          
@@ -34,7 +37,8 @@ export class PagesComponent implements OnInit {
       }
       if (e.item.title == "Products"){      
         if (currentCustomer){
-          this.router.navigateByUrl(`/pages/products?customerId=${currentCustomer}`);
+          let queryParams: Params = { };
+          this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                    
         }
         else{
           alert('please select customer');          
@@ -42,14 +46,16 @@ export class PagesComponent implements OnInit {
       }
       if (e.item.title == "Features"){      
         if (currentProduct && currentCustomer){
-          this.router.navigateByUrl(`/pages/features?productId=${currentProduct}&customerId=${currentCustomer}`);
+          let queryParams: Params = { };
+          this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                              
         }
         else{
           alert('please select customer and product');          
         }                
       }
       if (e.item.title == "Customers"){          
-        this.router.navigateByUrl(`/pages/customers`);
+        let queryParams: Params = { };
+        this.router.navigate(['/pages/customers'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
       }            
     });
   }

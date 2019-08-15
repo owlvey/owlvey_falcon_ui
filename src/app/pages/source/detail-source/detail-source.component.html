@@ -4,19 +4,6 @@
         <nb-card-header>Reports</nb-card-header>
         <nb-card-body>          
           <form class="form-inline">
-
-              <label for="txtstartdate" class="label">Start Date</label>
-              <input id="txtstartdate" nbInput placeholder="Start Date" [nbDatepicker]="startpicker"  [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}">
-              <nb-datepicker #startpicker></nb-datepicker>
-
-
-              <label for="txtEndDate" class="label">End Date</label>
-              <input id="txtEndDate" nbInput placeholder="End Date" [nbDatepicker]="endpicker" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}">
-              <nb-datepicker #endpicker></nb-datepicker>
-
-              <label for="txtPeriod" class="label">Period</label>
-              <input id="txtPeriod" nbInput placeholder="period default(1 day)"  [(ngModel)]="period" [ngModelOptions]="{standalone: true}">
-
               <button type="button" nbButton status="primary" (click)="handleClick($event)"> Submit </button>
           </form>
         </nb-card-body>

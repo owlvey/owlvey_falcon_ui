@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -74,10 +74,8 @@ export class ListSourceComponent implements OnInit {
   }
 
   onUserRowSelect(event): void {    
-    let sourceId = event.data.id;
-    this.router.navigate([`/pages/sources/detail`], {
-      queryParams: {refresh: new Date().getTime(), sourceId: sourceId, customerId: this.customerId, productId: this.productId}
-    });        
+    const sourceId = event.data.id;
+    let queryParams: Params = { sourceId: sourceId };
+    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-
 }

@@ -28,7 +28,9 @@ import {
 
 @NgModule({
   declarations: [CreateSourceComponent, DetailSourceComponent, ListSourceComponent],
-  imports: [FormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule, ControlsModule]
+  imports: [FormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, 
+     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
+     NbCardModule, ControlsModule]
 })
 export class SourceModule { }
 

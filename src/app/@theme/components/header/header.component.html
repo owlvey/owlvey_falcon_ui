@@ -9,17 +9,38 @@
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
   <br/>
-  <nb-select class="mr-2" placeholder="customers" [(selected)]="currentCustomer"  (selectedChange)="changeCustomer($event)" status="primary" >
+  <nb-select   class="mr-2" placeholder="customers" [(selected)]="currentCustomer"  (selectedChange)="changeCustomer($event)" status="primary" >
     <nb-option *ngFor="let customer of customers" [value]="customer.id"> {{ customer.name }}</nb-option>
   </nb-select>
-  <nb-select class="mr-2" placeholder="products" [(selected)]="currentProduct"  (selectedChange)="changeProduct($event)" status="primary" >
+
+  <nb-select  class="mr-2" placeholder="products" [(selected)]="currentProduct"  (selectedChange)="changeProduct($event)" status="primary" >
     <nb-option *ngFor="let product of products" [value]="product.id"> {{ product.name }}</nb-option>
   </nb-select>
+  <label for="txtstartdate" class="label header-label">Start Date</label>
+  <input id="txtstartdate" nbInput placeholder="Start Date"  class="header-input"
+      [nbDatepicker]="startpicker"  
+      [(ngModel)]="startDate"       
+      [ngModelOptions]="{standalone: true}"
+      (ngModelChange)="onEndChange($event)">
+  <nb-datepicker #startpicker></nb-datepicker>
+
+  <label for="txtenddate" class="label header-label">End Date</label>
+  <input id="txtenddate" nbInput placeholder="End Date"  class="header-input"      
+      [nbDatepicker]="endpicker"  
+      [(ngModel)]="endDate" 
+      [ngModelOptions]="{standalone: true}" 
+      (ngModelChange)="onStartChange($event)">
+  <nb-datepicker #endpicker></nb-datepicker>
+
+  <label for="txtPeriod" class="label header-label">Period</label>
+  <input id="txtPeriod" nbInput placeholder="period default(1 day)"  class="header-input"  type="text"
+         [(ngModel)]="period" [ngModelOptions]="{standalone: true}"
+         (change)="onPeriodChange()">
+
 </div>
 
 <div class="header-container">
   <nb-actions size="small">
-
     <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
