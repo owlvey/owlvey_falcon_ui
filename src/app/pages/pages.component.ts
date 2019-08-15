@@ -44,6 +44,16 @@ export class PagesComponent implements OnInit {
           alert('please select customer');          
         }        
       }
+      if (e.item.title == "Portfolios"){      
+        if (currentCustomer){
+          let queryParams: Params = { };
+          this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                    
+        }
+        else{
+          alert('please select customer');          
+        }        
+      }
+      
       if (e.item.title == "Features"){      
         if (currentProduct && currentCustomer){
           let queryParams: Params = { };

@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'layout-outline',
   },
   {
-    title: 'Services',
+    title: 'Portfolios',
     icon: 'layout-outline',
   },
   {

@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header>
-    Customers
-    <a [routerLink]="['create']" class="btn btn-sm btn-outline-primary float-right">Create</a>
+    Customers    
+    <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary float-right"> Create </button>
   </nb-card-header>
 
   <nb-card-body>

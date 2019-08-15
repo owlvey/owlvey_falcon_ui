@@ -6,14 +6,15 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService } from '@nebular/theme';
+import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 
 
 @Component({
-  selector: 'app-detail-feature',
-  templateUrl: './detail-feature.component.html',
-  styleUrls: ['./detail-feature.component.scss']
+  selector: 'app-detail-portfolio',
+  templateUrl: './detail-portfolio.component.html',
+  styleUrls: ['./detail-portfolio.component.scss']
 })
-export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   
 
   isLoading: boolean = false;
@@ -21,7 +22,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   actionConfirmWord: string;
   currentSource : any= {};    
   productId = 0;
-  sourceId = 0;
+  portfolioId = 0;
   themeSubscription: any;
   options: any = {};
   series: Array<any> = [];
@@ -34,39 +35,32 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
+    private portfolioGateway: PortfoliosGateway,    
     private theme: NbThemeService,
     private activatedRoute: ActivatedRoute) {       
-      this.endDate = new Date();
-      this.startDate = new Date();
-      this.startDate.setDate(this.startDate.getDate() - 365);
+      
     }        
 
   ngOnInit() {         
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
-      this.sourceId = parseInt(paramMap.get('sourceId'));       
-      this.startDate = new Date(paramMap.get("start"));           
-      this.endDate = new Date(paramMap.get("end"));           
-      this.period = parseInt(paramMap.get('period'));       
-      this.getSource();
+      this.portfolioId = parseInt(paramMap.get('portfolioId'));   
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));
+      this.period = parseInt(paramMap.get('period'));
+      this.getPortfolio();
     });          
   }  
 
-  getSource(){
-    this.sourcesGateway.getSource(this.sourceId).subscribe(data=>{
+  getPortfolio(){    
+    this.portfolioGateway.getPortfolio(this.portfolioId).subscribe(data=>{
       this.currentSource = data;            
     });    
   }
 
   handleClick(event){        
-    this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate, this.period).subscribe(data=>{      
-      this.series = data.items;      
-    });
-  }
-
-  ngOnDestroy(): void {
     
-  }     
+  }  
   
   ngAfterViewInit() {    
     

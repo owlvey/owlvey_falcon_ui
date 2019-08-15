@@ -25,9 +25,7 @@ export class CreateCustomerComponent implements OnInit {
   customerId = 0;
 
   createForm: FormGroup;
-  formTitle: string;
-  type: string;
-
+  formTitle: string;  
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -36,45 +34,22 @@ export class CreateCustomerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
+    private router: Router,    
     private eventHandler: EventHandlerService
   ) {
     this.createForm = this.fb.group({
       id: [''],
-      name: ['', Validators.required],
-      description: [''],
-      avatar: [''],
+      name: ['', Validators.required]      
     });
     this.isLoading = false;
   }
 
   ngOnInit() {
-    this.loadCustomerInfo();
-  }
-
-  loadCustomerInfo() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      if (this.activatedRoute.snapshot.params && this.activatedRoute.snapshot.params.customerId !== "create") {
-        this.getCustomer(this.activatedRoute.snapshot.params.customerId);
-      } else {
-        this.formTitle = "Create Customer";
-        this.type = "create"
-      }
-    });
-  }
-
-  getCustomer(customerId: number) {
-    this.customerGateway.getCustomer(customerId).subscribe(data => {
-      this.createForm.get("id").setValue(data.id);
-      this.createForm.get("name").setValue(data.name);
-      this.createForm.get("avatar").setValue(data.avatar);
-      this.formTitle = `Edit Customer - ${data.name}`;
-      this.type = "update"
-    });
+  
   }
 
   goBack() {
-    this.router.navigate(['/pages/customers']);
+    this.location.back();    
   }
 
   onSubmit() {
@@ -83,22 +58,14 @@ export class CreateCustomerComponent implements OnInit {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
-
-    let defer = null;
-
-    this.isLoading = true;
-    if (this.type === "create")
-      defer = this.customerGateway.createCustomer(this.createForm.value);
-    else
-      defer = this.customerGateway.updateCustomer(this.createForm.get("id").value, this.createForm.value);
-
-    defer
-      .subscribe((data) => {
-        this.toastr.success(`Customer ${this.type === 'create' ? 'Created' : 'Updated'}`, "Success");
+    
+    this.isLoading = true;    
+    let  defer = this.customerGateway.createCustomer(this.createForm.value);
+    defer.subscribe((data) => {
+        this.toastr.success("Customer Created Success");
         this.isLoading = false;
-        this.eventHandler.event.next({
-          name: "reloadCustomers"
-        })
+        this.eventHandler.event.next({ name: "reloadCustomers" })
+        this.location.back();
       }, (error) => {
         this.isLoading = false;
         this.toastr.warning("Something went wrong, please try again.", "Warning")

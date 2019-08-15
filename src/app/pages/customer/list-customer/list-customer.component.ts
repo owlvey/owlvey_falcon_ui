@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -91,8 +91,12 @@ export class ListCustomerComponent implements OnInit {
     }
   }
 
+  onCreate(event){    
+    let queryParams: Params = { };
+    this.router.navigate(['/pages/customers/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
   onEdit(event) {
-    console.log(event)
+    
     this.router.navigate(['/pages/customers/' + event.data.id]);
   }
 }
