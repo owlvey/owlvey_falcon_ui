@@ -18,28 +18,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Customers',
-    icon: 'layout-outline',
-    link: '/pages/customers'
+    icon: 'globe-outline',
   },
   {
     title: 'Squads',
-    icon: 'layout-outline',
+    icon: 'people-outline',
   },
   {
     title: 'Products',
-    icon: 'layout-outline',
+    icon: 'archive-outline',
   },
   {
     title: 'Portfolios',
-    icon: 'layout-outline',
+    icon: 'briefcase-outline',
   },
   {
     title: 'Features',
-    icon: 'layout-outline',
+    icon: 'smartphone-outline',
   },
   {
     title: 'Sources',
-    icon: 'layout-outline',
+    icon: 'shake-outline',
   },
   {
     title: 'Layout',
