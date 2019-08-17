@@ -16,4 +16,7 @@ export class FeaturesGateway{
     getFeature(featureId: number): Observable<any>{
         return this.http.get(this.baseUrl + `features/${featureId}`);
     }
+    getDaily(featureId: number, start: Date, end: Date): Observable<any> {
+        return this.http.get(this.baseUrl + `features/${featureId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
 }

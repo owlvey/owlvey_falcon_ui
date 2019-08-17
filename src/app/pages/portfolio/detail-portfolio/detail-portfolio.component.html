@@ -3,27 +3,28 @@
       <nb-card class="inline-form-card">
         <nb-card-header>Reports</nb-card-header>
         <nb-card-body>          
-          <form class="form-inline">
-              <button type="button" nbButton status="primary" (click)="handleClick($event)"> Submit </button>
+          <form class="form-inline">              
+              <button type="button" nbButton status="primary" (click)="onReportClick($event)"> Availability </button>
+              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>              
           </form>
         </nb-card-body>
       </nb-card>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12">
       <nb-card>
         <nb-card-header>
             Source {{ currentSource.name }}
         </nb-card-header>
-        <nb-card-body>
-          detail
+        <nb-card-body>            
+            <h5>Features</h5>
+            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onFeaturesRowSelect($event)">
+            </ng2-smart-table>
         </nb-card-body>
       </nb-card>
     </div>
 </div>
-
 
 
 <nb-card>
@@ -31,8 +32,8 @@
     Daily Report
   </nb-card-header>  
 
-  <nb-card-body>      
-      <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>          
+  <nb-card-body>            
+      <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>                   
   </nb-card-body>
 
 </nb-card>

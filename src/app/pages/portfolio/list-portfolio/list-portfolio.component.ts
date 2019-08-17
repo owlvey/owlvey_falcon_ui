@@ -37,11 +37,24 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      slo: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       name: {
         title: 'Name',
         type: 'string',
         filter: true
       },      
+      featuresCount: {
+        title: 'Features',
+        type: 'string',
+        filter: true,
+        width: '3em',
+      },            
     },
   };
 

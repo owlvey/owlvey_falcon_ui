@@ -17,7 +17,12 @@ export class SourcesGateway{
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }
-    getDaily(sourceId: number, start: Date, end: Date, period: number): Observable<any> {
-        return this.http.get(this.baseUrl + `sources/${sourceId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}&period=${period}`);
+
+    getSourceItems(sourceId: number): Observable<any>{
+        return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
+    }
+
+    getDaily(sourceId: number, start: Date, end: Date): Observable<any> {
+        return this.http.get(this.baseUrl + `sources/${sourceId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 }

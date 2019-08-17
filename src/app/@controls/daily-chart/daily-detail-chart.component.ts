@@ -1,18 +1,22 @@
-import { AfterViewInit, Component, OnDestroy, Input } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, Input, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { FormatService } from '../../@core/utils/format.service';
+
+
 
 @Component({
-  selector: 'ngx-daily-chart',
+  selector: 'ngx-daily-detail-chart',
   template: `
-    <div echarts [options]="options" class="echart"></div>
+    <div echarts [options]="options" class="echart" (chartInit)="onChartInit($event)"></div>
   `,
 })
-export class DailyChartComponent implements AfterViewInit, OnDestroy {
+export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
 
   options: any = {};
   themeSubscription: any;
-
-  constructor(private theme: NbThemeService) {
+  
+  constructor(private theme: NbThemeService,
+    private formatService: FormatService) {
   }
   private _dataItems : Array<any>; 
 
@@ -24,31 +28,54 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
   get dataItems(){
     return this._dataItems;
   }  
+  echartsIntance: any;
+
+  onChartInit(ec) {
+    this.echartsIntance = ec;
+  }  
 
   @Input()
-  set dataItems(data: Array<any>){
-    const line = data.map(c=>{ return { name: c.date, value:[ this.formatDate(c.date), 100 * c.oAva]}});
-    const dates = data.map(c=> new Date(c.date));
-    const points = [{
-         name : "Availability", 
-         type : 'line', 
-         data: line, 
-         showSymbol: true, 
-         hoverAnimation: true,
-         markLine: {
-                silent: true,
-                data: [{
-                    yAxis: 20
-                }, {
-                    yAxis: 40
-                }, {
-                    yAxis: 60
-                }, {
-                    yAxis: 80
-                }]
-          },
-        } 
-      ];      
+  set dataItems(data: Array<any>){    
+    let legends = [];
+    let series = [];    
+    let minValue = 50;
+    data.forEach(serieData=>{
+        const line = serieData.items.map(
+          c =>{ 
+            if(c.oAval * 100 < minValue) minValue = c.oAval;            
+            return { name: c.date, value:[this.formatDate(c.date), c.oAva * 100] };
+          }
+        );
+        legends.push(serieData.name);
+        let serie = {
+          name : serieData.name, 
+          type : 'line', 
+          data: line, 
+          showSymbol: true, 
+          hoverAnimation: false,
+          markLine: {
+                 silent: true,
+                 data: [{
+                     yAxis: 20
+                 }, {
+                     yAxis: 40
+                 }, {
+                     yAxis: 60
+                 }, {
+                     yAxis: 90
+                 }]
+           },
+         };
+         series.push(serie);
+    });    
+    
+    let legends_selected = {};
+    legends.forEach(c=>{
+      if (c !== "Availability"){
+        legends_selected[c]= false;
+      }
+    });
+
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echarts: any = config.variables.echarts;
@@ -61,7 +88,8 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         },
         legend: {
           left: 'left',
-          data: ['Availability'],
+          data: legends,
+          selected: legends_selected,
           textStyle: {
             color: echarts.textColor,
           },
@@ -71,13 +99,26 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
             type: 'time',            
             splitLine: {
               show: false
-            }           
+            },
+            axisTick: {
+              alignWithLabel: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: echarts.axisLineColor,
+              },
+            },
+            axisLabel: {
+              textStyle: {
+                color: echarts.textColor,
+              },
+            },
           },
         ],
         yAxis: [
           {
             type: 'value',
-            min: 0, 
+            min: minValue, 
             max: 100,
             axisLine: {
               lineStyle: {
@@ -99,6 +140,9 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         visualMap: {
           top: 1,
           right: 1,
+          textStyle:{
+            color: echarts.textColor
+          },
           pieces: [{
               gt: 80,
               lte: 100,
@@ -126,9 +170,9 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
           bottom: '5%',
           containLabel: true,
         },
-        series: points,
-      };  
-    });       
+        series: series,
+      }; 
+    });      
   }  
 
   ngAfterViewInit() {

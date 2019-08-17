@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -26,8 +26,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   options: any = {};
   series: Array<any> = [];
   startDate: Date = new Date();
-  endDate: Date;
-  period: number = 1;
+  endDate: Date;  
   
   constructor(
     private location: Location,
@@ -35,6 +34,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
     private theme: NbThemeService,
+    private router: Router, 
     private activatedRoute: ActivatedRoute) {       
       this.endDate = new Date();
       this.startDate = new Date();
@@ -46,9 +46,9 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
       this.productId = parseInt(paramMap.get('productId'));            
       this.sourceId = parseInt(paramMap.get('sourceId'));   
       this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));
-      this.period = parseInt(paramMap.get('period'));
+      this.endDate = new Date(paramMap.get('end'));      
       this.getSource();
+      this.getDaily();
     });          
   }  
 
@@ -57,13 +57,24 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
       this.currentSource = data;            
     });    
   }
-
-  handleClick(event){        
-    this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate, this.period).subscribe(data=>{      
+  getDaily(){
+    this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
       this.series = data.items;      
     });
+  }
+
+  handleClick(event){        
+    this.getDaily();
   }  
-  
+  onItemsClick($event){    
+    let queryParams: Params = { };
+    this.router.navigate(['/pages/sources/items'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }  
+  onBackClick($event){
+    let queryParams: Params = { sourceId: null };
+    this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+
+  }
   ngAfterViewInit() {    
     
   }

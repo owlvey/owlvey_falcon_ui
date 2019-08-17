@@ -1,10 +1,12 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card class="inline-form-card">
-        <nb-card-header>Reports</nb-card-header>
+        <nb-card-header>Actions</nb-card-header>
         <nb-card-body>          
           <form class="form-inline">
-              <button type="button" nbButton status="primary" (click)="handleClick($event)"> Submit </button>
+              <button type="button" nbButton status="primary" (click)="handleClick($event)"> Report </button>
+              <button type="button" nbButton status="primary" (click)="onItemsClick($event)"> View Items </button>
+              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right">  Up Sources </button>              
           </form>
         </nb-card-body>
       </nb-card>

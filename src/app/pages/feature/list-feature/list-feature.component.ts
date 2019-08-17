@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -74,11 +74,10 @@ export class ListFeatureComponent implements OnInit {
     });    
   }
 
-  onUserRowSelect(event): void {    
-    let sourceId = event.data.id;
-    this.router.navigate([`/pages/features/detail`], {
-      queryParams: {refresh: new Date().getTime(), sourceId: sourceId, customerId: this.customerId, productId: this.productId}
-    });        
+  onUserRowSelect(event): void {            
+    const featureId = event.data.id;
+    let queryParams: Params = { featureId: featureId };
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
 }

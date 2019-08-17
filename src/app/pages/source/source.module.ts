@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CreateSourceComponent } from './create-source/create-source.component';
 import { ListSourceComponent } from './list-source/list-source.component';
 import { DetailSourceComponent } from './detail-source/detail-source.component';
+import { ItemsSourceComponent } from './items-source/items-source.component';
 import { SourceRoutingModule } from "./source.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -26,8 +27,9 @@ import {
 } from '@nebular/theme';
 
 
+
 @NgModule({
-  declarations: [CreateSourceComponent, DetailSourceComponent, ListSourceComponent],
+  declarations: [CreateSourceComponent, DetailSourceComponent, ListSourceComponent, ItemsSourceComponent],
   imports: [FormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, 
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
      NbCardModule, ControlsModule]

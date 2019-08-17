@@ -25,17 +25,12 @@
   <nb-datepicker #startpicker></nb-datepicker>
 
   <label for="txtenddate" class="label header-label">End Date</label>
-  <input id="txtenddate" nbInput placeholder="End Date"  class="header-input"      
+  <input id="txtenddate" nbInput placeholder="End Date"  class="header-input"  readonly="readonly"    
       [nbDatepicker]="endpicker"  
       [(ngModel)]="endDate" 
       [ngModelOptions]="{standalone: true}" 
       (ngModelChange)="onStartChange($event)">
-  <nb-datepicker #endpicker></nb-datepicker>
-
-  <label for="txtPeriod" class="label header-label">Period</label>
-  <input id="txtPeriod" nbInput placeholder="period default(1 day)"  class="header-input"  type="text"
-         [(ngModel)]="period" [ngModelOptions]="{standalone: true}"
-         (change)="onPeriodChange()">
+  <nb-datepicker #endpicker></nb-datepicker>  
 
 </div>
 

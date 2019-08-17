@@ -20,13 +20,14 @@ import {
   NbTreeGridModule
 } from '@nebular/theme';
 import { DailyChartComponent } from './daily-chart/daily-chart.component';
+import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.component';
 import { throwIfAlreadyLoaded } from '../../../App/src/app/@core/module-import-guard';
 
 
 @NgModule({
    imports: [FormsModule, CommonModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule],
-   declarations: [ DailyChartComponent ],
-   exports: [DailyChartComponent]
+   declarations: [ DailyChartComponent, DailyDetailChartComponent ],
+   exports: [DailyChartComponent, DailyDetailChartComponent]
 })
 
 export class ControlsModule {

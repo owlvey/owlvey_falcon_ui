@@ -22,9 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   customers: Array<any> = [];
   products: Array<any> = [];
   startDate: Date; 
-  endDate: Date;
-  period: number;
-  pperiod: string = "test";
+  endDate: Date;  
 
   themes = [
     {
@@ -127,8 +125,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       customerId: this.currentCustomer, 
       productId: this.currentProduct,
       start: this.startDate.toISOString(), 
-      end: this.endDate.toISOString(), 
-      period: this.period };    
+      end: this.endDate.toISOString(),
+    };    
     this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                
   }
 
@@ -140,9 +138,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     });    
   }
   ngOnInit() {                 
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;        
-    const qperiod = parseInt(snapshot.get('period'));    
-    this.period = qperiod? qperiod : 1;    
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
     this.endDate = new Date();
     this.startDate = new Date();
     this.startDate.setDate(this.startDate.getDate() - 365);       
@@ -216,11 +212,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
-  }
-
-  onPeriodChange(){          
-    console.log("aaa");
-    this.onChangeRoute();      
   }
   onStartChange(start: Date){    
     this.onChangeRoute();      
