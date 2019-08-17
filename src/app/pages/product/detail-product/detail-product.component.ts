@@ -84,7 +84,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     this.productId = parseInt(paramMap.get('productId'));                                
     super.onChangeQueryParameters(paramMap); 
     this.loadProduct();
-
+    this.getDaily();
   }
 
   public loadProduct(){    
@@ -93,19 +93,24 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           this.source.load(data.services);
       });       
   }
+
   onNgOnInit(): void {
     
   }
-  
+  getDaily(){
+    this.productGateway.getDaily(this.productId, this.startDate, this.endDate).subscribe(data=>{
+      this.series = data.series;
+    });
+  }
   
   onServiceRowSelect(event){
       const portfolioId = event.data.id;
-      let queryParams: Params = { portfolioId: portfolioId, productId: null };      
+      let queryParams: Params = { portfolioId: portfolioId };      
       this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   } 
 
   onReportClick(event){
-    
+    this.getDaily();
   }
   
   ngAfterViewInit() {    

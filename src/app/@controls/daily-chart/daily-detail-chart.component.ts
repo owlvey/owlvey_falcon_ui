@@ -39,10 +39,12 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
     let legends = [];
     let series = [];    
     let minValue = 50;
-    data.forEach(serieData=>{
+    data.forEach(serieData=>{      
         const line = serieData.items.map(
           c =>{ 
-            if(c.oAval * 100 < minValue) minValue = c.oAval;            
+            if(c.oAva * 100 < minValue) {              
+              minValue = c.oAval;
+            }
             return { name: c.date, value:[this.formatDate(c.date), c.oAva * 100] };
           }
         );

@@ -1,7 +1,11 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card class="inline-form-card">
-        <nb-card-header>Reports</nb-card-header>
+        <nb-card-header>
+          <h2>
+            <h5>Feature: {{ currentSource.name }}</h5>            
+          </h2>
+        </nb-card-header>
         <nb-card-body>          
           <form class="form-inline">
               <button type="button" nbButton status="primary" (click)="onReportClick($event)"> Availability </button>
@@ -16,10 +20,9 @@
     <div class="col-md-12">
       <nb-card>
         <nb-card-header>
-          <h5>Feature: {{ currentSource.name }}</h5>            
+          <h6>Service Level Indicator (SLI)</h6>
         </nb-card-header>
-        <nb-card-body>
-            <h6>Indicators</h6>
+        <nb-card-body>            
             <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
             </ng2-smart-table>
         </nb-card-body>

@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card class="inline-form-card">
-        <nb-card-header>Reports</nb-card-header>
+        <nb-card-header>
+            <h2>Product: {{ currentProduct.name }}</h2>
+        </nb-card-header>
         <nb-card-body>          
           <form class="form-inline">                            
               <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>              
@@ -14,11 +16,9 @@
     <div class="col-md-12">
       <nb-card>
         <nb-card-header>            
-            <h5> Customer: {{ currentCustomer.name }}</h5>
-            <h6> Product: {{ currentProduct.name }}</h6>
+            <h5>Services</h5>
         </nb-card-header>
-        <nb-card-body>            
-            <h5>Portfolios</h5>
+        <nb-card-body>                        
             <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onServiceRowSelect($event)">
             </ng2-smart-table>
         </nb-card-body>
@@ -29,11 +29,11 @@
 
 <nb-card>
   <nb-card-header>
-    Daily Report
+    Availability Report
   </nb-card-header>  
 
   <nb-card-body>            
-      
+    <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
   </nb-card-body>
 
 </nb-card>
