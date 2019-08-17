@@ -1,9 +1,16 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
+import { SourcesGateway } from '../../../@core/data/sources.gateway';
+import { FeaturesGateway } from '../../../@core/data/features.gateway';
+import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { NbThemeService } from '@nebular/theme';
+import { ProductBaseComponent } from '../../common/components/base-product.components';
+import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+
 
 
 @Component({
@@ -11,36 +18,97 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
   templateUrl: './detail-product.component.html',
   styleUrls: ['./detail-product.component.scss']
 })
-export class DetailProductComponent implements OnInit {
+export class DetailProductComponent  extends CustomerBaseComponent  implements OnInit, AfterViewInit {
+  public currentProduct : any = {};
+  public productId : number;     
+  sources: any[];  
+  currentSource : any= {};            
+  options: any = {};
+  series: Array<any> = [];  
+  source: LocalDataSource = new LocalDataSource();
 
-  isLoading: boolean = false;
-  sources: any[];
-  actionConfirmWord: string;
-
-  currentCustomer = {};  
-  currentProduct ={};
-  productId: number;
-  customerId: number;
+  settings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,        
+        editable: false
+      },          
+      slo: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      featuresCount: {
+        title: 'Features',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },    
+    },
+  };
+  
   constructor(
-    private location: Location,
-    private customerGateway: CustomersGateway,
-    private productGateway: ProductsGateway,    
-    private activatedRoute: ActivatedRoute) {       
+    protected location: Location,
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
+    protected sourcesGateway: SourcesGateway,    
+    protected featuresGateway: FeaturesGateway,    
+    protected portfolioGateway: PortfoliosGateway,    
+    protected theme: NbThemeService,
+    protected router: Router, 
+    protected activatedRoute: ActivatedRoute) {       
+      super(location, customerGateway, theme, router, activatedRoute);
     }        
-  ngOnInit() {         
-     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {      
-      const refresh = paramMap.get('refresh');      
-      this.productId = parseInt(paramMap.get('productId'));         
-      this.customerId = parseInt(paramMap.get('customerId'));         
-      this.getProduct(this.customerId, this.productId);              
-    });
-  }  
-  getProduct(customerId: number, productId: number){    
-    this.customerGateway.getCustomer(customerId).subscribe(data=>{
-      this.currentCustomer = data;      
-    });
-    this.productGateway.getProduct(productId).subscribe(data=>{
-      this.currentProduct = data;
-    });
+   
+  onChangeQueryParameters(paramMap: ParamMap): void {    
+    this.productId = parseInt(paramMap.get('productId'));                                
+    super.onChangeQueryParameters(paramMap); 
+    this.loadProduct();
+
+  }
+
+  public loadProduct(){    
+      this.productGateway.getProduct(this.productId).subscribe(data=>{
+          this.currentProduct = data;
+          this.source.load(data.services);
+      });       
+  }
+  onNgOnInit(): void {
+    
+  }
+  
+  
+  onServiceRowSelect(event){
+      const portfolioId = event.data.id;
+      let queryParams: Params = { portfolioId: portfolioId, productId: null };      
+      this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  } 
+
+  onReportClick(event){
+    
+  }
+  
+  ngAfterViewInit() {    
+    
   }
 }

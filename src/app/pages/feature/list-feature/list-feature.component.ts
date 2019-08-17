@@ -41,7 +41,15 @@ export class ListFeatureComponent implements OnInit {
       name: {
         title: 'Name',
         type: 'string',
-        filter: true
+        filter: true,        
+        editable: false
+      },      
+      indicatorsCount: {
+        title: 'SLIs',
+        type: 'numver',
+        filter: true,
+        width: '3em',
+        editable: false
       },      
     },
   };

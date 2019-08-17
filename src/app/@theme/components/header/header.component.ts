@@ -100,10 +100,11 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
   }
-  onNavigation(){
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
-    const qcustomerId = parseInt(snapshot.get('customerId'));         
-    const qproductId = parseInt(snapshot.get('productId'));                
+  onNavigation(qcustomerId, qproductId){    
+    if (this.currentProduct && this.currentProduct === qproductId){
+        return;
+    }
+
     if(!qcustomerId) {
       this.onFirstLoadWithOutData();
     }
@@ -114,14 +115,11 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       this.onCustomer(qcustomerId);
     }    
   }
-
-  onChangeRoute(){
-    this.refresh = new Date().getTime();
-    this.onNavigateRoute();
-  }
-  onNavigateRoute(){
+  
+  onControlChangeRouter(){
     let target = [this.router.url.split('?')[0]];
     let queryParams: Params = { 
+      uheader: 1,
       customerId: this.currentCustomer, 
       productId: this.currentProduct,
       start: this.startDate.toISOString(), 
@@ -129,27 +127,38 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     };    
     this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                
   }
-
+  currentState: string; 
   ngAfterViewInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                                    
-      if (this.refresh !== parseInt(paramMap.get("refresh"))){        
-        this.onNavigateRoute();
-      }      
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {         
+      //evento from control
+      const tmp = parseInt(paramMap.get("uheader"));      
+      if (!tmp){        
+        const customerId = parseInt(paramMap.get("customerId"));
+        const productId = parseInt(paramMap.get("productId"))
+        this.onNavigation(customerId, productId);
+      }            
     });    
-  }
-  ngOnInit() {                 
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
-    this.endDate = new Date();
-    this.startDate = new Date();
-    this.startDate.setDate(this.startDate.getDate() - 365);       
-    
-    this.onNavigation();
+  }  
 
+  ngOnInit() {      
+    this.currentState = this.router.url.split('?')[0];           
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
+
+    this.startDate = new Date(snapshot.get("start"));
+    this.endDate = new Date(snapshot.get("end"));
+    const customerId = parseInt(snapshot.get("customerId"));
+    const productId = parseInt(snapshot.get("productId"))
+    if (!this.startDate){
+      this.endDate = new Date();
+    }
+    if (!this.endDate){
+      this.startDate = new Date();
+      this.startDate.setDate(this.startDate.getDate() - 365);           
+    }    
+    this.onNavigation(customerId, productId);
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
-
-
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -194,13 +203,13 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.currentProduct = null; 
     this.productGateway.getProducts(customer).subscribe(data=>{
       this.products=data;
-      this.onChangeRoute();      
+      this.onControlChangeRouter();      
     });
     
   }
 
   changeProduct(product: any) {               
-    this.onChangeRoute();      
+    this.onControlChangeRouter();      
   }
 
   toggleSidebar(): boolean {
@@ -214,9 +223,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     return false;
   }
   onStartChange(start: Date){    
-    this.onChangeRoute();      
+    this.onControlChangeRouter();      
   }
   onEndChange(end: Date){           
-    this.onChangeRoute();      
+    this.onControlChangeRouter();      
   }
 }

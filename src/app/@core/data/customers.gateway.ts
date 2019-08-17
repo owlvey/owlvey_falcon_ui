@@ -6,7 +6,7 @@ import { environment } from './../../../environments/environment';
 @Injectable()
 export class CustomersGateway {
   baseUrl: string;
-  constructor(private http: HttpClient) {
+  constructor(protected http: HttpClient) {
     this.baseUrl = environment.api;
   }
 

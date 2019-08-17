@@ -1,12 +1,27 @@
-<nb-card>
-    <nb-card-header>
-      Products
-    </nb-card-header>  
-
-    <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source">
-        </ng2-smart-table>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>Actions</nb-card-header>
+      <nb-card-body>          
+        <form class="form-inline">            
+          
+        </form>
       </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        Customer: {{currentCustomer.name}}
+      </nb-card-header>    
+      <nb-card-body>
+          <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onProductRowSelect($event)">
+          </ng2-smart-table>
+        </nb-card-body>  
+    </nb-card>
+  </div>
+</div>
 
-</nb-card>
   
