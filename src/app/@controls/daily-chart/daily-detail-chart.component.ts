@@ -33,6 +33,8 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   onChartInit(ec) {
     this.echartsIntance = ec;
   }  
+  @Input()
+  showAll: boolean = false;
 
   @Input()
   set dataItems(data: Array<any>){    
@@ -72,9 +74,14 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
     });    
     
     let legends_selected = {};
-    legends.forEach(c=>{
-      if (c !== "Availability"){
-        legends_selected[c]= false;
+    legends.forEach(c=>{      
+      if (this.showAll){
+        legends_selected[c]= true;
+      }      
+      else{
+        if (c !== "Availability"){
+          legends_selected[c]= false;
+        }
       }
     });
 

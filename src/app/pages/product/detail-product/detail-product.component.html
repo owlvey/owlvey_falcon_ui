@@ -33,7 +33,11 @@
   </nb-card-header>  
 
   <nb-card-body>            
-    <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
+    <div>
+        <nb-checkbox [(ngModel)]="showAll" status="success">Select All</nb-checkbox>
+    </div>
+        
+    <ngx-daily-detail-chart [showAll]="showAll" [dataItems]="series" ></ngx-daily-detail-chart>          
   </nb-card-body>
 
 </nb-card>

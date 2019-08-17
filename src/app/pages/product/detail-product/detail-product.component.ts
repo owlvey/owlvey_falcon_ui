@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, Input } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
@@ -26,6 +26,19 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   options: any = {};
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
+
+  private _showAll: boolean = true;
+
+  @Input()
+  set showAll(event){
+    this._showAll = !this._showAll;
+    this.getDaily();    
+  }
+  get showAll(){
+    return this._showAll;
+  }
+
+
 
   settings = {    
     actions:{

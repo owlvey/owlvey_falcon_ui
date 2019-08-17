@@ -142,19 +142,21 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {      
     this.currentState = this.router.url.split('?')[0];           
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;            
-
-    this.startDate = new Date(snapshot.get("start"));
-    this.endDate = new Date(snapshot.get("end"));
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;                
+    const qstart = snapshot.get("start");
+    const qend = snapshot.get("end");
     const customerId = parseInt(snapshot.get("customerId"));
     const productId = parseInt(snapshot.get("productId"))
-    if (!this.startDate){
-      this.endDate = new Date();
-    }
-    if (!this.endDate){
+    if (!qstart){
       this.startDate = new Date();
       this.startDate.setDate(this.startDate.getDate() - 365);           
-    }    
+      this.endDate = new Date();
+    }
+    else{
+      this.startDate = new Date(qstart);
+      this.endDate = new Date(qend);
+    }
+    
     this.onNavigation(customerId, productId);
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))

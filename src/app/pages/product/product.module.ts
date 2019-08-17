@@ -27,6 +27,6 @@ import {
   declarations: [ListProductComponent, DetailProductComponent],
   imports: [FormsModule, CommonModule, ProductRoutingModule, Ng2SmartTableModule, 
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule]
+    NbCardModule, ControlsModule, NbCheckboxModule]
 })
 export class ProductModule { }
