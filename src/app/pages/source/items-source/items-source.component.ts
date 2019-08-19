@@ -68,6 +68,12 @@ export class ItemsSourceComponent implements OnInit {
         type: 'number',
         filter: true
       },      
+      availability: {
+        title: 'Availability',
+        width: '3rem',
+        type: 'number',
+        filter: true
+      },      
       createdOn: {
         title: 'Created',        
         type: 'date',

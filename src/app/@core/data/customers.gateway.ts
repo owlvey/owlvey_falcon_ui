@@ -18,6 +18,10 @@ export class CustomersGateway {
     return this.http.get(this.baseUrl + `customers/${customerId}`);
   }
 
+  getCustomerWithAvailability(customerId: number, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `customers/${customerId}?end=${end.toISOString()}`);
+  }
+
   createCustomer(model: any) {
     return this.http.post(this.baseUrl + 'customers', model);
   }
@@ -28,5 +32,8 @@ export class CustomersGateway {
 
   deleteCustomer(id: string) {
     return this.http.delete(this.baseUrl + 'customers/' + id);
+  }
+  getDaily(customerId: number, start: Date, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `customers/${customerId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 }

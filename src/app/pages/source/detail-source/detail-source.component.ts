@@ -52,8 +52,8 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     });          
   }  
 
-  getSource(){
-    this.sourcesGateway.getSource(this.sourceId).subscribe(data=>{
+  getSource(){    
+    this.sourcesGateway.getSourceWithAvailability(this.sourceId, this.endDate).subscribe(data=>{
       this.currentSource = data;            
     });    
   }
@@ -70,10 +70,8 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     let queryParams: Params = { };
     this.router.navigate(['/pages/sources/items'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }  
-  onBackClick($event){
-    let queryParams: Params = { sourceId: null };
-    this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-
+  onBackClick($event){    
+    this.location.back();
   }
   ngAfterViewInit() {    
     

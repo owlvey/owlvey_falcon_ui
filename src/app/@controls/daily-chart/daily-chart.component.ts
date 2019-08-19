@@ -44,7 +44,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
                 }, {
                     yAxis: 60
                 }, {
-                    yAxis: 80
+                    yAxis: 90
                 }]
           },
         } 
@@ -71,7 +71,20 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
             type: 'time',            
             splitLine: {
               show: false
-            }           
+            },
+            axisTick: {
+              alignWithLabel: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: echarts.axisLineColor,
+              },
+            },
+            axisLabel: {
+              textStyle: {
+                color: echarts.textColor,
+              },
+            },
           },
         ],
         yAxis: [
@@ -99,13 +112,16 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         visualMap: {
           top: 1,
           right: 1,
+          textStyle:{
+            color: echarts.textColor
+          },
           pieces: [{
-              gt: 80,
+              gt: 90,
               lte: 100,
               color: '#096'
           }, {
               gt: 60,
-              lte: 80,
+              lte: 90,
               color: '#ffde33'
           }, {
               gt: 40,

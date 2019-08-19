@@ -116,7 +116,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }    
   }
   
-  onControlChangeRouter(){
+  onControlChangeRouter(){    
     let target = [this.router.url.split('?')[0]];
     let queryParams: Params = { 
       uheader: 1,
@@ -127,7 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     };    
     this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                
   }
-  currentState: string; 
+  
   ngAfterViewInit(): void {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {         
       //evento from control
@@ -140,24 +140,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     });    
   }  
 
-  ngOnInit() {      
-    this.currentState = this.router.url.split('?')[0];           
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;                
-    const qstart = snapshot.get("start");
-    const qend = snapshot.get("end");
-    const customerId = parseInt(snapshot.get("customerId"));
-    const productId = parseInt(snapshot.get("productId"))
-    if (!qstart){
-      this.startDate = new Date();
-      this.startDate.setDate(this.startDate.getDate() - 365);           
-      this.endDate = new Date();
-    }
-    else{
-      this.startDate = new Date(qstart);
-      this.endDate = new Date(qend);
-    }
-    
-    this.onNavigation(customerId, productId);
+  ngOnInit() {          
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
@@ -176,6 +159,23 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+    
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;                
+    const qstart = snapshot.get("start");
+    const qend = snapshot.get("end");
+    const customerId = parseInt(snapshot.get("customerId"));
+    const productId = parseInt(snapshot.get("productId"))
+    this.onNavigation(customerId, productId);
+    if (!qstart){
+      this.startDate = new Date();
+      this.startDate.setDate(this.startDate.getDate() - 365);           
+      this.endDate = new Date();      
+    }
+    else{
+      this.startDate = new Date(qstart);
+      this.endDate = new Date(qend);
+    }    
+    this.onControlChangeRouter();              
   } 
 /*
   getProducts() {
@@ -224,10 +224,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.menuService.navigateHome();
     return false;
   }
-  onStartChange(start: Date){    
+  onStartChange(start: Date){        
     this.onControlChangeRouter();      
   }
-  onEndChange(end: Date){           
+  onEndChange(end: Date){               
     this.onControlChangeRouter();      
   }
 }

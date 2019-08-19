@@ -42,6 +42,12 @@ export class ListSourceComponent implements OnInit {
         type: 'string',
         filter: true
       },      
+      tags: {
+        title: 'Tags',
+        type: 'string',
+        filter: true,
+        width: '8em',
+      },      
     },
   };
 

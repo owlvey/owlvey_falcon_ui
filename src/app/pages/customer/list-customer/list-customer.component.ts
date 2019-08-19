@@ -26,27 +26,25 @@ export class ListCustomerComponent implements OnInit {
       id: {
         title: 'Id',
         type: 'number',
-        filter: true
+        filter: true,
+        width: '3em',
       },
       name: {
         title: 'Name',
         type: 'string',
         filter: true
       },
+      productsCount: {
+        title: 'Name',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },
     },
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
     },
   };
 
@@ -95,8 +93,12 @@ export class ListCustomerComponent implements OnInit {
     let queryParams: Params = { };
     this.router.navigate(['/pages/customers/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onEdit(event) {
-    
+  onEdit(event) {    
     this.router.navigate(['/pages/customers/' + event.data.id]);
+  }
+  onCustomerRowSelect(event){
+    const customerId = event.data.id;
+    let queryParams: Params = { customerId: customerId, uheader: null };
+    this.router.navigate(['/pages/customers/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 }

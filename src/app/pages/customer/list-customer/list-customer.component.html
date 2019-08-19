@@ -1,12 +1,25 @@
-<nb-card>
-  <nb-card-header>
-    Customers    
-    <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary float-right"> Create </button>
-  </nb-card-header>
-
-  <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (edit)="onEdit($event)" (deleteConfirm)="onDeleteConfirm($event)">
-    </ng2-smart-table>
-  </nb-card-body>
-
-</nb-card>
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>Actions</nb-card-header>
+        <nb-card-body>                    
+            <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary float-right">
+                Create 
+            </button>          
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+          <nb-card>
+              <nb-card-header>
+                  Customers      
+              </nb-card-header>            
+              <nb-card-body>
+                <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onCustomerRowSelect($event)">
+                </ng2-smart-table>
+              </nb-card-body>            
+            </nb-card>
+      </div>
+  </div>

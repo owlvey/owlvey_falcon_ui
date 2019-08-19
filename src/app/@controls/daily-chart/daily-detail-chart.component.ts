@@ -37,17 +37,31 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   showAll: boolean = false;
 
   @Input()
+  target: string = "availability";
+
+  private getValue(item){
+    if (this.target == "availability"){
+      return item["oAva"];
+    }
+    else if (this.target == "average"){
+      return item["oAve"];
+    }
+    throw "No valid option";
+  }
+
+  @Input()
   set dataItems(data: Array<any>){    
     let legends = [];
     let series = [];    
-    let minValue = 50;
-    data.forEach(serieData=>{      
-        const line = serieData.items.map(
+    let minValue = 50;    
+    data.forEach(serieData=>{              
+        const line = serieData.items.map(          
           c =>{ 
-            if(c.oAva * 100 < minValue) {              
-              minValue = c.oAval;
+            const value = this.getValue(c) * 100;
+            if(value < minValue) {              
+              minValue = c[this.target];
             }
-            return { name: c.date, value:[this.formatDate(c.date), c.oAva * 100] };
+            return { name: c.date, value:[this.formatDate(c.date), value] };
           }
         );
         legends.push(serieData.name);
@@ -64,9 +78,9 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
                  }, {
                      yAxis: 40
                  }, {
-                     yAxis: 60
+                     yAxis: 80
                  }, {
-                     yAxis: 90
+                     yAxis: 95
                  }]
            },
          };
@@ -153,16 +167,16 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
             color: echarts.textColor
           },
           pieces: [{
-              gt: 80,
+              gt: 95,
               lte: 100,
               color: '#096'
           }, {
-              gt: 60,
-              lte: 80,
+              gt: 80,
+              lte: 95,
               color: '#ffde33'
           }, {
               gt: 40,
-              lte: 60,
+              lte: 80,
               color: '#ff9933'
           }, {
               gt: 0,
