@@ -16,6 +16,9 @@ export class PortfoliosGateway{
     getPortfolio(portflioId: number): Observable<any>{
         return this.http.get(this.baseUrl + `services/${portflioId}`);
     }
+    getPortfolioWithAvailabilities(portflioId: number, end : Date): Observable<any>{
+        return this.http.get(this.baseUrl + `services/${portflioId}?end=${end.toISOString()}`);
+    }
     getDaily(portfolioId: number, start: Date, end: Date): Observable<any> {
         return this.http.get(this.baseUrl + `services/${portfolioId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
     }

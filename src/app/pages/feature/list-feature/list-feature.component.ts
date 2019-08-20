@@ -43,6 +43,13 @@ export class ListFeatureComponent implements OnInit {
         type: 'string',
         filter: true,        
         editable: false
+      },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
       },      
       indicatorsCount: {
         title: 'SLIs',
@@ -54,6 +61,8 @@ export class ListFeatureComponent implements OnInit {
     },
   };
 
+  startDate: Date = new Date();
+  endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -69,6 +78,8 @@ export class ListFeatureComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
       this.customerId = parseInt(paramMap.get('customerId'));      
+      this.startDate = new Date(paramMap.get("start"));           
+      this.endDate = new Date(paramMap.get("end"));                 
       this.getFeature();
     });          
   }
@@ -77,7 +88,7 @@ export class ListFeatureComponent implements OnInit {
     this.productGateway.getProduct(this.productId).subscribe(data=>{
       this.currentProduct = data;
     });
-    this.featureGateway.getFeatures(this.productId).subscribe(data=>{
+    this.featureGateway.getFeaturesWithAvailabilities(this.productId, this.endDate).subscribe(data=>{
       this.source.load(data);
     });    
   }

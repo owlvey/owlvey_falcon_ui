@@ -43,16 +43,18 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         filter: true,
         width: '3em',
         editable: false
-      },
-      feature: {
-        title: 'Feature',
-        type: 'string',
-        filter: true
       },      
       source: {
         title: 'Source',
         type: 'string',
         filter: true
+      },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
       },            
     },
   };
@@ -85,12 +87,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   }  
 
   getSource(){
-    this.featuresGateway.getFeature(this.featureId).subscribe(feature=>{
-      this.currentSource = feature;
-      const indicators = feature.indicators.map(c=>{        
-        return c;
-      });
-      this.source.load(indicators);
+    this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.endDate).subscribe(feature=>{
+      this.currentSource = feature;      
+      this.source.load(feature.indicators);
     });        
   }
 

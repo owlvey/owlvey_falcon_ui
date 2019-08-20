@@ -10,11 +10,17 @@ export class FeaturesGateway{
         this.baseUrl = environment.api;
       }
 
-    getFeatures(customerId: number): Observable<any>{
-        return this.http.get(this.baseUrl + `features?productId=${customerId}`);
+    getFeatures(productId: number): Observable<any>{
+        return this.http.get(this.baseUrl + `features?productId=${productId}`);
+    }
+    getFeaturesWithAvailabilities(productId: number, end: Date): Observable<any>{
+        return this.http.get(this.baseUrl + `features?productId=${productId}&end=${end.toISOString()}`);
     }
     getFeature(featureId: number): Observable<any>{
         return this.http.get(this.baseUrl + `features/${featureId}`);
+    }
+    getFeatureWithAvailabilities(featureId: number, end: Date): Observable<any>{
+        return this.http.get(this.baseUrl + `features/${featureId}?&end=${end.toISOString()}`);
     }
     getDaily(featureId: number, start: Date, end: Date): Observable<any> {
         return this.http.get(this.baseUrl + `features/${featureId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);

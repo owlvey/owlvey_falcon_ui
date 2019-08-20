@@ -53,6 +53,13 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         type: 'string',
         filter: true,        
         editable: false
+      },   
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
       },          
     },
   };
@@ -82,7 +89,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   }  
 
   getPortfolio(){    
-    this.portfolioGateway.getPortfolio(this.portfolioId).subscribe(data=>{
+    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.endDate).subscribe(data=>{
       this.currentSource = data;            
       this.source.load(this.currentSource.features);      
     });    
