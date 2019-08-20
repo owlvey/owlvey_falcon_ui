@@ -14,6 +14,10 @@ export class SourcesGateway{
         return this.http.get(this.baseUrl + `sources?productId=${productId}`);
     }
 
+    getSourcesWithAvailability(productId: number, end: Date): Observable<any>{
+        return this.http.get(this.baseUrl + `sources?productId=${productId}&&end=${end.toISOString()}`);
+    }
+
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }

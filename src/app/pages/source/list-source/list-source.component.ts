@@ -36,11 +36,18 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '3em',
         editable: false
-      },
+      },      
       name: {
         title: 'Name',
         type: 'string',
         filter: true
+      },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
       },      
       tags: {
         title: 'Tags',
@@ -50,7 +57,8 @@ export class ListSourceComponent implements OnInit {
       },      
     },
   };
-
+  startDate: Date;
+  endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -66,6 +74,8 @@ export class ListSourceComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
       this.customerId = parseInt(paramMap.get('customerId'));      
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));      
       this.getProduct(this.productId);
     });          
   }
@@ -73,7 +83,7 @@ export class ListSourceComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.sourcesGateway.getSources(productId).subscribe(sources=>{
+      this.sourcesGateway.getSourcesWithAvailability(productId, this.endDate).subscribe(sources=>{
         this.source.load(sources);
       });
     });     
