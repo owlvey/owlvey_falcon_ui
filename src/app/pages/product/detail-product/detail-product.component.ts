@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, Input, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
@@ -10,75 +10,34 @@ import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+import { VisEdges, VisNetworkData, VisNetworkOptions,  VisNetworkService,  VisNode,  VisNodes, VisNodeOptions } from 'ngx-vis'
+import { NbPasswordAuthStrategyOptions } from '@nebular/auth';
 
-
+class ExampleNetworkData implements VisNetworkData {
+  public nodes: VisNodes;
+  public edges: VisEdges;
+}
 
 @Component({
   selector: 'app-detail-product',
   templateUrl: './detail-product.component.html',
   styleUrls: ['./detail-product.component.scss']
 })
-export class DetailProductComponent  extends CustomerBaseComponent  implements OnInit, AfterViewInit {
+export class DetailProductComponent  extends CustomerBaseComponent  implements OnInit, AfterViewInit, OnDestroy  {
   public currentProduct : any = {};
   public productId : number;     
   sources: any[];  
   currentSource : any= {};            
-  options: any = {};
-  series: Array<any> = [];  
+  
   source: LocalDataSource = new LocalDataSource();
+  graphData = {};
+  
 
-  private _showAll: boolean = true;
-
-  @Input()
-  set showAll(event){
-    this._showAll = !this._showAll;
-    this.getDaily();    
-  }
-  get showAll(){
-    return this._showAll;
-  }
+  public visNetwork: string = 'networkId1';
+  public visNetworkData: ExampleNetworkData;
+  public visNetworkOptions: VisNetworkOptions;
 
 
-
-  settings = {    
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 20
-    },
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },          
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: true,        
-        editable: false
-      },          
-      slo: {
-        title: 'SLO',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },          
-      featuresCount: {
-        title: 'Features',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },    
-    },
-  };
   
   constructor(
     protected location: Location,
@@ -89,6 +48,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     protected portfolioGateway: PortfoliosGateway,    
     protected theme: NbThemeService,
     protected router: Router, 
+    protected visNetworkService: VisNetworkService,
     protected activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, theme, router, activatedRoute);
     }        
@@ -96,25 +56,57 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   onChangeQueryParameters(paramMap: ParamMap): void {    
     this.productId = parseInt(paramMap.get('productId'));                                
     super.onChangeQueryParameters(paramMap); 
-    this.loadProduct();
-    this.getDaily();
+    this.loadProduct();    
   }
 
   public loadProduct(){    
       this.productGateway.getProduct(this.productId).subscribe(data=>{
-          this.currentProduct = data;
-          this.source.load(data.services);
+          this.currentProduct = data;          
       });       
   }
 
   onNgOnInit(): void {
+    const nodes = new VisNodes([
+      { id: '1', label: 'Node 1', group: '0', shape: 'hexagon'},
+      { id: '2', label: 'Node 2', group: '0', shape: 'triangle' },
+      { id: '3', label: 'Node 3', group: '1', shape: 'diamond' },
+      { id: '4', label: 'Node 4', group: '1'},
+      { id: '5', label: 'Node 5', group: '2', title: 'Title of Node 5' }]);
+
+    const edges = new VisEdges([
+        { from: '1', to: '3', color: {color:'red'} },
+        { from: '1', to: '2', color:{inherit:'from'} },
+        { from: '2', to: '4' },
+        { from: '2', to: '5' }]);
+
+    this.visNetworkData = {
+        nodes,
+        edges,
+    };
     
+    this.visNetworkOptions = {      
+        layout: {
+            hierarchical: {
+                direction: "LR"
+            }
+        },        
+        nodes: {                                     
+          shape: 'dot',          
+          size: 30,
+          font: {
+              size: 32,
+              color: '#ffffff'
+          },
+          borderWidth: 2,
+          shadow:true,          
+        },
+        edges: {
+            width: 2,
+            shadow:true
+        }
+    };    
   }
-  getDaily(){
-    this.productGateway.getDaily(this.productId, this.startDate, this.endDate).subscribe(data=>{
-      this.series = data.series;
-    });
-  }
+
   
   onServiceRowSelect(event){
       const portfolioId = event.data.id;
@@ -123,10 +115,26 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   } 
 
   onReportClick(event){
-    this.getDaily();
+    
   }
   
   ngAfterViewInit() {    
     
+  }
+
+  public networkInitialized(): void {
+    // now we can use the service to register on events
+    this.visNetworkService.on(this.visNetwork, 'click');
+
+    // open your console/dev tools to see the click params
+    this.visNetworkService.click
+        .subscribe((eventData: any[]) => {
+            if (eventData[0] === this.visNetwork) {
+              console.log(eventData[1]);
+            }
+        });
+  }
+  public ngOnDestroy(): void {
+    this.visNetworkService.off(this.visNetwork, 'click');
   }
 }

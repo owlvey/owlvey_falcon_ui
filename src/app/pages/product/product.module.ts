@@ -9,7 +9,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
 import { FormsModule } from '@angular/forms';
 import { ControlsModule  } from "./../../@controls/controls.module";
-
+import { VisModule } from 'ngx-vis'
 import {    
   NbActionsModule,
   NbButtonModule,
@@ -27,6 +27,6 @@ import {
   declarations: [ListProductComponent, DetailProductComponent],
   imports: [FormsModule, CommonModule, ProductRoutingModule, Ng2SmartTableModule, 
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule, NbCheckboxModule]
+    NbCardModule, ControlsModule, NbCheckboxModule, VisModule]
 })
 export class ProductModule { }

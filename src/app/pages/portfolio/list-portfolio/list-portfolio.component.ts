@@ -19,6 +19,8 @@ export class ListPortfolioComponent implements OnInit {
   currentProduct = {};  
   productId = 0;
   customerId = 0;
+  startDate: Date = new Date();
+  endDate: Date;  
 
   settings = {    
     actions:{
@@ -44,6 +46,27 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      delta: {
+        title: 'Delta',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      deploy: {
+        title: 'Deploy',
+        type: 'string',
+        filter: true,
+        width: '4em',
+        editable: false
+      },
       name: {
         title: 'Name',
         type: 'string',
@@ -59,6 +82,8 @@ export class ListPortfolioComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
+  options: any = {};
+  series: Array<any> = [];  
 
   constructor(
     private location: Location,
@@ -73,19 +98,35 @@ export class ListPortfolioComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
       this.customerId = parseInt(paramMap.get('customerId'));      
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));      
       this.getProduct(this.productId);
+      this.getDaily(); 
     });          
-  }
-
+  }  
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.portfolioGateway.getPortfolios(productId).subscribe(portfolios=>{
+      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.endDate).subscribe(portfolios=>{
+        let c = portfolios.map(c=> {
+          c.delta = Math.round((parseFloat(c.availability) - parseFloat(c.slo))  * 1000) / 1000;
+          if (c.delta >= 0){
+            c.deploy = "allow";
+          }
+          else{
+            c.deploy = "forbiden";
+          }
+          return c;
+        });
         this.source.load(portfolios);
       });
     });     
   }
-
+  getDaily(){
+    this.productGateway.getDaily(this.productId, this.startDate, this.endDate).subscribe(data=>{
+      this.series = data.series;
+    });
+  }
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };

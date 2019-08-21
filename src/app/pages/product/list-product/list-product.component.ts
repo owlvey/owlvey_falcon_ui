@@ -47,8 +47,10 @@ export class ListProductComponent implements OnInit {
       },      
     },
   };
-
-  source: LocalDataSource = new LocalDataSource();
+  public startDate : Date; 
+  public endDate: Date;
+  public productId: number;
+  source: LocalDataSource = new LocalDataSource();  
 
   constructor(
     private location: Location,
@@ -59,11 +61,15 @@ export class ListProductComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { 
     }        
   ngOnInit() {    
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                  
-      this.customerId = parseInt(paramMap.get('customerId'));            
-      this.getProduct();           
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                                  
+      this.customerId = parseInt(paramMap.get('customerId'));  
+      this.productId = parseInt(paramMap.get('productId'));  
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));                  
+      this.getProduct();                 
     });     
   }
+
   getProduct(){    
     this.customerGateway.getCustomer(this.customerId).subscribe(data=>{
       this.currentCustomer = data;

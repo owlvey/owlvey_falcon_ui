@@ -14,33 +14,13 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-      <nb-card>
-        <nb-card-header>            
-            <h5>Services</h5>
-        </nb-card-header>
-        <nb-card-body>                        
-            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onServiceRowSelect($event)">
-            </ng2-smart-table>
-        </nb-card-body>
-      </nb-card>
+        <div class="network-canvas"
+        [visNetwork]="visNetwork"
+        [visNetworkData]="visNetworkData"
+        [visNetworkOptions]="visNetworkOptions"
+        (initialized)="networkInitialized()"></div>
     </div>
 </div>
-
-
-<nb-card>
-  <nb-card-header>
-    Availability Report
-  </nb-card-header>  
-
-  <nb-card-body>            
-    <div>
-        <nb-checkbox [(ngModel)]="showAll" status="success">Select All</nb-checkbox>
-    </div>
-        
-    <ngx-daily-detail-chart [showAll]="showAll" [dataItems]="series" ></ngx-daily-detail-chart>          
-  </nb-card-body>
-
-</nb-card>
 
 
 
