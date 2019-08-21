@@ -30,7 +30,7 @@ export class CustomersGateway {
     return this.http.put(this.baseUrl + 'customers/' + id, model);
   }
 
-  deleteCustomer(id: string) {
+  deleteCustomer(id: any) {
     return this.http.delete(this.baseUrl + 'customers/' + id);
   }
   getDaily(customerId: number, start: Date, end: Date): Observable<any> {

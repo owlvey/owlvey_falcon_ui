@@ -51,7 +51,8 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
   useHash: false,
-  onSameUrlNavigation: 'reload'
+  onSameUrlNavigation: 'reload',
+  paramsInheritanceStrategy: 'always'
 };
 
 @NgModule({

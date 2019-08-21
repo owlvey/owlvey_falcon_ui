@@ -35,16 +35,16 @@ export class ListCustomerComponent implements OnInit {
         filter: true
       },
       productsCount: {
-        title: 'Name',
+        title: 'Count',
         type: 'number',
         filter: true,
         width: '3em',
       },
     },
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
+    actions: {
+      add: false,
+      edit: false,
+      delete: false
     },
   };
 
@@ -82,23 +82,32 @@ export class ListCustomerComponent implements OnInit {
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      //event.confirm.resolve();
       this.deleteCustomer(event.data)
     } else {
       event.confirm.reject();
     }
   }
 
-  onCreate(event){    
-    let queryParams: Params = { };
-    this.router.navigate(['/pages/customers/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  onCreate(event) {
+    let queryParams: Params = {};
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/customers/create'], extras);
   }
-  onEdit(event) {    
+  onEdit(event) {
     this.router.navigate(['/pages/customers/' + event.data.id]);
   }
-  onCustomerRowSelect(event){
+  onCustomerRowSelect(event) {
     const customerId = event.data.id;
     let queryParams: Params = { customerId: customerId, uheader: null };
-    this.router.navigate(['/pages/customers/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/customers/detail'], extras);
   }
 }

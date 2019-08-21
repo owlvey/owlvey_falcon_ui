@@ -1,0 +1,22 @@
+<nb-card>
+  <nb-card-header>
+    <h4>Create Customer</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit();" [formGroup]="createForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" formControlName="name" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Avatar</label>
+        <input type="text" name="avatar" formControlName="avatar" class="form-control" />
+      </div>
+      <div class="text-right">
+        <button type="button" nbButton status="info" class="mr-2 btn btn-primary" (click)="goBack()" [disabled]="isLoading">Back</button>
+        <button type="submit" nbButton status="primary" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+

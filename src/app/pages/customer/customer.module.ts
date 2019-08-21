@@ -23,10 +23,11 @@ import {
   NbUserModule,
   NbTreeGridModule
 } from '@nebular/theme';
+import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 
 
 @NgModule({
-  declarations: [DetailCustomerComponent, ListCustomerComponent, CreateCustomerComponent],
+  declarations: [DetailCustomerComponent, ListCustomerComponent, CreateCustomerComponent, EditCustomerComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, CustomerRoutingModule, Ng2SmartTableModule, 
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
     NbCardModule, ControlsModule, NbCheckboxModule]
