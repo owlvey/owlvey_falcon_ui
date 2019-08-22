@@ -15,8 +15,17 @@
 
 ## Getting started
 
-Run the following command in terminal:
+First, run the following command in terminal:
+
+    docker-compose pull
+
+You have to wait while Docker pulls the containers from the Docker Hub: <a target="_blank" href="https://hub.docker.com/r/owlvey/site/">Owlvey</a>
+
+Then, run the following command in terminal:
+
     docker-compose up
+
+Then open your browser to `http://localhost:45000`
 
 ### Backend Integration Bundles
 Easy way to integrate ngx-admin with .NET, Node.js, Java or PHP. [Checkout our Store](https://store.akveo.com/?utm_source=github&utm_medium=ngx_admin_readme) for ready to use Backend Bundles.
