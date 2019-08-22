@@ -19,8 +19,8 @@ export class DetailCustomerComponent implements OnInit {
   sources: any[];
   actionConfirmWord: string;
   startDate: Date = new Date();
-  endDate: Date;  
-  currentCustomer = {};  
+  endDate: Date;
+  currentCustomer: any;  
   customerId = 0;
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();

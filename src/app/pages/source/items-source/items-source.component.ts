@@ -15,8 +15,8 @@ import { FormatService } from '../../../@core/utils/format.service';
 export class ItemsSourceComponent implements OnInit {
 
   isLoading: boolean = false;  
-  actionConfirmWord: string;  
-  currentSource = {};  
+  actionConfirmWord: string;
+  currentSource: any;  
   productId = 0;
   customerId = 0;
   sourceId: number;

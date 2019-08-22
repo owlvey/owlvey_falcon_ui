@@ -14,7 +14,7 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-        Customer: {{currentCustomer.name}}
+        Customer: {{currentCustomer?.name}}
       </nb-card-header>    
       <nb-card-body>
           <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onProductRowSelect($event)">
@@ -25,4 +25,3 @@
 </div>
 
 
-  
