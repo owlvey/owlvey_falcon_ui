@@ -19,11 +19,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Customers',
     icon: 'globe-outline',
-  },
-  {
-    title: 'Squads',
-    icon: 'people-outline',
-  },
+  },  
   {
     title: 'Products',
     icon: 'archive-outline',
@@ -35,6 +31,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Features',
     icon: 'smartphone-outline',
+  },
+  {
+    title: 'Squads',
+    icon: 'people-outline',
   },
   {
     title: 'Sources',

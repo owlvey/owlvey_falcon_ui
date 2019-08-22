@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, Input, OnDestroy, SystemJsNgModuleLoader } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
@@ -68,8 +68,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   colors: any;
   onNgOnInit(): void {    
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {      
-      this.colors = config.variables;      
-      debugger;
+      this.colors = config.variables;            
       const echarts: any = config.variables.echarts;
       this.buildGraph();
     });
@@ -150,12 +149,12 @@ layoutBg: "#151a30"
             avoidOverlap: 0
           },
           forceAtlas2Based: {
-            gravitationalConstant: -40,
+            gravitationalConstant: -90,
             centralGravity: 0.004,
-            springConstant: 0.08,
+            springConstant: 0.18,
             springLength: 100,
             damping: 0.4,
-            avoidOverlap: 1
+            avoidOverlap: 1.5
           },
           repulsion: {
             centralGravity: 0.2,
@@ -171,18 +170,18 @@ layoutBg: "#151a30"
             nodeDistance: 120,
             damping: 0.09
           },
-          maxVelocity: 50,
+          maxVelocity: 146,
           minVelocity: 0.1,
           solver: 'forceAtlas2Based',
+          timestep: 0.35,
           stabilization: {
             enabled: true,
             iterations: 1000,
-            updateInterval: 100,
+            updateInterval: 25,
             onlyDynamicEdges: false,
-            fit: true
-          },
-          timestep: 0.5,
-          adaptiveTimestep: true
+            fit: false
+          },          
+          adaptiveTimestep: false
         },
         layout: {
           improvedLayout:true,
@@ -227,33 +226,7 @@ layoutBg: "#151a30"
         }
       };
     });
-    /*
-    this.portfolioGateway.getPortfolios(this.productId).subscribe(data=>{
 
-      let nodeData = data.map(c=>{
-        return { id: c.id, label: c.name, group: '1', shape: 'diamond' };
-      });
-
-      const nodesA = new VisNodes([
-        { id: '1', label: 'Node 1', group: '0', shape: 'hexagon'},
-        { id: '2', label: 'Node 2', group: '0', shape: 'triangle' },
-        { id: '3', label: 'Node 3', group: '1', shape: 'diamond' },
-        { id: '4', label: 'Node 4', group: '1'},
-        { id: '5', label: 'Node 5', group: '2', title: 'Title of Node 5' }]);  
-
-   
-      
-      const edgesa = new VisEdges([
-          { from: '1', to: '3', color: {color:'red'} },
-          { from: '1', to: '2', color:{inherit:'from'} },
-          { from: '2', to: '4' },
-          { from: '2', to: '5' }]);
-        
-      
-      
-    });
-    
-    */
     
   }
   
@@ -276,7 +249,15 @@ layoutBg: "#151a30"
     // now we can use the service to register on events
     this.visNetworkService.on(this.visNetwork, 'click');
 
+    // stop adjustments
+    setTimeout(() => {
+      this.visNetworkService.setOptions(this.visNetwork, { physics: false });
+    }, 4000);
+
     // open your console/dev tools to see the click params
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{      
+      
+    });
     this.visNetworkService.click
         .subscribe((eventData: any[]) => {
             if (eventData[0] === this.visNetwork) {

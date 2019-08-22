@@ -18,6 +18,12 @@ export class SourcesGateway{
         return this.http.get(this.baseUrl + `sources?productId=${productId}&&end=${end.toISOString()}`);
     }
 
+    postSource(productId: number, name: String): Observable<any> {
+        return this.http.post(this.baseUrl + `sources`, { productId:productId , name: name});        
+    }
+    putSource(sourceId: number, model: any): Observable<any> {
+        return this.http.put(this.baseUrl + `sources/${sourceId}`, model);        
+    }
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }

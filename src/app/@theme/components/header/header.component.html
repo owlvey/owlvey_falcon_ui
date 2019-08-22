@@ -18,7 +18,6 @@
   </nb-select>
   <label for="txtstartdate" class="label header-label border-0">Start Date</label>
   <input id="txtstartdate" nbInput placeholder="Start Date" class="header-input form-control size-small"
-         readonly="readonly"
          [nbDatepicker]="startpicker"
          [(ngModel)]="startDate"
          [ngModelOptions]="{standalone: true}"
@@ -27,7 +26,6 @@
 
   <label for="txtenddate" class="label header-label border-0">End Date</label>
   <input id="txtenddate" nbInput placeholder="End Date" class="header-input form-control size-small"
-         readonly="readonly"
          [nbDatepicker]="endpicker"
          [(ngModel)]="endDate"
          [ngModelOptions]="{standalone: true}"
