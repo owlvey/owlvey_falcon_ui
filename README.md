@@ -19,7 +19,7 @@ First, run the following command in terminal:
 
     docker-compose pull
 
-You have to wait while Docker pulls the containers from the Docker Hub: <a target="_blank" href="https://hub.docker.com/r/owlvey/site/">Owlvey</a>
+You have to wait while Docker pulls the containers from the Docker Hub: <a target="_blank" href="https://hub.docker.com/u/owlvey/">Owlvey</a>
 
 Then, run the following command in terminal:
 
