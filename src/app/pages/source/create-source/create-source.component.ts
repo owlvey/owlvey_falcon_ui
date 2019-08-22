@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-create-Source',
-  templateUrl: './create-Source.component.html',
-  styleUrls: ['./create-Source.component.scss']
+  selector: 'app-create-source',
+  templateUrl: './create-source.component.html',
+  styleUrls: ['./create-source.component.scss']
 })
 export class CreateSourceComponent implements OnInit {
 

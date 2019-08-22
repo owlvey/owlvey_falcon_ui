@@ -9,6 +9,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SourceModule } from './source/source.module';
 import { CustomerModule} from './customer/customer.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
+import { SquadModule } from './squad/squad.module';
 
 import {
   NbActionsModule,
@@ -34,6 +35,7 @@ import {
     SourceModule,
     CustomerModule,
     PortfolioModule,
+    SquadModule
   ],
   declarations: [
     PagesComponent,
