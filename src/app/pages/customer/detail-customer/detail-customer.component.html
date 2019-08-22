@@ -3,7 +3,7 @@
     <nb-card class="inline-form-card">
       <nb-card-header>
         <div class="d-flex align-content-center">
-          <h4>{{ currentCustomer.name }}</h4>
+          <h4>{{ currentCustomer?.name }}</h4>
           <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>
           <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
           <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button>

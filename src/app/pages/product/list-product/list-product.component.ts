@@ -18,7 +18,7 @@ export class ListProductComponent implements OnInit {
   sources: any[];
   actionConfirmWord: string;
 
-  currentCustomer = {};  
+  currentCustomer: any;  
   customerId = 0;  
 
   settings = {    

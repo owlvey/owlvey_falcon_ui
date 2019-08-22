@@ -15,7 +15,7 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-              Source: {{ currentSource.name }}
+              Source: {{ currentSource?.name }}
             </nb-card-header>          
             <nb-card-body>
                 <ng2-smart-table [settings]="settings" [source]="source">
@@ -26,4 +26,3 @@
     </div>  
 </div>
 
-  
