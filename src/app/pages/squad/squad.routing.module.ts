@@ -15,10 +15,10 @@ const routes: Routes = [
   { path: 'detail', component: DetailSquadComponent },
   { path: 'edit', component: EditSquadComponent },
   { path: 'create', component: CreateSquadComponent },  
-  { path: 'create/user', component: CreateUserSquadComponent }, 
-  { path: 'detail/user', component: DetailUserSquadComponent },
-  { path: 'create/product', component: CreateProductSquadComponent }, 
-  { path: 'detail/product', component: DetailProductSquadComponent }
+  { path: 'users/create', component: CreateUserSquadComponent }, 
+  { path: 'users/detail', component: DetailUserSquadComponent },
+  { path: 'products/asociate', component: CreateProductSquadComponent }, 
+  { path: 'products/detail', component: DetailProductSquadComponent }
 ];
 
 @NgModule({

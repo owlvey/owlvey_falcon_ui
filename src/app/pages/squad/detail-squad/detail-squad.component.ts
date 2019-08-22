@@ -16,6 +16,7 @@ import { NbToastrService } from '@nebular/theme';
 export class DetailSquadComponent implements OnInit {
 
   isLoading: boolean = false;
+  customerId: any;
   sources: any[];
   actionConfirmWord: string;
   currentSquad: any;  
@@ -67,7 +68,8 @@ export class DetailSquadComponent implements OnInit {
     }        
   ngOnInit() {                  
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                              
-      this.squadId = parseInt(paramMap.get('squadId'));      
+      this.squadId = parseInt(paramMap.get('squadId')); 
+      this.customerId = parseInt(paramMap.get('customerId'));      
       this.getSquad();
     });   
   }  
@@ -86,11 +88,23 @@ export class DetailSquadComponent implements OnInit {
     let queryParams: Params = { squadId: this.squadId, productId: productId, uheader: null };
     this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
+
   onUserRowSelect(event){
     const userId = event.data.id;
-    let queryParams: Params = { squadId: this.squadId, userId: userId, uheader: null };
+    let queryParams: Params = { customerId: this.customerId, squadId: this.squadId, userId: userId, uheader: null };
     this.router.navigate(['/pages/users/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
+
+  onAddMemberClick(event){
+    let queryParams: Params = { squadId: this.squadId, uheader: null };
+    this.router.navigate(['/pages/squads/users/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
+  onAsociateProduct(event){
+    let queryParams: Params = { squadId: this.squadId, uheader: null };
+    this.router.navigate(['/pages/squads/products/asociate'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
   onEditClick(event) {
     let queryParams: Params = {  };
     let extras: any = {

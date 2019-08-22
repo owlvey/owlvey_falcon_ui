@@ -38,6 +38,7 @@ export class EditSquadComponent implements OnInit {
     this.createForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],
+      description: [''],
       avatar: ['', Validators.required]
     });
     this.isLoading = false;
