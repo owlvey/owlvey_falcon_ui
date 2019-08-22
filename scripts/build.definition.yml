@@ -6,7 +6,7 @@ steps:
 - script: npm rebuild node-sass
   displayName: Ensure sass dependency
  
-- script: ng build --prod --configuration=docker
+- script: npm run build:docker
   displayName: ng-build for docker
 
 - task: Docker@2
