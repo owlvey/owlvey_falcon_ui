@@ -18,7 +18,7 @@ export class DetailSquadComponent implements OnInit {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
-  currentSquad = {};  
+  currentSquad: any;  
   squadId = 0;
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
