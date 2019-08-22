@@ -19,6 +19,7 @@ export class ListSquadComponent implements OnInit {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
+  customerId: any;
 
   settings = {
     mode: 'external',
@@ -56,8 +57,9 @@ export class ListSquadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
-      this.getSquads(parseInt(paramMap.get('customerId')));
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {     
+      this.customerId = parseInt(paramMap.get('customerId'));       
+      this.getSquads(this.customerId);
     });    
     
   }

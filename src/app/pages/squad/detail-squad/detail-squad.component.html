@@ -16,7 +16,10 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-        <h5>Users</h5>
+        <h5>Members</h5>
+        <div class="d-flex align-content-center">
+          <button type="button" nbButton status="primary" (click)="onAddMemberClick($event)" class="mr-2"> Add Member </button>
+        </div>
       </nb-card-header>
       <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
@@ -31,6 +34,9 @@
     <nb-card>
       <nb-card-header>
         <h5>Products</h5>
+        <div class="d-flex align-content-center">
+          <button type="button" nbButton status="primary" (click)="onAsociateProduct($event)" class="mr-2"> Asociate Product </button>
+        </div>
       </nb-card-header>
       <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onProductRowSelect($event)">
