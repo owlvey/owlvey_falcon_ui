@@ -58,6 +58,7 @@ import { FeaturesGateway } from './data/features.gateway';
 import { PortfoliosGateway } from './data/portfolios.gateway';
 import { SquadsGateway }  from './data/squads.gateway';
 import { FormatService } from './utils/format.service';
+import { EnvironmentService } from './utils/env.service';
 
 
 const socialLinks = [
@@ -104,7 +105,8 @@ const DATA_SERVICES = [
   { provide: FeaturesGateway, useClass: FeaturesGateway },
   { provide: PortfoliosGateway, useClass: PortfoliosGateway },   
   { provide: SquadsGateway, useClass: SquadsGateway },  
-  { provide: FormatService, useClass: FormatService }    
+  { provide: FormatService, useClass: FormatService },
+  { provide: EnvironmentService, useClass: EnvironmentService }    
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
