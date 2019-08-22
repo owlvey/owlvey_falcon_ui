@@ -12,7 +12,7 @@ export class PortfoliosGateway{
 
     getPortfolios(productId: number): Observable<any>{
         return this.http.get(this.baseUrl + `services?productId=${productId}`);
-    }
+    }    
     getPortfoliosWithAvailabilities(productId: number, end: Date): Observable<any>{
         return this.http.get(this.baseUrl + `services?productId=${productId}&end=${end.toISOString()}`);
     }
