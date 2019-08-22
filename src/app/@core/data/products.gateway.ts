@@ -19,4 +19,7 @@ export class ProductsGateway{
     getDaily(productId: number, start: Date, end: Date): Observable<any> {
         return this.http.get(this.baseUrl + `products/${productId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
+    getGraphView(productId: number, end: Date): Observable<any> {
+        return this.http.get(this.baseUrl + `products/${productId}/reports/graph?end=${end.toISOString()}`);
+    }
 }

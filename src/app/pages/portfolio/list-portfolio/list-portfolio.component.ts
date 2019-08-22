@@ -53,8 +53,8 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
-      delta: {
-        title: 'Delta',
+      budget: {
+        title: 'Budget',
         type: 'number',
         filter: true,
         width: '3em',
@@ -109,8 +109,8 @@ export class ListPortfolioComponent implements OnInit {
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.endDate).subscribe(portfolios=>{
         let c = portfolios.map(c=> {
-          c.delta = Math.round((parseFloat(c.availability) - parseFloat(c.slo))  * 1000) / 1000;
-          if (c.delta >= 0){
+          c.budget = Math.round((parseFloat(c.availability) - parseFloat(c.slo))  * 1000) / 1000;
+          if (c.budget >= 0){
             c.deploy = "allow";
           }
           else{
