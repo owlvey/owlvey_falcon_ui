@@ -5,12 +5,20 @@ import { ListSquadComponent } from './list-squad/list-squad.component';
 import { CreateSquadComponent } from './create-squad/create-squad.component';
 import { DetailSquadComponent } from './detail-squad/detail-squad.component';
 import { EditSquadComponent } from './edit-squad/edit-squad.component';
+import { CreateUserSquadComponent } from './create-user-squad/create-user-squad.component';
+import { DetailUserSquadComponent } from './detail-user-squad/detail-user-squad.component';
+import { CreateProductSquadComponent } from './create-product-squad/create-product-squad.component';
+import { DetailProductSquadComponent } from './detail-product-squad/detail-product-squad.component';
 
 const routes: Routes = [
   { path: '', component: ListSquadComponent},
   { path: 'detail', component: DetailSquadComponent },
   { path: 'edit', component: EditSquadComponent },
-  { path: 'create', component: CreateSquadComponent }  
+  { path: 'create', component: CreateSquadComponent },  
+  { path: 'create/user', component: CreateUserSquadComponent }, 
+  { path: 'detail/user', component: DetailUserSquadComponent },
+  { path: 'create/product', component: CreateProductSquadComponent }, 
+  { path: 'detail/product', component: DetailProductSquadComponent }
 ];
 
 @NgModule({
@@ -22,5 +30,9 @@ export class SquadRoutingModule { }
 export const routedComponents = [
   ListSquadComponent,
   DetailSquadComponent,  
-  CreateSquadComponent
+  CreateSquadComponent,
+  CreateUserSquadComponent,
+  DetailUserSquadComponent,
+  CreateProductSquadComponent,
+  DetailProductSquadComponent
 ];
