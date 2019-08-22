@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { of as observableOf, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EnvironmentService } from '../utils/env.service';
 import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class CustomersGateway {
   baseUrl: string;
-  constructor(protected http: HttpClient) {
-    this.baseUrl = environment.api;
+  constructor(protected http: HttpClient,
+              private envService: EnvironmentService)
+  {
+    this.baseUrl = envService.getUrl(environment.api, environment.type);
   }
 
   getCustomers(): Observable<any> {

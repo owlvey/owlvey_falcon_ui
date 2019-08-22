@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { of as observableOf, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EnvironmentService } from '../utils/env.service';
 import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class PortfoliosGateway{
     baseUrl: string;
-    constructor(private http: HttpClient) {
-        this.baseUrl = environment.api;
+  constructor(private http: HttpClient,
+              private envService: EnvironmentService)
+      {
+        this.baseUrl = envService.getUrl(environment.api, environment.type);
       }
 
     getPortfolios(productId: number): Observable<any>{
