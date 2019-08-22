@@ -15,8 +15,8 @@ import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 export class ListPortfolioComponent implements OnInit {
 
   isLoading: boolean = false;  
-  actionConfirmWord: string;  
-  currentProduct = {};  
+  actionConfirmWord: string;
+  currentProduct: any;  
   productId = 0;
   customerId = 0;
   startDate: Date = new Date();

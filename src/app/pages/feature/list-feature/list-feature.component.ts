@@ -16,8 +16,8 @@ export class ListFeatureComponent implements OnInit {
 
   isLoading: boolean = false;
   sources: any[];
-  actionConfirmWord: string;  
-  currentProduct = {};  
+  actionConfirmWord: string;
+  currentProduct: any;  
   productId = 0;
   customerId = 0;
 

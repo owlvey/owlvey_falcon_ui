@@ -5,6 +5,7 @@ import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
+import { NbToastrService } from '@nebular/theme';
 
 
 @Component({
@@ -18,8 +19,8 @@ export class DetailCustomerComponent implements OnInit {
   sources: any[];
   actionConfirmWord: string;
   startDate: Date = new Date();
-  endDate: Date;  
-  currentCustomer = {};  
+  endDate: Date;
+  currentCustomer: any;  
   customerId = 0;
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
@@ -61,7 +62,8 @@ export class DetailCustomerComponent implements OnInit {
   };
   constructor(
     private location: Location,
-    private customerGateway: CustomersGateway,      
+    private customerGateway: CustomersGateway,
+    private toastr: NbToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {       
     }        
@@ -92,5 +94,29 @@ export class DetailCustomerComponent implements OnInit {
     const productId = event.data.id;
     let queryParams: Params = { customerId: this.customerId, productId: productId, uheader: null };
     this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onEditClick(event) {
+    let queryParams: Params = {  };
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/customers/edit'], extras);     
+  }
+  deleteCustomer() {
+    this.customerGateway.deleteCustomer(this.customerId)
+      .subscribe((data) => {
+        this.location.back();
+      }, (error) => {
+        this.toastr.danger("Something went wrong. Please try again.", "Error");
+      })
+  }
+  onDeleteConfirm(event): void {
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.deleteCustomer();
+    } else {
+      event.confirm.reject();
+    }
   }
 }

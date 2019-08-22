@@ -2,8 +2,9 @@
     <div class="col-md-12">
       <nb-card class="inline-form-card">
         <nb-card-header>Actions</nb-card-header>
-        <nb-card-body>          
-          <form class="form-inline">                        
+        <nb-card-body>
+          <form class="form-inline">
+
           </form>
         </nb-card-body>
       </nb-card>
@@ -13,14 +14,14 @@
       <div class="col-md-12">
           <nb-card>
               <nb-card-header>
-                Information Source: Product {{ currentProduct.name }}
-              </nb-card-header>            
+                Information Source: Product {{ currentProduct?.name }}
+              </nb-card-header>
               <nb-card-body>
                   <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
                   </ng2-smart-table>
                 </nb-card-body>
-          
-          </nb-card>            
+
+          </nb-card>
 
       </div>
 </div>

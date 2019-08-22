@@ -18,10 +18,10 @@ export class ListProductComponent implements OnInit {
   sources: any[];
   actionConfirmWord: string;
 
-  currentCustomer = {};  
-  customerId = 0;  
+  currentCustomer: any;
+  customerId = 0;
 
-  settings = {    
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -44,33 +44,33 @@ export class ListProductComponent implements OnInit {
         type: 'number',
         filter: false,
         width: '3em',
-      },      
+      },
     },
   };
-  public startDate : Date; 
+  public startDate : Date;
   public endDate: Date;
   public productId: number;
-  source: LocalDataSource = new LocalDataSource();  
+  source: LocalDataSource = new LocalDataSource();
 
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,    
-    private router: Router, 
-    private activatedRoute: ActivatedRoute) { 
-    }        
-  ngOnInit() {    
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                                  
-      this.customerId = parseInt(paramMap.get('customerId'));  
-      this.productId = parseInt(paramMap.get('productId'));  
+    private sourcesGateway: SourcesGateway,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+    }
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.customerId = parseInt(paramMap.get('customerId'));
+      this.productId = parseInt(paramMap.get('productId'));
       this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));                  
-      this.getProduct();                 
-    });     
+      this.endDate = new Date(paramMap.get('end'));
+      this.getProduct();
+    });
   }
 
-  getProduct(){    
+  getProduct(){
     this.customerGateway.getCustomer(this.customerId).subscribe(data=>{
       this.currentCustomer = data;
     });
@@ -78,10 +78,21 @@ export class ListProductComponent implements OnInit {
       this.source.load(data);
     });
   }
+
   onProductRowSelect(event){
     const productId = event.data.id;
     let queryParams: Params = { productId: productId, uheader: null };
-    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+
+  onCreate(event) {
+    let queryParams: Params = {};
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/products/create'], extras);
   }
 
 }

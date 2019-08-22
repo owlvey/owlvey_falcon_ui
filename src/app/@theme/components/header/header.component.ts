@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private eventHandler: EventHandlerService
-  ) {    
+  ) {
   }
 
   onFirstLoadWithOutData(){
