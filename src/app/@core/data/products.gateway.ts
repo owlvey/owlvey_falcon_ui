@@ -24,6 +24,9 @@ export class ProductsGateway {
         `products/${productId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`
     );
   }
+  getGraphView(productId: number, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `products/${productId}/reports/graph?end=${end.toISOString()}`);
+  }
 
   createProduct(customerId: number, model: any) {
     model.customerId = customerId;
