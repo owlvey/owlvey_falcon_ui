@@ -3,5 +3,5 @@ export const environment = {
   applicationName: "Falcon.com",
   clientId: "pswebadmin",
   authority: "http://localhost:5001/",
-  api: "http://localhost:64370/"
+  api: "http://localhost:5001/"
 };
