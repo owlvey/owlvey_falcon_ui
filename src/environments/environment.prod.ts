@@ -4,4 +4,5 @@ export const environment = {
   clientId: 'pswebadmin',
   authority: 'https://falcon.com/',
   api: 'https://falcon.com/',
+  type: 'regular'
 };

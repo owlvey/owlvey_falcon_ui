@@ -5,13 +5,32 @@
 # Admin template based on Angular 8+ and <a href="https://github.com/akveo/nebular">Nebular</a>
 <a target="_blank" href="http://akveo.com/ngx-admin/pages/dashboard?theme=corporate&utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=main_pic"><img src="https://i.imgur.com/mFdqvgG.png"/></a>
 
+## Compose file format compatibility matrix
+
+| Compose file format  | Docker Engine |
+| ------------- | ------------- |
+| 3.6 | 18.02.0+ |
+| 3.3 - 3.5 | 17.06.0+ |
+| 3.0 – 3.2| 1.13.0+ |
+
+## Getting started
+
+First, run the following command in terminal:
+
+    docker-compose pull
+
+You have to wait while Docker pulls the containers from the Docker Hub: <a target="_blank" href="https://hub.docker.com/u/owlvey/">Owlvey</a>
+
+Then, run the following command in terminal:
+
+    docker-compose up
+
+Then open your browser to `http://localhost:45000`
+
 ### Backend Integration Bundles
 Easy way to integrate ngx-admin with .NET, Node.js, Java or PHP. [Checkout our Store](https://store.akveo.com/?utm_source=github&utm_medium=ngx_admin_readme) for ready to use Backend Bundles.
 
-
 ### With 4 stunning visual themes
-
-
 
 #### Default
 <a target="_blank" href="http://akveo.com/ngx-admin/pages/dashboard?theme=default&utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=themes"><img src="https://i.imgur.com/Kn3xDKQ.png"/></a>
