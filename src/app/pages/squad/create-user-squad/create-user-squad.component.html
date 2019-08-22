@@ -4,7 +4,7 @@
       <nb-card-header>
         <div class="d-flex align-content-center">
           <h4>Create Squad User</h4>
-          <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary ml-auto">
+          <button type="button" nbButton status="primary"  class="btn btn-sm btn-outline-primary ml-auto">
             Back
           </button>
         </div>
@@ -18,8 +18,8 @@
             </form>
           </div>
         </div>
-        <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onCustomerRowSelect($event)">
-        </ng2-smart-table>
+        <!--<ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onCustomerRowSelect($event)">
+        </ng2-smart-table>-->
       </nb-card-body>
     </nb-card>
   </div>
