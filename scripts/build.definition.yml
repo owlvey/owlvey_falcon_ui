@@ -1,0 +1,21 @@
+steps:
+
+- script: npm install
+  displayName: Restore Dependencies
+
+- script: npm rebuild node-sass
+  displayName: Ensure sass dependency
+ 
+- script: ng build --prod --configuration=docker
+  displayName: ng-build for docker
+
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'Owlvey Docker Connection'
+    repository: owlvey/site
+    Dockerfile: Dockerfile
+    buildContext: dist
+    tags: |
+     $(Build.BuildId)
+     latest
