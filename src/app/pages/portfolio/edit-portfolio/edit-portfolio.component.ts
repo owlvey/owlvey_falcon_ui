@@ -54,7 +54,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      slo: ['', Validators.required],      
+      slo: ['', Validators.required],              
     });
   }
   onSubmit() {    

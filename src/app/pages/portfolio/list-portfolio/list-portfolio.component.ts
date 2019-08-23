@@ -47,7 +47,7 @@ export class ListPortfolioComponent implements OnInit {
         editable: false
       },
       availability: {
-        title: 'Availability',
+        title: 'Availability',                
         type: 'number',
         filter: true,
         width: '3em',
@@ -60,11 +60,32 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      budgetMinutes:{
+        title: 'Budget (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      mttd:{
+        title: 'MTTD',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      mttr:{
+        title: 'MTTR',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       deploy: {
         title: 'Deploy',
         type: 'string',
         filter: true,
-        width: '4em',
+        width: '3em',
         editable: false
       },
       name: {

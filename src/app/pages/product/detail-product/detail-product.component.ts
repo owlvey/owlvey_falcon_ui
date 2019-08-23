@@ -74,12 +74,6 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     });
   }
 
-/*
-layoutBg: "#151a30"
-  primary: "#a16eff"
-  primaryLight: "#b18aff"
-*/
-
   buildGraph(){    
     const fgText = this.colors.fgText;
     const primary = this.colors.primary;    
@@ -124,11 +118,19 @@ layoutBg: "#151a30"
       });
       var edgeData = data.edges.map(c=>{
         const ava = String(c.budget);
-        if (c.budget >= 0){          
-          return { font: { size: 18, align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,  from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
-        }        
+        if (c.budget < 0){          
+          
+          return { font: { size: 18,  align: 'top', color: infoLight, strokeColor : infoLight}, 
+                label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
+        } 
+        else if ( c.budget >=0 && c.budget < 0.01 )       
+        {
+          return { font: { size: 18, align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,  
+              from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
+        }
         else{
-          return { font: { size: 18,  align: 'top', color: infoLight, strokeColor : infoLight},  label: ava, from: c.from, to: c.to, color:{ color:'red', highlight:'#dc143c', hover: '#dc143c'}};
+          return { font: { size: 18, align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,
+            from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
         }        
       });
       const nodes = new VisNodes(nodeData);
