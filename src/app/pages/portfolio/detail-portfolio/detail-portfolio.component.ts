@@ -107,6 +107,12 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   onReportClick(event){
     this.getDaily(); 
   }
+
+  onEditClick(event){      
+      let queryParams: Params = { };      
+      this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
   onBackClick(event){    
     //let queryParams: Params = { portfolioId: null };
     //this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 

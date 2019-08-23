@@ -8,40 +8,44 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
+import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 
 
 @Component({
-  selector: 'app-edit-source',
-  templateUrl: './edit-source.component.html',
-  styleUrls: ['./edit-source.component.scss']
+  selector: 'app-edit-portfolio',
+  templateUrl: './edit-portfolio.component.html',
+  styleUrls: ['./edit-portfolio.component.scss']
 })
-export class EditSourceComponent extends ProductBaseComponent {
+export class EditPortfolioComponent extends ProductBaseComponent {
   
   editForm: FormGroup;
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
-    protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router, 
-    protected activatedRoute: ActivatedRoute, private eventHandler: EventHandlerService,
-    private toastr: NbToastrService, private sourceGateway: SourcesGateway ) {
-    super(location, customerGateway, productGateway, theme, router, activatedRoute);
-    
+    protected productGateway: ProductsGateway, 
+    protected theme: NbThemeService, 
+    protected router: Router, 
+    protected activatedRoute: ActivatedRoute,
+    protected eventHandler: EventHandlerService, 
+    protected portfolioGateway: PortfoliosGateway,
+    protected toastr: NbToastrService, 
+    protected sourceGateway: SourcesGateway ) {
+    super(location, customerGateway, productGateway, theme, router, activatedRoute);    
     this.isLoading = false;
   } 
-  private sourceId: number;   
+  private portfolioId: number;   
   onChangeQueryParameters(paramMap: ParamMap): void {
-    this.sourceId = parseInt(paramMap.get('sourceId'));                                
+    this.portfolioId = parseInt(paramMap.get('portfolioId'));                                
     super.onChangeQueryParameters(paramMap);
     this.loadSource();
   }
 
   loadSource(){
-    this.sourceGateway.getSource(this.sourceId).subscribe(data=>{
+    this.portfolioGateway.getPortfolio(this.portfolioId).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("goodDefinition").setValue(data.goodDefinition);
-      this.editForm.get("totalDefinition").setValue(data.totalDefinition);      
+      this.editForm.get("slo").setValue(data.slo);      
     });
   }
 
@@ -50,8 +54,7 @@ export class EditSourceComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      goodDefinition: ['', Validators.required],
-      totalDefinition: ['', Validators.required]      
+      slo: ['', Validators.required],      
     });
   }
   onSubmit() {    
@@ -61,9 +64,9 @@ export class EditSourceComponent extends ProductBaseComponent {
     }    
     this.isLoading = true;    
     const model = this.editForm.value;
-    let  defer = this.sourceGateway.putSource(this.sourceId, model);
+    let  defer = this.portfolioGateway.putPortfolio(this.portfolioId, model);
     defer.subscribe((data) => {
-        this.toastr.success("Source Modified Success");
+        this.toastr.success("Portfolio Modified Success");
         this.isLoading = false;        
         this.location.back();
       }, (error) => {
