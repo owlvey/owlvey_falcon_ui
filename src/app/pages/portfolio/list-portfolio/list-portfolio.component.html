@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-md-12">
     <nb-card class="inline-form-card">
-      <nb-card-header>Actions</nb-card-header>
+      <nb-card-header>
+          <h2>Product: {{ currentProduct?.name  }}  </h2>
+      </nb-card-header>      
       <nb-card-body>          
         <form class="form-inline">            
           <button type="button" nbButton status="primary" class="float-right"> Back </button>              
@@ -14,7 +16,7 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-        Sources: Product {{ currentProduct?.name }}
+        Portfolios
       </nb-card-header>  
   
       <nb-card-body>

@@ -1,11 +1,28 @@
-<nb-card>
-    <nb-card-header>
-        <h5> Features List : {{ currentProduct?.name }} </h5>
-    </nb-card-header>  
-
-    <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="d-flex align-content-center">
+          <h5>Features List : {{ currentProduct?.name }}</h5>
+          <button
+            type="button"
+            nbButton
+            status="primary"
+            (click)="onCreate($event)"
+            class="btn btn-sm btn-outline-primary ml-auto"
+          >
+            Create
+          </button>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table
+          [settings]="settings"
+          [source]="source"
+          (userRowSelect)="onUserRowSelect($event)"
+        >
         </ng2-smart-table>
       </nb-card-body>
-
-</nb-card>
+    </nb-card>
+  </div>
+</div>

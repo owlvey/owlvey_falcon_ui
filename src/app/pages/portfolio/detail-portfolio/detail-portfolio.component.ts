@@ -53,9 +53,37 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         type: 'string',
         filter: true,        
         editable: false
-      },   
+      },            
       availability: {
         title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },   
+      mttd: {
+        title: 'MTTD (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mttr: {
+        title: 'MTTR (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mttf: {
+        title: 'MTTF (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mtbf: {
+        title: 'MTBF (min)',
         type: 'number',
         filter: true,
         width: '3em',
