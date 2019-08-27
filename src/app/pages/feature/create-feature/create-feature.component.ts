@@ -26,6 +26,7 @@ export class CreateFeatureComponent implements OnInit {
 
   customer: any = {};
   customerId = 0;
+  productId = 0;
 
   createForm: FormGroup;
   formTitle: string;
@@ -43,19 +44,23 @@ export class CreateFeatureComponent implements OnInit {
   ) {
     this.createForm = this.fb.group({
       id: [""],
-      name: ["", Validators.required]
+      name: ["", Validators.required],
+      description: ["", Validators.required]
     });
     this.isLoading = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.productId = parseInt(paramMap.get("productId"));
+    });
+  }
 
   goBack() {
     this.location.back();
   }
 
   onSubmit() {
-    console.log(this.createForm);
     if (!this.createForm.valid) {
       this.toastr.warning(
         "Please check the form fields are filled correctly.",
@@ -65,7 +70,10 @@ export class CreateFeatureComponent implements OnInit {
     }
 
     this.isLoading = true;
-    let defer = this.featuresGateway.createFeature(this.createForm.value);
+    let defer = this.featuresGateway.createFeature(
+      this.productId,
+      this.createForm.value
+    );
     defer.subscribe(
       data => {
         this.toastr.success("Feature Created Success");

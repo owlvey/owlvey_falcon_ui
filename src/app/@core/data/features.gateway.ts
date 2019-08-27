@@ -36,10 +36,11 @@ export class FeaturesGateway {
         `features/${featureId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`
     );
   }
-  createFeature(model: any) {
+  createFeature(productId: number, model: any) {
+    model.productId = productId;
     return this.http.post(`${this.baseUrl}features`, model);
   }
-  updateFeature(featureId: number,  model: any){
+  updateFeature(featureId: number, model: any) {
     return this.http.put(`${this.baseUrl}features/${featureId}`, model);
   }
 }
