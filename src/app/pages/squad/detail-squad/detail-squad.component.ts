@@ -62,6 +62,7 @@ export class DetailSquadComponent implements OnInit {
   constructor(
     private location: Location,
     private squadGateway: SquadsGateway,
+    private productsGateway: ProductsGateway,
     private toastr: NbToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {       
@@ -76,7 +77,13 @@ export class DetailSquadComponent implements OnInit {
   getSquad(){
     this.squadGateway.getSquad(this.squadId).subscribe(data=>{
       this.currentSquad = data;   
-      //this.source.load(data.products);
+      this.getProducts();
+    });
+  }
+
+  getProducts(){
+    this.squadGateway.getSquadProducts(this.squadId).subscribe(data=>{
+      this.source.load(data);
     });
   }
 
