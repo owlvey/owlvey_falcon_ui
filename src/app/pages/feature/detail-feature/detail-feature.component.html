@@ -5,10 +5,17 @@
           <h2>
             <h5>Feature: {{ currentSource.name }}, Availability: {{ currentSource.availability }} </h5>                        
           </h2>
+          
         </nb-card-header>
         <nb-card-body>          
+          <p>Description : {{ currentSource.description }} </p>
+          <p>Mean time to Detect : {{ currentSource.mttd }} </p>
+          <p>Mean time to Repair : {{ currentSource.mttr }} </p>
+          <p>Mean time to Fail : {{ currentSource.mttf }} </p>
+          <p>Mean time between failure : {{ currentSource.mtbf }} </p>
           <form class="form-inline">
               <button type="button" nbButton status="primary" (click)="onReportClick($event)"> Availability </button>
+              <button type="button" nbButton status="primary" (click)="onEditClick($event)"> Edit </button>
               <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>              
           </form>
         </nb-card-body>

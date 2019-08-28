@@ -46,8 +46,15 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      impact: {
+        title: 'Impact',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       availability: {
-        title: 'Availability',
+        title: 'Availability',                
         type: 'number',
         filter: true,
         width: '3em',
@@ -60,11 +67,39 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      budgetMinutes:{
+        title: 'Budget (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      mttd:{
+        title: 'MTTD (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },      
+      mttr:{
+        title: 'MTTR (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       deploy: {
         title: 'Deploy',
         type: 'string',
         filter: true,
-        width: '4em',
+        width: '3em',
+        editable: false
+      },
+      risk:{
+        title: 'Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
         editable: false
       },
       name: {
@@ -108,14 +143,7 @@ export class ListPortfolioComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.endDate).subscribe(portfolios=>{
-        let c = portfolios.map(c=> {
-          c.budget = Math.round((parseFloat(c.availability) - parseFloat(c.slo))  * 1000) / 1000;
-          if (c.budget >= 0){
-            c.deploy = "allow";
-          }
-          else{
-            c.deploy = "forbiden";
-          }
+        let c = portfolios.map(c=> {          
           return c;
         });
         this.source.load(portfolios);

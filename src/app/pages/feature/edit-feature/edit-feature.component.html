@@ -1,12 +1,25 @@
 <nb-card>
     <nb-card-header>
-      <h4>Create Customer</h4>
+      <h4>Edit Feature</h4>
     </nb-card-header>
     <nb-card-body>
-      <form (ngSubmit)="onSubmit();" [formGroup]="createForm">
+      <form (ngSubmit)="onSubmit();" [formGroup]="editForm">
         <div class="form-group">
           <label>Name</label>
           <input type="text" name="name" formControlName="name" class="form-control" />
+
+          <label>Description</label>
+          <input type="text" name="description" formControlName="description" class="form-control" />
+
+          <label>Avatar</label>
+          <input type="text" name="avatar" formControlName="avatar" class="form-control" />         
+
+          <label>Mean time to Detect (MTTD)</label>
+          <input type="text" name="mttd" formControlName="mttd" class="form-control" />          
+
+          <label>Mean time to Repair (MTTR)</label>
+          <input type="text" name="mttr" formControlName="mttr" class="form-control" />          
+
         </div>      
         <div class="text-right">
           <button type="button" nbbutton class="appearance-filled size-medium status-info shape-rectangle transitions mr-2" (click)="onBackClick($event)" [disabled]="isLoading">Back</button>

@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-md-12">
     <nb-card class="inline-form-card">
-      <nb-card-header>Actions</nb-card-header>
+      <nb-card-header>
+          <h4>{{currentCustomer?.name}} </h4>
+      </nb-card-header>
       <nb-card-body>
         <form class="form-inline">
             <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary ml-auto">
@@ -15,8 +17,8 @@
 <div class="row">
   <div class="col-md-12">
     <nb-card>
-      <nb-card-header>
-        Customer: {{currentCustomer?.name}}
+      <nb-card-header>        
+        <h5>Products</h5>
       </nb-card-header>
       <nb-card-body>
           <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onProductRowSelect($event)">

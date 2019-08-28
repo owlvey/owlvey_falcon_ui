@@ -73,6 +73,10 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   onBackClick($event){    
     this.location.back();
   }
+  onEditClick(event){
+    let queryParams: Params = { };
+    this.router.navigate(['/pages/sources/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
   ngAfterViewInit() {    
     
   }

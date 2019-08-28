@@ -114,6 +114,10 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     //this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 
     this.location.back();
   }
+  onEditClick(event){
+    let queryParams: Params = { };
+    this.router.navigate(['/pages/features/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
   ngOnDestroy(): void {
     
   }     

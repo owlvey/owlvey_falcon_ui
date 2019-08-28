@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { of as observableOf, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EnvironmentService } from '../utils/env.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class SourcesGateway{
     baseUrl: string;
-    constructor(private http: HttpClient) {
-        this.baseUrl = environment.api;
+  constructor(private http: HttpClient,
+              private envService: EnvironmentService) {
+    this.baseUrl = envService.getUrl(environment.api, environment.type);
       }
 
     getSources(productId: number): Observable<any>{
@@ -18,6 +20,12 @@ export class SourcesGateway{
         return this.http.get(this.baseUrl + `sources?productId=${productId}&&end=${end.toISOString()}`);
     }
 
+    postSource(productId: number, name: String): Observable<any> {
+        return this.http.post(this.baseUrl + `sources`, { productId:productId , name: name});        
+    }
+    putSource(sourceId: number, model: any): Observable<any> {
+        return this.http.put(this.baseUrl + `sources/${sourceId}`, model);        
+    }
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }
