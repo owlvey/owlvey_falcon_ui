@@ -17,17 +17,36 @@ export class FeaturesGateway {
   getFeatures(productId: number): Observable<any> {
     return this.http.get(this.baseUrl + `features?productId=${productId}`);
   }
-  getFeaturesWithAvailabilities(productId: number, end: Date): Observable<any> {
+
+  getFeaturesUnregistered(productId: number, portfolioId: number) : Observable<any> {
+    return this.http.get(this.baseUrl + `features?productId=${productId}&filter=serviceId ne ${portfolioId}`)
+  }
+
+  getIndicatorsComplement(featureId: number): Observable<any> {
+    return this.http.get(this.baseUrl + `features/${featureId}/indicators/complement`);
+  }
+
+  postIndicator(featureId: number, sourceId: number): Observable<any> {
+    return this.http.post(this.baseUrl + `indicators`, {
+      featureId : featureId, 
+      sourceId : sourceId
+    });
+  }
+  deleteIndicator(indicatorId: number){
+    return this.http.delete(this.baseUrl + `indicators/${indicatorId}`);
+  }
+
+  getFeaturesWithAvailabilities(productId: number, start:Date, end: Date): Observable<any> {
     return this.http.get(
-      this.baseUrl + `features?productId=${productId}&end=${end.toISOString()}`
+      this.baseUrl + `features?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`
     );
   }
   getFeature(featureId: number): Observable<any> {
     return this.http.get(this.baseUrl + `features/${featureId}`);
   }
-  getFeatureWithAvailabilities(featureId: number, end: Date): Observable<any> {
+  getFeatureWithAvailabilities(featureId: number, start:Date,  end: Date): Observable<any> {
     return this.http.get(
-      this.baseUrl + `features/${featureId}?&end=${end.toISOString()}`
+      this.baseUrl + `features/${featureId}?start=${start.toISOString()}&end=${end.toISOString()}`
     );
   }
   getDaily(featureId: number, start: Date, end: Date): Observable<any> {

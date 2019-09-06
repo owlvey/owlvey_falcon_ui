@@ -142,7 +142,7 @@ export class ListPortfolioComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.endDate).subscribe(portfolios=>{
+      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate).subscribe(portfolios=>{
         let c = portfolios.map(c=> {          
           return c;
         });

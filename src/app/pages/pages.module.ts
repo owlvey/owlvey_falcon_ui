@@ -22,6 +22,7 @@ import {
   NbSelectModule,
   NbUserModule,
 } from '@nebular/theme';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import {
     SourceModule,
     CustomerModule,
     PortfolioModule,
-    SquadModule
+    SquadModule,
+    UserModule,
   ],
   declarations: [
     PagesComponent,

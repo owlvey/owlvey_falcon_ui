@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>
+          <h4> Actions </h4>
+      </nb-card-header>
+      <nb-card-body>
+        <form class="form-inline">
+            <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary ml-auto">
+                Create
+            </button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>        
+        <h5>Users</h5>
+      </nb-card-header>
+      <nb-card-body>
+          <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onRowSelected($event)">
+          </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+

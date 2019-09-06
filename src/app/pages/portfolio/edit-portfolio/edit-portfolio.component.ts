@@ -9,6 +9,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { LocalDataSource } from 'ng2-smart-table';
+import { FeaturesGateway } from '../../../@core/data/features.gateway';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -19,6 +22,139 @@ import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 export class EditPortfolioComponent extends ProductBaseComponent {
   
   editForm: FormGroup;
+  source: LocalDataSource = new LocalDataSource();
+
+  settings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Delete',
+      width: '3em',
+      position: 'right',
+      add:false,
+      edit:false,
+      delete:true,  
+    },    
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,                  
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },            
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },   
+      mttd: {
+        title: 'MTTD (min)',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+      mttr: {
+        title: 'MTTR (min)',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+      mttf: {
+        title: 'MTTF (min)',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+      mtbf: {
+        title: 'MTBF (min)',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+    },
+  };
+
+  sourceNewFeatures: LocalDataSource = new LocalDataSource();
+
+  newSettings  = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:true,
+      delete: false,
+    },    
+    edit: {
+      editButtonContent: '<i class="nb-plus"></i>'      
+    },    
+    pager: {
+      perPage: 20
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,        
+        editable: false
+      },            
+      mttd: {
+        title: 'MTTD (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mttr: {
+        title: 'MTTR (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mttf: {
+        title: 'MTTF (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+      mtbf: {
+        title: 'MTBF (min)',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },          
+    },
+  };
+  
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
@@ -28,6 +164,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
     protected activatedRoute: ActivatedRoute,
     protected eventHandler: EventHandlerService, 
     protected portfolioGateway: PortfoliosGateway,
+    protected featureGateway: FeaturesGateway, 
     protected toastr: NbToastrService, 
     protected sourceGateway: SourcesGateway ) {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);    
@@ -37,15 +174,22 @@ export class EditPortfolioComponent extends ProductBaseComponent {
   onChangeQueryParameters(paramMap: ParamMap): void {
     this.portfolioId = parseInt(paramMap.get('portfolioId'));                                
     super.onChangeQueryParameters(paramMap);
-    this.loadSource();
+    this.loadSource();    
+    this.loadNewFeatures();
   }
 
-  loadSource(){
-    this.portfolioGateway.getPortfolio(this.portfolioId).subscribe(data=>{
+  loadSource(){    
+    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("slo").setValue(data.slo);      
+      this.editForm.get("slo").setValue(data.slo);            
+      this.source.load(data.features);      
+    });       
+  }
+  loadNewFeatures(){
+    this.featureGateway.getFeaturesUnregistered(this.productId, this.portfolioId).subscribe(data=>{
+      this.sourceNewFeatures.load(data);
     });
   }
 
@@ -57,6 +201,15 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       slo: ['', Validators.required],              
     });
   }
+  onDelete(event){    
+    if (confirm("are you sure?") === true){
+      const featureId =  event.data.id;    
+      this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
+        this.loadSource();
+        this.loadNewFeatures();
+      });
+    }    
+  } 
   onSubmit() {    
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
@@ -73,5 +226,14 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         this.isLoading = false;
         this.toastr.warning("Something went wrong, please try again.", "Warning")
       });
+  }
+
+  onFeaturesRowSelect(event){
+    const featureId = event.data.id;    
+    this.portfolioGateway.registerFeature(this.portfolioId, featureId).subscribe(data=>{
+      this.toastr.success("Feature Registered");
+      this.loadSource();
+      this.loadNewFeatures();
+    });
   }
 }

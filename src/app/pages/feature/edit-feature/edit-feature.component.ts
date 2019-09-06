@@ -10,6 +10,7 @@ import { EventHandlerService } from '../../../../../App/src/app/event-handler.se
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
+import { LocalDataSource } from 'ng2-smart-table';
 
 
 @Component({
@@ -21,6 +22,81 @@ export class EditFeatureComponent extends ProductBaseComponent {
   
   editForm: FormGroup;
 
+  settings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:false,
+      delete:true
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,                  
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },      
+      source: {
+        title: 'Source',
+        type: 'string',
+        filter: true
+      },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },            
+    },
+  };
+
+  source: LocalDataSource = new LocalDataSource();
+
+  newSettings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:true,
+      delete:false
+    },
+    edit: {
+      editButtonContent: '<i class="nb-plus"></i>'      
+    },    
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },      
+      name: {
+        title: 'Source',
+        type: 'string',
+        filter: true
+      }               
+    },
+  };
+
+  newSource: LocalDataSource = new LocalDataSource();
+
+
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, 
@@ -29,6 +105,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     protected activatedRoute: ActivatedRoute,
     protected eventHandler: EventHandlerService, 
     protected portfolioGateway: PortfoliosGateway,
+    protected sourceGateway: SourcesGateway,
     protected toastr: NbToastrService,     
     protected featureGateway: FeaturesGateway ) {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);    
@@ -39,16 +116,40 @@ export class EditFeatureComponent extends ProductBaseComponent {
     this.featureId = parseInt(paramMap.get('featureId'));                                
     super.onChangeQueryParameters(paramMap);
     this.loadSource();
+    this.laodNewSource(); 
   }
 
   loadSource(){
-    this.featureGateway.getFeature(this.featureId).subscribe(data=>{
+    this.featureGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
       this.editForm.get("mttd").setValue(data.mttd);      
-      this.editForm.get("mttr").setValue(data.mttr);      
+      this.editForm.get("mttr").setValue(data.mttr);    
+      this.source.load(data.indicators);
+    });
+  }
+  laodNewSource(){
+    this.featureGateway.getIndicatorsComplement(this.featureId).subscribe(data=>{
+      this.newSource.load(data);
+    });
+  }
+
+  onRegister(event){
+    const sourceId = event.data.id;    
+    this.featureGateway.postIndicator(this.featureId, sourceId).subscribe(data=>{
+      this.toastr.success("Feature Registered");
+      this.loadSource();
+      this.laodNewSource();
+    });
+  }
+
+  onUnRegister(event){
+    const indicatorId = event.data.id;    
+    this.featureGateway.deleteIndicator(indicatorId).subscribe(data=>{
+      this.loadSource();
+      this.laodNewSource();
     });
   }
 

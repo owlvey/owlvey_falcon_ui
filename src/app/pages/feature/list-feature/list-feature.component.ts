@@ -119,7 +119,7 @@ export class ListFeatureComponent implements OnInit {
       this.currentProduct = data;
     });
     this.featureGateway
-      .getFeaturesWithAvailabilities(this.productId, this.endDate)
+      .getFeaturesWithAvailabilities(this.productId, this.startDate, this.endDate)
       .subscribe(data => {
         this.source.load(data);
       });

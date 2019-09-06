@@ -8,7 +8,7 @@
           
             <form class="form-inline">              
                 <button type="button" nbButton status="primary" (click)="onReportClick($event)"> Availability </button>
-                <button type="button" nbButton status="primary" (click)="onEditClick($event)"> Edit </button>
+                <button type="button" nbButton status="primary" (click)="onEditClick($event)"> Edit </button>                
                 <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>                            
             </form>
 
@@ -29,7 +29,7 @@
           <h5>Features</h5>
         </nb-card-header>
         <nb-card-body>                        
-            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onFeaturesRowSelect($event)">
+            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onFeaturesRowSelect($event)" (delete)="onDelete($event)">
             </ng2-smart-table>
         </nb-card-body>
       </nb-card>

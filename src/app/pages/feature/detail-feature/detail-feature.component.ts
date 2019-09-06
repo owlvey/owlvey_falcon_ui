@@ -87,7 +87,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   }  
 
   getSource(){
-    this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.endDate).subscribe(feature=>{
+    this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(feature=>{
       this.currentSource = feature;      
       this.source.load(feature.indicators);
     });        

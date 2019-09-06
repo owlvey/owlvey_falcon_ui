@@ -32,15 +32,19 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   source: LocalDataSource = new LocalDataSource();
 
   settings = {    
+    mode: 'external',
     actions:{
+      columnTitle:'Delete',
+      width: '3em',
+      position: 'right',
       add:false,
       edit:false,
       delete:false
-    },
+    },    
     pager: {
       perPage: 20
     },
-    columns: {
+    columns: {      
       id: {
         title: 'Id',
         type: 'number',
@@ -117,7 +121,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   }  
 
   getPortfolio(){    
-    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.endDate).subscribe(data=>{
+    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSource = data;            
       this.source.load(this.currentSource.features);      
     });    
@@ -140,7 +144,14 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-
+  onDelete(event){    
+    if (confirm("are you sure?") === true){
+      const featureId =  event.data.id;    
+      this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
+        this.getPortfolio();
+      });
+    }    
+  } 
   onBackClick(event){    
     //let queryParams: Params = { portfolioId: null };
     //this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 

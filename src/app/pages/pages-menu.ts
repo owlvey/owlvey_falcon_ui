@@ -33,12 +33,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'smartphone-outline',
   },
   {
+    title: 'Sources',
+    icon: 'shake-outline',
+  },
+  {
     title: 'Squads',
     icon: 'people-outline',
   },
   {
-    title: 'Sources',
-    icon: 'shake-outline',
+    title: 'Users',
+    icon: 'people-outline',
   },
   {
     title: 'Layout',

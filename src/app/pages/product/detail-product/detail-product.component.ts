@@ -86,7 +86,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     const warningLight = this.colors.warningLight;
     const success = this.colors.success;
     const successLight = this.colors.successLight;
-    this.productGateway.getGraphView(this.productId, this.endDate).subscribe(data=>{
+    this.productGateway.getGraphView(this.productId, this.startDate, this.endDate).subscribe(data=>{
       var nodeData = data.nodes.map(c=>{
         if (c.group == "products"){
           return { id: c.id, label: c.name, group: "0", shape: 'diamond' };

@@ -28,7 +28,7 @@ export class PagesComponent implements OnInit {
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
       if (e.item.title == "Sources"){                    
         if (currentProduct && currentCustomer){
-          let queryParams: Params = { };
+          let queryParams: Params = {  };
           this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                          
         }
         else{
@@ -53,7 +53,13 @@ export class PagesComponent implements OnInit {
           alert('please select customer');          
         }        
       }
-      
+
+      if (e.item.title == "Users"){      
+        let queryParams: Params = { };
+        this.router.navigate(['/pages/users'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                           
+      }
+
+      //uheader
       if (e.item.title == "Features"){      
         if (currentProduct && currentCustomer){
           let queryParams: Params = { };
@@ -72,7 +78,7 @@ export class PagesComponent implements OnInit {
           let queryParams: Params = { };
           this.router.navigate(['/pages/squads'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
         
-        }     else{
+        } else{
           alert('please select customer');          
         } 
       }            
