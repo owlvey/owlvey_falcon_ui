@@ -24,19 +24,21 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-      <nb-card>
-        <nb-card-header>
-          <h6>Service Level Indicator (SLI)</h6>
-        </nb-card-header>
-        <nb-card-body>            
-            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
-            </ng2-smart-table>
-        </nb-card-body>
-      </nb-card>
-    </div>
+    <div class="col-12">
+        <nb-card size="small">
+          <nb-tabset fullWidth>
+            <nb-tab tabTitle="Service Level Indicators (SLI)">
+                <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
+                </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Squads">
+                <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
+                </ng2-smart-table>
+            </nb-tab>            
+          </nb-tabset>
+        </nb-card>
+      </div>
 </div>
-
 
 <div class="row">
   <div class="col-md-12">

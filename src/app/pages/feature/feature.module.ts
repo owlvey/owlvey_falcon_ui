@@ -23,7 +23,8 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  NbTreeGridModule
+  NbTreeGridModule,
+  NbTabsetModule,
 } from "@nebular/theme";
 
 @NgModule({
@@ -40,6 +41,7 @@ import {
     FeatureRoutingModule,
     Ng2SmartTableModule,
     NbCardModule,
+    NbTabsetModule,
     NgxEchartsModule,
     ChartModule,
     NbDatepickerModule,

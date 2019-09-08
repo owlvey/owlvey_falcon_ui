@@ -97,6 +97,73 @@ export class EditFeatureComponent extends ProductBaseComponent {
   newSource: LocalDataSource = new LocalDataSource();
 
 
+
+  squadSettings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:false,
+      delete:true
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,                  
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }
+    },
+  };
+
+  newSquadSettings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:true,
+      delete:false
+    },
+    edit: {
+      editButtonContent: '<i class="nb-plus"></i>'      
+    },    
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },      
+      name: {
+        title: 'Source',
+        type: 'string',
+        filter: false
+      }               
+    },
+  };
+  squadsSource: LocalDataSource = new LocalDataSource();
+  newSquadSource: LocalDataSource = new LocalDataSource();
+
+
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, 
@@ -111,12 +178,19 @@ export class EditFeatureComponent extends ProductBaseComponent {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);    
     this.isLoading = false;
   } 
+
   private featureId: number;   
+
   onChangeQueryParameters(paramMap: ParamMap): void {
     this.featureId = parseInt(paramMap.get('featureId'));                                
     super.onChangeQueryParameters(paramMap);
+    this.loadViewState(); 
+  }
+
+  loadViewState(){
     this.loadSource();
-    this.laodNewSource(); 
+    this.loadSLIs();
+    this.loadSquads();
   }
 
   loadSource(){
@@ -128,9 +202,17 @@ export class EditFeatureComponent extends ProductBaseComponent {
       this.editForm.get("mttd").setValue(data.mttd);      
       this.editForm.get("mttr").setValue(data.mttr);    
       this.source.load(data.indicators);
+      this.squadsSource.load(data.squads);
     });
   }
-  laodNewSource(){
+
+  loadSquads(){
+    this.featureGateway.getSquadsComplement(this.featureId).subscribe(data=>{
+      this.newSquadSource.load(data);
+    });
+  }
+
+  loadSLIs(){
     this.featureGateway.getIndicatorsComplement(this.featureId).subscribe(data=>{
       this.newSource.load(data);
     });
@@ -141,15 +223,26 @@ export class EditFeatureComponent extends ProductBaseComponent {
     this.featureGateway.postIndicator(this.featureId, sourceId).subscribe(data=>{
       this.toastr.success("Feature Registered");
       this.loadSource();
-      this.laodNewSource();
+      this.loadSLIs();
     });
   }
-
+  onRegisterSquad(event){
+    const squadId = event.data.id;    
+    this.featureGateway.putSquad(this.featureId, squadId).subscribe(data=>{
+      this.loadViewState();
+    });
+  }
   onUnRegister(event){
     const indicatorId = event.data.id;    
     this.featureGateway.deleteIndicator(indicatorId).subscribe(data=>{
-      this.loadSource();
-      this.laodNewSource();
+      this.loadViewState();
+    });
+  }
+
+  onUnRegisterSquad(event){
+    const squadId = event.data.id;    
+    this.featureGateway.deleteSquad(this.featureId, squadId).subscribe(data=>{
+      this.loadViewState();
     });
   }
 

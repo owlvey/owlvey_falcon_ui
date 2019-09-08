@@ -19,11 +19,7 @@ export class SquadsGateway{
   getSquad(customerId: number): Observable<any> {
     return this.http.get(this.baseUrl + `squads/${customerId}`);
   }
-
-  getSquadProducts(squadId: number): Observable<any> {
-    return this.http.get(this.baseUrl + `squadProducts?squadId=${squadId}`);
-  }
-
+  
   createSquad(model: any) {
     return this.http.post(this.baseUrl + 'squads', model);
   }

@@ -23,6 +23,9 @@ export class DetailSquadComponent implements OnInit {
   squadId = 0;
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
+
+  membersSource: LocalDataSource = new LocalDataSource();
+
   target = "average";
   private _showAll: boolean = true;
 
@@ -34,7 +37,7 @@ export class DetailSquadComponent implements OnInit {
   get showAll(){
     return this._showAll;
   }
-  settings = {    
+  membersSettings = {
     actions:{
       add:false,
       edit:false,
@@ -51,10 +54,41 @@ export class DetailSquadComponent implements OnInit {
         width: '3em',
         editable: false
       },          
+      email: {
+        title: 'Email',
+        type: 'string',
+        filter: true,        
+        editable: false
+      },                
+    },
+  };
+  settings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
       name: {
         title: 'Name',
         type: 'string',
-        filter: true,        
+        filter: false,        
+        editable: false
+      },               
+      product: {
+        title: 'Product',
+        type: 'string',
+        filter: false,        
         editable: false
       },                
     },
@@ -76,17 +110,12 @@ export class DetailSquadComponent implements OnInit {
   }  
   getSquad(){
     this.squadGateway.getSquad(this.squadId).subscribe(data=>{
-      this.currentSquad = data;   
-      this.getProducts();
+      this.currentSquad = data;  
+      this.membersSource.load(data.members); 
+      this.source.load(data.features);      
     });
   }
-
-  getProducts(){
-    this.squadGateway.getSquadProducts(this.squadId).subscribe(data=>{
-      this.source.load(data);
-    });
-  }
-
+  
   onBackClick(event){
     this.location.back();
   }

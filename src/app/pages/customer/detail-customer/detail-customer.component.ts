@@ -77,7 +77,7 @@ export class DetailCustomerComponent implements OnInit {
     });   
   }  
   getCustomer(){
-    this.customerGateway.getCustomerWithAvailability(this.customerId, this.endDate).subscribe(data=>{
+    this.customerGateway.getCustomerWithAvailability(this.customerId, this.startDate, this.endDate).subscribe(data=>{
       this.currentCustomer = data;   
       this.source.load(data.products);
     });
