@@ -83,7 +83,7 @@ export class ListSourceComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.sourcesGateway.getSourcesWithAvailability(productId, this.endDate).subscribe(sources=>{
+      this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
         this.source.load(sources);
       });
     });     

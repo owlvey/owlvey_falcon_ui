@@ -21,7 +21,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 export class EditFeatureComponent extends ProductBaseComponent {
   
   editForm: FormGroup;
-
+  isLoading: boolean = false;  
   settings = {    
     mode: 'external',
     actions:{

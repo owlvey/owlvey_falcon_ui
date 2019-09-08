@@ -32,7 +32,18 @@ export class SquadsGateway{
     return this.http.put(this.baseUrl + 'squads/' + id, model);
   }
 
+  registerMember(squadId: number, userId: number) : Observable<any>{
+    return this.http.put(this.baseUrl + `squads/${squadId}/members/${userId}`, {});
+  }
+  unRegisterMember(squadId: number, userId: number): Observable<any>{
+    return this.http.delete(this.baseUrl + `squads/${squadId}/members/${userId}`);
+  }
+
   deleteSquad(id: any) {
     return this.http.delete(this.baseUrl + 'squads/' + id);
+  }
+
+  getMembersComplement(squadId: any) : Observable<any> {
+    return this.http.get(this.baseUrl + `squads/${squadId}/members/complement`);
   }
 }
