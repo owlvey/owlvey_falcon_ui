@@ -41,13 +41,6 @@ export class ListSourceComponent implements OnInit {
         title: 'Name',
         type: 'string',
         filter: true
-      },
-      availability: {
-        title: 'Availability',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
       },      
       tags: {
         title: 'Tags',
@@ -83,7 +76,7 @@ export class ListSourceComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
+      this.sourcesGateway.getSources(productId).subscribe(sources=>{
         this.source.load(sources);
       });
     });     

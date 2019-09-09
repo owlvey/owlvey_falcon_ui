@@ -15,10 +15,16 @@ export class SquadsGateway{
   getSquads(customerId): Observable<any> {
     return this.http.get(this.baseUrl + `squads?customerId=${customerId}`);
   }
-
-  getSquad(customerId: number): Observable<any> {
-    return this.http.get(this.baseUrl + `squads/${customerId}`);
+  getSquadsWithPoints(customerId, start: Date, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `squads?customerId=${customerId}&start=${start.toISOString()}&end=${end.toISOString()}`);
   }
+
+  getSquad(squadId: number): Observable<any> {
+    return this.http.get(this.baseUrl + `squads/${squadId}`);
+  }  
+  getSquadDetail(squadId: number, start: Date, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `squads/${squadId}?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }  
   
   createSquad(model: any) {
     return this.http.post(this.baseUrl + 'squads', model);

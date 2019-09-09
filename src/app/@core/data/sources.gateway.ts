@@ -29,8 +29,8 @@ export class SourcesGateway{
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }
-    getSourceWithAvailability(sourceId: number, end: Date): Observable<any> {
-        return this.http.get(this.baseUrl + `sources/${sourceId}?end=${end.toISOString()}`);
+    getSourceWithAvailability(sourceId: number, start:Date, end: Date): Observable<any> {
+        return this.http.get(this.baseUrl + `sources/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
     getSourceItems(sourceId: number): Observable<any>{

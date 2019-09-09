@@ -53,7 +53,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   }  
 
   getSource(){    
-    this.sourcesGateway.getSourceWithAvailability(this.sourceId, this.endDate).subscribe(data=>{
+    this.sourcesGateway.getSourceWithAvailability(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSource = data;            
     });    
   }

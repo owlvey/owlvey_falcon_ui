@@ -5,7 +5,9 @@ import { SquadsGateway } from './../../../@core/data/squads.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
+import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
 
 
 @Component({
@@ -13,11 +15,9 @@ import { NbToastrService } from '@nebular/theme';
   templateUrl: './detail-squad.component.html',
   styleUrls: ['./detail-squad.component.scss']
 })
-export class DetailSquadComponent implements OnInit {
+export class DetailSquadComponent extends CustomerBaseComponent {
 
-  isLoading: boolean = false;
-  customerId: any;
-  sources: any[];
+  isLoading: boolean = false;    
   actionConfirmWord: string;
   currentSquad: any;  
   squadId = 0;
@@ -79,37 +79,74 @@ export class DetailSquadComponent implements OnInit {
         width: '3em',
         editable: false
       },          
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false,        
-        editable: false
-      },               
       product: {
         title: 'Product',
         type: 'string',
         filter: false,        
         editable: false
       },                
+      service: {
+        title: 'Service',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },          
+      slo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },             
+      impact: {
+        title: 'Impact',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },               
+      name: {
+        title: 'Feature',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },              
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },              
+      points: {
+        title: 'Points',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },                    
     },
-  };
-  constructor(
-    private location: Location,
-    private squadGateway: SquadsGateway,
-    private productsGateway: ProductsGateway,
-    private toastr: NbToastrService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {       
-    }        
-  ngOnInit() {                  
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                              
-      this.squadId = parseInt(paramMap.get('squadId')); 
-      this.customerId = parseInt(paramMap.get('customerId'));      
-      this.getSquad();
-    });   
-  }  
+  };  
+    constructor(
+      protected location: Location,
+      protected customerGateway: CustomersGateway,        
+      private squadGateway: SquadsGateway,    
+      protected theme: NbThemeService,
+      private toastr: NbToastrService,
+      protected router: Router, 
+      protected activatedRoute: ActivatedRoute) {       
+        super(location, customerGateway, theme, router, activatedRoute);
+      }        
+  
+  onChangeQueryParameters(paramMap: ParamMap){
+    this.squadId = parseInt(paramMap.get('squadId'));     
+    this.getSquad();
+  }
+  onNgOnInit(){
+
+  }
   getSquad(){
-    this.squadGateway.getSquad(this.squadId).subscribe(data=>{
+    this.squadGateway.getSquadDetail(this.squadId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSquad = data;  
       this.membersSource.load(data.members); 
       this.source.load(data.features);      

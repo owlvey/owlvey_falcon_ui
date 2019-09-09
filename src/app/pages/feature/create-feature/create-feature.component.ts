@@ -44,8 +44,7 @@ export class CreateFeatureComponent implements OnInit {
   ) {
     this.createForm = this.fb.group({
       id: [""],
-      name: ["", Validators.required],
-      description: ["", Validators.required]
+      name: ["", Validators.required]      
     });
     this.isLoading = false;
   }
