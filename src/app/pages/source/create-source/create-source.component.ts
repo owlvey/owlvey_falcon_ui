@@ -6,7 +6,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 @Component({
   selector: 'app-create-source',
@@ -14,33 +14,33 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
   styleUrls: ['./create-source.component.scss']
 })
 export class CreateSourceComponent extends ProductBaseComponent {
-  
+
   createForm: FormGroup;
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
-    protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router, 
+    protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router,
     protected activatedRoute: ActivatedRoute, private eventHandler: EventHandlerService,
     private toastr: NbToastrService, private sourceGateway: SourcesGateway ) {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);
     this.createForm = this.fb.group({
       id: [''],
-      name: ['', Validators.required]      
+      name: ['', Validators.required]
     });
     this.isLoading = false;
-  }    
+  }
 
-  onSubmit() {    
+  onSubmit() {
     if (!this.createForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
-    }    
-    this.isLoading = true;    
+    }
+    this.isLoading = true;
     const model = this.createForm.value;
     let  defer = this.sourceGateway.postSource(this.productId, model.name);
     defer.subscribe((data) => {
         this.toastr.success("Source Created Success");
-        this.isLoading = false;        
+        this.isLoading = false;
         this.location.back();
       }, (error) => {
         this.isLoading = false;

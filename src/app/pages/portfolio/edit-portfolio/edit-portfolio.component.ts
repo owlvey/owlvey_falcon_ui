@@ -6,7 +6,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -20,11 +20,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./edit-portfolio.component.scss']
 })
 export class EditPortfolioComponent extends ProductBaseComponent {
-  
+
   editForm: FormGroup;
   source: LocalDataSource = new LocalDataSource();
 
-  settings = {    
+  settings = {
     mode: 'external',
     actions:{
       columnTitle:'Delete',
@@ -32,160 +32,160 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       position: 'right',
       add:false,
       edit:false,
-      delete:true,  
-    },    
+      delete:true,
+    },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,                  
+      confirmDelete: true,
     },
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       id: {
         title: 'Id',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },
       name: {
         title: 'Name',
         type: 'string',
-        filter: false,        
+        filter: false,
         editable: false
-      },            
+      },
       availability: {
         title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },   
+      },
       mttd: {
         title: 'MTTD (min)',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },
       mttr: {
         title: 'MTTR (min)',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },
       mttf: {
         title: 'MTTF (min)',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },
       mtbf: {
         title: 'MTBF (min)',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },
     },
   };
 
   sourceNewFeatures: LocalDataSource = new LocalDataSource();
 
-  newSettings  = {    
+  newSettings  = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:true,
       delete: false,
-    },    
+    },
     edit: {
-      editButtonContent: '<i class="nb-plus"></i>'      
-    },    
+      editButtonContent: '<i class="nb-plus"></i>'
+    },
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       id: {
         title: 'Id',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
       name: {
         title: 'Name',
         type: 'string',
-        filter: true,        
+        filter: true,
         editable: false
-      },            
+      },
       mttd: {
         title: 'MTTD (min)',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
       mttr: {
         title: 'MTTR (min)',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
       mttf: {
         title: 'MTTF (min)',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
       mtbf: {
         title: 'MTBF (min)',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
     },
   };
-  
+
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
-    protected productGateway: ProductsGateway, 
-    protected theme: NbThemeService, 
-    protected router: Router, 
+    protected productGateway: ProductsGateway,
+    protected theme: NbThemeService,
+    protected router: Router,
     protected activatedRoute: ActivatedRoute,
-    protected eventHandler: EventHandlerService, 
+    protected eventHandler: EventHandlerService,
     protected portfolioGateway: PortfoliosGateway,
-    protected featureGateway: FeaturesGateway, 
-    protected toastr: NbToastrService, 
+    protected featureGateway: FeaturesGateway,
+    protected toastr: NbToastrService,
     protected sourceGateway: SourcesGateway ) {
-    super(location, customerGateway, productGateway, theme, router, activatedRoute);    
+    super(location, customerGateway, productGateway, theme, router, activatedRoute);
     this.isLoading = false;
-  } 
-  private portfolioId: number;   
+  }
+  private portfolioId: number;
   onChangeQueryParameters(paramMap: ParamMap): void {
-    this.portfolioId = parseInt(paramMap.get('portfolioId'));                                
+    this.portfolioId = parseInt(paramMap.get('portfolioId'));
     super.onChangeQueryParameters(paramMap);
-    this.loadSource();    
+    this.loadSource();
     this.loadNewFeatures();
   }
 
-  loadSource(){    
+  loadSource(){
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("slo").setValue(data.slo);            
-      this.source.load(data.features);      
-    });       
+      this.editForm.get("slo").setValue(data.slo);
+      this.source.load(data.features);
+    });
   }
   loadNewFeatures(){
     this.featureGateway.getFeaturesUnregistered(this.productId, this.portfolioId).subscribe(data=>{
@@ -198,29 +198,29 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      slo: ['', Validators.required],              
+      slo: ['', Validators.required],
     });
   }
-  onDelete(event){    
+  onDelete(event){
     if (confirm("are you sure?") === true){
-      const featureId =  event.data.id;    
+      const featureId =  event.data.id;
       this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
         this.loadSource();
         this.loadNewFeatures();
       });
-    }    
-  } 
-  onSubmit() {    
+    }
+  }
+  onSubmit() {
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
-    }    
-    this.isLoading = true;    
+    }
+    this.isLoading = true;
     const model = this.editForm.value;
     let  defer = this.portfolioGateway.putPortfolio(this.portfolioId, model);
     defer.subscribe((data) => {
         this.toastr.success("Portfolio Modified Success");
-        this.isLoading = false;        
+        this.isLoading = false;
         this.location.back();
       }, (error) => {
         this.isLoading = false;
@@ -229,7 +229,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
   }
 
   onFeaturesRowSelect(event){
-    const featureId = event.data.id;    
+    const featureId = event.data.id;
     this.portfolioGateway.registerFeature(this.portfolioId, featureId).subscribe(data=>{
       this.toastr.success("Feature Registered");
       this.loadSource();

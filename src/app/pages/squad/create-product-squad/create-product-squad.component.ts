@@ -5,7 +5,7 @@ import { SquadsGateway } from '../../../@core/data/squads.gateway';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 
 @Component({
   selector: 'ngx-create-product-squad',
@@ -24,7 +24,7 @@ export class CreateProductSquadComponent implements OnInit {
   squadName: string = '';
 
   createForm: FormGroup;
-  formTitle: string;  
+  formTitle: string;
   constructor(
     private location: Location,
     private squadGateway: SquadsGateway,
@@ -32,34 +32,34 @@ export class CreateProductSquadComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,    
+    private router: Router,
     private eventHandler: EventHandlerService
   ) {
     this.createForm = this.fb.group({
       productId: ['', Validators.required],
-      squadId: ['', Validators.required]      
+      squadId: ['', Validators.required]
     });
     this.isLoading = false;
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {     
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.customerId = parseInt(paramMap.get('customerId'));
       this.squadId = parseInt(paramMap.get('squadId'));
-      this.createForm.get('squadId').setValue(this.squadId); 
+      this.createForm.get('squadId').setValue(this.squadId);
       this.onLoadSquad();
       this.onLoadProducts();
-    });     
+    });
   }
 
   goBack() {
-    this.location.back();    
+    this.location.back();
   }
 
   onLoadProducts() {
 
     this.productGateway.getProducts(this.customerId).subscribe(products=>{
-      this.products = products;        
+      this.products = products;
     });
 
   }
@@ -67,7 +67,7 @@ export class CreateProductSquadComponent implements OnInit {
   onLoadSquad() {
 
     this.squadGateway.getSquad(this.squadId).subscribe(squad=>{
-      this.squadName = squad.name;        
+      this.squadName = squad.name;
     });
 
   }
@@ -78,8 +78,8 @@ export class CreateProductSquadComponent implements OnInit {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
-    
-    this.isLoading = true;    
+
+    this.isLoading = true;
     let  defer = this.squadGateway.createSquadProduct(this.createForm.value);
     defer.subscribe((data) => {
         this.toastr.success("Product Associated Success");

@@ -6,7 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
@@ -16,7 +16,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 })
 export class EditSquadComponent implements OnInit {
 
-  isLoading: boolean = false;  
+  isLoading: boolean = false;
   actionConfirmWord: string;
 
   currentSquad: any = {};
@@ -25,10 +25,10 @@ export class EditSquadComponent implements OnInit {
   createForm: FormGroup;
   formTitle: string;
 
-  settings = {    
+  settings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:false,
@@ -36,7 +36,7 @@ export class EditSquadComponent implements OnInit {
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,                  
+      confirmDelete: true,
     },
     pager: {
       perPage: 20
@@ -48,27 +48,27 @@ export class EditSquadComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false
-      },      
+      },
       email: {
         title: 'Email',
         type: 'string',
         filter: false
-      }      
+      }
     },
   };
 
-  memberSettings = {    
+  memberSettings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:true,
       delete:false
     },
     edit: {
-      editButtonContent: '<i class="nb-plus"></i>'      
-    },    
+      editButtonContent: '<i class="nb-plus"></i>'
+    },
     pager: {
       perPage: 20
     },
@@ -79,12 +79,12 @@ export class EditSquadComponent implements OnInit {
         filter: true,
         width: '3em',
         editable: false
-      },      
+      },
       email: {
         title: 'Email',
         type: 'string',
-        filter: true,        
-      }      
+        filter: true,
+      }
     },
   };
 
@@ -94,7 +94,7 @@ export class EditSquadComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private squadGateway: SquadsGateway,    
+    private squadGateway: SquadsGateway,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
@@ -155,7 +155,7 @@ export class EditSquadComponent implements OnInit {
       this.toastr.warning("Something went wrong, please try again.", "Warning")
     });
   }
-  onRegister(event){    
+  onRegister(event){
     const userId = event.data.id;
     this.squadGateway.registerMember(this.squadId, userId).subscribe(data=>{
       this.loadViewState();

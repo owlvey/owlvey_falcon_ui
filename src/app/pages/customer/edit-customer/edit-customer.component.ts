@@ -6,7 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 
 @Component({
   selector: 'ngx-edit-customer',

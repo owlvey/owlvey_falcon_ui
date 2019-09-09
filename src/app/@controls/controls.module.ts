@@ -21,7 +21,6 @@ import {
 } from '@nebular/theme';
 import { DailyChartComponent } from './daily-chart/daily-chart.component';
 import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.component';
-import { throwIfAlreadyLoaded } from '../../../App/src/app/@core/module-import-guard';
 
 
 @NgModule({
@@ -31,6 +30,6 @@ import { throwIfAlreadyLoaded } from '../../../App/src/app/@core/module-import-g
 })
 
 export class ControlsModule {
-    
+
 }
 

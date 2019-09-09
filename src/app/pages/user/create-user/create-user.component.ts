@@ -7,7 +7,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { UsersGateway } from '../../../@core/data/users.gateway';
 
 
@@ -16,7 +16,7 @@ import { UsersGateway } from '../../../@core/data/users.gateway';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {    
+export class CreateUserComponent implements OnInit {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
@@ -31,7 +31,7 @@ export class CreateUserComponent implements OnInit {
     private eventHandler: EventHandlerService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.createForm = this.fb.group({     
+    this.createForm = this.fb.group({
       email: ['', Validators.required]
     });
     this.isLoading = false;
@@ -39,7 +39,7 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      
+
     });
   }
 

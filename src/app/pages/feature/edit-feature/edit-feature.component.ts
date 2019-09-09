@@ -6,7 +6,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
@@ -19,13 +19,13 @@ import { LocalDataSource } from 'ng2-smart-table';
   styleUrls: ['./edit-feature.component.scss']
 })
 export class EditFeatureComponent extends ProductBaseComponent {
-  
+
   editForm: FormGroup;
-  isLoading: boolean = false;  
-  settings = {    
+  isLoading: boolean = false;
+  settings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:false,
@@ -33,7 +33,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,                  
+      confirmDelete: true,
     },
     pager: {
       perPage: 20
@@ -45,7 +45,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: '3em',
         editable: false
-      },      
+      },
       source: {
         title: 'Source',
         type: 'string',
@@ -57,24 +57,24 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: '3em',
         editable: false
-      },            
+      },
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  newSettings = {    
+  newSettings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:true,
       delete:false
     },
     edit: {
-      editButtonContent: '<i class="nb-plus"></i>'      
-    },    
+      editButtonContent: '<i class="nb-plus"></i>'
+    },
     pager: {
       perPage: 20
     },
@@ -85,12 +85,12 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: '3em',
         editable: false
-      },      
+      },
       name: {
         title: 'Source',
         type: 'string',
         filter: true
-      }               
+      }
     },
   };
 
@@ -98,10 +98,10 @@ export class EditFeatureComponent extends ProductBaseComponent {
 
 
 
-  squadSettings = {    
+  squadSettings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:false,
@@ -109,7 +109,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,                  
+      confirmDelete: true,
     },
     pager: {
       perPage: 20
@@ -121,7 +121,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: false,
         width: '3em',
         editable: false
-      },      
+      },
       name: {
         title: 'Name',
         type: 'string',
@@ -130,18 +130,18 @@ export class EditFeatureComponent extends ProductBaseComponent {
     },
   };
 
-  newSquadSettings = {    
+  newSquadSettings = {
     mode: 'external',
     actions:{
-      columnTitle:'Actions',      
+      columnTitle:'Actions',
       position: 'right',
       add:false,
       edit:true,
       delete:false
     },
     edit: {
-      editButtonContent: '<i class="nb-plus"></i>'      
-    },    
+      editButtonContent: '<i class="nb-plus"></i>'
+    },
     pager: {
       perPage: 20
     },
@@ -152,12 +152,12 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: false,
         width: '3em',
         editable: false
-      },      
+      },
       name: {
         title: 'Source',
         type: 'string',
         filter: false
-      }               
+      }
     },
   };
   squadsSource: LocalDataSource = new LocalDataSource();
@@ -166,25 +166,25 @@ export class EditFeatureComponent extends ProductBaseComponent {
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
-    protected productGateway: ProductsGateway, 
-    protected theme: NbThemeService, 
-    protected router: Router, 
+    protected productGateway: ProductsGateway,
+    protected theme: NbThemeService,
+    protected router: Router,
     protected activatedRoute: ActivatedRoute,
-    protected eventHandler: EventHandlerService, 
+    protected eventHandler: EventHandlerService,
     protected portfolioGateway: PortfoliosGateway,
     protected sourceGateway: SourcesGateway,
-    protected toastr: NbToastrService,     
+    protected toastr: NbToastrService,
     protected featureGateway: FeaturesGateway ) {
-    super(location, customerGateway, productGateway, theme, router, activatedRoute);    
+    super(location, customerGateway, productGateway, theme, router, activatedRoute);
     this.isLoading = false;
-  } 
+  }
 
-  private featureId: number;   
+  private featureId: number;
 
   onChangeQueryParameters(paramMap: ParamMap): void {
-    this.featureId = parseInt(paramMap.get('featureId'));                                
+    this.featureId = parseInt(paramMap.get('featureId'));
     super.onChangeQueryParameters(paramMap);
-    this.loadViewState(); 
+    this.loadViewState();
   }
 
   loadViewState(){
@@ -199,8 +199,8 @@ export class EditFeatureComponent extends ProductBaseComponent {
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("mttd").setValue(data.mttd);      
-      this.editForm.get("mttr").setValue(data.mttr);    
+      this.editForm.get("mttd").setValue(data.mttd);
+      this.editForm.get("mttr").setValue(data.mttr);
       this.source.load(data.indicators);
       this.squadsSource.load(data.squads);
     });
@@ -219,7 +219,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
   }
 
   onRegister(event){
-    const sourceId = event.data.id;    
+    const sourceId = event.data.id;
     this.featureGateway.postIndicator(this.featureId, sourceId).subscribe(data=>{
       this.toastr.success("Feature Registered");
       this.loadSource();
@@ -227,20 +227,20 @@ export class EditFeatureComponent extends ProductBaseComponent {
     });
   }
   onRegisterSquad(event){
-    const squadId = event.data.id;    
+    const squadId = event.data.id;
     this.featureGateway.putSquad(this.featureId, squadId).subscribe(data=>{
       this.loadViewState();
     });
   }
   onUnRegister(event){
-    const indicatorId = event.data.id;    
+    const indicatorId = event.data.id;
     this.featureGateway.deleteIndicator(indicatorId).subscribe(data=>{
       this.loadViewState();
     });
   }
 
   onUnRegisterSquad(event){
-    const squadId = event.data.id;    
+    const squadId = event.data.id;
     this.featureGateway.deleteSquad(this.featureId, squadId).subscribe(data=>{
       this.loadViewState();
     });
@@ -252,21 +252,21 @@ export class EditFeatureComponent extends ProductBaseComponent {
       name: ['', Validators.required],
       description: ['', Validators.required],
       avatar: ['', Validators.required],
-      mttd: ['', Validators.required],              
-      mttr: ['', Validators.required],  
+      mttd: ['', Validators.required],
+      mttr: ['', Validators.required],
     });
   }
-  onSubmit() {    
+  onSubmit() {
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
-    }    
-    this.isLoading = true;    
+    }
+    this.isLoading = true;
     const model = this.editForm.value;
     let  defer = this.featureGateway.updateFeature(this.featureId, model);
     defer.subscribe((data) => {
         this.toastr.success("Feature Modified Success");
-        this.isLoading = false;        
+        this.isLoading = false;
         this.location.back();
       }, (error) => {
         this.isLoading = false;
