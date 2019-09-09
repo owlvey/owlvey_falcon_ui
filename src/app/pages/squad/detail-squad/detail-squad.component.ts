@@ -5,7 +5,9 @@ import { SquadsGateway } from './../../../@core/data/squads.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
+import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
 
 
 @Component({
@@ -13,16 +15,17 @@ import { NbToastrService } from '@nebular/theme';
   templateUrl: './detail-squad.component.html',
   styleUrls: ['./detail-squad.component.scss']
 })
-export class DetailSquadComponent implements OnInit {
+export class DetailSquadComponent extends CustomerBaseComponent {
 
-  isLoading: boolean = false;
-  customerId: any;
-  sources: any[];
+  isLoading: boolean = false;    
   actionConfirmWord: string;
   currentSquad: any;  
   squadId = 0;
   series: Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
+
+  membersSource: LocalDataSource = new LocalDataSource();
+
   target = "average";
   private _showAll: boolean = true;
 
@@ -34,7 +37,7 @@ export class DetailSquadComponent implements OnInit {
   get showAll(){
     return this._showAll;
   }
-  settings = {    
+  membersSettings = {
     actions:{
       add:false,
       edit:false,
@@ -51,42 +54,105 @@ export class DetailSquadComponent implements OnInit {
         width: '3em',
         editable: false
       },          
-      name: {
-        title: 'Name',
+      email: {
+        title: 'Email',
         type: 'string',
         filter: true,        
         editable: false
       },                
     },
   };
-  constructor(
-    private location: Location,
-    private squadGateway: SquadsGateway,
-    private productsGateway: ProductsGateway,
-    private toastr: NbToastrService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {       
-    }        
-  ngOnInit() {                  
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                              
-      this.squadId = parseInt(paramMap.get('squadId')); 
-      this.customerId = parseInt(paramMap.get('customerId'));      
-      this.getSquad();
-    });   
-  }  
+  settings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
+      product: {
+        title: 'Product',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },                
+      service: {
+        title: 'Service',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },          
+      slo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },             
+      impact: {
+        title: 'Impact',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },               
+      name: {
+        title: 'Feature',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },              
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },              
+      points: {
+        title: 'Points',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },                    
+    },
+  };  
+    constructor(
+      protected location: Location,
+      protected customerGateway: CustomersGateway,        
+      private squadGateway: SquadsGateway,    
+      protected theme: NbThemeService,
+      private toastr: NbToastrService,
+      protected router: Router, 
+      protected activatedRoute: ActivatedRoute) {       
+        super(location, customerGateway, theme, router, activatedRoute);
+      }        
+  
+  onChangeQueryParameters(paramMap: ParamMap){
+    this.squadId = parseInt(paramMap.get('squadId'));     
+    this.getSquad();
+  }
+  onNgOnInit(){
+
+  }
   getSquad(){
-    this.squadGateway.getSquad(this.squadId).subscribe(data=>{
-      this.currentSquad = data;   
-      this.getProducts();
+    this.squadGateway.getSquadDetail(this.squadId, this.startDate, this.endDate).subscribe(data=>{
+      this.currentSquad = data;  
+      this.membersSource.load(data.members); 
+      this.source.load(data.features);      
     });
   }
-
-  getProducts(){
-    this.squadGateway.getSquadProducts(this.squadId).subscribe(data=>{
-      this.source.load(data);
-    });
-  }
-
+  
   onBackClick(event){
     this.location.back();
   }

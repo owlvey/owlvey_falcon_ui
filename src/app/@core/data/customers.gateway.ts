@@ -21,8 +21,8 @@ export class CustomersGateway {
     return this.http.get(this.baseUrl + `customers/${customerId}`);
   }
 
-  getCustomerWithAvailability(customerId: number, end: Date): Observable<any> {
-    return this.http.get(this.baseUrl + `customers/${customerId}?end=${end.toISOString()}`);
+  getCustomerWithAvailability(customerId: number, start: Date, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `customers/${customerId}?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 
   createCustomer(model: any) {

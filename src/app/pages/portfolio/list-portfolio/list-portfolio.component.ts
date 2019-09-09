@@ -155,6 +155,9 @@ export class ListPortfolioComponent implements OnInit {
       this.series = data.series;
     });
   }
+  onCreate(event){
+
+  }
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };

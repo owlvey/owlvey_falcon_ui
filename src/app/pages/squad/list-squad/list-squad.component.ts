@@ -5,7 +5,9 @@ import { SquadsGateway } from './../../../@core/data/squads.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
+import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { NbToastrService } from '@nebular/theme';
   styleUrls: ['./list-squad.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ListSquadComponent implements OnInit {
+export class ListSquadComponent extends CustomerBaseComponent {
 
   isLoading: boolean = false;
   sources: any[];
@@ -23,17 +25,16 @@ export class ListSquadComponent implements OnInit {
 
   settings = {
     mode: 'external',
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },
+    columns: {      
       name: {
         title: 'Name',
         type: 'string',
-        filter: true
+        filter: false
+      },
+      points: {
+        title: 'Points',
+        type: 'number',
+        filter: false
       }
     },
     actions: {
@@ -44,28 +45,26 @@ export class ListSquadComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
-
   constructor(
-    private location: Location,
+    protected location: Location,
+    protected customerGateway: CustomersGateway,        
     private squadGateway: SquadsGateway,
-    private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,
-    private activatedRoute: ActivatedRoute,
+    protected theme: NbThemeService,
+    protected router: Router, 
     private toastr: NbToastrService,
-    private router: Router
-  ) {
-  }
+    protected activatedRoute: ActivatedRoute) {       
+      super(location, customerGateway, theme, router, activatedRoute);
+    }      
 
-  ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {     
-      this.customerId = parseInt(paramMap.get('customerId'));       
-      this.getSquads(this.customerId);
-    });    
-    
+  onChangeQueryParameters(paramMap: ParamMap): void {       
+    super.onChangeQueryParameters(paramMap);  
+    this.getSquads();    
   }
-
-  getSquads(customerId) {
-    this.squadGateway.getSquads(customerId).subscribe(data => {
+  onNgOnInit(): void {
+      
+  }
+  getSquads() {
+    this.squadGateway.getSquadsWithPoints(this.customerId, this.startDate, this.endDate).subscribe(data => {
       this.source.load(data);
     });
   }

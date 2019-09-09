@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 import { EventHandlerService } from '../../../../../App/src/app/event-handler.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-edit-squad',
@@ -15,8 +16,7 @@ import { EventHandlerService } from '../../../../../App/src/app/event-handler.se
 })
 export class EditSquadComponent implements OnInit {
 
-  isLoading: boolean = false;
-  sources: any[];
+  isLoading: boolean = false;  
   actionConfirmWord: string;
 
   currentSquad: any = {};
@@ -24,11 +24,77 @@ export class EditSquadComponent implements OnInit {
 
   createForm: FormGroup;
   formTitle: string;
+
+  settings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:false,
+      delete:true
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,                  
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },      
+      email: {
+        title: 'Email',
+        type: 'string',
+        filter: false
+      }      
+    },
+  };
+
+  memberSettings = {    
+    mode: 'external',
+    actions:{
+      columnTitle:'Actions',      
+      position: 'right',
+      add:false,
+      edit:true,
+      delete:false
+    },
+    edit: {
+      editButtonContent: '<i class="nb-plus"></i>'      
+    },    
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },      
+      email: {
+        title: 'Email',
+        type: 'string',
+        filter: true,        
+      }      
+    },
+  };
+
+  source: LocalDataSource = new LocalDataSource();
+  memberSource: LocalDataSource = new LocalDataSource();
+
+
   constructor(
     private location: Location,
-    private squadGateway: SquadsGateway,
-    private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,
+    private squadGateway: SquadsGateway,    
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
@@ -47,15 +113,24 @@ export class EditSquadComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.squadId = parseInt(paramMap.get('squadId'));
-      this.getSquad();
+      this.loadViewState();
     });
   }
+
+  loadViewState(){
+    this.getSquad();
+    this.squadGateway.getMembersComplement(this.squadId).subscribe(data=>{
+        this.memberSource.load(data);
+    });
+  }
+
   getSquad() {
     this.squadGateway.getSquad(this.squadId).subscribe(data => {
       this.createForm.get("id").setValue(data.id);
       this.createForm.get("name").setValue(data.name);
       this.createForm.get("description").setValue(data.description);
       this.createForm.get("avatar").setValue(data.avatar);
+      this.source.load(data.members);
     });
   }
   goBack() {
@@ -78,6 +153,18 @@ export class EditSquadComponent implements OnInit {
     }, (error) => {
       this.isLoading = false;
       this.toastr.warning("Something went wrong, please try again.", "Warning")
+    });
+  }
+  onRegister(event){    
+    const userId = event.data.id;
+    this.squadGateway.registerMember(this.squadId, userId).subscribe(data=>{
+      this.loadViewState();
+    });
+  }
+  onUnRegister(event){
+    const userId = event.data.id;
+    this.squadGateway.unRegisterMember(this.squadId, userId).subscribe(data=>{
+      this.loadViewState();
     });
   }
 }

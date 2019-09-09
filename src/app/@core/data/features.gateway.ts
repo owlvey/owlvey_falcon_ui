@@ -25,6 +25,20 @@ export class FeaturesGateway {
   getIndicatorsComplement(featureId: number): Observable<any> {
     return this.http.get(this.baseUrl + `features/${featureId}/indicators/complement`);
   }
+  getSquadsComplement(featureId: number): Observable<any> {
+    return this.http.get(this.baseUrl + `features/${featureId}/squads/complement`);
+  }
+
+  putSquad(featureId: number, squadId: number): Observable<any> {
+    return this.http.put(this.baseUrl + `features/${featureId}/squads/${squadId}`, {
+      featureId : featureId, 
+      squadId : squadId
+    });
+  }
+
+  deleteSquad(featureId: number, squadId: number): Observable<any> {
+    return this.http.delete(this.baseUrl + `features/${featureId}/squads/${squadId}`);
+  } 
 
   postIndicator(featureId: number, sourceId: number): Observable<any> {
     return this.http.post(this.baseUrl + `indicators`, {

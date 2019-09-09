@@ -27,6 +27,30 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   startDate: Date = new Date();
   endDate: Date;  
 
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }      
+    }
+  };
   settings = {    
     actions:{
       add:false,
@@ -60,6 +84,8 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   };
 
   source: LocalDataSource = new LocalDataSource();
+
+  squadSource: LocalDataSource = new LocalDataSource();
   
   constructor(
     private location: Location,
@@ -90,6 +116,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(feature=>{
       this.currentSource = feature;      
       this.source.load(feature.indicators);
+      this.squadSource.load(feature.squads);
     });        
   }
 
@@ -107,6 +134,11 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     const sourceId = event.data.sourceId;
     let queryParams: Params = { sourceId: sourceId };
     this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onSquadRowSelect(event){
+    const squadId = event.data.id;
+    let queryParams: Params = { squadId: squadId };
+    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
   onBackClick(event){    

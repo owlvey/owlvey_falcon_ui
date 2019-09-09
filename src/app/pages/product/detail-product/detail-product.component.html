@@ -2,8 +2,17 @@
     <div class="col-md-12">
         <nb-card>
           <nb-card-header>
-              <h2>Product: {{ currentProduct.name }}</h2>
-              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>                
+              <div class="d-flex align-content-center">
+                  <h5> Product: {{ currentProduct.name }} </h5>
+                  <button
+                    type="button"
+                    nbButton
+                    status="primary"
+                    (click)="onBackClick($event)"
+                    class="btn btn-sm btn-outline-primary ml-auto">
+                    Back
+                  </button>
+              </div>
           </nb-card-header>
           <nb-card-body>          
               <div class="network-canvas"
