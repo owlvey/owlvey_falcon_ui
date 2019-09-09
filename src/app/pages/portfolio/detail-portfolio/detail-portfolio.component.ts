@@ -44,14 +44,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     pager: {
       perPage: 20
     },
-    columns: {      
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },          
+    columns: {            
       name: {
         title: 'Name',
         type: 'string',

@@ -29,25 +29,12 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 20
     },
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },      
+    columns: {      
       name: {
         title: 'Name',
         type: 'string',
-        filter: true
-      },      
-      tags: {
-        title: 'Tags',
-        type: 'string',
-        filter: true,
-        width: '8em',
-      },      
+        filter: false
+      },             
     },
   };
   startDate: Date;
