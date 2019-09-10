@@ -51,9 +51,14 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 5
     },
     columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false
+      },
       source: {
         title: 'SLI',
         type: 'string',

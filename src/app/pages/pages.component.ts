@@ -22,7 +22,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.themeService.changeTheme("dark");
+    //this.themeService.changeTheme("Dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {            
       const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;            
@@ -44,17 +44,17 @@ export class PagesComponent implements OnInit {
           alert('please select customer');          
         }        
       }
-      if (e.item.title == "Portfolios"){      
-        if (currentCustomer){
+      if (e.item.title == "Services"){      
+        if (currentCustomer && currentProduct){
           let queryParams: Params = { };
           this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                    
         }
         else{
-          alert('please select customer');          
+          alert('please select customer and product');          
         }        
       }
 
-      if (e.item.title == "Users"){      
+      if (e.item.title == "Members"){      
         let queryParams: Params = { };
         this.router.navigate(['/pages/users'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                           
       }

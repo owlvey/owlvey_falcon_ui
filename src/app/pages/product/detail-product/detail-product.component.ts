@@ -83,7 +83,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetwork, { physics: false });
     }, 4000);
-
+   
     const fgText = this.colors.fgText;
     const primary = this.colors.primary;    
     const primaryLight = this.colors.primaryLight;
@@ -129,16 +129,17 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         const ava = String(c.budget);
         if (c.budget < 0){          
           
-          return { font: {  align: 'top', color: infoLight, strokeColor : infoLight}, 
+          return { font: {  align: 'top', color: fgText }, 
                 label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
         } 
         else if ( c.budget >=0 && c.budget < 0.01 )       
         {
-          return { font: {  align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,  
+          //, strokeColor : infoLight
+          return { font: {  align: 'top', color: fgText }, label: ava,  
               from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
         }
         else{
-          return { font: {  align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,
+          return { font: {  align: 'top', color: fgText }, label: ava,
             from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
         }        
       });

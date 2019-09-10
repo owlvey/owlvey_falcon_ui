@@ -25,7 +25,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'archive-outline',
   },
   {
-    title: 'Portfolios',
+    title: 'Services',
     icon: 'briefcase-outline',
   },
   {
@@ -41,7 +41,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'people-outline',
   },
   {
-    title: 'Users',
+    title: 'Members',
     icon: 'people-outline',
   },
   {

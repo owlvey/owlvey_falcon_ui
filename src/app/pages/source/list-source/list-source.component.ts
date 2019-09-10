@@ -33,7 +33,7 @@ export class ListSourceComponent implements OnInit {
       name: {
         title: 'Name',
         type: 'string',
-        filter: false
+        filter: true
       },             
     },
   };
