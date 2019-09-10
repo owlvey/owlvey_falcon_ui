@@ -2,22 +2,65 @@
     <div class="col-md-12">
       <nb-card class="inline-form-card">
         <nb-card-header>
-          <h2>
-            <h5>Feature: {{ currentSource.name }}, Availability: {{ currentSource.availability }} </h5>                        
-          </h2>
-          
+          <div class="d-flex align-content-center">              
+              <h5>Feature: {{ currentSource.name }} </h5>                                      
+              <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>
+              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class=""> Back </button>              
+          </div>       
         </nb-card-header>
         <nb-card-body>          
-          <p>Description : {{ currentSource.description }} </p>
-          <p>Mean time to Detect : {{ currentSource.mttd }} </p>
-          <p>Mean time to Repair : {{ currentSource.mttr }} </p>
-          <p>Mean time to Fail : {{ currentSource.mttf }} </p>
-          <p>Mean time between failure : {{ currentSource.mtbf }} </p>
-          <form class="form-inline">
-              <button type="button" nbButton status="primary" (click)="onReportClick($event)"> Availability </button>
-              <button type="button" nbButton status="primary" (click)="onEditClick($event)"> Edit </button>
-              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="float-right"> Back </button>              
-          </form>
+            <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.availability" 
+                          nbInput fullWidth id="inputAvailability" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                  </div>
+                </div>                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.description" 
+                            nbInput fullWidth id="inputDescription" placeholder="Description"
+                            class="input-full-width size-medium shape-rectangle">                     
+                    </div>
+                </div>                
+              </div>    
+              <div class="row">
+                  <div class="col-sm-6">
+                      <label for="inputMTTD" class="label form-control-label">Mean time to Detect (MTTD)</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.mttd" 
+                          nbInput fullWidth id="inputMTTD" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                  </div>                
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputMTTR" class="label col-sm-6 form-control-label">Mean time to Repair</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.mttr" 
+                            nbInput fullWidth id="inputMTTR" placeholder=""
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                    </div>     
+              </div>
+              <div class="row">           
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="inputMTTF" class="label col-sm-6 form-control-label">Mean time to Fail</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.mttf" 
+                          nbInput fullWidth id="inputMTTF" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                </div>                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="inputMTBF" class="label col-sm-6 form-control-label">Mean time between failure</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.mtbf" 
+                          nbInput fullWidth id="inputMTBF" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                </div>                
+              </div>                        
         </nb-card-body>
       </nb-card>
     </div>
@@ -25,15 +68,17 @@
 
 <div class="row">
     <div class="col-12">
-        <nb-card size="small">
+        <nb-card size="medium">
           <nb-tabset fullWidth>
-            <nb-tab tabTitle="Service Level Indicators (SLI)">
+            <nb-tab tabTitle="Service Level Indicators (SLI)" >              
                 <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
-                </ng2-smart-table>
+                </ng2-smart-table>              
             </nb-tab>
             <nb-tab tabTitle="Squads">
-                <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
-                </ng2-smart-table>
+                <div>
+                    <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
+                    </ng2-smart-table>
+                </div>                
             </nb-tab>            
           </nb-tabset>
         </nb-card>

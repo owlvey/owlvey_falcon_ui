@@ -31,6 +31,11 @@ export class ListSquadComponent extends CustomerBaseComponent {
         type: 'string',
         filter: false
       },
+      features:{
+        title: 'Features',
+        type: 'number',
+        filter: false
+      },
       points: {
         title: 'Points',
         type: 'number',

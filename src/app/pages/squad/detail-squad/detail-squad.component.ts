@@ -71,14 +71,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
     pager: {
       perPage: 20
     },
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false
-      },          
+    columns: {      
       product: {
         title: 'Product',
         type: 'string',

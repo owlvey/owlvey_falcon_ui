@@ -36,14 +36,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     pager: {
       perPage: 20
     },
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false
-      },      
+    columns: {      
       name: {
         title: 'Name',
         type: 'string',
@@ -58,25 +51,23 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 5
     },
-    columns: {
+    columns: {      
       id: {
         title: 'Id',
         type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },      
+        filter: false
+      },
       source: {
-        title: 'Source',
+        title: 'SLI',
         type: 'string',
-        filter: true
+        filter: false
       },
       availability: {
         title: 'Availability',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },            

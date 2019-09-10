@@ -23,6 +23,11 @@ export class SourcesGateway{
     postSource(productId: number, name: String): Observable<any> {
         return this.http.post(this.baseUrl + `sources`, { productId:productId , name: name});        
     }
+
+    postSourceItem(model: any): Observable<any> {
+        return this.http.post(this.baseUrl + `sourceItems`, model);        
+    }
+
     putSource(sourceId: number, model: any): Observable<any> {
         return this.http.put(this.baseUrl + `sources/${sourceId}`, model);        
     }
@@ -35,6 +40,10 @@ export class SourcesGateway{
 
     getSourceItems(sourceId: number): Observable<any>{
         return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
+    }
+
+    deleteSourceItem(sourceItemId: number): Observable<any>{
+        return this.http.delete(this.baseUrl + `sourceItems/${sourceItemId}`);
     }
 
     getDaily(sourceId: number, start: Date, end: Date): Observable<any> {

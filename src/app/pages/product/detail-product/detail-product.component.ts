@@ -58,6 +58,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     this.productId = parseInt(paramMap.get('productId'));                                
     super.onChangeQueryParameters(paramMap); 
     this.loadProduct();    
+    this.buildGraph();
+    
   }
 
   public loadProduct(){    
@@ -75,6 +77,13 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   }
 
   buildGraph(){    
+    if (!this.colors){
+      return;
+    }
+    setTimeout(() => {
+      this.visNetworkService.setOptions(this.visNetwork, { physics: false });
+    }, 4000);
+   
     const fgText = this.colors.fgText;
     const primary = this.colors.primary;    
     const primaryLight = this.colors.primaryLight;
@@ -109,7 +118,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           }          
         }
         else if (c.group == "features"){
-          return { id: c.id, value: 15, label: c.name, group: "2", shape: 'dot', title: c.name, 
+          return { id: c.id, value: 14, label: c.name, group: "2", shape: 'dot', title: c.name, 
                     font:{ color: fgText },
                     color: {background:success, border: primaryLight , 
                     highlight:{background:successLight, border: primaryLight},
@@ -120,16 +129,17 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         const ava = String(c.budget);
         if (c.budget < 0){          
           
-          return { font: { size: 18,  align: 'top', color: infoLight, strokeColor : infoLight}, 
+          return { font: {  align: 'top', color: fgText }, 
                 label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
         } 
         else if ( c.budget >=0 && c.budget < 0.01 )       
         {
-          return { font: { size: 18, align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,  
+          //, strokeColor : infoLight
+          return { font: {  align: 'top', color: fgText }, label: ava,  
               from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
         }
         else{
-          return { font: { size: 18, align: 'top', color: infoLight, strokeColor : infoLight }, label: ava,
+          return { font: {  align: 'top', color: fgText }, label: ava,
             from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
         }        
       });
@@ -200,10 +210,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           }
         },        
         nodes: {                                     
-          shape: 'dot',          
-          size: 30,
-          font: {
-              size: 32,
+          shape: 'dot',                    
+          font: {              
               color: '#ffffff'
           },
           color: {
@@ -211,11 +219,16 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             background: '#666666'
           },
           borderWidth: 2,
-          shadow:true,          
+          shadow:false,          
         },
         interaction: {hover: true},
         edges: {
-            width: 3,            
+            labelHighlightBold:false,
+            smooth: true,          
+            width: 3,    
+            font:{
+              face: 'arial'
+            },        
             arrows: 'to',
             arrowStrikethrough: true,
             dashes: true,            
@@ -252,10 +265,6 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     this.visNetworkService.on(this.visNetwork, 'click');
 
     // stop adjustments
-    setTimeout(() => {
-      this.visNetworkService.setOptions(this.visNetwork, { physics: false });
-    }, 4000);
-
     // open your console/dev tools to see the click params
     this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{      
       
