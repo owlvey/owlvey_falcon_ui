@@ -14,8 +14,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 })
 export class CreateProductComponent implements OnInit {
 
-  isLoading: boolean = false;
-  sources: any[];
+  isLoading: boolean = false;  
   actionConfirmWord: string;
 
   product: any = {};
@@ -49,8 +48,7 @@ export class CreateProductComponent implements OnInit {
     this.location.back();
   }
 
-  onSubmit() {
-    console.log(this.createForm)
+  onSubmit() {    
     if (!this.createForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;

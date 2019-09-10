@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListPortfolioComponent } from './list-portfolio/list-portfolio.component';
+import { CreatePortfolioComponent } from './create-portfolio/create-portfolio.component';
 import { EditPortfolioComponent } from './edit-portfolio/edit-portfolio.component';
 import { DetailPortfolioComponent } from './detail-portfolio/detail-portfolio.component';
 import { PortfolioRoutingModule } from "./portfolio.routing.module";
@@ -25,7 +26,7 @@ import {
 
 
 @NgModule({
-  declarations: [DetailPortfolioComponent, ListPortfolioComponent, EditPortfolioComponent],
+  declarations: [DetailPortfolioComponent, ListPortfolioComponent, EditPortfolioComponent, CreatePortfolioComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, PortfolioRoutingModule, Ng2SmartTableModule, 
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
      NbCardModule, ControlsModule]

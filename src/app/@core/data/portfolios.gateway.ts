@@ -13,6 +13,10 @@ export class PortfoliosGateway{
         this.baseUrl = envService.getUrl(environment.api, environment.type);
       }
 
+    postPortfolio(model: any){        
+        return this.http.post(this.baseUrl + `services`, model);
+    }
+
     putPortfolio(portflioId: number, model: any): Observable<any>{
         return this.http.put(this.baseUrl + `services/${portflioId}`, model);
     }

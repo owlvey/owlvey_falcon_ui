@@ -18,8 +18,7 @@ import { FeaturesGateway } from '../../../@core/data/features.gateway';
 export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   
 
-  isLoading: boolean = false;
-  sources: any[];
+  isLoading: boolean = false;  
   actionConfirmWord: string;
   currentSource : any= {};    
   productId = 0;
@@ -45,44 +44,51 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       perPage: 20
     },
     columns: {            
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },          
       name: {
         title: 'Name',
         type: 'string',
-        filter: true,        
+        filter: false,        
         editable: false
       },            
       availability: {
         title: 'Availability',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },   
       mttd: {
         title: 'MTTD (min)',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },          
       mttr: {
         title: 'MTTR (min)',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },          
       mttf: {
         title: 'MTTF (min)',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },          
       mtbf: {
         title: 'MTBF (min)',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
         editable: false
       },          

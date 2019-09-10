@@ -2,12 +2,17 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-        <div class="d-flex align-content-center">
-          <h4>Customers</h4>
-          <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary ml-auto">
-            Create
-          </button>
-        </div>
+          <div class="d-flex">
+              <h5>Customers</h5>
+              <div class="ml-auto mr-4">
+                  <nb-actions size="small">                      
+                      <nb-action>
+                        <nb-icon class="action-icon" icon="plus-outline" (click)="onCreate($event)" style="cursor: pointer;" ></nb-icon>
+                        <span>Create</span>                
+                      </nb-action>
+                    </nb-actions>
+              </div>
+          </div>        
       </nb-card-header>
       <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onCustomerRowSelect($event)">

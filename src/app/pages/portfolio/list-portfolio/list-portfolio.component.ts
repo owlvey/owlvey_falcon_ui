@@ -155,8 +155,9 @@ export class ListPortfolioComponent implements OnInit {
       this.series = data.series;
     });
   }
-  onCreate(event){
-
+  onCreate(event){    
+    let queryParams: Params = {  };
+    this.router.navigate(['/pages/portfolios/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;

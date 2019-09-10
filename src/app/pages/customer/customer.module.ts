@@ -15,7 +15,7 @@ import {
   NbActionsModule,
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule,
+  NbCheckboxModule,  
   NbDatepickerModule,
   NbIconModule,
   NbInputModule,
@@ -46,8 +46,10 @@ import { EditCustomerComponent } from "./edit-customer/edit-customer.component";
     NgxChartsModule,
     NbButtonModule,
     NbCardModule,
+    NbActionsModule,
     ControlsModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    NbIconModule
   ]
 })
 export class CustomerModule {}

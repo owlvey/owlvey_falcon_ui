@@ -22,22 +22,16 @@ export class ListCustomerComponent implements OnInit {
 
   settings = {
     mode: 'external',
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },
+    columns: {      
       name: {
         title: 'Name',
         type: 'string',
-        filter: true
+        filter: false
       },
       productsCount: {
-        title: 'Count',
+        title: 'Services',
         type: 'number',
-        filter: true,
+        filter: false,
         width: '3em',
       },
     },
