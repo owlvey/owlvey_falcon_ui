@@ -35,9 +35,9 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   themeSubscription: any;
 
   public visNetwork: string = 'networkId1';
-  public visNetworkData: ExampleNetworkData;
+  public visNetworkData: VisNetworkData;
   public visNetworkOptions: VisNetworkOptions;
-
+  colors: any;
 
   
   constructor(
@@ -67,7 +67,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           this.currentProduct = data;          
       });       
   }
-  colors: any;
+  
   onNgOnInit(): void {    
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {      
       this.colors = config.variables;            
@@ -103,14 +103,14 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         else if (c.group == "services"){          
           if (c.budget >= 0 )
           {            
-            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon', title: String(c.availability),
+            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon', title: String(c.value),
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight , 
                   highlight:{background:successLight, border: primaryLight},
                   hover:{background:successLight, border: primaryLight}}};              
           }          
           else{
-            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon',title: String(c.availability),
+            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon',title: String(c.value),
                   font:{ color: fgText },
                   color: {background: danger, border: primaryLight, 
                   highlight:{background: dangerLight, border: primaryLight},
@@ -126,13 +126,13 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         }        
       });
       var edgeData = data.edges.map(c=>{
-        const ava = String(c.budget);
-        if (c.budget < 0){          
+        const ava = String(c.value);
+        if (c.value < 0){          
           
           return { font: {  align: 'top', color: fgText }, 
                 label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
         } 
-        else if ( c.budget >=0 && c.budget < 0.01 )       
+        else if ( c.value >=0 && c.value < 0.01 )       
         {
           //, strokeColor : infoLight
           return { font: {  align: 'top', color: fgText }, label: ava,  
@@ -149,6 +149,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         nodes,
         edges,
       };
+      
       this.visNetworkOptions = {      
         physics:{
           enabled: true,

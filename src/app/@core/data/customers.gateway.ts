@@ -19,7 +19,11 @@ export class CustomersGateway {
 
   getCustomer(customerId: number): Observable<any> {
     return this.http.get(this.baseUrl + `customers/${customerId}`);
-  }
+  }  
+
+  getSquadsGraph(customerId: number, start: Date, end: Date): Observable<any> {
+    return this.http.get(this.baseUrl + `customers/${customerId}/squads/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }  
 
   getCustomerWithAvailability(customerId: number, start: Date, end: Date): Observable<any> {
     return this.http.get(this.baseUrl + `customers/${customerId}?start=${start.toISOString()}&end=${end.toISOString()}`);

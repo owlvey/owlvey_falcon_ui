@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+          <nb-card-header>
+              <div class="d-flex align-content-center">
+                  <h5> {{ currentCustomer?.name }} </h5>
+                  <button
+                    type="button"
+                    nbButton
+                    status="primary"
+                    (click)="onBackClick($event)"
+                    class="btn btn-sm btn-outline-primary ml-auto">
+                    Back
+                  </button>
+              </div>
+          </nb-card-header>
+          <nb-card-body>          
+              <div class="network-canvas"
+              [visNetwork]="visNetwork"
+              [visNetworkData]="visNetworkData"
+              [visNetworkOptions]="visNetworkOptions"
+              (initialized)="networkInitialized()"></div>
+            
+          </nb-card-body>
+        </nb-card>
+      </div>
+</div>

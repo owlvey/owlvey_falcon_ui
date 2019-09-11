@@ -91,6 +91,16 @@ export class ListSquadComponent extends CustomerBaseComponent {
     }
   }
 
+  onGraph(event){
+    let queryParams: Params = {};
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/squads/graph'], extras);
+  }
+
   onCreate(event) {
     let queryParams: Params = {};
     let extras: any = {
@@ -100,9 +110,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
     }
     this.router.navigate(['/pages/squads/create'], extras);
   }
-  onEdit(event) {
-    this.router.navigate(['/pages/squads/' + event.data.id]);
-  }
+  
   onSquadRowSelect(event) {
     const squadId = event.data.id;
     let queryParams: Params = { squadId: squadId, uheader: null };

@@ -14,7 +14,7 @@ export class SquadsGateway{
 
   getSquads(customerId): Observable<any> {
     return this.http.get(this.baseUrl + `squads?customerId=${customerId}`);
-  }
+  }  
   getSquadsWithPoints(customerId, start: Date, end: Date): Observable<any> {
     return this.http.get(this.baseUrl + `squads?customerId=${customerId}&start=${start.toISOString()}&end=${end.toISOString()}`);
   }
