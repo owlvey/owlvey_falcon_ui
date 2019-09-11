@@ -34,57 +34,47 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-      <nb-card>
-        <nb-card-header>
-          <h6>Service Level Indicators (SLI)</h6>
-        </nb-card-header>
-        <nb-card-body>            
-            <ng2-smart-table [settings]="settings" [source]="source" (delete)="onUnRegister($event)">
-            </ng2-smart-table>
-        </nb-card-body>
-      </nb-card>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-      <nb-card>
-        <nb-card-header>
-          <h6> Register Source as SLI</h6>
-        </nb-card-header>
-        <nb-card-body>            
-            <ng2-smart-table [settings]="newSettings" [source]="newSource" (edit)="onRegister($event)">
-            </ng2-smart-table>
-        </nb-card-body>
-      </nb-card>
-    </div>
-</div> 
-  
-<div class="row">
   <div class="col-md-12">
-    <nb-card>
-      <nb-card-header>
-        <h6>Squads</h6>
-      </nb-card-header>
-      <nb-card-body>            
-          <ng2-smart-table [settings]="squadSettings" [source]="squadsSource" (delete)="onUnRegisterSquad($event)">
-          </ng2-smart-table>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
+      <nb-card style="height: 60rem">
+          <nb-tabset fullWidth>
+              <nb-tab tabTitle="Service Level Indicators (SLI)" >                  
+                  <nb-card>                      
+                      <nb-card-body>            
+                          <ng2-smart-table [settings]="settings" [source]="source" (delete)="onUnRegister($event)">
+                          </ng2-smart-table>                      
+                      </nb-card-body>
+                  </nb-card>  
+    
+                  <nb-card>
+                      <nb-card-header>
+                          <h6> Register Source as SLI</h6>      
+                      </nb-card-header>
+                      <nb-card-body>            
+                          <ng2-smart-table [settings]="newSettings" [source]="newSource" (edit)="onRegister($event)">
+                          </ng2-smart-table>
+                      </nb-card-body>
+                  </nb-card>  
+              </nb-tab>
+              <nb-tab tabTitle="Squads">
+                  <nb-card>                      
+                      <nb-card-body>            
+                          <ng2-smart-table [settings]="squadSettings" [source]="squadsSource" (delete)="onUnRegisterSquad($event)">
+                          </ng2-smart-table>
+                      </nb-card-body>
+                  </nb-card>
+                  <nb-card>
+                      <nb-card-header>
+                        <h6> Register Squad</h6>
+                      </nb-card-header>
+                      <nb-card-body>            
+                          <ng2-smart-table [settings]="newSquadSettings" [source]="newSquadSource" (edit)="onRegisterSquad($event)">
+                          </ng2-smart-table>
+                      </nb-card-body>
+                    </nb-card>
 
-<div class="row">
-  <div class="col-md-12">
-    <nb-card>
-      <nb-card-header>
-        <h6> Register Squad</h6>
-      </nb-card-header>
-      <nb-card-body>            
-          <ng2-smart-table [settings]="newSquadSettings" [source]="newSquadSource" (edit)="onRegisterSquad($event)">
-          </ng2-smart-table>
-      </nb-card-body>
-    </nb-card>
+              </nb-tab>            
+            </nb-tabset>
+
+      </nb-card>      
   </div>
 </div>
