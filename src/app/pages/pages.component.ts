@@ -73,6 +73,10 @@ export class PagesComponent implements OnInit {
         let queryParams: Params = { };
         this.router.navigate(['/pages/customers'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
       }      
+      if (e.item.title == "Migrations"){          
+        let queryParams: Params = { };
+        this.router.navigate(['/pages/migrations'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
+      }      
       if (e.item.title == "Squads"){     
         if (currentCustomer){
           let queryParams: Params = { };

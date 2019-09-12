@@ -43,6 +43,10 @@ const routes: Routes = [{
       loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule),
     },    
     {
+      path: 'migrations',
+      loadChildren: () => import('./migrate/migrate.module').then(m => m.MigrateModule),
+    },    
+    {
       path: 'portfolios',
       loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),
     },    

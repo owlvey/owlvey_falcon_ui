@@ -17,8 +17,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
+    title: 'Members',
+    icon: 'people-outline',
+  },
+  {
     title: 'Customers',
     icon: 'globe-outline',
+  },  
+  {
+    title: 'Squads',
+    icon: 'people-outline',
   },  
   {
     title: 'Products',
@@ -35,15 +43,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Sources',
     icon: 'shake-outline',
-  },
+  },  
   {
-    title: 'Squads',
-    icon: 'people-outline',
-  },
-  {
-    title: 'Members',
-    icon: 'people-outline',
-  },
+    title: 'Migrations',
+    icon: 'shake-outline',
+  },  
   {
     title: 'Layout',
     icon: 'layout-outline',

@@ -43,4 +43,12 @@ export class CustomersGateway {
   getDaily(customerId: number, start: Date, end: Date): Observable<any> {
     return this.http.get(this.baseUrl + `customers/${customerId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
+
+  importMetadata(customerId, model: any): Observable<any>{
+    return this.http.post(this.baseUrl + `customers/${customerId}/import/metadata/excel`, model);
+  }
+
+  exportMetadata(customerId: number): Observable<any>{    
+    return this.http.get(this.baseUrl + `customers/${customerId}/export/metadata/excel`, { responseType: 'blob'});
+  }
 }
