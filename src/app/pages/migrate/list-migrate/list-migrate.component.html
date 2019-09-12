@@ -38,7 +38,7 @@
                 <div class="form-group">
                   <label for="metadata">Metadata</label>
                   <input type="file" id="metadata" (change)="onFileChange($event)" nbInput fullWidth class="form-control">
-                  <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+                  <button type="button" nbButton status="primary" (click)="clearFile()">clear file</button>
                 </div>
                 <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
               </form>
