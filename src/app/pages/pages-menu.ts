@@ -45,6 +45,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'shake-outline',
   },  
   {
+    title: 'Incidents',
+    icon: 'shake-outline',
+  },  
+  {
     title: 'Migrations',
     icon: 'shake-outline',
   },  

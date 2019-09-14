@@ -69,6 +69,17 @@ export class PagesComponent implements OnInit {
           alert('please select customer and product');          
         }                
       }
+
+      if (e.item.title == "Incidents"){      
+        if (currentProduct && currentCustomer){
+          let queryParams: Params = { };
+          this.router.navigate(['/pages/incidents'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                              
+        }
+        else{
+          alert('please select customer and product');          
+        }                
+      }
+
       if (e.item.title == "Customers"){          
         let queryParams: Params = { };
         this.router.navigate(['/pages/customers'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      

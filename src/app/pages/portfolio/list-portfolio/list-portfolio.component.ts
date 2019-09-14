@@ -50,7 +50,7 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Impact',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },
       availability: {
@@ -64,28 +64,28 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Budget',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },
       budgetMinutes:{
         title: 'Budget (min)',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },
       mttd:{
         title: 'MTTD (min)',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },      
       mttr:{
         title: 'MTTR (min)',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },
       deploy: {
@@ -99,7 +99,7 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Risk',
         type: 'string',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },
       name: {
@@ -111,7 +111,7 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Features',
         type: 'string',
         filter: true,
-        width: '3em',
+        width: '2em',
       },            
     },
   };

@@ -60,6 +60,7 @@ import { PortfoliosGateway } from './data/portfolios.gateway';
 import { SquadsGateway }  from './data/squads.gateway';
 import { FormatService } from './utils/format.service';
 import { EnvironmentService } from './utils/env.service';
+import { IncidentsGateway } from './data/incident.gateway';
 
 
 const socialLinks = [
@@ -108,7 +109,8 @@ const DATA_SERVICES = [
   { provide: SquadsGateway, useClass: SquadsGateway }, 
   { provide: UsersGateway, useClass: UsersGateway },  
   { provide: FormatService, useClass: FormatService },
-  { provide: EnvironmentService, useClass: EnvironmentService }    
+  { provide: EnvironmentService, useClass: EnvironmentService } ,
+  { provide: IncidentsGateway, useClass: IncidentsGateway }    
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
