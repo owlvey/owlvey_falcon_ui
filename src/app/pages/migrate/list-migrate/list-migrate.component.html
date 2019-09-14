@@ -29,12 +29,7 @@
       <nb-card class="inline-form-card">
         <nb-card-header>Import metadata from Excel</nb-card-header>
         <nb-card-body>
-
-              <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="customer.xlsx" formControlName="name">
-                </div>
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">                
                 <div class="form-group">
                   <label for="metadata">Metadata</label>
                   <input type="file" id="metadata" (change)="onFileChange($event)" nbInput fullWidth class="form-control">

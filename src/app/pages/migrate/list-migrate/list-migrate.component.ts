@@ -28,8 +28,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       this.createForm();
     }   
     createForm() {
-      this.form = this.fb.group({
-        name: ['', Validators.required],
+      this.form = this.fb.group({        
         data: null
       });
     }
@@ -42,8 +41,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       }
     }
     private prepareSave(): any {
-      let input = new FormData();
-      input.append('name', this.form.get('name').value);
+      let input = new FormData();      
       input.append('data', this.form.get('data').value);
       return input;
     }
@@ -52,9 +50,10 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       const formModel = this.prepareSave();
       this.loading = true;
 
-      this.customerGateway.importMetadata(this.customerId, formModel).subscribe(data=>{
-        console.log(formModel);
+      this.customerGateway.importMetadata(this.customerId, formModel).subscribe(data=>{        
         alert('done!');
+        this.loading = false;
+      }, (error:any) => {
         this.loading = false;
       });
     }

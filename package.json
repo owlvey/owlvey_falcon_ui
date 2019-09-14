@@ -12,7 +12,7 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "build:docker": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=docker",
     "build:prod": "npm run build -- --prod --aot",
