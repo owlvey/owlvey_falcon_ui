@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>
+        <div class="d-flex align-content-center">
+          <h4>{{ currentCustomer?.name }}</h4>
+          <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>
+          <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
+          <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button>
+        </div>
+      </nb-card-header>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <h5>Products</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onProductRowSelect($event)">
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<nb-card>
+  <nb-card-header>
+    <h5>Average Availability Report</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-daily-detail-chart [showAll]="1" [target]="target" [dataItems]="series"></ngx-daily-detail-chart>
+  </nb-card-body>
+</nb-card>
+
+
+

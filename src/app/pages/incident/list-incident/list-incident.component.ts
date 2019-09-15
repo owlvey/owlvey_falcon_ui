@@ -39,7 +39,7 @@ export class ListIncidentComponent extends ProductBaseComponent {
         title: 'Id',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '2em',
         editable: false
       },      
       title: {
@@ -50,19 +50,26 @@ export class ListIncidentComponent extends ProductBaseComponent {
         editable: false
       },      
       mttd:{
-        title: 'MTTD (min)',
+        title: 'MTTD',
         type: 'number',
         filter: true,
         width: '2em',
         editable: false
       },      
-      mttr:{
-        title: 'MTTR (min)',
+      mtte:{
+        title: 'MTTE',
         type: 'number',
         filter: true,
         width: '2em',
         editable: false
-      },           
+      },      
+      mttf:{
+        title: 'MTTF',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        editable: false
+      }           
     },
   };
 
@@ -91,5 +98,8 @@ export class ListIncidentComponent extends ProductBaseComponent {
     this.incidentGateway.getIncidents(this.productId, this.startDate, this.endDate).subscribe(data=>{
       this.source.load(data);
     });    
+  }
+  onUserRowSelect(){
+    
   }
 }
