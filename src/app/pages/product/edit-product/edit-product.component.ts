@@ -45,6 +45,11 @@ export class EditProductComponent implements OnInit {
     });
   }
 
+
+  goBack() {
+    this.location.back();
+  }
+
   getProduct(){
     this.productsGateway.getProduct(this.productId).subscribe(data => {
       this.editForm.get("id").setValue(data.id);
