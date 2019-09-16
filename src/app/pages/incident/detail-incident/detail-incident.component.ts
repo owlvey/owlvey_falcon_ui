@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChildren, Input } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, DatePipe } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
-import { CustomersGateway } from './../../../@core/data/customers.gateway';
-import { SourcesGateway } from './../../../@core/data/sources.gateway';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
+import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
@@ -15,12 +15,11 @@ import { IncidentsGateway } from '../../../@core/data/incident.gateway';
   templateUrl: './detail-incident.component.html',
   styleUrls: ['./detail-incident.component.scss']
 })
+
 export class DetailIncidentComponent  extends ProductBaseComponent {
 
   incidentId : number;
   incident: any;
-
-
   settings = {    
     actions:{
       add:false,
