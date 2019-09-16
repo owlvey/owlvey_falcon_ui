@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChildren, Input } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
-import { CustomersGateway } from './../../../@core/data/customers.gateway';
-import { SourcesGateway } from './../../../@core/data/sources.gateway';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
+import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService } from '@nebular/theme';
 
 
 @Component({
-  selector: 'app-detail-customer',
-  templateUrl: './detail-customer.component.html',
-  styleUrls: ['./detail-customer.component.scss']
+  selector: 'app-detail-incident',
+  templateUrl: './detail-incident.component.html',
+  styleUrls: ['./detail-incident.component.scss']
 })
-export class DetailCustomerComponent implements OnInit {
+export class DetailIncidentComponent implements OnInit {
 
   isLoading: boolean = false;
   sources: any[];
