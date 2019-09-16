@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>
+        <div class="d-flex align-content-center">
+          <h4>{{ incident?.title }}</h4>
+          <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>          
+        </div>
+      </nb-card-header>
+      <nb-card-body>          
+          <form (ngSubmit)="onSubmit();" [formGroup]="editForm">
+              <div class="row">            
+                  <div class="col-sm-12">
+                      <div class="form-group">
+                          <label for="inpTitle" class="label col-sm-3 form-control-label">Title</label>
+                          <input type="text" name="title"  formControlName="title"
+                              nbInput fullWidth id="inpTitle" placeholder="title"
+                              class="input-full-width size-medium shape-rectangle">                     
+                      </div>
+                  </div>                
+                </div>       
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inpaffected" class="label col-sm-3 form-control-label">Affected</label>
+                        <input  type="number"  name="affected"  formControlName="affected"
+                            nbInput fullWidth id="inpaffected" placeholder=""
+                            class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                  </div>                
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
+                          <input type="text" name="description" formControlName="description"
+                              nbInput fullWidth id="inputDescription" placeholder="Description"
+                              class="input-full-width size-medium shape-rectangle">                     
+                      </div>
+                  </div>                
+                </div>    
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="inpDate" class="label col-sm-3 form-control-label">Start</label>
+                        <input type="datetime"  formControlName="start" name="start"
+                            nbInput fullWidth id="inpDate" placeholder="" class="input-full-width size-medium shape-rectangle">                 
+                        
+                    </div>                
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="inputMTTR" class="label col-sm-6 form-control-label">Time to Engage</label>
+                          <input type="number" formControlName="tte" name="tte"
+                              nbInput fullWidth id="inputMTTR" placeholder=""
+                              class="input-full-width size-medium shape-rectangle">                 
+                        </div>
+                      </div>     
+                </div>
+                <div class="row">           
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="inputMTTF" class="label col-sm-6 form-control-label">Time to Fix</label>
+                        <input type="number" formControlName="ttf" name="ttf"
+                            nbInput fullWidth id="inputMTTF" placeholder=""
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                  </div>                                  
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="inputMTTD" class="label form-control-label">Time to Detect </label>
+                          <input type="number" formControlName="ttd" name="ttd"
+                              nbInput fullWidth id="inputMTTD" placeholder=""
+                              class="input-full-width size-medium shape-rectangle">                   
+                      </div>
+                    </div>                                                  
+                </div>                 
+                <div class="row">
+                  
+                </div>   
+                <div class="row">            
+                  <div class="col-sm-12">
+                      <div class="form-group">
+                          <label for="inputUrl" class="label col-sm-3 form-control-label">Url</label>
+                          <input type="text" formControlName="url" name="url"
+                              nbInput fullWidth id="inputUrl" placeholder="url"
+                              class="input-full-width size-medium shape-rectangle">                     
+                      </div>
+                  </div>                
+                </div>    
+                <div class="row">            
+                    <div class="col-sm-12">
+                        <div class="text-right">                            
+                            <button type="submit" nbbutton class="appearance-filled size-medium status-primary shape-rectangle transitions" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button>
+                        </div>
+                    </div>
+                </div>               
+          </form>         
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>
+          <h5>Features</h5>         
+        </nb-card-header>  
+    
+        <nb-card-body>
+            <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)">
+            </ng2-smart-table>
+          </nb-card-body>    
+      </nb-card>      
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-12">
+        <nb-card>
+          <nb-card-header>
+            <h5>New Features</h5>         
+          </nb-card-header>  
+      
+          <nb-card-body>
+              <ng2-smart-table [settings]="newSettings" [source]="newSource"  (edit)="onFeaturesRowSelect($event)" >
+              </ng2-smart-table>
+            </nb-card-body>
+      
+        </nb-card>
+        
+      </div>
+    </div>
