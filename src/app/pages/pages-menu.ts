@@ -18,16 +18,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Members',
-    icon: 'people-outline',
+    icon: 'person-outline',
   },
   {
     title: 'Customers',
     icon: 'globe-outline',
-  },  
+  },
   {
     title: 'Squads',
     icon: 'people-outline',
-  },  
+  },
   {
     title: 'Products',
     icon: 'archive-outline',
@@ -42,16 +42,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Sources',
-    icon: 'shake-outline',
-  },  
+    icon: 'stop-circle-outline',
+  },
   {
     title: 'Incidents',
-    icon: 'shake-outline',
-  },  
+    icon: 'activity-outline',
+  },
   {
     title: 'Migrations',
-    icon: 'shake-outline',
-  },  
+    icon: 'upload-outline',
+  },
   {
     title: 'Layout',
     icon: 'layout-outline',
@@ -179,7 +179,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/extra-components/chat',
       },
     ],
-  },  
+  },
   {
     title: 'Charts',
     icon: 'pie-chart-outline',

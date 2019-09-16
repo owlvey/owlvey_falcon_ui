@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { SquadsGateway } from '../../../@core/data/squads.gateway';
-import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
