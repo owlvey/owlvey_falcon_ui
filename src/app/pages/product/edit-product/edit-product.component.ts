@@ -58,7 +58,6 @@ export class EditProductComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
     console.log(this.editForm);
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
