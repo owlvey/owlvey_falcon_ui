@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChildren, Input } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy, DatePipe } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
+import { ProductBaseComponent } from '../../common/components/base-product.components';
+import { IncidentsGateway } from '../../../@core/data/incident.gateway';
 
 
 @Component({
@@ -13,28 +15,11 @@ import { NbToastrService } from '@nebular/theme';
   templateUrl: './detail-incident.component.html',
   styleUrls: ['./detail-incident.component.scss']
 })
-export class DetailIncidentComponent implements OnInit {
 
-  isLoading: boolean = false;
-  sources: any[];
-  actionConfirmWord: string;
-  startDate: Date = new Date();
-  endDate: Date;
-  currentCustomer: any;  
-  customerId = 0;
-  series: Array<any> = [];  
-  source: LocalDataSource = new LocalDataSource();
-  target = "average";
-  private _showAll: boolean = true;
+export class DetailIncidentComponent  extends ProductBaseComponent {
 
-  @Input()
-  set showAll(event){
-    this._showAll = !this._showAll;
-       
-  }
-  get showAll(){
-    return this._showAll;
-  }
+  incidentId : number;
+  incident: any;
   settings = {    
     actions:{
       add:false,
@@ -51,72 +36,58 @@ export class DetailIncidentComponent implements OnInit {
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },    
       name: {
         title: 'Name',
         type: 'string',
-        filter: true,        
-        editable: false
-      },                
+        filter: true
+      },          
     },
   };
+
+  source: LocalDataSource = new LocalDataSource();
+
   constructor(
-    private location: Location,
-    private customerGateway: CustomersGateway,
-    private toastr: NbToastrService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {       
-    }        
-  ngOnInit() {                  
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                              
-      this.customerId = parseInt(paramMap.get('customerId'));      
-      this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));      
-      this.getCustomer();
-      this.getDaily(); 
-    });   
-  }  
-  getCustomer(){
-    this.customerGateway.getCustomerWithAvailability(this.customerId, this.startDate, this.endDate).subscribe(data=>{
-      this.currentCustomer = data;   
-      this.source.load(data.products);
-    });
+    protected location: Location,
+    protected customerGateway: CustomersGateway,        
+    protected productGateway: ProductsGateway,    
+    protected incidentGateway: IncidentsGateway,
+    protected theme: NbThemeService,
+    private datePipe: DatePipe,
+    protected router: Router, 
+    protected activatedRoute: ActivatedRoute) {       
+      super(location, customerGateway, productGateway, theme, router, activatedRoute);
+    }     
+  onChangeQueryParameters(paramMap: ParamMap): void {                 
+      super.onChangeQueryParameters(paramMap);    
+      this.incidentId = parseInt(paramMap.get("incidentId"));          
+      this.getIncident();
   }
-  getDaily(){
-    this.customerGateway.getDaily(this.customerId, this.startDate, this.endDate).subscribe(data=>{
-      this.series = data.series;
-    });
-  }
-  onBackClick(event){
-    this.location.back();
-  }
-  onProductRowSelect(event){
-    const productId = event.data.id;
-    let queryParams: Params = { customerId: this.customerId, productId: productId, uheader: null };
-    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-  onEditClick(event) {
+  onNgOnInit(): void {
+      
+  } 
+  onEditClick(event){
     let queryParams: Params = {  };
-    let extras: any = {
-      relativeTo: this.activatedRoute,
-      queryParams: queryParams,
-      queryParamsHandling: 'merge'
-    }
-    this.router.navigate(['/pages/customers/edit'], extras);     
+    this.router.navigate(['/pages/incidents/edit'], { 
+      relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
+    );     
   }
-  deleteCustomer() {
-    this.customerGateway.deleteCustomer(this.customerId)
-      .subscribe((data) => {
-        this.location.back();
-      }, (error) => {
-        this.toastr.danger("Something went wrong. Please try again.", "Error");
-      })
+  onDeleteConfirm(event){
+    
   }
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      this.deleteCustomer();
-    } else {
-      event.confirm.reject();
-    }
+  getIncident(){
+    this.incidentGateway.getIncident(this.incidentId).subscribe(data=>{
+      data.start = this.datePipe.transform(new Date(data.start), 'yyyy-MM-dd hh:mm:ss')       
+      data.end = this.datePipe.transform(new Date(data.end), 'yyyy-MM-dd hh:mm:ss')       
+      this.incident = data;
+      this.source.load(data.features);
+    });
+  }
+  onUserRowSelect(event){
+
+    let queryParams: Params = { featureId: event.data.id };
+        this.router.navigate(['/pages/features/detail'], { 
+          relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
+    );     
   }
 }

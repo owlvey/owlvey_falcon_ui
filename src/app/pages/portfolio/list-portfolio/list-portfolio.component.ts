@@ -74,20 +74,13 @@ export class ListPortfolioComponent implements OnInit {
         width: '2em',
         editable: false
       },
-      mttd:{
-        title: 'MTTD (min)',
+      mttm:{
+        title: 'MTTM (min)',
         type: 'number',
         filter: true,
         width: '2em',
         editable: false
-      },      
-      mttr:{
-        title: 'MTTR (min)',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },
+      },            
       deploy: {
         title: 'Deploy',
         type: 'string',

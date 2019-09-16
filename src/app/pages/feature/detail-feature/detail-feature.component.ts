@@ -27,6 +27,54 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   startDate: Date = new Date();
   endDate: Date;  
 
+  incidentSettings={
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {      
+      title: {
+        title: 'title',
+        type: 'string',
+        filter: false
+      },
+      start:{
+        title: 'Start',
+        type: 'text',
+        filter: false
+      },
+      ttd:{
+        title: 'TTD',
+        type: 'number',
+        width: '2em',
+        filter: false
+      },
+      tte:{
+        title: 'TTE',
+        type: 'number',
+        width: '2em',
+        filter: false
+      },
+      ttf:{
+        title: 'TTF',
+        type: 'number',
+        width: '2em',
+        filter: false
+      },
+      ttm:{
+        title: 'TTM',
+        type: 'number',
+        width: '2em',
+        filter: false
+      }
+    }
+  };
+  incidentSource: LocalDataSource = new LocalDataSource();
+  
   squadsSettings = {
     actions:{
       add:false,
@@ -34,7 +82,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 5
     },
     columns: {      
       name: {
@@ -108,6 +156,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.currentSource = feature;      
       this.source.load(feature.indicators);
       this.squadSource.load(feature.squads);
+      this.incidentSource.load(feature.incidents);
     });        
   }
 
@@ -140,6 +189,11 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   onEditClick(event){
     let queryParams: Params = { };
     this.router.navigate(['/pages/features/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onIncidentRowSelect(event){
+    const incidentId = event.data.id;
+    let queryParams: Params = { incidentId: incidentId };
+    this.router.navigate(['/pages/incidents/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
   ngOnDestroy(): void {
     

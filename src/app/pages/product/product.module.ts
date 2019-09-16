@@ -24,12 +24,14 @@ import {
   NbUserModule,
   NbTreeGridModule
 } from "@nebular/theme";
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
     ListProductComponent,
     DetailProductComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    EditProductComponent
   ],
   imports: [
     FormsModule,

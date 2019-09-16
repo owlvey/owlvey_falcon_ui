@@ -37,4 +37,8 @@ export class ProductBaseComponent extends CustomerBaseComponent {
         }        
     }
 
+    goBack(){
+        this.location.back();
+    }
+
 }

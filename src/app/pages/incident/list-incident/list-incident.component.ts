@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
@@ -36,40 +36,28 @@ export class ListIncidentComponent extends ProductBaseComponent {
     },
     columns: {
       id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
+        title: 'Id',        
+        filter: true,        
+        editable: false,
+        width: '2em'
       },      
       title: {
-        title: 'Title',
-        type: 'string',
-        filter: true,
-        width: '5em',
-        editable: false
+        title: 'Title',        
+        filter: true,                
+        editable: false,        
       },      
-      mttd:{
-        title: 'MTTD',
-        type: 'number',
+      start: {
+        title: 'Start',              
+        filter: true,        
+        editable: false,
+        width: '20em'
+      },      
+      ttm:{
+        title: 'TTM',        
         filter: true,
         width: '2em',
         editable: false
-      },      
-      mtte:{
-        title: 'MTTE',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },      
-      mttf:{
-        title: 'MTTF',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      }           
+      },                   
     },
   };
 
@@ -83,6 +71,7 @@ export class ListIncidentComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,    
     protected incidentGateway: IncidentsGateway,
     protected theme: NbThemeService,
+    private datePipe: DatePipe,
     protected router: Router, 
     protected activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
@@ -96,10 +85,25 @@ export class ListIncidentComponent extends ProductBaseComponent {
   } 
   loadIncidents(){
     this.incidentGateway.getIncidents(this.productId, this.startDate, this.endDate).subscribe(data=>{
+
+      data = data.map(c=> {
+          c.start = this.datePipe.transform(new Date(c.start), 'yyyy-MM-dd hh:mm:ss').toString();
+          return c;
+        }
+      );
       this.source.load(data);
     });    
   }
-  onUserRowSelect(){
-    
+  onUserRowSelect(event){
+    let queryParams: Params = { incidentId: event.data.id };
+        this.router.navigate(['/pages/incidents/detail'], { 
+          relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
+    );     
+  }
+  onCreate(event){
+    let queryParams: Params = {  };
+    this.router.navigate(['/pages/incidents/create'], { 
+      relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
+    );     
   }
 }
