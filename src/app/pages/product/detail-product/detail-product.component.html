@@ -4,23 +4,18 @@
           <nb-card-header>
               <div class="d-flex align-content-center">
                   <h5> {{ currentProduct.name }} </h5>
-                  <button
-                    type="button"
-                    nbButton
-                    status="primary"
-                    (click)="onBackClick($event)"
-                    class="btn btn-sm btn-outline-primary ml-auto">
-                    Back
-                  </button>
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="btn btn-sm btn-outline-primary ml-auto"> Back </button>
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
+                  <!-- <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button> -->
               </div>
           </nb-card-header>
-          <nb-card-body>          
+          <nb-card-body>
               <div class="network-canvas"
               [visNetwork]="visNetwork"
               [visNetworkData]="visNetworkData"
               [visNetworkOptions]="visNetworkOptions"
               (initialized)="networkInitialized()"></div>
-            
+
           </nb-card-body>
         </nb-card>
       </div>

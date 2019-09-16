@@ -26,10 +26,10 @@ class ExampleNetworkData implements VisNetworkData {
 })
 export class DetailProductComponent  extends CustomerBaseComponent  implements OnInit, AfterViewInit, OnDestroy  {
   public currentProduct : any = {};
-  public productId : number;     
-  sources: any[];  
-  currentSource : any= {};            
-  
+  public productId : number;
+  sources: any[];
+  currentSource : any= {};
+
   source: LocalDataSource = new LocalDataSource();
   graphData = {};
   themeSubscription: any;
@@ -39,55 +39,54 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   public visNetworkOptions: VisNetworkOptions;
   colors: any;
 
-  
+
   constructor(
     protected location: Location,
     protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway,
-    protected sourcesGateway: SourcesGateway,    
-    protected featuresGateway: FeaturesGateway,    
-    protected portfolioGateway: PortfoliosGateway,    
+    protected sourcesGateway: SourcesGateway,
+    protected featuresGateway: FeaturesGateway,
+    protected portfolioGateway: PortfoliosGateway,
     protected theme: NbThemeService,
-    protected router: Router, 
+    protected router: Router,
     protected visNetworkService: VisNetworkService,
-    protected activatedRoute: ActivatedRoute) {       
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, theme, router, activatedRoute);
-    }        
-   
-  onChangeQueryParameters(paramMap: ParamMap): void {    
-    this.productId = parseInt(paramMap.get('productId'));                                
-    super.onChangeQueryParameters(paramMap); 
-    this.loadProduct();    
+    }
+
+  onChangeQueryParameters(paramMap: ParamMap): void {
+    this.productId = parseInt(paramMap.get('productId'));
+    super.onChangeQueryParameters(paramMap);
+    this.loadProduct();
     this.buildGraph();
-    
   }
 
-  public loadProduct(){    
+  public loadProduct(){
       this.productGateway.getProduct(this.productId).subscribe(data=>{
-          this.currentProduct = data;          
-      });       
+          this.currentProduct = data;
+      });
   }
-  
-  onNgOnInit(): void {    
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {      
-      this.colors = config.variables;            
+
+  onNgOnInit(): void {
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      this.colors = config.variables;
       const echarts: any = config.variables.echarts;
       this.buildGraph();
     });
   }
 
-  buildGraph(){    
+  buildGraph(){
     if (!this.colors){
       return;
     }
     setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetwork, { physics: false });
     }, 4000);
-   
+
     const fgText = this.colors.fgText;
-    const primary = this.colors.primary;    
+    const primary = this.colors.primary;
     const primaryLight = this.colors.primaryLight;
-    const info = this.colors.info;    
+    const info = this.colors.info;
     const infoLight = this.colors.infoLight;
     const danger = this.colors.danger;
     const dangerLight = this.colors.dangerLight;
@@ -100,48 +99,48 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         if (c.group == "products"){
           return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
         }
-        else if (c.group == "services"){          
+        else if (c.group == "services"){
           if (c.budget >= 0 )
-          {            
+          {
             return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon', title: String(c.value),
                   font:{ color: fgText },
-                  color: {background:success, border: primaryLight , 
+                  color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
-                  hover:{background:successLight, border: primaryLight}}};              
-          }          
+                  hover:{background:successLight, border: primaryLight}}};
+          }
           else{
             return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon',title: String(c.value),
                   font:{ color: fgText },
-                  color: {background: danger, border: primaryLight, 
+                  color: {background: danger, border: primaryLight,
                   highlight:{background: dangerLight, border: primaryLight},
                   hover:{background:dangerLight, border: primaryLight}}};
-          }          
+          }
         }
         else if (c.group == "features"){
-          return { id: c.id, value: 14, label: c.name, group: "2", shape: 'dot', title: c.name, 
+          return { id: c.id, value: 14, label: c.name, group: "2", shape: 'dot', title: c.name,
                     font:{ color: fgText },
-                    color: {background:success, border: primaryLight , 
+                    color: {background:success, border: primaryLight ,
                     highlight:{background:successLight, border: primaryLight},
                     hover:{background:successLight, border: primaryLight}}};
-        }        
+        }
       });
       var edgeData = data.edges.map(c=>{
         const ava = String(c.value);
-        if (c.value < 0){          
-          
-          return { font: {  align: 'top', color: fgText }, 
-                label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
-        } 
-        else if ( c.value >=0 && c.value < 0.01 )       
+        if (c.value < 0){
+
+          return { font: {  align: 'top', color: fgText },
+                label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
+        }
+        else if ( c.value >=0 && c.value < 0.01 )
         {
           //, strokeColor : infoLight
-          return { font: {  align: 'top', color: fgText }, label: ava,  
+          return { font: {  align: 'top', color: fgText }, label: ava,
               from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
         }
         else{
           return { font: {  align: 'top', color: fgText }, label: ava,
             from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
-        }        
+        }
       });
       const nodes = new VisNodes(nodeData);
       const edges = new VisEdges(edgeData);
@@ -149,8 +148,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         nodes,
         edges,
       };
-      
-      this.visNetworkOptions = {      
+
+      this.visNetworkOptions = {
         physics:{
           enabled: true,
           barnesHut: {
@@ -193,7 +192,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             updateInterval: 25,
             onlyDynamicEdges: false,
             fit: false
-          },          
+          },
           adaptiveTimestep: false
         },
         layout: {
@@ -209,10 +208,10 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             direction: 'UD',        // UD, DU, LR, RL
             sortMethod: 'directed'   // hubsize, directed
           }
-        },        
-        nodes: {                                     
-          shape: 'dot',                    
-          font: {              
+        },
+        nodes: {
+          shape: 'dot',
+          font: {
               color: '#ffffff'
           },
           color: {
@@ -220,45 +219,43 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             background: '#666666'
           },
           borderWidth: 2,
-          shadow:false,          
+          shadow:false,
         },
         interaction: {hover: true},
         edges: {
             labelHighlightBold:false,
-            smooth: true,          
-            width: 3,    
+            smooth: true,
+            width: 3,
             font:{
               face: 'arial'
-            },        
+            },
             arrows: 'to',
             arrowStrikethrough: true,
-            dashes: true,            
+            dashes: true,
             scaling:{
               label: true,
             }
         },
         configure:{
-          enabled: false          
+          enabled: false
         }
       };
     });
 
-    
+
   }
-  
+
   onServiceRowSelect(event){
       const portfolioId = event.data.id;
-      let queryParams: Params = { portfolioId: portfolioId };      
-      this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  } 
-
-  onReportClick(event){
-    
+      let queryParams: Params = { portfolioId: portfolioId };
+      this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
-  
-  ngAfterViewInit() {    
 
-    
+  onReportClick(event) {
+  }
+
+  ngAfterViewInit() {
+
   }
 
   public networkInitialized(): void {
@@ -267,8 +264,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
     // stop adjustments
     // open your console/dev tools to see the click params
-    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{      
-      
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{
     });
     this.visNetworkService.click
         .subscribe((eventData: any[]) => {
@@ -277,11 +273,22 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             }
         });
   }
+
+  onEditClick(event) {
+    let queryParams: Params = { customerId: this.customerId, productId: this.productId };
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/products/edit'], extras);
+  }
+
   public ngOnDestroy(): void {
     this.visNetworkService.off(this.visNetwork, 'click');
 
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();
-    }    
+    }
   }
 }
