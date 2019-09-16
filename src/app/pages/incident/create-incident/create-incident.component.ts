@@ -52,6 +52,9 @@ export class CreateIncidentComponent extends ProductBaseComponent {
   onNgOnInit(): void {
      
   } 
+  goBack(){
+    this.location.back();
+  }
   onSubmit() {
     if (!this.createForm.valid) {
       this.toastr.warning(

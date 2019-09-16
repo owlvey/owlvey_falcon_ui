@@ -67,11 +67,14 @@ export class DetailIncidentComponent  extends ProductBaseComponent {
   onNgOnInit(): void {
       
   } 
-  onEditClick(){
+  onEditClick(event){
     let queryParams: Params = {  };
     this.router.navigate(['/pages/incidents/edit'], { 
       relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
     );     
+  }
+  onDeleteConfirm(event){
+    
   }
   getIncident(){
     this.incidentGateway.getIncident(this.incidentId).subscribe(data=>{
