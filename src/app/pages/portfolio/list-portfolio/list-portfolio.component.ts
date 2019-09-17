@@ -75,7 +75,7 @@ export class ListPortfolioComponent implements OnInit {
         editable: false
       },            
       deploy: {
-        title: 'Deploy',
+        title: 'Action',
         type: 'string',
         filter: true,
         width: '3em',
