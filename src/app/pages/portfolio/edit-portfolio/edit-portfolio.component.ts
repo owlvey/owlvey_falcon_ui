@@ -63,28 +63,28 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         editable: false
       },
       mttd: {
-        title: 'MTTD (min)',
+        title: 'MTTD',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
       },
-      mttr: {
-        title: 'MTTR (min)',
+      mtte: {
+        title: 'MTTE',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
       },
       mttf: {
-        title: 'MTTF (min)',
+        title: 'MTTF',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
       },
-      mtbf: {
-        title: 'MTBF (min)',
+      mttm: {
+        title: 'MTTM',
         type: 'number',
         filter: false,
         width: '3em',
@@ -125,28 +125,28 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         editable: false
       },
       mttd: {
-        title: 'MTTD (min)',
+        title: 'MTTD',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
       },
-      mttr: {
-        title: 'MTTR (min)',
+      mtte: {
+        title: 'MTTE',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
       },
       mttf: {
-        title: 'MTTF (min)',
+        title: 'MTTF',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
       },
-      mtbf: {
-        title: 'MTBF (min)',
+      mttm: {
+        title: 'MTTM',
         type: 'number',
         filter: true,
         width: '3em',
@@ -188,7 +188,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
     });
   }
   loadNewFeatures(){
-    this.featureGateway.getFeaturesUnregistered(this.productId, this.portfolioId).subscribe(data=>{
+    this.featureGateway.getFeaturesUnregistered(this.portfolioId).subscribe(data=>{
       this.sourceNewFeatures.load(data);
     });
   }

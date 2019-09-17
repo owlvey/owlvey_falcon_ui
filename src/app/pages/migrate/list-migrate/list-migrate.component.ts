@@ -62,6 +62,16 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       this.form.get('data').setValue(null);
       this.fileInput.nativeElement.value = '';
     }
+    onExport(event){
+      this.customerGateway.exportData(this.customerId).subscribe(data=>{        
+        const blob = new Blob([data], { type: data.type });
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = this.currentCustomer.name + "-data.xlsx";
+        anchor.href = url;
+        anchor.click();
+      });
+    }
 
     onExportMetadata(event){
 

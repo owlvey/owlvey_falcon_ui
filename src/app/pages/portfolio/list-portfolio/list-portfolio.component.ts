@@ -66,19 +66,12 @@ export class ListPortfolioComponent implements OnInit {
         filter: true,
         width: '2em',
         editable: false
-      },
-      budgetMinutes:{
-        title: 'Budget (min)',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },
+      },     
       mttm:{
-        title: 'MTTM (min)',
+        title: 'MTTM mins',
         type: 'number',
         filter: true,
-        width: '2em',
+        width: '4em',
         editable: false
       },            
       deploy: {

@@ -18,8 +18,8 @@ export class FeaturesGateway {
     return this.http.get(this.baseUrl + `features?productId=${productId}`);
   }
 
-  getFeaturesUnregistered(productId: number, portfolioId: number) : Observable<any> {
-    return this.http.get(this.baseUrl + `features?productId=${productId}&filter=serviceId ne ${portfolioId}`)
+  getFeaturesUnregistered(portfolioId: number) : Observable<any> {
+    return this.http.get(this.baseUrl + `services/${portfolioId}/features/complement`)    
   }
 
   getIndicatorsComplement(featureId: number): Observable<any> {

@@ -51,4 +51,7 @@ export class CustomersGateway {
   exportMetadata(customerId: number): Observable<any>{    
     return this.http.get(this.baseUrl + `migrations/${customerId}/export/metadata/excel`, { responseType: 'blob'});
   }
+  exportData(customerId: number): Observable<any>{    
+    return this.http.get(this.baseUrl + `migrations/${customerId}/export/data/excel`, { responseType: 'blob'});
+  }
 }

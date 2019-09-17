@@ -63,7 +63,14 @@ export class ListFeatureComponent implements OnInit {
       },                  
       indicatorsCount: {
         title: "SLIs",
-        type: "numver",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },
+      serviceCount:{
+        title: "Services",
+        type: "number",
         filter: true,
         width: "3em",
         editable: false
