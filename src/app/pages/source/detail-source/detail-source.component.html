@@ -11,13 +11,36 @@
         </nb-card-header>
         <nb-card-body>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
+                      <input readonly="readonly" type="number" [value]="currentSource?.total" 
+                          nbInput fullWidth id="inputAvailability" placeholder="Availability"
+                          class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                </div>              
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
+                      <input readonly="readonly" type="number" [value]="currentSource?.good" 
+                          nbInput fullWidth id="inputAvailability" placeholder="Availability"
+                          class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                </div>                
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="inputGood" class="label col-sm-3 form-control-label">Delta</label>
+                      <input readonly="readonly" type="number" [value]="currentSource?.delta" 
+                          nbInput fullWidth id="inputAvailability" placeholder="Delta"
+                          class="input-full-width size-medium shape-rectangle">                 
+                    </div>
+                </div>                
+                <div class="col-sm-3">
                   <div class="form-group">
                     <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
-                    <input readonly="readonly" type="number" [value]="currentSource.availability" 
+                    <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                         nbInput fullWidth id="inputAvailability" placeholder="Availability"
-                        class="input-full-width size-medium shape-rectangle">
-                 
+                        class="input-full-width size-medium shape-rectangle">                 
                   </div>
                 </div>                
               </div>            
