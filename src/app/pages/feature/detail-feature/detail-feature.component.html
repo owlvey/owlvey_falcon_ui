@@ -85,11 +85,23 @@
                     <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
                     </ng2-smart-table>
                 </div>                
-            </nb-tab>            
+            </nb-tab>
+            <nb-tab tabTitle="Services">
+                <div>
+                    <ng2-smart-table [settings]="portfolioSettings" [source]="portfolioSource" (userRowSelect)="onPortfolioRowSelect($event)">
+                    </ng2-smart-table>
+                </div>                
+            </nb-tab>
           </nb-tabset>
         </nb-card>
       </div>
 </div>
+
+
+
+
+
+
 
 <div class="row">
   <div class="col-md-12">

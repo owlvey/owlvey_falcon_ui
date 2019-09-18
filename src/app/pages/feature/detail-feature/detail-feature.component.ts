@@ -125,6 +125,38 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   source: LocalDataSource = new LocalDataSource();
 
   squadSource: LocalDataSource = new LocalDataSource();
+
+  portfolioSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        width: '2em',
+        filter: false
+      },
+      name: {
+        title: 'name',
+        type: 'string',
+        filter: false
+      },       
+      slo: {
+        title: 'slo',
+        type: 'number',
+        filter: false,
+        width: '2em',
+        editable: false
+      }  
+    },
+  }
+  portfolioSource: LocalDataSource = new LocalDataSource(); 
   
   constructor(
     private location: Location,
@@ -157,6 +189,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.source.load(feature.indicators);
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
+      this.portfolioSource.load(feature.services);
     });        
   }
 
@@ -195,6 +228,13 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     let queryParams: Params = { incidentId: incidentId };
     this.router.navigate(['/pages/incidents/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
+
+  onPortfolioRowSelect(event){
+    const portfolioId = event.data.id;
+    let queryParams: Params = { portfolioId: portfolioId };
+    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
   ngOnDestroy(): void {
     
   }     
