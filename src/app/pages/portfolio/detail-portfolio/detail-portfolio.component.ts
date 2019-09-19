@@ -62,7 +62,8 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false
+        editable: false,
+        sortDirection: 'desc',
       },   
       mttd: {
         title: 'MTTD',
