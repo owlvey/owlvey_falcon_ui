@@ -3,7 +3,7 @@
     <nb-card class="inline-form-card">
       <nb-card-header>
         <div class="d-flex align-content-center">
-          <h4>{{ incident?.title }}</h4>
+          <h4>{{ incident?.key }}</h4>
           <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>
           <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
           <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button>
@@ -21,9 +21,9 @@
             </div>                
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
-                    <input readonly="readonly" type="text" [value]="incident?.description" 
-                        nbInput fullWidth id="inputDescription" placeholder="Description"
+                    <label for="inputDescription" class="label col-sm-3 form-control-label">title</label>
+                    <input readonly="readonly" type="text" [value]="incident?.title" 
+                        nbInput fullWidth id="inputDescription" placeholder="title"
                         class="input-full-width size-medium shape-rectangle">                     
                 </div>
             </div>                

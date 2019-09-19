@@ -84,7 +84,7 @@ export class ListIncidentComponent extends ProductBaseComponent {
       
   } 
   loadIncidents(){
-    this.incidentGateway.getIncidents(this.productId, this.startDate, this.endDate).subscribe(data=>{
+    this.incidentGateway.getIncidents(this.productId).subscribe(data=>{
 
       data = data.map(c=> {
           c.start = this.datePipe.transform(new Date(c.start), 'yyyy-MM-dd hh:mm:ss').toString();

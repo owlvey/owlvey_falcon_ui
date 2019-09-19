@@ -13,8 +13,8 @@ export class IncidentsGateway{
     this.baseUrl = envService.getUrl(environment.api, environment.type);
     }
     
-    getIncidents(productId: number, start: Date, end : Date) : Observable<any> {        
-        return this.http.get(this.baseUrl + `incidents?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+    getIncidents(productId: number) : Observable<any> {        
+        return this.http.get(this.baseUrl + `incidents?productId=${productId}`);
     }
 
     getIncident(incidentId: number) : Observable<any> {        
