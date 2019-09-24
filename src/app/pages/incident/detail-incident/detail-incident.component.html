@@ -10,16 +10,8 @@
         </div>
       </nb-card-header>
       <nb-card-body>          
-        <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                  <label for="inputAvailability" class="label col-sm-3 form-control-label">Affected</label>
-                  <input readonly="readonly" type="number" [value]="incident?.affected" 
-                      nbInput fullWidth id="inputAvailability" placeholder=""
-                      class="input-full-width size-medium shape-rectangle">                 
-              </div>
-            </div>                
-            <div class="col-sm-6">
+        <div class="row">            
+            <div class="col-sm-12">
                 <div class="form-group">
                     <label for="inputDescription" class="label col-sm-3 form-control-label">title</label>
                     <input readonly="readonly" type="text" [value]="incident?.title" 
@@ -30,14 +22,14 @@
           </div>    
           <div class="row">
               <div class="col-sm-6">
-                  <label for="inputMTTD" class="label form-control-label">Time to Detect (MTTD)</label>
+                  <label for="inputMTTD" class="label form-control-label">Time to Detect</label>
                   <input readonly="readonly" type="number" [value]="incident?.ttd" 
                       nbInput fullWidth id="inputMTTD" placeholder=""
                       class="input-full-width size-medium shape-rectangle">                 
               </div>                
               <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="inputMTTR" class="label col-sm-6 form-control-label">Time to Engage (MTTE)</label>
+                    <label for="inputMTTR" class="label col-sm-6 form-control-label">Time to Engage</label>
                     <input readonly="readonly" type="number" [value]="incident?.tte" 
                         nbInput fullWidth id="inputMTTR" placeholder=""
                         class="input-full-width size-medium shape-rectangle">                 
@@ -55,7 +47,7 @@
             </div>                
             <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="inputMTBF" class="label col-sm-6 form-control-label">Time to Mitigate (TTM)</label>
+                  <label for="inputMTBF" class="label col-sm-6 form-control-label">Time to Mitigate</label>
                   <input readonly="readonly" type="number" [value]="incident?.ttm" 
                       nbInput fullWidth id="inputMTBF" placeholder=""
                       class="input-full-width size-medium shape-rectangle">                 
@@ -77,16 +69,27 @@
                 <input readonly="readonly" type="datetime" [value]="incident?.end"
                     nbInput fullWidth id="inpEnd" placeholder=""
                     class="input-full-width size-medium shape-rectangle">                 
-            </div>
+              </div>
             </div>                
           </div>   
           <div class="row">            
-            <div class="col-sm-12">
-                <div class="form-group">                         
-                  <b>
-                    <a  href="{{incident?.url}}"   target="_blank" > Url Detail </a>                                   
-                  </b>             
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Affected</label>
+                    <input readonly="readonly" type="number" [value]="incident?.affected" 
+                        nbInput fullWidth id="inputAvailability" placeholder=""
+                        class="input-full-width size-medium shape-rectangle">                 
                 </div>
+            </div>                
+            <div class="col-sm-6">
+                <div class="form-group">                         
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label"></label>
+                    <p>
+                        <b>
+                            <a  href="{{incident?.url}}"   target="_blank" > Url Detail </a>                                   
+                        </b>             
+                    </p>                    
+                  </div>
             </div>                
           </div>        
     </nb-card-body>

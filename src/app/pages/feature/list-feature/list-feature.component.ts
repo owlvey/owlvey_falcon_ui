@@ -55,10 +55,10 @@ export class ListFeatureComponent implements OnInit {
         editable: false
       },
       mttm: {
-        title: 'MTTM (min)',
+        title: 'MTTM',
         type: 'number',
         filter: true,       
-        width: '3em', 
+        width: '12em', 
         editable: false
       },                  
       indicatorsCount: {

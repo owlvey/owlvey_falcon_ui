@@ -58,7 +58,9 @@ export class ListPortfolioComponent implements OnInit {
         type: 'number',
         filter: true,
         width: '3em',
-        editable: false
+        editable: false,
+        sort:true,
+        sortDirection: 'asc'
       },
       budget: {
         title: 'Budget',
@@ -79,13 +81,6 @@ export class ListPortfolioComponent implements OnInit {
         type: 'string',
         filter: true,
         width: '3em',
-        editable: false
-      },
-      risk:{
-        title: 'Risk',
-        type: 'string',
-        filter: true,
-        width: '2em',
         editable: false
       },
       name: {

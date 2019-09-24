@@ -168,7 +168,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onNavigation(customerId, productId);
     if (!qstart){
       this.startDate = new Date();
-      this.startDate.setDate(this.startDate.getDate() - 60);           
+      this.startDate.setDate(this.startDate.getDate() - 30); // Policy time           
       this.endDate = new Date();      
     }
     else{

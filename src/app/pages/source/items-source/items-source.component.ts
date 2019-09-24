@@ -93,7 +93,8 @@ export class ItemsSourceComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
-
+  startDate: Date;
+  endDate: Date;
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -110,7 +111,9 @@ export class ItemsSourceComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
       this.customerId = parseInt(paramMap.get('customerId'));      
-      this.sourceId = parseInt(paramMap.get('sourceId'));      
+      this.sourceId = parseInt(paramMap.get('sourceId'));     
+      this.startDate = new Date(paramMap.get('start'));
+      this.endDate = new Date(paramMap.get('end'));                
       this.getSourceItems();
     });          
 
@@ -126,8 +129,7 @@ export class ItemsSourceComponent implements OnInit {
   getSourceItems(){
     this.sourcesGateway.getSource(this.sourceId).subscribe(source=>{
       this.currentSource = source;
-      this.sourcesGateway.getSourceItems(this.sourceId).subscribe(data=>{
-
+      this.sourcesGateway.getSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
         const transform  = data.map(c =>{ 
           c.start =  this.formatService.getGridDateFromDate(new Date(c.start));
           c.end = this.formatService.getGridDateFromDate(new Date(c.end));

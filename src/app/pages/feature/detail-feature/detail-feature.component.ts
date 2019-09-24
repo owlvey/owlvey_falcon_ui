@@ -43,9 +43,10 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         filter: false
       },
       start:{
-        title: 'Start',
-        type: 'text',
-        filter: false
+        title: 'Start',        
+        filter: false,        
+        editable: false,
+        width: '20em'
       },
       ttd:{
         title: 'TTD',
@@ -117,7 +118,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false
+        editable: false,
+        sort:true,
+        sortDirection: 'asc'     
       },            
     },
   };

@@ -39,7 +39,9 @@ export class ListIncidentComponent extends ProductBaseComponent {
         title: 'Id',        
         filter: true,        
         editable: false,
-        width: '2em'
+        width: '2em',
+        sort: true,   
+        sortDirection: 'asc'     
       },      
       title: {
         title: 'Title',        
@@ -52,12 +54,18 @@ export class ListIncidentComponent extends ProductBaseComponent {
         editable: false,
         width: '20em'
       },      
-      ttm:{
+      ttms:{
         title: 'TTM',        
+        filter: true,
+        width: '20em',
+        editable: false
+      },           
+      featuresCount:{
+        title: 'Features',        
         filter: true,
         width: '2em',
         editable: false
-      },                   
+      },           
     },
   };
 

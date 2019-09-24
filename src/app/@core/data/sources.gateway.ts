@@ -41,6 +41,9 @@ export class SourcesGateway{
     getSourceItems(sourceId: number): Observable<any>{
         return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
     }
+    getSourceItemsByPeriod(sourceId: number, start:Date, end: Date): Observable<any>{
+        return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
 
     deleteSourceItem(sourceItemId: number): Observable<any>{
         return this.http.delete(this.baseUrl + `sourceItems/${sourceItemId}`);

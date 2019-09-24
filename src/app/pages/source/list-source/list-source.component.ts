@@ -27,13 +27,33 @@ export class ListSourceComponent implements OnInit {
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 50
     },
     columns: {      
       name: {
         title: 'Name',
         type: 'string',
         filter: true
+      },             
+      good: {
+        title: 'Good',
+        type: 'number',
+        width: '2em',
+        filter: true
+      },             
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: true,
+        width: '2em',
+      },             
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
       },             
     },
   };
@@ -63,7 +83,7 @@ export class ListSourceComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.sourcesGateway.getSources(productId).subscribe(sources=>{
+      this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
         this.source.load(sources);
       });
     });     
