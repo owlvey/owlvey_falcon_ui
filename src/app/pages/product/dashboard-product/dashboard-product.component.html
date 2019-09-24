@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xxxl-2 col-md-3" >
+        <nb-card size="tiny">
+            <nb-card-header>
+                <h5> Sources </h5> 
+            </nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="option" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> # {{ sourceCount }}</div>
+                  <div class="details subtitle-2"><span> {{sourceTotal}} </span> </div>
+                </div>                              
+                <!-- 
+                  <nb-icon icon="stop-circle-outline"  style="height: 3rem; width: 3rem;" pack="eva"></nb-icon>
+                -->                 
+            </nb-card-body>
+          
+        </nb-card>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-xxxl-4 col-xxl-4 col-lg-7 col-md-6">
+    <nb-card size="giant">
+      <nb-tabset fullWidth>
+    
+        <nb-tab tabTitle="Sources">
+          <nb-list>
+            <nb-list-item class="source" *ngFor="let c of sources">
+              <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" size="large"></nb-user>
+              <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
+            </nb-list-item>
+          </nb-list>
+        </nb-tab>
+    
+        <nb-tab tabTitle="Recent">
+          <nb-list>
+            <nb-list-item class="contact" *ngFor="let c of recent">
+              <nb-user [picture]="c.user.picture" [name]="c.user.name" [title]="c.type" size="large"></nb-user>
+              <span class="caption">{{ c.time | date: 'shortTime' }}</span>
+            </nb-list-item>
+          </nb-list>
+        </nb-tab>
+    
+      </nb-tabset>
+    </nb-card>    
+  </div>
+</div>
+

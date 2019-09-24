@@ -42,4 +42,8 @@ export class ProductsGateway {
   deleteProduct(id: string) {
     return this.http.delete(this.baseUrl + "products/" + id);
   }
+
+  getProductDashboard(productId : number, start: Date, end: Date): Observable<any>{
+    return this.http.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }
 }

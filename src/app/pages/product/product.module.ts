@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ListProductComponent } from "./list-product/list-product.component";
 import { DetailProductComponent } from "./detail-product/detail-product.component";
 import { CreateProductComponent } from "./create-product/create-product.component";
+import { DashboardProductComponent } from "./dashboard-product/dashboard-product.component";
 import { ProductRoutingModule } from "./product.routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -18,11 +19,14 @@ import {
   NbCheckboxModule,
   NbDatepickerModule,
   NbIconModule,
+  NbTabsetModule,
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  NbTreeGridModule
+  NbListModule,
+  NbTreeGridModule,
+  
 } from "@nebular/theme";
 import { EditProductComponent } from './edit-product/edit-product.component';
 
@@ -31,7 +35,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     ListProductComponent,
     DetailProductComponent,
     CreateProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    DashboardProductComponent
   ],
   imports: [
     FormsModule,
@@ -48,7 +53,11 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     NbCardModule,
     ControlsModule,
     NbCheckboxModule,
-    VisModule
+    VisModule,
+    NbIconModule,
+    NbUserModule,
+    NbListModule,
+    NbTabsetModule
   ]
 })
 export class ProductModule {}
