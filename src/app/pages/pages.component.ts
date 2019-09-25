@@ -88,6 +88,13 @@ export class PagesComponent implements OnInit {
         let queryParams: Params = { };
         this.router.navigate(['/pages/migrations'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
       }      
+
+      if (e.item.title == "Product Dashboard"){          
+        let queryParams: Params = { };
+        this.router.navigate(['/pages/products/dashboard'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
+      }      
+
       if (e.item.title == "Squads"){     
         if (currentCustomer){
           let queryParams: Params = { };

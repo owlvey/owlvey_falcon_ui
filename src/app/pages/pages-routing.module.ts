@@ -17,7 +17,7 @@ const routes: Routes = [{
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
-    },
+    },    
     {
       path: 'customers',
       loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
@@ -37,7 +37,7 @@ const routes: Routes = [{
     {
       path: 'products',
       loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
-    },    
+    },        
     {
       path: 'features',
       loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule),

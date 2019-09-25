@@ -232,6 +232,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true
   },
   {
+    title: "Product Dashboard",
+    icon: "home-outline"
+  },
+  {
     title: "Concepts",
     group: true
   },
