@@ -2,20 +2,78 @@
     <div class="col-xxxl-2 col-md-3" >
         <nb-card size="tiny">
             <nb-card-header>
+                <h5> Services </h5> 
+            </nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="optionServices" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> # {{ serviceStats.count }}</div>
+                  <div class="details subtitle-2"><span> {{ serviceStats.count }} </span> </div>
+                </div>                                                             
+            </nb-card-body>          
+        </nb-card>
+    </div>
+
+    <div class="col-xxxl-2 col-md-3" >
+        <nb-card size="tiny">
+            <nb-card-header>
+                <h5> Features </h5> 
+            </nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="optionFeatures" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> # {{ featuresStats.count }}</div>
+                  <div class="details subtitle-2"><span> {{ featuresStats.count }} </span> </div>
+                </div>                                                             
+            </nb-card-body>          
+        </nb-card>
+    </div>    
+    <div class="col-xxxl-2 col-md-3" >
+        <nb-card size="tiny">
+            <nb-card-header>
+                <h5> Squads </h5> 
+            </nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="optionFeatures" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> # {{ squadCount }}</div>
+                  <div class="details subtitle-2"><span> {{ squadCount }} </span> </div>
+                </div>                                                             
+            </nb-card-body>          
+        </nb-card>
+    </div>    
+    <div class="col-xxxl-2 col-md-3" >
+        <nb-card size="tiny">
+            <nb-card-header>
                 <h5> Sources </h5> 
             </nb-card-header>
             <nb-card-body>
                 <div echarts [options]="option" class="echart">
                 </div>
                 <div class="info">
-                  <div class="h5 value"> # {{ sourceCount }}</div>
+                  <div class="h5 value"> # {{ sourceStats.count }}</div>
                   <div class="details subtitle-2"><span> {{sourceTotal}} </span> </div>
-                </div>                              
-                <!-- 
-                  <nb-icon icon="stop-circle-outline"  style="height: 3rem; width: 3rem;" pack="eva"></nb-icon>
-                -->                 
-            </nb-card-body>
-          
+                </div>                                                             
+            </nb-card-body>          
+        </nb-card>
+    </div>
+
+    <div class="col-xxxl-2 col-md-3" >
+        <nb-card size="tiny">
+            <nb-card-header>
+                <h5> Incidents </h5> 
+            </nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="option" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> # {{ incidentCount }}</div>
+                  <div class="details subtitle-2"><span> {{ incidentTotal }} </span> </div>
+                </div>                                                             
+            </nb-card-body>          
         </nb-card>
     </div>
 </div>
@@ -28,7 +86,9 @@
         <nb-tab tabTitle="Sources">
           <nb-list>
             <nb-list-item class="source" *ngFor="let c of sources">
-              <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" size="large"></nb-user>
+              <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" 
+                    size="large" (click)="onSourceClick($event)" [id]="c.id" 
+                    style="cursor: pointer"></nb-user>
               <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
             </nb-list-item>
           </nb-list>

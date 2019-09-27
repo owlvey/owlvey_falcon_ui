@@ -24,12 +24,16 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
   
 
   sources: any[];
-
   sourceCount: number;
-
-  sourceAvailability: number;
-  sourceTotal: number;
+  sourceStats: any;
+  serviceStats: any;    
+  featuresStats: any; 
+  
   option: any = {};
+  optionServices: any = {};
+  optionFeatures: any = {};
+
+
   themeSubscription: any;
 
   constructor(    
@@ -50,143 +54,152 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
       super.onChangeQueryParameters(paramMap);        
       this.getDashboard();      
     }
+
+    buildOptions(solarTheme, config, targetAvailability){
+      return Object.assign({}, {            
+        series: [
+          {
+            name: ' ',
+            clockWise: true,
+            hoverAnimation: false,
+            type: 'pie',
+            center: ['45%', '50%'],
+            radius: solarTheme.radius,
+            data: [
+              {
+                value: targetAvailability,
+                name: ' ',
+                label: {
+                  normal: {
+                    position: 'center',
+                    formatter: '{d}%',
+                    textStyle: {
+                      fontSize: '22',
+                      fontFamily: config.variables.fontSecondary,
+                      fontWeight: '600',
+                      color: config.variables.fgHeading,
+                    },
+                  },
+                },
+                tooltip: {
+                  show: false,
+                },
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: solarTheme.gradientLeft,
+                      },
+                      {
+                        offset: 1,
+                        color: solarTheme.gradientRight,
+                      },
+                    ]),
+                    shadowColor: solarTheme.shadowColor,
+                    shadowBlur: 0,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 3,
+                  },
+                },
+                hoverAnimation: false,
+              },
+              {
+                value: 100 - targetAvailability,
+                name: ' ',
+                tooltip: {
+                  show: false,
+                },
+                label: {
+                  normal: {
+                    position: 'inner',
+                  },
+                },
+                itemStyle: {
+                  normal: {
+                    color: solarTheme.secondSeriesFill,
+                  },
+                },
+              },
+            ],
+          },
+          {
+            name: ' ',
+            clockWise: true,
+            hoverAnimation: false,
+            type: 'pie',
+            center: ['45%', '50%'],
+            radius: solarTheme.radius,
+            data: [
+              {
+                value: targetAvailability,
+                name: ' ',
+                label: {
+                  normal: {
+                    position: 'inner',
+                    show: false,
+                  },
+                },
+                tooltip: {
+                  show: false,
+                },
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: solarTheme.gradientLeft,
+                      },
+                      {
+                        offset: 1,
+                        color: solarTheme.gradientRight,
+                      },
+                    ]),
+                    shadowColor: solarTheme.shadowColor,
+                    shadowBlur: 7,
+                  },
+                },
+                hoverAnimation: false,
+              },
+              {
+                value: 28,
+                name: ' ',
+                tooltip: {
+                  show: false,
+                },
+                label: {
+                  normal: {
+                    position: 'inner',
+                  },
+                },
+                itemStyle: {
+                  normal: {
+                    color: 'none',
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      });
+    }
+
     getDashboard(){
       this.productGateway.getProductDashboard(this.productId, this.startDate, this.endDate).subscribe(data=>{
         this.sources = data.sources;
-        this.sourceCount = data.sourceCount;
-        this.sourceAvailability = parseFloat(data.sourceAvailability) * 100;
-        this.sourceTotal = data.sourceTotal; 
+        this.sourceCount = data.sourceStats.count;
+        this.sourceStats = data.sourceStats; 
+        this.serviceStats = data.servicesStats;
+        this.featuresStats = data.featuresStats;
+        const sourceAvailability = parseFloat(data.sourceStats.mean) * 100;
+        const serviceAvailability = parseFloat(data.servicesStats.mean) * 100;        
+        const featureAvailability = parseFloat(data.featuresStats.mean) * 100;
         this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
           const solarTheme: any = config.variables.solar;  
-          this.option = Object.assign({}, {            
-            series: [
-              {
-                name: ' ',
-                clockWise: true,
-                hoverAnimation: false,
-                type: 'pie',
-                center: ['45%', '50%'],
-                radius: solarTheme.radius,
-                data: [
-                  {
-                    value: this.sourceAvailability,
-                    name: ' ',
-                    label: {
-                      normal: {
-                        position: 'center',
-                        formatter: '{d}%',
-                        textStyle: {
-                          fontSize: '22',
-                          fontFamily: config.variables.fontSecondary,
-                          fontWeight: '600',
-                          color: config.variables.fgHeading,
-                        },
-                      },
-                    },
-                    tooltip: {
-                      show: false,
-                    },
-                    itemStyle: {
-                      normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                          {
-                            offset: 0,
-                            color: solarTheme.gradientLeft,
-                          },
-                          {
-                            offset: 1,
-                            color: solarTheme.gradientRight,
-                          },
-                        ]),
-                        shadowColor: solarTheme.shadowColor,
-                        shadowBlur: 0,
-                        shadowOffsetX: 0,
-                        shadowOffsetY: 3,
-                      },
-                    },
-                    hoverAnimation: false,
-                  },
-                  {
-                    value: 100 - this.sourceAvailability,
-                    name: ' ',
-                    tooltip: {
-                      show: false,
-                    },
-                    label: {
-                      normal: {
-                        position: 'inner',
-                      },
-                    },
-                    itemStyle: {
-                      normal: {
-                        color: solarTheme.secondSeriesFill,
-                      },
-                    },
-                  },
-                ],
-              },
-              {
-                name: ' ',
-                clockWise: true,
-                hoverAnimation: false,
-                type: 'pie',
-                center: ['45%', '50%'],
-                radius: solarTheme.radius,
-                data: [
-                  {
-                    value: this.sourceAvailability,
-                    name: ' ',
-                    label: {
-                      normal: {
-                        position: 'inner',
-                        show: false,
-                      },
-                    },
-                    tooltip: {
-                      show: false,
-                    },
-                    itemStyle: {
-                      normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                          {
-                            offset: 0,
-                            color: solarTheme.gradientLeft,
-                          },
-                          {
-                            offset: 1,
-                            color: solarTheme.gradientRight,
-                          },
-                        ]),
-                        shadowColor: solarTheme.shadowColor,
-                        shadowBlur: 7,
-                      },
-                    },
-                    hoverAnimation: false,
-                  },
-                  {
-                    value: 28,
-                    name: ' ',
-                    tooltip: {
-                      show: false,
-                    },
-                    label: {
-                      normal: {
-                        position: 'inner',
-                      },
-                    },
-                    itemStyle: {
-                      normal: {
-                        color: 'none',
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
-          });
+          this.option = this.buildOptions(solarTheme, config, sourceAvailability);
+          this.optionServices = this.buildOptions(solarTheme, config, serviceAvailability);
+          this.optionFeatures = this.buildOptions(solarTheme, config, featureAvailability);
         });
-
-
       });
     }
 

@@ -45,14 +45,7 @@ export class ListPortfolioComponent implements OnInit {
         filter: true,
         width: '3em',
         editable: false
-      },
-      impact: {
-        title: 'Impact',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },
+      },      
       availability: {
         title: 'Availability',                
         type: 'number',
@@ -69,11 +62,11 @@ export class ListPortfolioComponent implements OnInit {
         width: '2em',
         editable: false
       },     
-      mttm:{
-        title: 'MTTM mins',
-        type: 'number',
+      mttms:{
+        title: 'MTTM',
+        type: 'string',
         filter: true,
-        width: '4em',
+        width: '10rem',
         editable: false
       },            
       deploy: {
