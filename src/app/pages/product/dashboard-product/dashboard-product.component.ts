@@ -24,14 +24,29 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
   
 
   sources: any[];
-  sourceCount: number;
+  squads: any[];
+  squadsData: any[];
+  sourceData: any[];
+  incident: any;
+  services: any[];
+  features: any[];
+  featuresData: any[];
+  serviceMaps: any;
+  featureMaps: any;
+  incidentMaps: any;
+  squadMaps: any;
+
+  sourceTotal: number;
   sourceStats: any;
   serviceStats: any;    
   featuresStats: any; 
+  sloFails: number = 0;
+
   
   option: any = {};
   optionServices: any = {};
   optionFeatures: any = {};
+  optionSLO: any = {};
 
 
   themeSubscription: any;
@@ -186,26 +201,53 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
 
     getDashboard(){
       this.productGateway.getProductDashboard(this.productId, this.startDate, this.endDate).subscribe(data=>{
-        this.sources = data.sources;
-        this.sourceCount = data.sourceStats.count;
+        this.sourceData = data.sources;
+        this.featuresData = data.features;
+        this.squadsData = data.squads;
+        this.serviceMaps = data.serviceMaps;
+        this.featureMaps = data.featureMaps;
+        this.incidentMaps = data.incidentInformation;
+        this.squadMaps = data.squadMaps;
+        this.services = data.services.map(c=> { 
+          c.title =  `SLO: ${c.slo} | Availability: ${c.availability}`
+          return c;
+         } );
+        this.sourceTotal = data.sourceTotal;
         this.sourceStats = data.sourceStats; 
         this.serviceStats = data.servicesStats;
-        this.featuresStats = data.featuresStats;
+        this.featuresStats = data.featuresStats;     
+        this.sloFails = data.sloFail;   
         const sourceAvailability = parseFloat(data.sourceStats.mean) * 100;
         const serviceAvailability = parseFloat(data.servicesStats.mean) * 100;        
         const featureAvailability = parseFloat(data.featuresStats.mean) * 100;
+        const sloProportion = parseFloat(data.sloProportion) * 100;
         this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
           const solarTheme: any = config.variables.solar;  
           this.option = this.buildOptions(solarTheme, config, sourceAvailability);
           this.optionServices = this.buildOptions(solarTheme, config, serviceAvailability);
           this.optionFeatures = this.buildOptions(solarTheme, config, featureAvailability);
+          this.optionSLO = this.buildOptions(solarTheme, config, sloProportion)
         });
       });
     }
 
-    onSourceClick(event){
-      debugger;
+    onSourceClick(event){      
       alert(event);
+    }
+    onServiceClick(event){
+      const serviceId = event.currentTarget.id;
+      const featuresIds = this.serviceMaps[serviceId];
+      this.features = this.featuresData.filter(c=> featuresIds.indexOf(c.id) > -1 );
+      this.sources = [];
+      this.squads = [];
+    }
+    onFeatureClick(event){
+      const featureId = event.currentTarget.id;
+      const indicatorsIds = this.featureMaps[featureId];
+      const squadsIds = this.squadMaps[featureId];
+      this.incident = this.incidentMaps[featureId];
+      this.sources = this.sourceData.filter(c=> indicatorsIds.indexOf(c.id) > -1 );
+      this.squads = this.squadsData.filter(c=> squadsIds.indexOf(c.id)> -1);
     }
     ngOnDestroy() {
       if (this.themeSubscription){

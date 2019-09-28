@@ -80,7 +80,7 @@ export class PagesComponent implements OnInit {
         }                
       }
 
-      if (e.item.title == "Customers"){          
+      if (e.item.title == "Organizations"){          
         let queryParams: Params = { };
         this.router.navigate(['/pages/customers'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                                                      
       }      

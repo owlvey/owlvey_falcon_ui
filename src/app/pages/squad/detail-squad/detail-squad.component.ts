@@ -148,29 +148,20 @@ export class DetailSquadComponent extends CustomerBaseComponent {
   
   onBackClick(event){
     this.location.back();
-  }
-  onProductRowSelect(event){
-    const productId = event.data.id;
-    let queryParams: Params = { squadId: this.squadId, productId: productId, uheader: null };
-    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }  
+
+  onSquadRowSelect(event){    
+    const featureId = event.data.id;
+    let queryParams: Params = { featureId: featureId };
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/features/detail'], extras);   
   }
 
-  onUserRowSelect(event){
-    const userId = event.data.id;
-    let queryParams: Params = { customerId: this.customerId, squadId: this.squadId, userId: userId, uheader: null };
-    this.router.navigate(['/pages/users/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-
-  onAddMemberClick(event){
-    let queryParams: Params = { squadId: this.squadId, uheader: null };
-    this.router.navigate(['/pages/squads/users/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-
-  onAsociateProduct(event){
-    let queryParams: Params = { squadId: this.squadId, uheader: null };
-    this.router.navigate(['/pages/squads/products/asociate'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-
+  
   onEditClick(event) {
     let queryParams: Params = {  };
     let extras: any = {

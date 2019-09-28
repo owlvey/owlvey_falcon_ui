@@ -244,7 +244,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "person-outline"
   },
   {
-    title: "Customers",
+    title: "Organizations",
     icon: "globe-outline"
   },
   {
