@@ -4,9 +4,9 @@
           <nb-card-header>
               <div class="d-flex align-content-center">
                   <h5> {{ currentProduct.name }} </h5>
-                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="btn btn-sm btn-outline-primary ml-auto"> Back </button>
-                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
-                  <!-- <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button> -->
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
+                  <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
               </div>
           </nb-card-header>
           <nb-card-body>

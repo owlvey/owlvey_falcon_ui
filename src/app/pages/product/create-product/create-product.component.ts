@@ -3,16 +3,18 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NbToastrService } from '@nebular/theme';
+import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { EventHandlerService } from '../../../event-handler.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { CustomerBaseComponent } from '../../common/components/base-customer.component';
+import { CustomersGateway } from '../../../@core/data/customers.gateway';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss']
 })
-export class CreateProductComponent implements OnInit {
+export class CreateProductComponent extends CustomerBaseComponent {
 
   isLoading: boolean = false;  
   actionConfirmWord: string;
@@ -22,27 +24,28 @@ export class CreateProductComponent implements OnInit {
 
   createForm: FormGroup;
   formTitle: string;
+
   constructor(
-    private location: Location,
+    protected location: Location,
+    protected customerGateway: CustomersGateway,        
     private productsGateway: ProductsGateway,
     private fb: FormBuilder,
+    protected theme: NbThemeService,
     private toastr: NbToastrService,
-    private router: Router,
+    protected router: Router, 
     private eventHandler: EventHandlerService,
-    private activatedRoute: ActivatedRoute
-  ) {
-    this.createForm = this.fb.group({
-      id: [''],
-      name: ['', Validators.required]
-    });
-    this.isLoading = false;
-  }
-
-  ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      this.customerId = parseInt(paramMap.get('customerId'));
-    });
-  }
+    protected activatedRoute: ActivatedRoute) {       
+      super(location, customerGateway, theme, router, activatedRoute);
+      this.createForm = this.fb.group({
+        id: [''],
+        name: ['', Validators.required]
+      });
+      this.isLoading = false;
+  }   
+  onChangeQueryParameters(paramMap: ParamMap): void {        
+    super.onChangeQueryParameters(paramMap);
+    
+  }  
 
   goBack() {
     this.location.back();

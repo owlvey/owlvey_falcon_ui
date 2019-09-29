@@ -7,7 +7,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { VisEdges, VisNetworkData, VisNetworkOptions,  VisNetworkService,  VisNode,  VisNodes, VisNodeOptions } from 'ngx-vis'
@@ -42,6 +42,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
   constructor(
     protected location: Location,
+    private toastr: NbToastrService,
     protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway,
     protected sourcesGateway: SourcesGateway,
@@ -289,6 +290,20 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();
+    }
+  }
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.productGateway.deleteProduct(this.productId).subscribe(res=>{
+        this.toastr.success("Product was deleted");
+        let queryParams: Params = { productId : null };
+        this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }, (error) => {
+        this.isLoading = false;
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });      
+    } else {
+      event.confirm.reject();
     }
   }
 }

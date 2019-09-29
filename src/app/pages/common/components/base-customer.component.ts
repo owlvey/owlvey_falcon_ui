@@ -30,7 +30,7 @@ export class CustomerBaseComponent extends BaseComponent {
                 this.currentCustomer = data;
             });
         }else{
-            alert('please select a customer');
+            alert('please select an organization');
             this.goHome();
         }        
     }

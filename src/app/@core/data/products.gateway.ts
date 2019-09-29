@@ -35,11 +35,11 @@ export class ProductsGateway {
     return this.http.post(this.baseUrl + "products", model);
   }
 
-  updateProduct(id: string, model: any) {
-    return this.http.put(this.baseUrl + "products/" + id, model);
+  updateProduct(id: number, model: any) {
+    return this.http.put(this.baseUrl + `products/${id}`, model);
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(id: number) {
     return this.http.delete(this.baseUrl + "products/" + id);
   }
 

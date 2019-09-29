@@ -5,7 +5,7 @@ import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
 
 
 @Component({
@@ -33,6 +33,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
+    private toastr: NbToastrService,
     private theme: NbThemeService,
     private router: Router, 
     private activatedRoute: ActivatedRoute) {       
@@ -74,6 +75,20 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   onEditClick(event){
     let queryParams: Params = { };
     this.router.navigate(['/pages/sources/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.sourcesGateway.deleteSource(this.sourceId).subscribe(res=>{
+        this.toastr.success("Source was deleted");
+        let queryParams: Params = { sourceId : null };
+        this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }, (error) => {        
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });
+      
+    } else {
+      event.confirm.reject();
+    }
   }
   ngAfterViewInit() {    
     

@@ -24,6 +24,10 @@ export class SourcesGateway{
         return this.http.post(this.baseUrl + `sources`, { productId:productId , name: name});        
     }
 
+    deleteSource(sourceId: number): Observable<any> {
+        return this.http.delete(this.baseUrl + `sources/${sourceId}`);        
+    }
+
     postSourceItem(model: any): Observable<any> {
         return this.http.post(this.baseUrl + `sourceItems`, model);        
     }

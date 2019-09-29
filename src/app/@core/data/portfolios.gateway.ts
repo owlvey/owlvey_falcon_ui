@@ -17,6 +17,10 @@ export class PortfoliosGateway{
         return this.http.post(this.baseUrl + `services`, model);
     }
 
+    deletePortfolio(portfolioId: number){        
+        return this.http.delete(this.baseUrl + `services/${portfolioId}`);
+    }
+
     putPortfolio(portflioId: number, model: any): Observable<any>{
         return this.http.put(this.baseUrl + `services/${portflioId}`, model);
     }

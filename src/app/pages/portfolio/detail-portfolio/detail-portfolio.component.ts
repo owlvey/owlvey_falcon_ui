@@ -5,7 +5,7 @@ import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 
@@ -94,6 +94,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
+    private toastr: NbToastrService,
     private featuresGateway: FeaturesGateway,    
     private portfolioGateway: PortfoliosGateway,    
     private theme: NbThemeService,
@@ -152,5 +153,20 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {    
     
+  }
+
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
+        this.toastr.success("Portfolio was deleted");
+        let queryParams: Params = { portfolioId : null };
+        this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }, (error) => {
+        this.isLoading = false;
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });      
+    } else {
+      event.confirm.reject();
+    }
   }
 }

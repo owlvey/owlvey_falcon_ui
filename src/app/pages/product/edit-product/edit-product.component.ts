@@ -32,7 +32,9 @@ export class EditProductComponent implements OnInit {
     private activatedRoute: ActivatedRoute) {
       this.editForm = this.fb.group({
         id: [''],
-        name: ['', Validators.required]
+        name: ['', Validators.required],
+        description: ['', Validators.required],
+        avatar: ['', Validators.required],
       });
       this.isLoading = false;
     }
@@ -40,11 +42,10 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.customerId = parseInt(paramMap.get('customerId'));
-      this.productId = parseInt(paramMap.get('productId'));
+      this.productId = parseInt(paramMap.get('productId'));      
       this.getProduct();
     });
   }
-
 
   goBack() {
     this.location.back();
@@ -54,6 +55,8 @@ export class EditProductComponent implements OnInit {
     this.productsGateway.getProduct(this.productId).subscribe(data => {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
+      this.editForm.get("description").setValue(data.description);
+      this.editForm.get("avatar").setValue(data.avatar);
     });
   }
 
@@ -64,9 +67,8 @@ export class EditProductComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-
-    let defer = this.productsGateway.updateProduct(this.productId.toString(), this.product);
+    this.isLoading = true;    
+    let defer = this.productsGateway.updateProduct(this.productId, this.editForm.value);
     defer.subscribe((data) => {
       this.toastr.success("Product Updated Success", "Success");
       this.isLoading = false;

@@ -5,7 +5,7 @@ import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 
 
@@ -165,6 +165,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
+    private toastr: NbToastrService,
     private sourcesGateway: SourcesGateway,    
     private featuresGateway: FeaturesGateway,   
     private theme: NbThemeService,    
@@ -241,6 +242,20 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnDestroy(): void {
     
   }     
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.featuresGateway.deleteFeature(this.featureId).subscribe(res=>{
+        this.toastr.success("Feature was deleted");
+        let queryParams: Params = { featureId : null };
+        this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }, (error) => {
+        this.isLoading = false;
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });      
+    } else {
+      event.confirm.reject();
+    }
+  }
   
   ngAfterViewInit() {    
     

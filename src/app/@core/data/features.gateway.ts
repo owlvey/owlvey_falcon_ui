@@ -73,6 +73,9 @@ export class FeaturesGateway {
     model.productId = productId;
     return this.http.post(`${this.baseUrl}features`, model);
   }
+  deleteFeature(featureId: number): Observable<any>{
+    return this.http.delete(`${this.baseUrl}features/${featureId}`);
+  }
   updateFeature(featureId: number, model: any) {
     return this.http.put(`${this.baseUrl}features/${featureId}`, model);
   }
