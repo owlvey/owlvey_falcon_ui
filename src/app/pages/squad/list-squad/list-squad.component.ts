@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChildren, ViewEncapsulation } from '@angular/cor
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { SquadsGateway } from './../../../@core/data/squads.gateway';
-import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
@@ -29,23 +27,23 @@ export class ListSquadComponent extends CustomerBaseComponent {
       name: {
         title: 'Name',
         type: 'string',
-        filter: false
+        filter: false,
       },
       features:{
         title: 'Features',
         type: 'number',
-        filter: false
+        filter: false,
       },
       points: {
         title: 'Points',
         type: 'number',
-        filter: false
+        filter: false,
       }
     },
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: false,
     },
   };
 
@@ -79,7 +77,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
       .subscribe((data) => {
        //  this.getSquads();
       }, (error) => {
-        this.toastr.danger("Something went wrong. Please try again.");
+        this.toastr.danger('Something went wrong. Please try again.');
       })
   }
 
@@ -113,8 +111,8 @@ export class ListSquadComponent extends CustomerBaseComponent {
   
   onSquadRowSelect(event) {
     const squadId = event.data.id;
-    let queryParams: Params = { squadId: squadId, uheader: null };
-    let extras: any = {
+    const queryParams: Params = { squadId: squadId, uheader: null };
+    const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,
       queryParamsHandling: 'merge'

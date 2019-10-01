@@ -12,15 +12,12 @@ export class CustomersGateway {
   {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
   }
-
   getCustomers(): Observable<any> {
     return this.http.get(this.baseUrl + 'customers');
   }
-
   getCustomer(customerId: number): Observable<any> {
     return this.http.get(this.baseUrl + `customers/${customerId}`);
   }  
-
   getSquadsGraph(customerId: number, start: Date, end: Date): Observable<any> {
     return this.http.get(this.baseUrl + `customers/${customerId}/squads/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
   }  
@@ -36,7 +33,6 @@ export class CustomersGateway {
   updateCustomer(id: string, model: any) {
     return this.http.put(this.baseUrl + 'customers/' + id, model);
   }
-
   deleteCustomer(id: any) {
     return this.http.delete(this.baseUrl + 'customers/' + id);
   }
@@ -47,7 +43,6 @@ export class CustomersGateway {
   importMetadata(customerId, model: any): Observable<any>{
     return this.http.post(this.baseUrl + `migrations/${customerId}/import/metadata/excel`, model);
   }
-
   exportMetadata(customerId: number): Observable<any>{    
     return this.http.get(this.baseUrl + `migrations/${customerId}/export/metadata/excel`, { responseType: 'blob'});
   }
