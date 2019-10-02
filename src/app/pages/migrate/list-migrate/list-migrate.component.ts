@@ -79,10 +79,15 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       this.customerGateway.exportMetadata(this.customerId).subscribe(data=>{        
         const blob = new Blob([data], { type: data.type });
         const url= window.URL.createObjectURL(blob);
+
         var anchor = document.createElement("a");
+        var body = document.getElementsByTagName('body')[0];
         anchor.download = this.currentCustomer.name + "-metadata.xlsx";
         anchor.href = url;
+        anchor.target = "_blank";
+        body.appendChild(anchor);
         anchor.click();
+        body.removeChild(anchor);
       });
     }
 }

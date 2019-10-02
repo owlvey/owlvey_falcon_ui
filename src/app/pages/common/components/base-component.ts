@@ -12,9 +12,8 @@ export abstract class BaseComponent implements OnInit {
         protected location: Location,
         protected theme: NbThemeService,
         protected router: Router, 
-        protected activatedRoute: ActivatedRoute) {       
-          
-        }        
+        protected activatedRoute: ActivatedRoute) {                 
+    }        
 
     abstract onChangeQueryParameters(paramMap: ParamMap): void;
     abstract onNgOnInit(): void;

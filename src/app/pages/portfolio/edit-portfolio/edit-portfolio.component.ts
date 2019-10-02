@@ -66,28 +66,28 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         title: 'MTTD',
         type: 'number',
         filter: false,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mtte: {
         title: 'MTTE',
         type: 'number',
         filter: false,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mttf: {
         title: 'MTTF',
         type: 'number',
         filter: false,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mttm: {
         title: 'MTTM',
         type: 'number',
         filter: false,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
     },
@@ -128,28 +128,28 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         title: 'MTTD',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mtte: {
         title: 'MTTE',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mttf: {
         title: 'MTTF',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
       mttm: {
         title: 'MTTM',
         type: 'number',
         filter: true,
-        width: '3em',
+        width: '10rem',
         editable: false
       },
     },
