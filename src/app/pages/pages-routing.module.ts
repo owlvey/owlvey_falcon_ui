@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { AuthGuard } from '../auth-guard.service';
 
 const routes: Routes = [{
   path: '',
@@ -12,34 +13,42 @@ const routes: Routes = [{
   children: [
     {
       path: 'dashboard',
+      canActivate: [AuthGuard],
       component: ECommerceComponent,
     },
     {
       path: 'iot-dashboard',
+      canActivate: [AuthGuard],
       component: DashboardComponent,
     },    
     {
       path: 'customers',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
     },  
     {
       path: 'squads',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./squad/squad.module').then(m => m.SquadModule),
     },    
     {
       path: 'sources',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./source/source.module').then(m => m.SourceModule),
     }, 
     {
       path: 'users',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./user/user.module').then(m => m.UserModule),
     },    
     {
       path: 'products',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
     },        
     {
       path: 'features',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule),
     },    
     {
@@ -48,10 +57,12 @@ const routes: Routes = [{
     },    
     {
       path: 'portfolios',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),
     },    
     {
       path: 'incidents',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./incident/incident.module').then(m => m.IncidentModule),
     },    
     {

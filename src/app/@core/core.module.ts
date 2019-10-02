@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ResponseType, NbAuthOAuth2Token, NbOAuth2GrantType, NbOAuth2ClientAuthMethod } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -126,22 +126,45 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      NbDummyAuthStrategy.setup({
-        name: 'email',
-        delay: 3000,
-      }),
+
+      NbOAuth2AuthStrategy.setup(
+        { 
+          name: 'password',
+          baseEndpoint: 'http://localhost:63923/',
+          clientId: 'B0D76E84BF394F1297CABBD7337D42B9',
+          clientSecret: '0da45603-282a-4fa6-a20b-2d4c3f2a2127',
+          clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
+          token: {
+            endpoint: 'connect/token',
+            grantType: NbOAuth2GrantType.PASSWORD,
+            scope: 'openid profile api',
+            class: NbAuthOAuth2Token,
+            requireValidToken: true
+          },
+          refresh: {
+            endpoint: 'token',
+            grantType: NbOAuth2GrantType.REFRESH_TOKEN
+          }
+        }
+      ),
     ],
     forms: {
+
       login: {
-        socialLinks: socialLinks,
-      },
-      register: {
-        socialLinks: socialLinks,
-      },
-    },
+        redirectDelay: 0,
+        strategy: 'password',
+        rememberMe: false,
+        showMessages: {
+          success: true,
+          error: true,
+        },
+      }
+
+    }
   }).providers,
 
   NbSecurityModule.forRoot({
+    
     accessControl: {
       guest: {
         view: '*',
