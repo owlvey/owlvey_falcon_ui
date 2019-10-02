@@ -2,12 +2,14 @@ import { Component, EventEmitter, Input, OnDestroy, Output, OnInit, ElementRef, 
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbSelectComponent } from '@nebular/theme';
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
 import { ActivatedRoute, Route, Router, ParamMap, Params } from '@angular/router';
 import { EventHandlerService } from '../../../event-handler.service';
+import { NbAuthService, NbAuthJWTToken, NbTokenService } from '@nebular/auth';
+import { UsersGateway } from '../../../@core/data/users.gateway';
 
 @Component({
   selector: 'ngx-header',
@@ -57,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
-    private userService: UserData,
+    private authService: NbAuthService,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
     private customerGateway: CustomersGateway,
@@ -65,8 +67,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private cdRef: ChangeDetectorRef,
-    private eventHandler: EventHandlerService
+    private eventHandler: EventHandlerService,
+    private tokenService: NbTokenService
   ) {
+
   }
 
   onFirstLoadWithOutData(){
@@ -141,9 +145,21 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }  
 
   ngOnInit() {          
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.eva);
+    // this.userService.getUsers()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users: any) => this.user = users.eva);
+
+
+      this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+
+        if (token.isValid()) {
+          this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable 
+          console.log(this.user);
+        }
+
+      });
+
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -175,7 +191,25 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       this.startDate = new Date(qstart);
       this.endDate = new Date(qend);
     }    
-    this.onControlChangeRouter();              
+    this.onControlChangeRouter();      
+    
+    this.menuService.onItemClick()
+    .pipe(
+      filter(({ tag }) => tag === 'user-menu'),
+      map(({ item: { title } }) => title),
+    )
+    .subscribe(title => {
+      console.log(title);
+      if (title === 'Profile') {
+        this.router.navigate(['/profile/me']);
+      } else {
+        this.authService.logout('password');
+        this.tokenService.clear();
+        this.router.navigate(['/auth/logout']);
+      }
+    });
+
+
   } 
 /*
   getProducts() {

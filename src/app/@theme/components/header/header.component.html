@@ -47,6 +47,7 @@
     
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="userMenu"
+               nbContextMenuTag="user-menu"
                [onlyPicture]="userPictureOnly"
                [name]="user?.name"
                [picture]="user?.picture">

@@ -7,11 +7,15 @@ import { environment } from './../../../environments/environment';
 @Injectable()
 export class UsersGateway {
     baseUrl: string;
+    identityUrl: string;
     constructor(private http: HttpClient,
               private envService: EnvironmentService) {
       this.baseUrl = envService.getUrl(environment.api, environment.type);
+      this.identityUrl = envService.getUrl(environment.authority, environment.type);
     }
-
+    getUserIdentity() : Observable<any>{
+        return this.http.get(this.identityUrl + `api/account/me`);
+    }
     getUsers() : Observable<any>{
         return this.http.get(this.baseUrl + `users`);
     }

@@ -61,6 +61,7 @@ import { SquadsGateway }  from './data/squads.gateway';
 import { FormatService } from './utils/format.service';
 import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
+import { environment } from '../../environments/environment';
 
 
 const socialLinks = [
@@ -130,9 +131,9 @@ export const NB_CORE_PROVIDERS = [
       NbOAuth2AuthStrategy.setup(
         { 
           name: 'password',
-          baseEndpoint: 'http://localhost:63923/',
-          clientId: 'B0D76E84BF394F1297CABBD7337D42B9',
-          clientSecret: '0da45603-282a-4fa6-a20b-2d4c3f2a2127',
+          baseEndpoint: environment.authority,
+          clientId: environment.clientId,
+          clientSecret: environment.clientSecret,
           clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
           token: {
             endpoint: 'connect/token',
@@ -151,14 +152,19 @@ export const NB_CORE_PROVIDERS = [
     forms: {
 
       login: {
-        redirectDelay: 0,
+        redirectDelay: 100,
         strategy: 'password',
         rememberMe: false,
         showMessages: {
           success: true,
           error: true,
         },
-      }
+      },
+
+      logout: {
+        redirectDelay: 500,
+        strategy: 'password',
+      },
 
     }
   }).providers,
