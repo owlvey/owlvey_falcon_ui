@@ -4,5 +4,6 @@ export const environment = {
   clientId: 'pswebadmin',
   authority: 'http://authority:45002/',
   api: 'http://api:45001/',
-  type: 'docker'
+  type: 'docker',
+  showDevMenu: false
 };
