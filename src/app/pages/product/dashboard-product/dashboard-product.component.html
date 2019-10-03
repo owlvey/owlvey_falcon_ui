@@ -43,16 +43,20 @@
         </nb-card>
     </div>      
     <div class="col-xxxl-3 col-md-3" >
-        <nb-card size="tiny" class="gauge">            
-            <nb-card-body>                
-                <div>
-                  <div class="h5 value"> Sources </div>
+      <nb-card size="tiny" class="gauge">            
+          <nb-card-body>                
+                <div echarts [options]="optionSources" class="echart">
+                </div>
+                <div class="info">
+                  <div class="h5 value"> Sources </div>                  
                   <div class="details subtitle-2"><span> Total: {{ sourceStats?.count }} </span> </div>
+                  <div class="details subtitle-2"><span> Min: {{ sourceStats?.min }} </span> </div>
+                  <div class="details subtitle-2"><span> Max: {{ sourceStats?.max }} </span> </div>
                   <div class="details subtitle-2"><span> Sum: {{ sourceTotal }} </span> </div>                  
-                </div>                                                             
-            </nb-card-body>          
-        </nb-card>
-    </div>
+                </div>                                                                 
+          </nb-card-body>          
+      </nb-card>
+  </div>
     
 </div>
 

@@ -10,6 +10,8 @@ import { SourceModule } from './source/source.module';
 import { CustomerModule} from './customer/customer.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
 import { SquadModule } from './squad/squad.module';
+import { HomeModule } from './home/home.module';
+
 
 import {
   NbActionsModule,
@@ -38,6 +40,7 @@ import { UserModule } from './user/user.module';
     PortfolioModule,
     SquadModule,
     UserModule,
+    HomeModule,
   ],
   declarations: [
     PagesComponent,

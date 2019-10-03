@@ -226,6 +226,12 @@ if (environment.showDevMenu) {
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
+    title: "Home",
+    icon: "home-outline",
+    link: "/pages/home",
+    home: true
+  },
+  {
     title: "E-commerce",
     icon: "shopping-cart-outline",
     link: "/pages/dashboard",

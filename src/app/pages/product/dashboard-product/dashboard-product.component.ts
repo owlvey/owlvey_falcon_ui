@@ -47,6 +47,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
   optionServices: any = {};
   optionFeatures: any = {};
   optionSLO: any = {};
+  optionSources: any = {};
 
 
   themeSubscription: any;
@@ -226,7 +227,8 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
           this.option = this.buildOptions(solarTheme, config, sourceAvailability);
           this.optionServices = this.buildOptions(solarTheme, config, serviceAvailability);
           this.optionFeatures = this.buildOptions(solarTheme, config, featureAvailability);
-          this.optionSLO = this.buildOptions(solarTheme, config, sloProportion)
+          this.optionSLO = this.buildOptions(solarTheme, config, sloProportion);
+          this.optionSources = this.buildOptions(solarTheme, config, sourceAvailability);
         });
       });
     }
@@ -237,7 +239,11 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     onServiceClick(event){
       const serviceId = event.currentTarget.id;
       const featuresIds = this.serviceMaps[serviceId];
-      this.features = this.featuresData.filter(c=> featuresIds.indexOf(c.id) > -1 );
+      this.features = this.featuresData
+        .filter(c=> featuresIds.indexOf(c.id) > -1 )
+        .sort(( a:any, b:any)=>{
+          return a.id - b.id;
+        });
       this.sources = [];
       this.squads = [];
     }
