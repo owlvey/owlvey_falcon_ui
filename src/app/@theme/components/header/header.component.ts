@@ -141,6 +141,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }  
 
   ngOnInit() {          
+
+    this.eventHandler.customerCreated.subscribe(c=>{
+      this.onNavigation(null, null);
+    });
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.eva);
@@ -177,21 +181,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }    
     this.onControlChangeRouter();              
   } 
-/*
-  getProducts() {
-    this.productGateway.getProducts(this.currentCustomer).subscribe(data => {      
-      this.products = data;
-      setTimeout(() => {        
-        this.headerSelectors.forEach(c=>{        
-          if (c.placeholder === "products")
-          { 
-            c.setSelection(this.currentProduct);
-          }
-        });      
-      }, 100);
-    });
-  } 
-*/
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

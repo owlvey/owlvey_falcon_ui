@@ -64,7 +64,7 @@ export class CreateCustomerComponent implements OnInit {
     defer.subscribe((data) => {
         this.toastr.success("Customer Created Success");
         this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadCustomers" })
+        this.eventHandler.customerCreated.next({ name: "reloadCustomers" });        
         this.location.back();
       }, (error) => {
         this.isLoading = false;

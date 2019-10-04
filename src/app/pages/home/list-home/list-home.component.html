@@ -18,8 +18,19 @@
             </nb-card-front>
             <nb-card-back>
               <nb-card size="tiny">
-                  <h1> False </h1>
-                <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon"></nb-icon>
+                <nb-card-header>
+                  <h5> Books </h5>
+                </nb-card-header>
+                <nb-card-body>
+                  <img  height="120px" width="100px" 
+                        src="https://lh3.googleusercontent.com/FbVf-50mMs63CELj0fi9mlX7oeWcaPYWVGJlfdMfrn70RG0neKU9M40S9zZW1OxOm6uDxzcVGntuT1pKaECNrfLSDq6G182FD7CCgA=s0"/>
+                  <img  height="120px" width="100px" 
+                        src="https://lh3.googleusercontent.com/hZ9DuUu6PjbWPekhneG1XZP55oEvb3iBFv-NZGP4odRGBJOS62zguN5MZ52xZUFYoZB7C7WI0Ta3qelvKbtacNykchPCrL99hyRT0Q=s0"/>
+                  <img  height="120px" width="100px" 
+                        src="https://covers.oreillystatic.com/images/0636920063964/lrg.jpg"/>
+
+                </nb-card-body>
+
               </nb-card>
             </nb-card-back>
           </nb-flip-card>
@@ -35,7 +46,7 @@
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Organization 
+                        Root entity that contains products, and squads, has a group of products (applications).
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -43,11 +54,11 @@
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5> Organization & Products </h5>
+                      <h5> Products </h5>
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Products
+                        Represents an application that contains business services, business features, sources and incidents.
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -64,19 +75,22 @@
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Squads
+                        It’s a small cross-functional, self-organized team usually with less than eight members.
+                        The team members have end-to-end responsibilities, and they work together towards their long-term mission. 
+                        On Squads the key driver is autonomy. <strong><i>Spotify</i></strong>
                     </p>
+                    
                   </nb-card-body>
               </nb-card>
             </nb-card-front>
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5> Squad & Members </h5>
+                      <h5> Members </h5>
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Members
+                        An awesome Full Stack Software Engineer
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -95,25 +109,25 @@
                   </nb-card-header>                
                   <nb-card-body>
                       <p>
-                          Is your system helthtly ?                        
+                         A measuare of your system helthtly.                       
                       </p>
-                      <ul class="mb-5">
-                          <li>Request Latency</li>
-                          <li>Requests per second</li>
-                          <li>Failures per request</li>
-                      </ul>                    
+                      <p>
+                          A carefully defined quantitative measure of some aspect of the level of service that is provided.
+                      </p>        
                   </nb-card-body>
               </nb-card>
             </nb-card-front>
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5>  </h5>
+                      <h5>  SLI Samples  </h5>
                   </nb-card-header>                
                   <nb-card-body>
-                    <p>
-                        Binding target for a collection 
-                    </p>
+                      <ul class="mb-5">
+                          <li>UX: Availability, Latency, Throughput</li>
+                          <li>Storage: Latency, Availability, Durability</li>
+                          <li>Big Data: Throughput, end-to-end latency</li>
+                      </ul>   
                   </nb-card-body>
               </nb-card>
             </nb-card-back>
@@ -128,7 +142,9 @@
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Binding target for a collection of SLIs
+                        An SLO is a service level objective: a target value or range of values for a service level that is measured by an SLI.
+                        A natural structure for SLOs is thus SLI ≤ target, or lower bound ≤ SLI ≤ upper bound.
+                       <strong><i> SRE Book </i></strong>
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -136,11 +152,12 @@
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5> Organization & Products </h5>
+                      <h5> SLO </h5>
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Products
+                        For example, we might decide that we will return Shakespeare search results "quickly," 
+                        adopting an SLO that our average search request latency should be less than 100 milliseconds.
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -152,11 +169,12 @@
             <nb-card-front>
               <nb-card size="tiny">        
                   <nb-card-header>
-                      <h5> Analysis period and Error Budget </h5>
+                      <h5> Analysis window and Error Budget </h5>
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Organization 
+                        The main benefit of an error budget, defined per specific period of time, is that it provides a common incentive that allows both product development and
+                        produtction to focus on finding the right balance between innovation and reliability.
                     </p>
                   </nb-card-body>
               </nb-card>
@@ -164,20 +182,20 @@
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5> Organization & Products </h5>
+                      <h5> SLO miss policies </h5>
                   </nb-card-header>                
                   <nb-card-body>
-                    <p>
-                        Products
-                    </p>
+                      <ul class="mb-5">
+                          <li> Postmortem outage policy. </li>
+                          <li> Escalation policy.</li>
+                          <li> Forbide deployment until recuperate SLO.</li>
+                      </ul>  
                   </nb-card-body>
               </nb-card>
             </nb-card-back>
           </nb-flip-card>
     </div>
 </div>
-  
-
 <div class="row">
     <div class="col-xxl-12">
         <nb-flip-card showToggleButton="true">
@@ -188,27 +206,32 @@
                   </nb-card-header>                
                   <nb-card-body>
                     <p>
-                        Is your system helthtly ?
-                        Request Latency 
-                        Requests per second 
-                        Failures per request
-                    </p>
+                        <strong> Time To Detect (TTD) </strong>, Minimized with automated monitoring and alerting to protect SLA.
+                    </p>                  
+                    <p>
+                        <strong> Time To Engage (TTE) </strong>, Minimized with automated escalation and solid escalation process.
+                    </p>                  
+                    <p>
+                        <strong> Time To Fix (TTF) </strong>, Minimized with fast rollback, fail over, fix forward.
+                    </p>                                      
                   </nb-card-body>
               </nb-card>
             </nb-card-front>
             <nb-card-back>
               <nb-card size="tiny">
                   <nb-card-header>
-                      <h5>  </h5>
+                      <h5> Incidents  </h5>
                   </nb-card-header>                
                   <nb-card-body>
-                    <p>
-                        Binding target for a collection 
-                    </p>
+                      <p>
+                          <strong> Time To Mitigate (TTM) </strong> Aggregation of TTD + TTE + TTF
+                      </p>                  
+                      <p>
+                          <strong> Time Between Fail (TBF) </strong> Refers to the average amount of time that a device or product functions before failing. 
+                      </p>                  
                   </nb-card-body>
               </nb-card>
             </nb-card-back>
           </nb-flip-card>
     </div>
-    
 </div>

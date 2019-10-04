@@ -40,11 +40,8 @@ export class FeaturesGateway {
     return this.http.delete(this.baseUrl + `features/${featureId}/squads/${squadId}`);
   } 
 
-  postIndicator(featureId: number, sourceId: number): Observable<any> {
-    return this.http.post(this.baseUrl + `indicators`, {
-      featureId : featureId, 
-      sourceId : sourceId
-    });
+  putIndicator(featureId: number, sourceId: number): Observable<any> {
+    return this.http.put(this.baseUrl + `features/${featureId}/indicators/${sourceId}`, { });
   }
   deleteIndicator(indicatorId: number){
     return this.http.delete(this.baseUrl + `indicators/${indicatorId}`);

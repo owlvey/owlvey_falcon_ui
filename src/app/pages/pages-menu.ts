@@ -11,6 +11,11 @@ if (environment.showDevMenu) {
       home: true
     },
     {
+      title: "Home",
+      icon: "home-outline",
+      link: "/pages/home",
+    },
+    {
       title: "IoT Dashboard",
       icon: "home-outline",
       link: "/pages/iot-dashboard"
@@ -230,13 +235,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "home-outline",
     link: "/pages/home",
     home: true
-  },
-  {
-    title: "E-commerce",
-    icon: "shopping-cart-outline",
-    link: "/pages/dashboard",
-    home: true
-  },
+  },  
   {
     title: "Product Dashboard",
     icon: "home-outline"

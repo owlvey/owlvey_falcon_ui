@@ -7,5 +7,7 @@ import { Subject } from 'rxjs';
 export class EventHandlerService {
   public event: Subject<any> = new Subject<any>();
 
+  public customerCreated: Subject<any> = new Subject<any>();
+
   constructor() { }
 }

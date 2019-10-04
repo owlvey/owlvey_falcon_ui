@@ -62,8 +62,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,
-        sortDirection: 'desc',
+        editable: false,        
       },   
       mttd: {
         title: 'MTTD',
@@ -160,7 +159,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
         this.toastr.success("Portfolio was deleted");
         let queryParams: Params = { portfolioId : null };
-        this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+        this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
       }, (error) => {
         this.isLoading = false;
         this.toastr.warning("Something went wrong, please try again.", "Warning")

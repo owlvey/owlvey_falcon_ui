@@ -198,9 +198,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.name);
-      this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("mttd").setValue(data.mttd);
-      this.editForm.get("mttr").setValue(data.mttr);
+      this.editForm.get("avatar").setValue(data.avatar);      
       this.source.load(data.indicators);
       this.squadsSource.load(data.squads);
     });
@@ -220,7 +218,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
 
   onRegister(event){
     const sourceId = event.data.id;
-    this.featureGateway.postIndicator(this.featureId, sourceId).subscribe(data=>{
+    this.featureGateway.putIndicator(this.featureId, sourceId).subscribe(data=>{
       this.toastr.success("Feature Registered");
       this.loadSource();
       this.loadSLIs();
@@ -251,18 +249,16 @@ export class EditFeatureComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      avatar: ['', Validators.required],
-      mttd: ['', Validators.required],
-      mttr: ['', Validators.required],
+      avatar: ['', Validators.required]      
     });
   }
-  onSubmit() {
+  onSubmit() {    
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
     this.isLoading = true;
-    const model = this.editForm.value;
+    const model = this.editForm.value;    
     let  defer = this.featureGateway.updateFeature(this.featureId, model);
     defer.subscribe((data) => {
         this.toastr.success("Feature Modified Success");
