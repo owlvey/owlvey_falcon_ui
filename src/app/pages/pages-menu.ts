@@ -258,19 +258,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: "Products",
-    icon: "archive-outline"
+    icon: "bulb-outline"
   },
   {
     title: "Services",
-    icon: "briefcase-outline"
+    icon: "award-outline"
   },
   {
     title: "Features",
-    icon: "smartphone-outline"
+    icon: "cube-outline"
   },
   {
     title: "Sources",
-    icon: "stop-circle-outline"
+    icon: "archive-outline"
   },
   {
     title: "Incidents",

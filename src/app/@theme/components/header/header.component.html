@@ -9,13 +9,15 @@
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
   <br />
-  <nb-select class="mr-2" placeholder="organizations" [(selected)]="currentCustomer" (selectedChange)="changeCustomer($event)" status="primary">
+  <nb-select class="mr-2" placeholder="organizations" [(selected)]="currentCustomer" 
+               (selectedChange)="changeCustomer($event)" status="primary">
     <nb-option *ngFor="let customer of customers" [value]="customer.id"> {{ customer.name }}</nb-option>
   </nb-select>
 
   <nb-select class="mr-2" placeholder="products" [(selected)]="currentProduct" (selectedChange)="changeProduct($event)" status="primary">
     <nb-option *ngFor="let product of products" [value]="product.id"> {{ product.name }}</nb-option>
   </nb-select>
+
   <label for="txtstartdate" class="label header-label border-0">Start Date</label>
   <input id="txtstartdate" nbInput placeholder="Start Date" class="header-input form-control size-small"
          [nbDatepicker]="startpicker"
