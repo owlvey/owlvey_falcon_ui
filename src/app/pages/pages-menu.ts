@@ -5,16 +5,18 @@ let DEV_MENU = [];
 if (environment.showDevMenu) {
   DEV_MENU = [
     {
-      title: "E-commerce",
-      icon: "shopping-cart-outline",
-      link: "/pages/dashboard",
-      home: true
-    },
-    {
       title: "Home",
       icon: "home-outline",
       link: "/pages/home",
+      home: true,
     },
+    {
+      title: "E-commerce",
+      icon: "shopping-cart-outline",
+      link: "/pages/dashboard",
+      
+    },
+  
     {
       title: "IoT Dashboard",
       icon: "home-outline",
