@@ -13,11 +13,11 @@ import {
 } from '@nebular/theme';
 
 const routes: Routes = [
-  { path: '', component: ListHomeComponent },  
+  { path: '', component: ListHomeComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class HomeRoutingModule {}

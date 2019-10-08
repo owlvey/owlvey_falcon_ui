@@ -6,7 +6,6 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 
 
@@ -22,8 +21,9 @@ export class EditSourceComponent extends ProductBaseComponent {
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router,
-    protected activatedRoute: ActivatedRoute, private eventHandler: EventHandlerService,
-    private toastr: NbToastrService, private sourceGateway: SourcesGateway ) {
+    protected activatedRoute: ActivatedRoute, 
+    private toastr: NbToastrService, 
+    private sourceGateway: SourcesGateway ) {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);
 
     this.isLoading = false;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of as observableOf, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../utils/env.service';
 import { environment } from './../../../environments/environment';
@@ -12,23 +12,23 @@ export class IncidentsGateway{
     {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
     }
-    
-    getIncidents(productId: number) : Observable<any> {        
+
+    getIncidents(productId: number): Observable<any> {
         return this.http.get(this.baseUrl + `incidents?productId=${productId}`);
     }
 
-    getIncident(incidentId: number) : Observable<any> {        
+    getIncident(incidentId: number): Observable<any> {
         return this.http.get(this.baseUrl + `incidents/${incidentId}`);
     }
 
-    getIncidentComplement(incidentId: number) : Observable<any> {        
+    getIncidentComplement(incidentId: number): Observable<any> {
         return this.http.get(this.baseUrl + `incidents/${incidentId}/features/complement`);
     }
 
     postIncident(model: any): Observable<any>{
         return this.http.post(this.baseUrl + `incidents`, model);
     }
-    putIncident(incidentId: number, model:any) : Observable<any>{
+    putIncident(incidentId: number, model: any): Observable<any>{
         return this.http.put(this.baseUrl + `incidents/${incidentId}`, model);
     }
     registerFeature(incidentId: number, featureId: number): Observable<any>{

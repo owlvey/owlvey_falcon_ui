@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { environment } from "../../../../environments/environment";
+import { Component } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: "ngx-footer",
-  styleUrls: ["./footer.component.scss"],
+  selector: 'ngx-footer',
+  styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
       <b><a href="#" target="_blank">Falcon </a></b> 2019</span
@@ -30,6 +30,6 @@ import { environment } from "../../../../environments/environment";
         class="ion ion-social-linkedin"
       ></a>
     </div>
-  `
+  `,
 })
 export class FooterComponent {}

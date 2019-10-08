@@ -7,9 +7,9 @@ export class EnvironmentService {
   }
 
   getUrl(baseUrl: string, type: string): string {
-    if (type && type === "docker")
+    if (type && type === 'docker')
     {
-      return "http://" + window.location.hostname + ":45001/";
+      return 'http://' + window.location.hostname + ':45001/';
     }
     return baseUrl;
   }

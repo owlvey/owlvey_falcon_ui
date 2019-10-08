@@ -137,13 +137,12 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onDelete(event){    
-    if (confirm("are you sure?") === true){
-      const featureId =  event.data.id;    
-      this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
-        this.getPortfolio();
-      });
-    }    
+  onDelete(event){        
+    const featureId =  event.data.id;    
+    this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
+      this.getPortfolio();
+    });
+    
   } 
   onBackClick(event){    
     //let queryParams: Params = { portfolioId: null };
@@ -154,18 +153,15 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     
   }
 
-  onDeleteClick(event){
-    if (window.confirm('Are you sure you want to delete?')) {
-      this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
-        this.toastr.success("Portfolio was deleted");
-        let queryParams: Params = { portfolioId : null };
-        this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-      }, (error) => {
-        this.isLoading = false;
-        this.toastr.warning("Something went wrong, please try again.", "Warning")
-      });      
-    } else {
-      event.confirm.reject();
-    }
+  onDeleteClick(event){    
+    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
+      this.toastr.success("Portfolio was deleted");
+      let queryParams: Params = { portfolioId : null };
+      this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    }, (error) => {
+      this.isLoading = false;
+      this.toastr.warning("Something went wrong, please try again.", "Warning")
+    });      
+    
   }
 }

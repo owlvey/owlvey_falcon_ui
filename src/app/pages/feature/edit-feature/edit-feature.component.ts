@@ -6,7 +6,6 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
@@ -169,8 +168,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,
     protected theme: NbThemeService,
     protected router: Router,
-    protected activatedRoute: ActivatedRoute,
-    protected eventHandler: EventHandlerService,
+    protected activatedRoute: ActivatedRoute,    
     protected portfolioGateway: PortfoliosGateway,
     protected sourceGateway: SourcesGateway,
     protected toastr: NbToastrService,

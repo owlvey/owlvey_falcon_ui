@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of as observableOf, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../utils/env.service';
 import { environment } from '../../../environments/environment';
@@ -21,31 +21,31 @@ export class SourcesGateway{
     }
 
     postSource(productId: number, name: String): Observable<any> {
-        return this.http.post(this.baseUrl + `sources`, { productId:productId , name: name});        
+        return this.http.post(this.baseUrl + `sources`, { productId: productId , name: name});
     }
 
     deleteSource(sourceId: number): Observable<any> {
-        return this.http.delete(this.baseUrl + `sources/${sourceId}`);        
+        return this.http.delete(this.baseUrl + `sources/${sourceId}`);
     }
 
     postSourceItem(model: any): Observable<any> {
-        return this.http.post(this.baseUrl + `sourceItems`, model);        
+        return this.http.post(this.baseUrl + `sourceItems`, model);
     }
 
     putSource(sourceId: number, model: any): Observable<any> {
-        return this.http.put(this.baseUrl + `sources/${sourceId}`, model);        
+        return this.http.put(this.baseUrl + `sources/${sourceId}`, model);
     }
     getSource(sourceId: number): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}`);
     }
-    getSourceWithAvailability(sourceId: number, start:Date, end: Date): Observable<any> {
+    getSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.http.get(this.baseUrl + `sources/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
     getSourceItems(sourceId: number): Observable<any>{
         return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
     }
-    getSourceItemsByPeriod(sourceId: number, start:Date, end: Date): Observable<any>{
+    getSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
         return this.http.get(this.baseUrl + `sourceItems?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 

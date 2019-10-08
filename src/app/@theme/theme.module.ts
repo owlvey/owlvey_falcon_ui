@@ -13,7 +13,7 @@ import {
   NbSelectModule,
   NbIconModule,
   NbThemeModule,
-  NbDatepickerModule
+  NbDatepickerModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';

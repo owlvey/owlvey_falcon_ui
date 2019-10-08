@@ -4,7 +4,6 @@ import { SquadsGateway } from '../../../@core/data/squads.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
@@ -96,8 +95,7 @@ export class EditSquadComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
-    private eventHandler: EventHandlerService
+    private router: Router,    
   ) {
     this.createForm = this.fb.group({
       id: [''],
@@ -145,8 +143,7 @@ export class EditSquadComponent implements OnInit {
     let defer = this.squadGateway.updateSquad(this.createForm.get('id').value, this.createForm.value);
     defer.subscribe((data) => {
       this.toastr.success("Squad Updated Success", "Success");
-      this.isLoading = false;
-      this.eventHandler.event.next({ name: "reloadSquads" })
+      this.isLoading = false;      
       this.location.back();
     }, (error) => {
       this.isLoading = false;

@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, OnInit, ElementRef, ViewChild, AfterViewInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbSelectComponent } from '@nebular/theme';
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { ProductsGateway } from './../../../@core/data/products.gateway';
-import { ActivatedRoute, Route, Router, ParamMap, Params } from '@angular/router';
-import { EventHandlerService } from '../../../event-handler.service';
+import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
+import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
 
 @Component({
   selector: 'ngx-header',
@@ -21,8 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   user: any;
   customers: Array<any> = [];
   products: Array<any> = [];
-  startDate: Date; 
-  endDate: Date;  
+  startDate: Date;
+  endDate: Date;
 
   themes = [
     {
@@ -45,8 +45,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   currentTheme = 'default';
   currentCustomer: number;
-  currentProduct: number;    
-  refresh : any= new Date().getTime();
+  currentProduct: number;
+  refresh: any= new Date().getTime();
 
   @ViewChildren(NbSelectComponent) headerSelectors: QueryList<any>;
 
@@ -64,87 +64,87 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private productGateway: ProductsGateway,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdRef: ChangeDetectorRef,
-    private eventHandler: EventHandlerService
+    private cdRef: ChangeDetectorRef,    
+    private customerEventHub: CustomerEventHub
   ) {
   }
 
   onFirstLoadWithOutData(){
     this.currentCustomer = null;
     this.currentProduct = null;
-    this.customerGateway.getCustomers().subscribe(data=>{
-      this.customers = data;            
-      this.products = null;            
+    this.customerGateway.getCustomers().subscribe(data => {
+      this.customers = data;
+      this.products = null;
     });
   }
-  onCustomerAndProduct(custId, prodId){    
-    this.customerGateway.getCustomers().subscribe(data=>{
-      this.customers = data;           
-      this.cdRef.detectChanges();            
+  onCustomerAndProduct(custId, prodId){
+    this.customerGateway.getCustomers().subscribe(data => {
+      this.customers = data;
+      this.cdRef.detectChanges();
       this.currentCustomer = custId;
-      this.productGateway.getProducts(custId).subscribe(products=>{
-        this.products = products;        
-        this.cdRef.detectChanges();            
-        this.currentProduct = prodId;                
+      this.productGateway.getProducts(custId).subscribe(products => {
+        this.products = products;
+        this.cdRef.detectChanges();
+        this.currentProduct = prodId;
       });
     });
   }
   onCustomer(custId){
-    this.customerGateway.getCustomers().subscribe(data=>{
-      this.customers = data;           
-      this.cdRef.detectChanges();            
+    this.customerGateway.getCustomers().subscribe(data => {
+      this.customers = data;
+      this.cdRef.detectChanges();
       this.currentCustomer = custId;
-      this.productGateway.getProducts(custId).subscribe(products=>{
-        this.products = products;    
-        this.currentProduct = null;                            
+      this.productGateway.getProducts(custId).subscribe(products => {
+        this.products = products;
+        this.currentProduct = null;
       });
     });
   }
-  onNavigation(qcustomerId, qproductId){    
+  onNavigation(qcustomerId, qproductId){
     if (this.currentProduct && this.currentProduct === qproductId){
         return;
     }
 
-    if(!qcustomerId) {
+    if (!qcustomerId) {
       this.onFirstLoadWithOutData();
     }
-    else if(qcustomerId && qproductId){
-      this.onCustomerAndProduct(qcustomerId, qproductId);        
+    else if (qcustomerId && qproductId){
+      this.onCustomerAndProduct(qcustomerId, qproductId);
     }
     else {
       this.onCustomer(qcustomerId);
-    }    
+    }
   }
-  
-  onControlChangeRouter(){    
-    let target = [this.router.url.split('?')[0]];
-    let queryParams: Params = { 
+
+  onControlChangeRouter(){
+    const target = [this.router.url.split('?')[0]];
+    const queryParams: Params = {
       uheader: 1,
-      customerId: this.currentCustomer, 
+      customerId: this.currentCustomer,
       productId: this.currentProduct,
-      start: this.startDate.toISOString(), 
+      start: this.startDate.toISOString(),
       end: this.endDate.toISOString(),
-    };    
-    this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                
+    };
+    this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
-  
+
   ngAfterViewInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {         
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       //evento from control
-      const tmp = parseInt(paramMap.get("uheader"));      
-      if (!tmp){        
-        const customerId = parseInt(paramMap.get("customerId"));
-        const productId = parseInt(paramMap.get("productId"))
+      const tmp = parseInt(paramMap.get('uheader'));
+      if (!tmp){
+        const customerId = parseInt(paramMap.get('customerId'));
+        const productId = parseInt(paramMap.get('productId'));
         this.onNavigation(customerId, productId);
-      }            
-    });    
-  }  
-
-  ngOnInit() {          
-
-    this.eventHandler.customerCreated.subscribe(c=>{
-      this.onNavigation(null, null);
+      }
     });
+  }
+
+  ngOnInit() {
+
+    this.customerEventHub.customerCreated.subscribe(c=>{
+      this.onNavigation(null, null);
+    });    
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.eva);
@@ -163,24 +163,24 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
-    
-    const snapshot = this.activatedRoute.snapshot.queryParamMap;                
-    const qstart = snapshot.get("start");
-    const qend = snapshot.get("end");
-    const customerId = parseInt(snapshot.get("customerId"));
-    const productId = parseInt(snapshot.get("productId"))
+
+    const snapshot = this.activatedRoute.snapshot.queryParamMap;
+    const qstart = snapshot.get('start');
+    const qend = snapshot.get('end');
+    const customerId = parseInt(snapshot.get('customerId'));
+    const productId = parseInt(snapshot.get('productId'));
     this.onNavigation(customerId, productId);
     if (!qstart){
       this.startDate = new Date();
-      this.startDate.setDate(this.startDate.getDate() - 30); // Policy time           
-      this.endDate = new Date();      
+      this.startDate.setDate(this.startDate.getDate() - 30); // Policy time
+      this.endDate = new Date();
     }
     else{
       this.startDate = new Date(qstart);
       this.endDate = new Date(qend);
-    }    
-    this.onControlChangeRouter();              
-  } 
+    }
+    this.onControlChangeRouter();
+  }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -190,17 +190,17 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.themeService.changeTheme(themeName);
   }
 
-  changeCustomer(customer: any) {                
-    this.currentProduct = null; 
-    this.productGateway.getProducts(customer).subscribe(data=>{
-      this.products=data;
-      this.onControlChangeRouter();      
+  changeCustomer(customer: any) {
+    this.currentProduct = null;
+    this.productGateway.getProducts(customer).subscribe(data => {
+      this.products = data;
+      this.onControlChangeRouter();
     });
-    
+
   }
 
-  changeProduct(product: any) {               
-    this.onControlChangeRouter();      
+  changeProduct(product: any) {
+    this.onControlChangeRouter();
   }
 
   toggleSidebar(): boolean {
@@ -213,10 +213,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.menuService.navigateHome();
     return false;
   }
-  onStartChange(start: Date){        
-    this.onControlChangeRouter();      
+  onStartChange(start: Date){
+    this.onControlChangeRouter();
   }
-  onEndChange(end: Date){               
-    this.onControlChangeRouter();      
+  onEndChange(end: Date){
+    this.onControlChangeRouter();
   }
 }

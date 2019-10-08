@@ -143,13 +143,11 @@ export class ItemsSourceComponent implements OnInit {
     });        
   }  
   onDelete(event){
-    const sourceItemId = event.data.id;
-    if( confirm("Are you sure?")){
-      this.sourcesGateway.deleteSourceItem(sourceItemId).subscribe(data=>{
-        this.toastr.success("Source Item Deleted Success");
-        this.getSourceItems();
-      });    
-    }    
+    const sourceItemId = event.data.id;    
+    this.sourcesGateway.deleteSourceItem(sourceItemId).subscribe(data=>{
+      this.toastr.success("Source Item Deleted Success");
+      this.getSourceItems();
+    });        
   }
   onBackClick(event){
     this.location.back();

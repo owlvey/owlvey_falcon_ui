@@ -7,13 +7,11 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../event-handler.service';
-
 
 @Component({
   selector: 'app-create-squad',
   templateUrl: './create-squad.component.html',
-  styleUrls: ['./create-squad.component.scss']
+  styleUrls: ['./create-squad.component.scss'], 
 })
 export class CreateSquadComponent implements OnInit {
 
@@ -28,14 +26,11 @@ export class CreateSquadComponent implements OnInit {
   formTitle: string;  
   constructor(
     private location: Location,
-    private squadGateway: SquadsGateway,
-    private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,
+    private squadGateway: SquadsGateway,    
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,    
-    private eventHandler: EventHandlerService
+    private router: Router,        
   ) {
     this.createForm = this.fb.group({
       id: [''],
@@ -66,8 +61,7 @@ export class CreateSquadComponent implements OnInit {
     let  defer = this.squadGateway.createSquad(this.createForm.value);
     defer.subscribe((data) => {
         this.toastr.success("Squad Created Success");
-        this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadSquads" })
+        this.isLoading = false;        
         this.location.back();
       }, (error) => {
         this.isLoading = false;

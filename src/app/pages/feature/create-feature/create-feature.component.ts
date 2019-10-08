@@ -12,7 +12,6 @@ import { LocalDataSource } from "ng2-smart-table";
 import { ProductsGateway } from "../../../@core/data/products.gateway";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { NbToastrService } from "@nebular/theme";
-import { EventHandlerService } from "../../../event-handler.service";
 
 @Component({
   selector: "app-create-feature",
@@ -39,8 +38,7 @@ export class CreateFeatureComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
-    private eventHandler: EventHandlerService
+    private router: Router,    
   ) {
     this.createForm = this.fb.group({
       id: [""],
@@ -76,8 +74,7 @@ export class CreateFeatureComponent implements OnInit {
     defer.subscribe(
       data => {
         this.toastr.success("Feature Created Success");
-        this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadFeatures" });
+        this.isLoading = false;        
         this.location.back();
       },
       error => {

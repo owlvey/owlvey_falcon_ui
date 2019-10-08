@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService } from '@nebular/theme';
+import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
 
 
 @Component({
   selector: 'app-list-customer',
   templateUrl: './list-customer.component.html',
   styleUrls: ['./list-customer.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ListCustomerComponent implements OnInit {
 
@@ -22,11 +23,11 @@ export class ListCustomerComponent implements OnInit {
 
   settings = {
     mode: 'external',
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
-        filter: false
+        filter: false,
       },
       productsCount: {
         title: 'Services',
@@ -38,7 +39,7 @@ export class ListCustomerComponent implements OnInit {
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: false,
     },
   };
 
@@ -51,11 +52,12 @@ export class ListCustomerComponent implements OnInit {
     private sourcesGateway: SourcesGateway,
     private activatedRoute: ActivatedRoute,
     private toastr: NbToastrService,
-    private router: Router
+    private router: Router,    
+    private customerEventHub: CustomerEventHub
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.getCustomers();
   }
 
@@ -70,25 +72,25 @@ export class ListCustomerComponent implements OnInit {
       .subscribe((data) => {
         this.getCustomers();
       }, (error) => {
-        this.toastr.danger("Something went wrong. Please try again.");
-      })
+        this.toastr.danger('Something went wrong. Please try again.');
+      });
   }
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.deleteCustomer(event.data)
+      this.deleteCustomer(event.data);
     } else {
       event.confirm.reject();
     }
   }
 
   onCreate(event) {
-    let queryParams: Params = {};
-    let extras: any = {
+    const queryParams: Params = {};
+    const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,
-      queryParamsHandling: 'merge'
-    }
+      queryParamsHandling: 'merge',
+    };
     this.router.navigate(['/pages/customers/create'], extras);
   }
   onEdit(event) {
@@ -96,12 +98,12 @@ export class ListCustomerComponent implements OnInit {
   }
   onCustomerRowSelect(event) {
     const customerId = event.data.id;
-    let queryParams: Params = { customerId: customerId, uheader: null };
-    let extras: any = {
+    const queryParams: Params = { customerId: customerId, uheader: null };
+    const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,
-      queryParamsHandling: 'merge'
-    }
+      queryParamsHandling: 'merge',
+    };
     this.router.navigate(['/pages/customers/detail'], extras);
   }
 }

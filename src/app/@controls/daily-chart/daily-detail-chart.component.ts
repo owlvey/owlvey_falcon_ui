@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { FormatService } from '../../@core/utils/format.service';
 
@@ -14,87 +14,87 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
 
   options: any = {};
   themeSubscription: any;
-  
+
   constructor(private theme: NbThemeService,
     private formatService: FormatService) {
   }
-  private _dataItems : Array<any>; 
+  private _dataItems: Array<any>;
 
   private formatDate(date){
     const target = new Date(date);
-    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');    
+    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');
   }
-  
+
   get dataItems(){
     return this._dataItems;
-  }  
+  }
   echartsIntance: any;
 
   onChartInit(ec) {
     this.echartsIntance = ec;
-  }  
+  }
   @Input()
   showAll: boolean = false;
 
   @Input()
-  target: string = "availability";
+  target: string = 'availability';
 
   private getValue(item){
-    if (this.target == "availability"){
-      return item["oAva"];
+    if (this.target == 'availability'){
+      return item['oAva'];
     }
-    else if (this.target == "average"){
-      return item["oAve"];
+    else if (this.target == 'average'){
+      return item['oAve'];
     }
-    throw "No valid option";
+    throw new Error('No valid option');
   }
 
   @Input()
-  set dataItems(data: Array<any>){    
-    let legends = [];
-    let series = [];    
-    let minValue = 50;    
-    data.forEach(serieData=>{              
-        const line = serieData.items.map(          
-          c =>{ 
+  set dataItems(data: Array<any>){
+    const legends = [];
+    const series = [];
+    let minValue = 50;
+    data.forEach(serieData => {
+        const line = serieData.items.map(
+          c => {
             const value = this.getValue(c) * 100;
-            if(value < minValue) {              
+            if (value < minValue) {
               minValue = c[this.target];
             }
-            return { name: c.date, value:[this.formatDate(c.date), value] };
-          }
+            return { name: c.date, value: [this.formatDate(c.date), value] };
+          },
         );
         legends.push(serieData.name);
-        let serie = {
-          name : serieData.name, 
-          type : 'line', 
-          data: line, 
-          showSymbol: true, 
+        const serie = {
+          name : serieData.name,
+          type : 'line',
+          data: line,
+          showSymbol: true,
           hoverAnimation: false,
           markLine: {
                  silent: true,
                  data: [{
-                     yAxis: 20
+                     yAxis: 20,
                  }, {
-                     yAxis: 40
+                     yAxis: 40,
                  }, {
-                     yAxis: 80
+                     yAxis: 80,
                  }, {
-                     yAxis: 95
-                 }]
+                     yAxis: 95,
+                 }],
            },
          };
          series.push(serie);
-    });    
-    
-    let legends_selected = {};
-    legends.forEach(c=>{      
+    });
+
+    const legends_selected = {};
+    legends.forEach(c => {
       if (this.showAll){
-        legends_selected[c]= true;
-      }      
+        legends_selected[c] = true;
+      }
       else{
-        if (c !== "Availability"){
-          legends_selected[c]= false;
+        if (c !== 'Availability'){
+          legends_selected[c] = false;
         }
       }
     });
@@ -103,7 +103,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
       const colors: any = config.variables;
       const echarts: any = config.variables.echarts;
       this.options = {
-        backgroundColor: echarts.bg,      
+        backgroundColor: echarts.bg,
         color: [colors.danger, colors.primary, colors.info],
         tooltip: {
           trigger: 'item',
@@ -119,9 +119,9 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
         },
         xAxis: [
           {
-            type: 'time',            
+            type: 'time',
             splitLine: {
-              show: false
+              show: false,
             },
             axisTick: {
               alignWithLabel: true,
@@ -141,7 +141,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
         yAxis: [
           {
             type: 'value',
-            min: minValue, 
+            min: minValue,
             max: 100,
             axisLine: {
               lineStyle: {
@@ -163,29 +163,29 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
         visualMap: {
           top: 1,
           right: 1,
-          textStyle:{
-            color: echarts.textColor
+          textStyle: {
+            color: echarts.textColor,
           },
           pieces: [{
               gt: 95,
               lte: 100,
-              color: '#096'
+              color: '#096',
           }, {
               gt: 80,
               lte: 95,
-              color: '#ffde33'
+              color: '#ffde33',
           }, {
               gt: 40,
               lte: 80,
-              color: '#ff9933'
+              color: '#ff9933',
           }, {
               gt: 0,
               lte: 40,
-              color: '#cc0033'
+              color: '#cc0033',
           }],
           outOfRange: {
-              color: '#999'
-          }
+              color: '#999',
+          },
         },
         grid: {
           left: '5%',
@@ -194,9 +194,9 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
           containLabel: true,
         },
         series: series,
-      }; 
-    });      
-  }  
+      };
+    });
+  }
 
   ngAfterViewInit() {
 
@@ -205,6 +205,6 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();
-    }    
+    }
   }
 }
