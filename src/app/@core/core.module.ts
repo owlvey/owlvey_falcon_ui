@@ -128,16 +128,6 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
   }
 }
 
- export class AuthorityResolver {
-  getUrl(baseUrl: string, type: string): string {
-    if (type && type === "docker")
-    {
-      return "http://" + window.location.hostname + ":45002/";
-    }
-    return baseUrl;
-  }
- }
-
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
@@ -149,7 +139,7 @@ export const NB_CORE_PROVIDERS = [
       NbOAuth2AuthStrategy.setup(
         { 
           name: 'password',
-          baseEndpoint: new AuthorityResolver().getUrl(environment.authority, environment.type),
+          baseEndpoint:  environment.type == 'docker' ? 'http://' + window.location.hostname + ':45001/' : environment.authority,
           clientId: environment.clientId,
           clientSecret: environment.clientSecret,
           clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
@@ -208,8 +198,7 @@ export const NB_CORE_PROVIDERS = [
   AnalyticsService,
   LayoutService,
   PlayerService,
-  StateService,
-  EnvironmentService
+  StateService
 ];
 
 @NgModule({
