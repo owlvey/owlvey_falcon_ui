@@ -5,7 +5,7 @@ export const environment = {
   clientSecret: '0da45603-282a-4fa6-a20b-2d4c3f2a2127',
   authority: 'https://falcon.com/',
   api: 'https://falcon.com/',
-  type: 'regular',
+  type: 'docker',
   showDevMenu: false,
   githubFalconURL: "https://github.com",
   facebookFalconURL: "https://facebook.com",
