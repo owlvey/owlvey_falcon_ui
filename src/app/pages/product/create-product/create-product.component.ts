@@ -4,7 +4,6 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
-import { EventHandlerService } from '../../../event-handler.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
@@ -32,8 +31,7 @@ export class CreateProductComponent extends CustomerBaseComponent {
     private fb: FormBuilder,
     protected theme: NbThemeService,
     private toastr: NbToastrService,
-    protected router: Router, 
-    private eventHandler: EventHandlerService,
+    protected router: Router,     
     protected activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, theme, router, activatedRoute);
       this.createForm = this.fb.group({
@@ -61,8 +59,7 @@ export class CreateProductComponent extends CustomerBaseComponent {
     let  defer = this.productsGateway.createProduct(this.customerId, this.createForm.value);
     defer.subscribe((data) => {
         this.toastr.success("Product Created Success");
-        this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadProducts" })
+        this.isLoading = false;        
         this.location.back();
       }, (error) => {
         this.isLoading = false;

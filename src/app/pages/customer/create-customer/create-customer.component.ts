@@ -7,13 +7,13 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../event-handler.service';
+import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
 
 
 @Component({
   selector: 'app-create-customer',
   templateUrl: './create-customer.component.html',
-  styleUrls: ['./create-customer.component.scss']
+  styleUrls: ['./create-customer.component.scss'],
 })
 export class CreateCustomerComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class CreateCustomerComponent implements OnInit {
   customerId = 0;
 
   createForm: FormGroup;
-  formTitle: string;  
+  formTitle: string;
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -35,40 +35,40 @@ export class CreateCustomerComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NbToastrService,
     private router: Router,    
-    private eventHandler: EventHandlerService
+    private customerEventHub: CustomerEventHub
   ) {
     this.createForm = this.fb.group({
       id: [''],
-      name: ['', Validators.required]      
+      name: ['', Validators.required],
     });
     this.isLoading = false;
   }
 
   ngOnInit() {
-  
+
   }
 
   goBack() {
-    this.location.back();    
+    this.location.back();
   }
 
   onSubmit() {
-    console.log(this.createForm)
+    console.log(this.createForm);
     if (!this.createForm.valid) {
-      this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
+      this.toastr.warning('Please check the form fields are filled correctly.', 'Warning');
       return;
     }
-    
-    this.isLoading = true;    
-    let  defer = this.customerGateway.createCustomer(this.createForm.value);
+
+    this.isLoading = true;
+    const  defer = this.customerGateway.createCustomer(this.createForm.value);
     defer.subscribe((data) => {
-        this.toastr.success("Customer Created Success");
-        this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadCustomers" })
+        this.toastr.success('Customer Created Success');
+        this.isLoading = false;        
+        this.customerEventHub.customerCreated.next({ name: 'reloadCustomers' });
         this.location.back();
       }, (error) => {
         this.isLoading = false;
-        this.toastr.warning("Something went wrong, please try again.", "Warning")
+        this.toastr.warning('Something went wrong, please try again.', 'Warning');
       });
   }
 }

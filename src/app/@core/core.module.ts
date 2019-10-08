@@ -62,6 +62,8 @@ import { FormatService } from './utils/format.service';
 import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
 import { environment } from '../../environments/environment';
+import { CustomerEventHub } from './hubs/customer.eventhub';
+import { CacheManager } from './data/cache.manager';
 
 
 const socialLinks = [
@@ -80,6 +82,10 @@ const socialLinks = [
     target: '_blank',
     icon: 'twitter',
   },
+];
+
+const EVENT_HUBS = [
+  { provide: CustomerEventHub, useClass: CustomerEventHub }
 ];
 
 const DATA_SERVICES = [
@@ -106,12 +112,13 @@ const DATA_SERVICES = [
   { provide: ProductsGateway, useClass: ProductsGateway },
   { provide: SourcesGateway, useClass: SourcesGateway },
   { provide: FeaturesGateway, useClass: FeaturesGateway },
-  { provide: PortfoliosGateway, useClass: PortfoliosGateway },   
-  { provide: SquadsGateway, useClass: SquadsGateway }, 
-  { provide: UsersGateway, useClass: UsersGateway },  
+  { provide: PortfoliosGateway, useClass: PortfoliosGateway },
+  { provide: SquadsGateway, useClass: SquadsGateway },
+  { provide: UsersGateway, useClass: UsersGateway },
   { provide: FormatService, useClass: FormatService },
   { provide: EnvironmentService, useClass: EnvironmentService } ,
-  { provide: IncidentsGateway, useClass: IncidentsGateway }    
+  { provide: IncidentsGateway, useClass: IncidentsGateway },
+  { provide: CacheManager, useClass: CacheManager },
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
@@ -134,6 +141,7 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
+  ...EVENT_HUBS,
   ...NbAuthModule.forRoot({
 
     strategies: [

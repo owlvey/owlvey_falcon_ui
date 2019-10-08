@@ -14,46 +14,46 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
 
   constructor(private theme: NbThemeService) {
   }
-  private _dataItems : Array<any>; 
+  private _dataItems: Array<any>;
 
   private formatDate(date){
     const target = new Date(date);
-    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');    
+    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');
   }
-  
+
   get dataItems(){
     return this._dataItems;
-  }  
+  }
 
   @Input()
   set dataItems(data: Array<any>){
-    const line = data.map(c=>{ return { name: c.date, value:[ this.formatDate(c.date), 100 * c.oAva]}});
-    const dates = data.map(c=> new Date(c.date));
+    const line = data.map(c => ({ name: c.date, value: [ this.formatDate(c.date), 100 * c.oAva]}));
+    const dates = data.map(c => new Date(c.date));
     const points = [{
-         name : "Availability", 
-         type : 'line', 
-         data: line, 
-         showSymbol: true, 
+         name : 'Availability',
+         type : 'line',
+         data: line,
+         showSymbol: true,
          hoverAnimation: true,
          markLine: {
                 silent: true,
                 data: [{
-                    yAxis: 20
+                    yAxis: 20,
                 }, {
-                    yAxis: 40
+                    yAxis: 40,
                 }, {
-                    yAxis: 60
+                    yAxis: 60,
                 }, {
-                    yAxis: 90
-                }]
+                    yAxis: 90,
+                }],
           },
-        } 
-      ];      
+        },
+      ];
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echarts: any = config.variables.echarts;
       this.options = {
-        backgroundColor: echarts.bg,      
+        backgroundColor: echarts.bg,
         color: [colors.danger, colors.primary, colors.info],
         tooltip: {
           trigger: 'item',
@@ -68,9 +68,9 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         },
         xAxis: [
           {
-            type: 'time',            
+            type: 'time',
             splitLine: {
-              show: false
+              show: false,
             },
             axisTick: {
               alignWithLabel: true,
@@ -90,7 +90,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         yAxis: [
           {
             type: 'value',
-            min: 0, 
+            min: 0,
             max: 100,
             axisLine: {
               lineStyle: {
@@ -112,29 +112,29 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         visualMap: {
           top: 1,
           right: 1,
-          textStyle:{
-            color: echarts.textColor
+          textStyle: {
+            color: echarts.textColor,
           },
           pieces: [{
               gt: 90,
               lte: 100,
-              color: '#096'
+              color: '#096',
           }, {
               gt: 60,
               lte: 90,
-              color: '#ffde33'
+              color: '#ffde33',
           }, {
               gt: 40,
               lte: 60,
-              color: '#ff9933'
+              color: '#ff9933',
           }, {
               gt: 0,
               lte: 40,
-              color: '#cc0033'
+              color: '#cc0033',
           }],
           outOfRange: {
-              color: '#999'
-          }
+              color: '#999',
+          },
         },
         grid: {
           left: '5%',
@@ -143,9 +143,9 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
           containLabel: true,
         },
         series: points,
-      };  
-    });       
-  }  
+      };
+    });
+  }
 
   ngAfterViewInit() {
 
@@ -154,6 +154,6 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();
-    }    
+    }
   }
 }

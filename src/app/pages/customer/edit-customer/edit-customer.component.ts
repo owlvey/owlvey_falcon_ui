@@ -6,7 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
+import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
 
 @Component({
   selector: 'ngx-edit-customer',
@@ -32,8 +32,8 @@ export class EditCustomerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
-    private eventHandler: EventHandlerService
+    private router: Router,    
+    private customerEventHub: CustomerEventHub
   ) {
     this.createForm = this.fb.group({
       id: [''],
@@ -70,9 +70,9 @@ export class EditCustomerComponent implements OnInit {
     let defer = this.customerGateway.updateCustomer(this.createForm.get('id').value, this.createForm.value);
     defer.subscribe((data) => {
       this.toastr.success("Customer Updated Success", "Success");
-      this.isLoading = false;
-      this.eventHandler.event.next({ name: "reloadCustomers" })
+      this.isLoading = false;            
       this.location.back();
+      this.customerEventHub.customerCreated.next({ name: 'reloadCustomers' });
     }, (error) => {
       this.isLoading = false;
       this.toastr.warning("Something went wrong, please try again.", "Warning")

@@ -242,19 +242,15 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnDestroy(): void {
     
   }     
-  onDeleteClick(event){
-    if (window.confirm('Are you sure you want to delete?')) {
-      this.featuresGateway.deleteFeature(this.featureId).subscribe(res=>{
-        this.toastr.success("Feature was deleted");
-        let queryParams: Params = { featureId : null };
-        this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-      }, (error) => {
-        this.isLoading = false;
-        this.toastr.warning("Something went wrong, please try again.", "Warning")
-      });      
-    } else {
-      event.confirm.reject();
-    }
+  onDeleteClick(event){    
+    this.featuresGateway.deleteFeature(this.featureId).subscribe(res=>{
+      this.toastr.success("Feature was deleted");
+      let queryParams: Params = { featureId : null };
+      this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    }, (error) => {
+      this.isLoading = false;
+      this.toastr.warning("Something went wrong, please try again.", "Warning")
+    });          
   }
   
   ngAfterViewInit() {    

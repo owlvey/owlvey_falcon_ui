@@ -7,7 +7,6 @@ import { DetailSquadComponent } from './detail-squad/detail-squad.component';
 import { EditSquadComponent } from './edit-squad/edit-squad.component';
 import { CreateUserSquadComponent } from './create-user-squad/create-user-squad.component';
 import { DetailUserSquadComponent } from './detail-user-squad/detail-user-squad.component';
-import { CreateProductSquadComponent } from './create-product-squad/create-product-squad.component';
 import { DetailProductSquadComponent } from './detail-product-squad/detail-product-squad.component';
 import { GraphSquadComponent } from './graph-squad/graph-squad.component';
 
@@ -18,8 +17,7 @@ const routes: Routes = [
   { path: 'create', component: CreateSquadComponent },  
   { path: 'graph', component: GraphSquadComponent},  
   { path: 'users/create', component: CreateUserSquadComponent }, 
-  { path: 'users/detail', component: DetailUserSquadComponent },
-  { path: 'products/asociate', component: CreateProductSquadComponent }, 
+  { path: 'users/detail', component: DetailUserSquadComponent },  
   { path: 'products/detail', component: DetailProductSquadComponent }
 ];
 
@@ -34,7 +32,6 @@ export const routedComponents = [
   DetailSquadComponent,  
   CreateSquadComponent,
   CreateUserSquadComponent,
-  DetailUserSquadComponent,
-  CreateProductSquadComponent,
+  DetailUserSquadComponent,  
   DetailProductSquadComponent
 ];

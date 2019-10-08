@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { EventHandlerService } from '../../../event-handler.service';
+
 
 @Component({
   selector: 'ngx-edit-product',
@@ -27,8 +27,7 @@ export class EditProductComponent implements OnInit {
     private productsGateway: ProductsGateway,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
-    private eventHandler: EventHandlerService,
+    private router: Router,    
     private activatedRoute: ActivatedRoute) {
       this.editForm = this.fb.group({
         id: [''],
@@ -71,8 +70,7 @@ export class EditProductComponent implements OnInit {
     let defer = this.productsGateway.updateProduct(this.productId, this.editForm.value);
     defer.subscribe((data) => {
       this.toastr.success("Product Updated Success", "Success");
-      this.isLoading = false;
-      this.eventHandler.event.next({ name: "reloadProducts" })
+      this.isLoading = false;      
       this.location.back();
     }, (error) => {
       this.isLoading = false;

@@ -6,7 +6,6 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -161,8 +160,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,
     protected theme: NbThemeService,
     protected router: Router,
-    protected activatedRoute: ActivatedRoute,
-    protected eventHandler: EventHandlerService,
+    protected activatedRoute: ActivatedRoute,    
     protected portfolioGateway: PortfoliosGateway,
     protected featureGateway: FeaturesGateway,
     protected toastr: NbToastrService,
@@ -201,14 +199,12 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       slo: ['', Validators.required],
     });
   }
-  onDelete(event){
-    if (confirm("are you sure?") === true){
-      const featureId =  event.data.id;
-      this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
-        this.loadSource();
-        this.loadNewFeatures();
-      });
-    }
+  onDelete(event){    
+    const featureId =  event.data.id;
+    this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
+      this.loadSource();
+      this.loadNewFeatures();
+    });    
   }
   onSubmit() {
     if (!this.editForm.valid) {

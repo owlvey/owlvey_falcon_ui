@@ -9,15 +9,15 @@ export class FormatService {
         //return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
         date = new Date(date);
         return date.getUTCFullYear() + '-' +
-           ('0'+ (date.getUTCMonth()+1)).slice(-2) + '-' +
-           ('0'+ date.getUTCDate()).slice(-2);
+           ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+           ('0' + date.getUTCDate()).slice(-2);
     }
 
-    getTooltipDateFromDate(date: Date): string {        
+    getTooltipDateFromDate(date: Date): string {
         date = new Date(date);
         return date.getUTCFullYear() + '-' +
-           ('0'+ (date.getUTCMonth()+1)).slice(-2) + '-' +
-           ('0'+ date.getUTCDate()).slice(-2) + ' : ';
+           ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+           ('0' + date.getUTCDate()).slice(-2) + ' : ';
     }
 
 }

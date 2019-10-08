@@ -7,7 +7,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { EventHandlerService } from '../../../../../src/app/event-handler.service';
 import { UsersGateway } from '../../../@core/data/users.gateway';
 
 
@@ -27,8 +26,7 @@ export class CreateUserComponent implements OnInit {
     private userGateway: UsersGateway,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,
-    private eventHandler: EventHandlerService,
+    private router: Router,    
     private activatedRoute: ActivatedRoute
   ) {
     this.createForm = this.fb.group({
@@ -57,8 +55,7 @@ export class CreateUserComponent implements OnInit {
     let  defer = this.userGateway.createUser(this.createForm.value);
     defer.subscribe((data) => {
         this.toastr.success("Product Created Success");
-        this.isLoading = false;
-        this.eventHandler.event.next({ name: "reloadProducts" })
+        this.isLoading = false;        
         this.location.back();
       }, (error) => {
         this.isLoading = false;

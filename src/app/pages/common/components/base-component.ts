@@ -29,7 +29,7 @@ export abstract class BaseComponent implements OnInit {
     
     protected goHome(){
         let queryParams: Params = { productId: null, customerId: null };
-        this.router.navigate(['/pages/dashboard'], { relativeTo: this.activatedRoute,
+        this.router.navigate(['/pages/home'], { relativeTo: this.activatedRoute,
              queryParams: queryParams, 
              queryParamsHandling: 'merge' });                 
     }

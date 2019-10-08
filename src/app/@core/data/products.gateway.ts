@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { of as observableOf, Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../utils/env.service';
-import { environment } from "./../../../environments/environment";
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class ProductsGateway {
@@ -23,7 +23,7 @@ export class ProductsGateway {
   getDaily(productId: number, start: Date, end: Date): Observable<any> {
     return this.http.get(
       this.baseUrl +
-        `products/${productId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`
+        `products/${productId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`,
     );
   }
   getGraphView(productId: number, start: Date, end: Date): Observable<any> {
@@ -32,7 +32,7 @@ export class ProductsGateway {
 
   createProduct(customerId: number, model: any) {
     model.customerId = customerId;
-    return this.http.post(this.baseUrl + "products", model);
+    return this.http.post(this.baseUrl + 'products', model);
   }
 
   updateProduct(id: number, model: any) {
@@ -40,10 +40,10 @@ export class ProductsGateway {
   }
 
   deleteProduct(id: number) {
-    return this.http.delete(this.baseUrl + "products/" + id);
+    return this.http.delete(this.baseUrl + 'products/' + id);
   }
 
-  getProductDashboard(productId : number, start: Date, end: Date): Observable<any>{
+  getProductDashboard(productId: number, start: Date, end: Date): Observable<any>{
     return this.http.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 }

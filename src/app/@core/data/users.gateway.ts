@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of as observableOf, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../utils/env.service';
 import { environment } from './../../../environments/environment';
@@ -16,10 +16,10 @@ export class UsersGateway {
     getUserIdentity() : Observable<any>{
         return this.http.get(this.identityUrl + `api/account/me`);
     }
-    getUsers() : Observable<any>{
+    getUsers(): Observable<any>{
         return this.http.get(this.baseUrl + `users`);
     }
-    getUser(userId: number) : Observable<any>{
+    getUser(userId: number): Observable<any>{
         return this.http.get(this.baseUrl + `users/${userId}`);
     }
     createUser(model: any) {

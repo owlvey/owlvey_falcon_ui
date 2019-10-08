@@ -8,16 +8,9 @@ import { FormsModule } from '@angular/forms';
 
 
 import {
-  NbActionsModule,
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule,
-  NbDatepickerModule, NbIconModule,
-  NbInputModule,
-  NbRadioModule,
-  NbSelectModule,
-  NbUserModule,
-  NbTreeGridModule
+  NbDatepickerModule,
 } from '@nebular/theme';
 import { DailyChartComponent } from './daily-chart/daily-chart.component';
 import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.component';
@@ -26,7 +19,7 @@ import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.comp
 @NgModule({
    imports: [FormsModule, CommonModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule],
    declarations: [ DailyChartComponent, DailyDetailChartComponent ],
-   exports: [DailyChartComponent, DailyDetailChartComponent]
+   exports: [DailyChartComponent, DailyDetailChartComponent],
 })
 
 export class ControlsModule {
