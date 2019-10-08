@@ -61,7 +61,7 @@ import { SquadsGateway }  from './data/squads.gateway';
 import { FormatService } from './utils/format.service';
 import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
-import { environment } from '../../environments/environment';
+import { environment as env } from '../../environments/environment';
 import { CustomerEventHub } from './hubs/customer.eventhub';
 import { CacheManager } from './data/cache.manager';
 
@@ -137,11 +137,11 @@ export const NB_CORE_PROVIDERS = [
     strategies: [
 
       NbOAuth2AuthStrategy.setup(
-        { 
+        {
           name: 'password',
-          baseEndpoint:  environment.type == 'docker' ? 'http://' + window.location.hostname + ':45001/' : environment.authority,
-          clientId: environment.clientId,
-          clientSecret: environment.clientSecret,
+          baseEndpoint: env.type === 'docker' ? `http://${window.location.hostname}:45002/` : env.authority,
+          clientId: env.clientId,
+          clientSecret: env.clientSecret,
           clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
           token: {
             endpoint: 'connect/token',
@@ -178,7 +178,7 @@ export const NB_CORE_PROVIDERS = [
   }).providers,
 
   NbSecurityModule.forRoot({
-    
+
     accessControl: {
       guest: {
         view: '*',
@@ -201,7 +201,7 @@ export const NB_CORE_PROVIDERS = [
   StateService
 ];
 
-@NgModule({
+@ NgModule({
   imports: [
     CommonModule,
   ],
@@ -211,12 +211,12 @@ export const NB_CORE_PROVIDERS = [
   declarations: [],
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@ Optional() @ SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
   static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
+    return < ModuleWithProviders>{
       ngModule: CoreModule,
       providers: [
         ...NB_CORE_PROVIDERS,
