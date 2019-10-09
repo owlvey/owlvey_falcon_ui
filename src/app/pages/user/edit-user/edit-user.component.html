@@ -1,1 +1,37 @@
-<h2>Edit</h2>
+<nb-card>
+  <nb-card-header>
+    <h4>Edit Member</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="editForm">
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          formControlName="email"
+          class="form-control"
+        />
+      </div>
+      <div class="text-right">
+        <button
+          type="button"
+          nbbutton
+          class="appearance-filled size-medium status-info shape-rectangle transitions mr-2"
+          (click)="goBack()"
+          [disabled]="isLoading"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          nbbutton
+          class="appearance-filled size-medium status-primary shape-rectangle transitions"
+          [disabled]="isLoading"
+        >
+          {{ isLoading ? "Saving..." : "Save" }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
