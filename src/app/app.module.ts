@@ -97,6 +97,7 @@ export class AppModule {
   ) {
     // window.location should be available here
     this.oauthStrategy.setOptions({
+      name: 'password',
       baseEndpoint: env.type === 'docker' ? `http://${window.location.hostname}:45002/` : env.authority,
       clientId: env.clientId,
       clientSecret: env.clientSecret,
