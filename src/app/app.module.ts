@@ -6,6 +6,8 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { environment as env } from '../environments/environment';
+
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -16,7 +18,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 
-import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER } from '@nebular/auth';
+import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 import { environment } from '../environments/environment';
 
@@ -38,6 +40,47 @@ import { environment } from '../environments/environment';
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+    NbAuthModule.forRoot({
+      strategies: [
+        NbOAuth2AuthStrategy.setup(
+          {
+            name: 'password',
+            clientId: env.clientId,
+            clientSecret: env.clientSecret,
+            clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
+            token: {
+              endpoint: 'connect/token',
+              grantType: NbOAuth2GrantType.PASSWORD,
+              scope: 'openid profile api',
+              class: NbAuthOAuth2Token,
+              requireValidToken: true
+            },
+            refresh: {
+              endpoint: 'token',
+              grantType: NbOAuth2GrantType.REFRESH_TOKEN
+            }
+          }
+        ),
+      ],
+      forms: {
+
+        login: {
+          redirectDelay: 100,
+          strategy: 'password',
+          rememberMe: false,
+          showMessages: {
+            success: true,
+            error: true,
+          },
+        },
+
+        logout: {
+          redirectDelay: 500,
+          strategy: 'password',
+        },
+
+      }
+    })
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
@@ -46,5 +89,30 @@ import { environment } from '../environments/environment';
     AuthGuard],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {
+  constructor(
+    private authService: NbAuthService, 
+    private oauthStrategy: NbOAuth2AuthStrategy
+  ) {
+    // window.location should be available here
+    this.oauthStrategy.setOptions({
+      name: 'password',
+      baseEndpoint: env.type === 'docker' ? `http://${window.location.hostname}:45002/` : env.authority,
+      clientId: env.clientId,
+      clientSecret: env.clientSecret,
+      clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
+      token: {
+        endpoint: 'connect/token',
+        grantType: NbOAuth2GrantType.PASSWORD,
+        scope: 'openid profile api',
+        class: NbAuthOAuth2Token,
+        requireValidToken: true
+      },
+      refresh: {
+        endpoint: 'token',
+        grantType: NbOAuth2GrantType.REFRESH_TOKEN
+      }
+    });
+  }
 }

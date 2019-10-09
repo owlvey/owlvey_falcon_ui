@@ -132,53 +132,7 @@ export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...EVENT_HUBS,
-  ...NbAuthModule.forRoot({
-
-    strategies: [
-
-      NbOAuth2AuthStrategy.setup(
-        {
-          name: 'password',
-          baseEndpoint: env.type === 'docker' ? `http://${window.location.hostname}:45002/` : env.authority,
-          clientId: env.clientId,
-          clientSecret: env.clientSecret,
-          clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
-          token: {
-            endpoint: 'connect/token',
-            grantType: NbOAuth2GrantType.PASSWORD,
-            scope: 'openid profile api',
-            class: NbAuthOAuth2Token,
-            requireValidToken: true
-          },
-          refresh: {
-            endpoint: 'token',
-            grantType: NbOAuth2GrantType.REFRESH_TOKEN
-          }
-        }
-      ),
-    ],
-    forms: {
-
-      login: {
-        redirectDelay: 100,
-        strategy: 'password',
-        rememberMe: false,
-        showMessages: {
-          success: true,
-          error: true,
-        },
-      },
-
-      logout: {
-        redirectDelay: 500,
-        strategy: 'password',
-      },
-
-    }
-  }).providers,
-
   NbSecurityModule.forRoot({
-
     accessControl: {
       guest: {
         view: '*',
