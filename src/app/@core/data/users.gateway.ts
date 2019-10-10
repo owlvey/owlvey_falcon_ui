@@ -33,4 +33,7 @@ export class UsersGateway {
   updateUser(id: number, model: any) {
     return this.http.put(this.baseUrl + `users/${id}`, model);
   }
+  deleteProduct(id: number) {
+    return this.http.delete(this.baseUrl + "users/" + id);
+  }
 }
