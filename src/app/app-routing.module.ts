@@ -10,6 +10,9 @@ import {
 } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 
+// https://akveo.github.io/nebular/docs/auth/redirect-after-login#redirect-user
+// https://stackoverflow.com/questions/47088385/how-to-customize-login
+
 const routes: Routes = [
   {
     path: 'pages',
