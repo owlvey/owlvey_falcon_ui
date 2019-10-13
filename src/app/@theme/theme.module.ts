@@ -14,6 +14,10 @@ import {
   NbIconModule,
   NbThemeModule,
   NbDatepickerModule,
+  NbCardModule,
+  NbAlertModule,
+  NbCheckboxModule,
+  NbInputModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -41,8 +45,19 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 
+import { OwlveyLoginComponent } from './components/auth/login/login.component'
+import { OwlveyAuthComponent } from './components/auth/auth.component'
+import { OwlveyLogoutComponent } from './components/auth/logout/logout.component'
+import { NbAuthModule } from '@nebular/auth';
+import { RouterModule } from '@angular/router';
+
 const NB_MODULES = [
+  NbInputModule,
+  NbCheckboxModule,
+  NbAlertModule,
+  NbCardModule,
   NbLayoutModule,
+  NbAuthModule,
   NbMenuModule,
   NbUserModule,
   NbActionsModule,
@@ -64,6 +79,9 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  OwlveyAuthComponent,
+  OwlveyLoginComponent,
+  OwlveyLogoutComponent
 ];
 const PIPES = [
   CapitalizePipe,
@@ -74,7 +92,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule,  ...NB_MODULES],
+  imports: [CommonModule, FormsModule, RouterModule,    ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

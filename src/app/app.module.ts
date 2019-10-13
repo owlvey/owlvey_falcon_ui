@@ -18,7 +18,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 
-import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService } from '@nebular/auth';
+import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService, NbDummyAuthStrategyOptions, NbDummyAuthStrategy } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 import { environment } from '../environments/environment';
 
@@ -41,7 +41,7 @@ import { environment } from '../environments/environment';
     }),
     CoreModule.forRoot(),
     NbAuthModule.forRoot({
-      strategies: [
+      strategies: [                
         NbOAuth2AuthStrategy.setup(
           {
             name: 'password',
@@ -60,7 +60,7 @@ import { environment } from '../environments/environment';
               grantType: NbOAuth2GrantType.REFRESH_TOKEN
             }
           }
-        ),
+        ),                
       ],
       forms: {
 

@@ -1,13 +1,9 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+import { OwlveyAuthComponent } from './@theme/components/auth/auth.component';
+import { OwlveyLoginComponent } from './@theme/components/auth/login/login.component';
+import { OwlveyLogoutComponent } from './@theme/components/auth/logout/logout.component';
+
 import { AuthGuard } from './auth-guard.service';
 
 // https://akveo.github.io/nebular/docs/auth/redirect-after-login#redirect-user
@@ -21,31 +17,19 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    component: NbAuthComponent,
+    component: OwlveyAuthComponent,
     children: [
       {
         path: '',
-        component: NbLoginComponent,
+        component: OwlveyLoginComponent,
       },
       {
         path: 'login',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
+        component: OwlveyLoginComponent,
+      },      
       {
         path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
+        component: OwlveyLogoutComponent,
       },
     ],
   },
