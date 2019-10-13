@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      <b><a href="#" target="_blank">Falcon </a></b> 2019</span
+      <b><a href="#" target="_blank">Owlvey </a></b> 2019</span
     >
     <div class="socials">
       <a

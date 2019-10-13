@@ -95,7 +95,7 @@ export class PagesComponent implements OnInit {
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
-      if (e.item.title == 'Squads'){
+      if (e.item.title == 'Squads'){        
         if (currentCustomer){
           const queryParams: Params = { };
           this.router.navigate(['/pages/squads'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });

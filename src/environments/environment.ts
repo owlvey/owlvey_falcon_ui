@@ -10,5 +10,5 @@ export const environment = {
   facebookFalconURL: "https://facebook.com",
   twitterFalconURL: "http://twitter.com",
   linkedinFalconURL: "https://linkedin.com",
-  showDevMenu: true
+  showDevMenu: false
 };
