@@ -55,6 +55,10 @@ import { environment } from '../environments/environment';
               class: NbAuthOAuth2Token,
               requireValidToken: true
             },
+            redirect: {
+              success: '/pages/home', 
+              failure: null, 
+            },
             refresh: {
               endpoint: 'token',
               grantType: NbOAuth2GrantType.REFRESH_TOKEN
@@ -71,9 +75,12 @@ import { environment } from '../environments/environment';
           showMessages: {
             success: true,
             error: true,
+          }, 
+          redirect: {
+            success: '/pages/home',
+            failure: null,
           },
         },
-
         logout: {
           redirectDelay: 500,
           strategy: 'password',

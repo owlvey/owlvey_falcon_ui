@@ -1,9 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { AuthGuard } from '../auth-guard.service';
 
@@ -12,17 +9,8 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'dashboard',
-      canActivate: [AuthGuard],
-      component: ECommerceComponent,
-    },
-    {
-      path: 'iot-dashboard',
-      canActivate: [AuthGuard],
-      component: DashboardComponent,
-    },    
-    {
       path: 'home',
+      canActivate: [AuthGuard],
       loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     },  
     {
@@ -121,7 +109,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'home',
       pathMatch: 'full',
     },
     {

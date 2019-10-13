@@ -13,7 +13,6 @@ import {
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { DashboardComponent } from './dashboard.component';
 import { StatusCardComponent } from './status-card/status-card.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { RoomsComponent } from './rooms/rooms.component';
@@ -47,8 +46,7 @@ import { FormsModule } from '@angular/forms';
     NbButtonModule,
     NgxEchartsModule,
   ],
-  declarations: [
-    DashboardComponent,
+  declarations: [    
     StatusCardComponent,
     TemperatureDraggerComponent,
     ContactsComponent,

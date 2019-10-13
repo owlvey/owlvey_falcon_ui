@@ -1,8 +1,3 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthService, NB_AUTH_OPTIONS, NbAuthResult, getDeepFromObject, NbAuthSocialLink } from '@nebular/auth';
@@ -51,6 +46,28 @@ export class OwlveyLoginComponent {
         this.errors = result.getErrors();
       }
 
+      const redirect = result.getRedirect();
+      if (redirect) {
+        setTimeout(() => {
+          return this.router.navigateByUrl(redirect);
+        }, this.redirectDelay);
+      }
+      this.cd.detectChanges();
+    });
+  }
+
+  loginAsGuest(): void {
+    this.errors = [];
+    this.messages = [];
+    this.submitted = true;
+    const guestUser = { email: "guest@owlvey.com", password: "P@$$w0rd" };    
+    this.service.authenticate(this.strategy, guestUser).subscribe((result: NbAuthResult) => {
+      this.submitted = false;
+      if (result.isSuccess()) {
+        this.messages = result.getMessages();
+      } else {
+        this.errors = result.getErrors();
+      }
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {

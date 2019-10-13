@@ -9,19 +9,7 @@ if (environment.showDevMenu) {
       icon: 'home-outline',
       link: '/pages/home',
       home: true,
-    },
-    {
-      title: 'E-commerce',
-      icon: 'shopping-cart-outline',
-      link: '/pages/dashboard',
-
-    },
-
-    {
-      title: 'IoT Dashboard',
-      icon: 'home-outline',
-      link: '/pages/iot-dashboard',
-    },
+    },    
     {
       title: 'Layout',
       icon: 'layout-outline',

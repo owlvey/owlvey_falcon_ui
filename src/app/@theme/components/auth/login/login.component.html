@@ -27,8 +27,7 @@
            id="input-email"
            pattern=".+@.+\..+"
            placeholder="Email address"
-           fieldSize="large"
-           autofocus
+           fieldSize="large"           
            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.email.required')"
            [attr.aria-invalid]="email.invalid && email.touched ? true : null">
@@ -45,7 +44,9 @@
   <div class="form-control-group">
     <span class="label-with-link">
       <label class="label" for="input-password">Password:</label>
-      <a class="forgot-password caption-2" routerLink="../request-password">Forgot Password?</a>
+      <!-- 
+        <a class="forgot-password caption-2" routerLink="../request-password">Forgot Password?</a>
+      -->      
     </span>
     <input nbInput
            fullWidth
@@ -85,8 +86,14 @@
           [disabled]="submitted || !form.valid"
           [class.btn-pulse]="submitted">
     Log In
-  </button>
+  </button>  
 </form>
+
+<section class="another-action" aria-label="Guest">
+    <button nbButton fullWidth autofocus status="success" size="large" [class.btn-pulse]="submitted" (click)="loginAsGuest()">
+      Log In As Guest
+    </button>  
+</section>
 
 <section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
   or enter with:
@@ -113,5 +120,8 @@
 </section>
 
 <section class="another-action" aria-label="Register">
-  Don't have an account? <a class="text-link" routerLink="../register">Register</a>
+  <!--
+    Don't have an account? <a class="text-link" routerLink="../register">Register</a>
+  -->
+  
 </section>
