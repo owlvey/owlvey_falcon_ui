@@ -57,7 +57,7 @@ import { environment } from '../environments/environment';
             },
             redirect: {
               success: '/pages/home', 
-              failure: null, 
+              failure: null,
             },
             refresh: {
               endpoint: 'token',
@@ -75,15 +75,15 @@ import { environment } from '../environments/environment';
           showMessages: {
             success: true,
             error: true,
-          }, 
-          redirect: {
-            success: '/pages/home',
-            failure: null,
-          },
+          },           
         },
         logout: {
           redirectDelay: 500,
           strategy: 'password',
+          redirect: {
+            success: '/auth/login',
+            failure: null,
+          },
         },
 
       }

@@ -28,13 +28,17 @@ export class OwlveyLogoutComponent implements OnInit {
     this.logout(this.strategy);
   }
 
-  logout(strategy: string): void {
-    this.service.logout(strategy).subscribe((result: NbAuthResult) => {
-
+  logout(strategy: string): void {    
+    this.service.logout(strategy).subscribe((result: NbAuthResult) => {      
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
           return this.router.navigateByUrl(redirect);
+        }, this.redirectDelay);
+      }
+      else{
+        setTimeout(() => {
+          return this.router.navigateByUrl("/auth/login");
         }, this.redirectDelay);
       }
     });
