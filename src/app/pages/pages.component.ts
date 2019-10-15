@@ -21,9 +21,15 @@ export class PagesComponent implements OnInit {
 
   }
 
+  private onCustomerAndProductMustSelected(){
+    alert('please select customer and product');
+    const queryParams: Params = {  };
+    this.router.navigate(['/pages/home'], { relativeTo: this.activatedRoute, queryParams: queryParams });
+  }
+
   ngOnInit(){
     // this.themeService.changeTheme("cosmic"); // change theme
-    this.menuService.onItemClick().subscribe((e) => {
+    this.menuService.onItemClick().subscribe((e) => {      
       const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;
       if (e.item.title == 'Sources'){
@@ -32,7 +38,7 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
       if (e.item.title == 'Products'){
@@ -41,7 +47,7 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer');
+          this.onCustomerAndProductMustSelected();
         }
       }
       if (e.item.title == 'Services'){
@@ -50,7 +56,7 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
 
@@ -66,7 +72,7 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
 
@@ -101,7 +107,16 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/squads'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
 
         } else{
-          alert('please select customer');
+          this.onCustomerAndProductMustSelected();
+        }
+      }
+      if (e.item.title == 'Sync'){
+        if (currentProduct && currentCustomer){
+          const queryParams: Params = {  };
+          this.router.navigate(['/pages/sync'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+        }
+        else{
+          this.onCustomerAndProductMustSelected();
         }
       }
     });

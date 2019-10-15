@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+          <nb-card-header>
+              <div class="d-flex align-content-center">
+                  <h5> {{ source?.name }} </h5>
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
+                  <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
+              </div>
+          </nb-card-header>
+          <nb-card-body>
+                <div class="row">
+                    <div class="col-sm-6">
+                          <div class="form-group">
+                            <label for="inputAvailability" class="label col-sm-3 form-control-label">Target</label>
+                            <input readonly="readonly" type="text" [value]="source?.target" 
+                                nbInput fullWidth id="inputAvailability" placeholder="target"
+                                class="input-full-width size-medium shape-rectangle">                         
+                          </div>
+                    </div>                        
+                </div>        
+          </nb-card-body>
+        </nb-card>
+      </div>
+</div>

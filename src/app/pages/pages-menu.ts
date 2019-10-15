@@ -270,5 +270,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Migrations',
     icon: 'upload-outline',
   },
+  {
+    title: 'Sync',
+    icon: 'upload-outline',
+  },
   ...DEV_MENU,
 ];

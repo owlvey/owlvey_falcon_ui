@@ -48,6 +48,10 @@ const routes: Routes = [{
       loadChildren: () => import('./migrate/migrate.module').then(m => m.MigrateModule),
     },    
     {
+      path: 'sync',
+      loadChildren: () => import('./sync/sync.module').then(m => m.SyncModule),
+    },    
+    {
       path: 'portfolios',
       canActivate: [AuthGuard],
       loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),

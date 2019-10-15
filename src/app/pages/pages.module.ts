@@ -7,6 +7,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SourceModule } from './source/source.module';
 import { CustomerModule} from './customer/customer.module';
+import { SyncModule } from './sync/sync.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
 import { SquadModule } from './squad/squad.module';
 import { HomeModule } from './home/home.module';
@@ -39,6 +40,7 @@ import { UserModule } from './user/user.module';
     SquadModule,
     UserModule,
     HomeModule,
+    SyncModule,
   ],
   declarations: [
     PagesComponent,

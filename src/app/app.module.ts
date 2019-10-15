@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -91,8 +91,23 @@ import { environment } from '../environments/environment';
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function () { return false; } },
-  
+    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {         
+        // avoid CORS attack 
+        const whiteList = ["/customers", "/products", "/squads", "/services", "/features", "/sources", "/incidents"];
+        let found = false;
+        whiteList.forEach(item=>{
+           if ( req.url.indexOf(item) > -1 ){
+             found = true;
+           }
+        });        
+        if (found)
+        {
+           return false; // add header
+        }
+        else {
+           return true; // remove header
+        }        
+     } },
     AuthGuard],
   bootstrap: [AppComponent],
 })
