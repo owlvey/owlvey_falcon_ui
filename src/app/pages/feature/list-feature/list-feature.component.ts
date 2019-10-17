@@ -1,29 +1,24 @@
 import { Component, OnInit, ViewChildren } from "@angular/core";
-import {
-  Location,
-  LocationStrategy,
-  PathLocationStrategy
-} from "@angular/common";
+import {  Location } from "@angular/common";
 import { ActivatedRoute, Router, ParamMap, Params } from "@angular/router";
 import { CustomersGateway } from "./../../../@core/data/customers.gateway";
-import { SourcesGateway } from "./../../../@core/data/sources.gateway";
 import { LocalDataSource } from "ng2-smart-table";
 import { ProductsGateway } from "../../../@core/data/products.gateway";
 import { FeaturesGateway } from "../../../@core/data/features.gateway";
+import { ProductBaseComponent } from '../../common/components/base-product.components';
+import { NbThemeService } from '@nebular/theme';
+
 
 @Component({
   selector: "app-list-feature",
   templateUrl: "./list-feature.component.html",
   styleUrls: ["./list-feature.component.scss"]
 })
-export class ListFeatureComponent implements OnInit {
+export class ListFeatureComponent extends ProductBaseComponent {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
-  currentProduct: any;
-  productId = 0;
-  customerId = 0;
-
+    
   settings = {
     actions: {
       add: false,
@@ -31,7 +26,7 @@ export class ListFeatureComponent implements OnInit {
       delete: false
     },
     pager: {
-      perPage: 20
+      perPage: 10
     },
     columns: {
       id: {
@@ -53,14 +48,7 @@ export class ListFeatureComponent implements OnInit {
         filter: true,
         width: "3em",
         editable: false
-      },
-      mttm: {
-        title: 'MTTM',
-        type: 'number',
-        filter: true,       
-        width: '12em', 
-        editable: false
-      },                  
+      },           
       indicatorsCount: {
         title: "SLIs",
         type: "number",
@@ -78,38 +66,41 @@ export class ListFeatureComponent implements OnInit {
     }
   };
 
-  startDate: Date = new Date();
-  endDate: Date;
+  /*
+  mttm: {
+        title: 'MTTM',
+        type: 'number',
+        filter: true,       
+        width: '12em', 
+        editable: false
+      },             
+  */ 
+
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
-    private location: Location,
-    private customerGateway: CustomersGateway,
-    private productGateway: ProductsGateway,
-    private featureGateway: FeaturesGateway,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
-  ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      this.productId = parseInt(paramMap.get("productId"));
-      this.customerId = parseInt(paramMap.get("customerId"));
-      this.startDate = new Date(paramMap.get("start"));
-      this.endDate = new Date(paramMap.get("end"));
-      this.getFeature();
-    });
+    protected location: Location,
+    protected customerGateway: CustomersGateway,        
+    protected productGateway: ProductsGateway,        
+    protected featureGateway: FeaturesGateway,
+    protected theme: NbThemeService,
+    protected router: Router, 
+    protected activatedRoute: ActivatedRoute) {       
+      super(location, customerGateway, productGateway, theme, router, activatedRoute);
+    }          
+  onChangeQueryParameters(paramMap: ParamMap): void {               
+    super.onChangeQueryParameters(paramMap);        
+    this.getFeature();
   }
 
-  getFeature() {
-    this.productGateway.getProduct(this.productId).subscribe(data => {
-      this.currentProduct = data;
-    });
+  getFeature() {    
     this.featureGateway
       .getFeaturesWithAvailabilities(this.productId, this.startDate, this.endDate)
       .subscribe(data => {
-        this.source.load(data);
-      });
+        this.source.load(data);        
+    });
   }
+
 
   onUserRowSelect(event): void {
     const featureId = event.data.id;

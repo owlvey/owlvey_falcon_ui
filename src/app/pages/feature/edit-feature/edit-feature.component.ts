@@ -27,15 +27,14 @@ export class EditFeatureComponent extends ProductBaseComponent {
       columnTitle:'Actions',
       position: 'right',
       add:false,
-      edit:false,
-      delete:true
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+      edit:true,
+      delete:false
+    },    
+    edit: {
+      editButtonContent: '<i class="nb-trash"></i>',      
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {
       id: {
@@ -49,14 +48,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
         title: 'Source',
         type: 'string',
         filter: true
-      },
-      availability: {
-        title: 'Availability',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },
+      }
     },
   };
 
@@ -75,7 +67,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       editButtonContent: '<i class="nb-plus"></i>'
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {
       id: {
@@ -94,8 +86,6 @@ export class EditFeatureComponent extends ProductBaseComponent {
   };
 
   newSource: LocalDataSource = new LocalDataSource();
-
-
 
   squadSettings = {
     mode: 'external',
@@ -192,7 +182,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
   }
 
   loadSource(){
-    this.featureGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(data=>{
+    this.featureGateway.getFeature(this.featureId).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.name);
@@ -228,12 +218,16 @@ export class EditFeatureComponent extends ProductBaseComponent {
       this.loadViewState();
     });
   }
+
+  //#region Indicators
   onUnRegister(event){
-    const indicatorId = event.data.id;
-    this.featureGateway.deleteIndicator(indicatorId).subscribe(data=>{
+    const sourceId = event.data.sourceId;
+    this.featureGateway.deleteIndicator(this.featureId, sourceId).subscribe(data=>{
       this.loadViewState();
     });
   }
+  //#endregion
+  
 
   onUnRegisterSquad(event){
     const squadId = event.data.id;

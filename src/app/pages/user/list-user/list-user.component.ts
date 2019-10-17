@@ -36,6 +36,11 @@ export class ListUserComponent implements OnInit  {
             type: 'string',
             filter: false
           },          
+          name: {
+            title: 'Name',
+            type: 'string',
+            filter: false
+          },          
         },
       };
       

@@ -34,6 +34,28 @@
           </button>
         </div>
       </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="inputName" class="label col-sm-3 form-control-label">Name</label>
+                  <input readonly="readonly" type="text" [value]="currentUser?.name" 
+                      nbInput fullWidth id="inputName" placeholder="name"
+                      class="input-full-width size-medium shape-rectangle">                         
+                </div>
+          </div>                                  
+        </div>   
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="inputAvatar" class="label col-sm-3 form-control-label">Avatar</label>
+                  <input readonly="readonly" type="text" [value]="currentUser?.avatar" 
+                      nbInput fullWidth id="inputAvatar" placeholder="avatar"
+                      class="input-full-width size-medium shape-rectangle">                         
+                </div>
+          </div>                                  
+        </div>   
+      </nb-card-body>
     </nb-card>
   </div>
 </div>

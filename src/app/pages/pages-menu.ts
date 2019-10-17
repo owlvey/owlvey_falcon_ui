@@ -235,13 +235,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Members',
-    icon: 'person-outline',
-  },
-  {
     title: 'Organizations',
     icon: 'globe-outline',
   },
+  {
+    title: 'Members',
+    icon: 'person-outline',
+  },  
   {
     title: 'Squads',
     icon: 'people-outline',
@@ -261,11 +261,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Sources',
     icon: 'archive-outline',
-  },
-  {
-    title: 'Incidents',
-    icon: 'activity-outline',
-  },
+  },  
   {
     title: 'Migrations',
     icon: 'upload-outline',
@@ -276,3 +272,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   ...DEV_MENU,
 ];
+
+/*
+{
+    title: 'Incidents',
+    icon: 'activity-outline',
+  },
+*/ 

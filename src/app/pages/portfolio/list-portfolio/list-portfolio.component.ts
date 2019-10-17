@@ -61,14 +61,7 @@ export class ListPortfolioComponent implements OnInit {
         filter: true,
         width: '2em',
         editable: false
-      },     
-      mttms:{
-        title: 'MTTM',
-        type: 'string',
-        filter: true,
-        width: '10rem',
-        editable: false
-      },            
+      },                  
       deploy: {
         title: 'Action',
         type: 'string',
@@ -89,6 +82,16 @@ export class ListPortfolioComponent implements OnInit {
       },            
     },
   };
+
+  /*
+  mttms:{
+        title: 'MTTM',
+        type: 'string',
+        filter: true,
+        width: '10rem',
+        editable: false
+      },     
+  */ 
 
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
@@ -125,7 +128,7 @@ export class ListPortfolioComponent implements OnInit {
     });     
   }
   getDaily(){
-    this.productGateway.getDaily(this.productId, this.startDate, this.endDate).subscribe(data=>{
+    this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
     });
   }

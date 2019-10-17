@@ -94,7 +94,7 @@ import { environment } from '../environments/environment';
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {         
         // avoid CORS attack 
         const whiteList = ["/customers", "/products", "/squads", "/services", "/features",
-                           "/sources", "/incidents", "/users"];
+                           "/sources", "/incidents", "/users", "/migrations", "/sourceItems"];
         let found = false;
         whiteList.forEach(item=>{
            if ( req.url.indexOf(item) > -1 ){

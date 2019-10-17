@@ -34,7 +34,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {      
       title: {
@@ -100,7 +100,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {      
       id: {

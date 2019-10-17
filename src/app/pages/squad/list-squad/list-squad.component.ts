@@ -38,7 +38,15 @@ export class ListSquadComponent extends CustomerBaseComponent {
         title: 'Points',
         type: 'number',
         filter: false,
+        width: '3em'
+      },
+      members:{
+        title: 'Members',
+        type: 'number',
+        filter: false,
+        width: '3em'
       }
+
     },
     actions: {
       add: false,

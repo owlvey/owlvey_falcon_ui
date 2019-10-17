@@ -28,12 +28,12 @@
 
 <div class="row">
   <div class="col-md-12">
-      <nb-card style="height: 60rem">
+      <nb-card style="height: 90rem">
           <nb-tabset fullWidth>
               <nb-tab tabTitle="Service Level Indicators (SLI)" >                  
                   <nb-card>                      
                       <nb-card-body>            
-                          <ng2-smart-table [settings]="settings" [source]="source" (delete)="onUnRegister($event)">
+                          <ng2-smart-table [settings]="settings" [source]="source" (edit)="onUnRegister($event)">
                           </ng2-smart-table>                      
                       </nb-card-body>
                   </nb-card>  
