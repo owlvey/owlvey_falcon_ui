@@ -93,6 +93,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       }      
     }
   };
+
   settings = {    
     actions:{
       add:false,
@@ -106,7 +107,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       id: {
         title: 'Id',
         type: 'number',
-        filter: false
+        filter: false,
+        sort:true,
+        sortDirection: 'asc'     
       },
       source: {
         title: 'SLI',
@@ -118,9 +121,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,
-        sort:true,
-        sortDirection: 'asc'     
+        editable: false,        
       },            
     },
   };

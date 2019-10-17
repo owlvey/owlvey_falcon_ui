@@ -44,8 +44,15 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       perPage: 20
     },
     columns: {            
-      id: {
+      mapId: {
         title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },   
+      id: {
+        title: 'FeatureId',
         type: 'number',
         filter: false,
         width: '3em',
@@ -63,8 +70,11 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },   
-      mttd: {
+      },        
+    },
+  };
+  /*
+   mttd: {
         title: 'MTTD',
         type: 'number',
         filter: false,
@@ -85,8 +95,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         width: '10rem',
         editable: false
       },                
-    },
-  };
+  */
   
   constructor(
     private location: Location,

@@ -101,7 +101,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       confirmDelete: true,
     },
     pager: {
-      perPage: 20
+      perPage: 10
     },
     columns: {
       id: {
@@ -132,7 +132,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       editButtonContent: '<i class="nb-plus"></i>'
     },
     pager: {
-      perPage: 20
+      perPage: 10
     },
     columns: {
       id: {

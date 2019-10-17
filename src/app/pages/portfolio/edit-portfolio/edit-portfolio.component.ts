@@ -30,19 +30,25 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       width: '3em',
       position: 'right',
       add:false,
-      edit:false,
-      delete:true,
+      edit:true,
+      delete:false,
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
+    edit: {
+      editButtonContent: '<i class="nb-trash"></i>'
+    },    
     pager: {
       perPage: 20
     },
-    columns: {
-      id: {
+    columns: {      
+      mapId: {
         title: 'Id',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },
+      id: {
+        title: 'FeatureId',
         type: 'number',
         filter: false,
         width: '3em',
@@ -60,8 +66,12 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         filter: false,
         width: '3em',
         editable: false
-      },
-      mttd: {
+      },      
+    },
+  };
+
+  /*
+  mttd: {
         title: 'MTTD',
         type: 'number',
         filter: false,
@@ -89,8 +99,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         width: '10rem',
         editable: false
       },
-    },
-  };
+  */
 
   sourceNewFeatures: LocalDataSource = new LocalDataSource();
 
@@ -122,8 +131,13 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         type: 'string',
         filter: true,
         editable: false
-      },
-      mttd: {
+      },     
+    },
+  };
+
+
+  /*
+   mttd: {
         title: 'MTTD',
         type: 'number',
         filter: true,
@@ -151,9 +165,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         width: '10rem',
         editable: false
       },
-    },
-  };
-
+      */
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
