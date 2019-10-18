@@ -24,12 +24,13 @@ export class CustomerBaseComponent extends BaseComponent {
     onNgOnInit(): void {
         
     }
+    
     public loadCustomer(){
         if (this.customerId){
             this.customerGateway.getCustomer(this.customerId).subscribe(data=>{                
                 this.currentCustomer = data;
             });
-        }else{
+        } else{
             alert('please select an organization');
             this.goHome();
         }        

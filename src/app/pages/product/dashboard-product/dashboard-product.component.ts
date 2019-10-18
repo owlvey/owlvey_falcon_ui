@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy } from '@angu
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
-import { SourcesGateway } from '../../../@core/data/sources.gateway';
-import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { NbThemeService } from '@nebular/theme';
@@ -20,9 +18,8 @@ interface CardSettings {
   templateUrl: './dashboard-product.component.html',
   styleUrls: ['./dashboard-product.component.scss']
 })
-export class DashboardProductComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {
+export class DashboardProductComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {  
   
-
   sources: any[];
   squads: any[];
   squadsData: any[];
@@ -41,6 +38,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
   serviceStats: any;    
   featuresStats: any; 
   sloFails: number = 0;
+  featuresCoverage: number = 0;
 
   
   option: any = {};
@@ -210,7 +208,9 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
         this.incidentMaps = data.incidentInformation;
         this.squadMaps = data.squadMaps;
         this.services = data.services.map(c=> { 
-          c.title =  `SLO: ${c.slo} | Availability: ${c.availability}`
+          c.title =  `SLO: ${c.slo} | Availability: ${c.availability}`;
+          c.budget = Math.round( (c.availability * 1000) - (c.slo * 1000))/1000;
+          c.badgetStatus = this.getBadgeStatus(c.availability, c.slo);                  
           return c;
          } );
         this.sourceTotal = data.sourceTotal;
@@ -218,6 +218,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
         this.serviceStats = data.servicesStats;
         this.featuresStats = data.featuresStats;     
         this.sloFails = data.sloFail;   
+        this.featuresCoverage = data.featuresCoverage * 100;
         const sourceAvailability = parseFloat(data.sourceStats.mean) * 100;
         const serviceAvailability = parseFloat(data.servicesStats.mean) * 100;        
         const featureAvailability = parseFloat(data.featuresStats.mean) * 100;
@@ -236,25 +237,70 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     onSourceClick(event){      
       alert(event);
     }
-    onServiceClick(event){
+
+    private currentService : any;
+    onServiceClick(event){      
       const serviceId = event.currentTarget.id;
-      const featuresIds = this.serviceMaps[serviceId];
-      this.features = this.featuresData
-        .filter(c=> featuresIds.indexOf(c.id) > -1 )
-        .sort(( a:any, b:any)=>{
-          return a.id - b.id;
-        });
+      this.currentService = this.services.filter(c=>c.id == event.currentTarget.id).pop();
+      const featureSlo = this.currentService.featureSlo;
+      const featuresIds = this.serviceMaps[serviceId];      
+      const featuresList = [];
+      featuresIds.forEach(item => {
+        const target = this.featuresData.filter(c=> c.id === item).pop();
+        featuresList.push(target);        
+      });     
+
+      this.features = featuresList.map(c=>{                
+        c.budget = Math.round( (c.availability * 1000) - (featureSlo * 1000))/1000;
+        c.title =  `SLO: ${featureSlo} | Availability: ${c.availability}`;
+        c.badgetStatus = this.getBadgeStatus(c.availability, featureSlo);        
+        return c;
+      });
       this.sources = [];
       this.squads = [];
     }
+
+    private getBadgeStatus( availability: number, slo: number): string{
+      const budget = Math.round( (availability * 1000) - (slo * 1000))/1000;
+      if (budget < 0){
+        return "danger";
+      }      
+      else{            
+        return "success";
+      }              
+    }
+
+    private getBudget(availability: number, slo: number): number{
+      return Math.round( (availability * 10000) - (slo * 10000))/10000;
+    }
+    private getIndicatorSlo(indicators: number){
+      const slo = this.currentService.featureSlo;
+      if (!indicators) { return  slo;}
+      return Math.round(Math.pow(slo, 1 / indicators) * 10000) /10000;
+    }
+
     onFeatureClick(event){
       const featureId = event.currentTarget.id;
       const indicatorsIds = this.featureMaps[featureId];
       const squadsIds = this.squadMaps[featureId];
-      this.incident = this.incidentMaps[featureId];
-      this.sources = this.sourceData.filter(c=> indicatorsIds.indexOf(c.id) > -1 );
+      const sourceList = [];
+
+      const indicatorSlo = this.getIndicatorSlo(indicatorsIds.length);
+
+      indicatorsIds.forEach(item =>{
+        const target = this.sourceData.filter(c=>c.id == item).pop();
+        sourceList.push(target);
+      });
+      this.sources = sourceList.map(c=>{
+        c.title =  `SLO: ${indicatorSlo} | Availability: ${c.availability}`;
+        c.budget = this.getBudget(c.availability, indicatorSlo);
+        c.badgetStatus = this.getBadgeStatus(c.availability, indicatorSlo);        
+        return c;
+      });
+      this.incident = this.incidentMaps[featureId];      
       this.squads = this.squadsData.filter(c=> squadsIds.indexOf(c.id)> -1);
     }
+
     ngOnDestroy() {
       if (this.themeSubscription){
         this.themeSubscription.unsubscribe();

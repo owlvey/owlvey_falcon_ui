@@ -128,7 +128,6 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
       var edgeData = data.edges.map(c=>{
         const ava = String(c.value);
         if (c.value < 0){
-
           return { font: {  align: 'top', color: fgText },
                 label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
         }

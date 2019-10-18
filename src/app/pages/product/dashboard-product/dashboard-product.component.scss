@@ -3,6 +3,21 @@
 @import '~bootstrap/scss/mixins/breakpoints';
 
 @include nb-install-component() {
+
+  nb-user {
+    
+    .user-picture {
+      position: relative;
+      flex-shrink: 0;
+  
+      &.image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 100rem;
+      }  
+    }
+  }  
+
   nb-card {
     overflow: hidden;
   }

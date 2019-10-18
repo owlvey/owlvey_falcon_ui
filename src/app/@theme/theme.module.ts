@@ -18,6 +18,7 @@ import {
   NbAlertModule,
   NbCheckboxModule,
   NbInputModule,
+  NbBadgeModule,  
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -50,6 +51,7 @@ import { OwlveyAuthComponent } from './components/auth/auth.component'
 import { OwlveyLogoutComponent } from './components/auth/logout/logout.component'
 import { NbAuthModule } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
+import { OwlveyTileComponent } from './components/tile/tile.component';
 
 const NB_MODULES = [
   NbInputModule,
@@ -70,6 +72,7 @@ const NB_MODULES = [
   NbIconModule,
   NbEvaIconsModule,
   NbDatepickerModule,
+  NbBadgeModule,
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -81,7 +84,8 @@ const COMPONENTS = [
   TwoColumnsLayoutComponent,
   OwlveyAuthComponent,
   OwlveyLoginComponent,
-  OwlveyLogoutComponent
+  OwlveyLogoutComponent,
+  OwlveyTileComponent,
 ];
 const PIPES = [
   CapitalizePipe,

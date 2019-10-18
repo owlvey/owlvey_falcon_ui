@@ -38,6 +38,7 @@
                   <div class="details subtitle-2"><span> Total: {{ featuresStats?.count }} </span> </div>
                   <div class="details subtitle-2"><span> Min: {{ featuresStats?.min }} </span> </div>
                   <div class="details subtitle-2"><span> Max: {{ featuresStats?.max }} </span> </div>
+                  <div class="details subtitle-2"><span> Coverage: {{ featuresCoverage }}% </span> </div>
                 </div>                                                             
             </nb-card-body>          
         </nb-card>
@@ -68,8 +69,11 @@
           <nb-list>
             <nb-list-item class="service" *ngFor="let c of services">
               <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
-                    size="large" (click)="onServiceClick($event)" [id]="c.id" 
-                    style="cursor: pointer"></nb-user>
+                    size="large" (click)="onServiceClick($event)" [id]="c.id"                     
+                    badgePosition="bottom end"
+                    [badgeStatus]="c.badgetStatus"
+                    [badgeText]="c.budget"                    
+                    style="cursor: pointer; "></nb-user>
                     <!--
                       <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
                     -->              
@@ -85,8 +89,11 @@
           <nb-tab tabTitle="Features">
             <nb-list>
               <nb-list-item class="feature" *ngFor="let c of features">
-                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" 
+                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
                       size="large" (click)="onFeatureClick($event)" [id]="c.id" 
+                      badgePosition="bottom end"
+                      [badgeStatus]="c.badgetStatus"
+                      [badgeText]="c.budget"                      
                       style="cursor: pointer"></nb-user>
                       <!--
                         <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
@@ -104,8 +111,11 @@
           <nb-tab tabTitle="Indicators">
             <nb-list>
               <nb-list-item class="indicator" *ngFor="let c of sources">
-                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" 
+                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
                       size="large" (click)="onSourceClick($event)" [id]="c.id" 
+                      badgePosition="bottom end"
+                      [badgeStatus]="c.badgetStatus"
+                      [badgeText]="c.budget"     
                       style="cursor: pointer"></nb-user>                                   
               </nb-list-item>
             </nb-list>
@@ -122,6 +132,8 @@
                 </nb-list-item>
               </nb-list>
           </nb-tab>    
+
+          <!--
           <nb-tab tabTitle="Incidents">      
               <nb-list>
                   <nb-list-item>
@@ -151,6 +163,10 @@
                   </nb-list-item>
               </nb-list>                                      
           </nb-tab>    
+
+          -->
+
+          
         </nb-tabset>
       </nb-card>    
   </div>

@@ -71,6 +71,20 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         width: '3em',
         editable: false,        
       },        
+      slo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      budget: {
+        title: 'Budget',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
     },
   };
   /*
@@ -125,6 +139,13 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
   getPortfolio(){    
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSource = data;            
+
+      const features = this.currentSource.features.map(c=>{
+        c.slo = this.currentSource.featureSlo;
+        c.budget = Math.round( (c.availability - c.slo) * 1000) / 1000;
+        return c;
+      });
+
       this.source.load(this.currentSource.features);      
     });    
   }

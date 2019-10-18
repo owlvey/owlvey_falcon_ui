@@ -29,6 +29,7 @@ import {
   
 } from "@nebular/theme";
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     NbIconModule,
     NbUserModule,
     NbListModule,
-    NbTabsetModule
+    NbTabsetModule,
+    ThemeModule,
   ]
 })
 export class ProductModule {}
