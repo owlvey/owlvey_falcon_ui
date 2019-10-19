@@ -67,7 +67,13 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   
   onItemsClick($event){    
     let queryParams: Params = { };
-    this.router.navigate(['/pages/sources/items'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    if (this.currentSource.kind == "Interaction"){
+      this.router.navigate(['/pages/sources/items'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    }
+    else {
+      this.router.navigate(['/pages/sources/uptime'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    }
+    
   }  
   onBackClick($event){    
     this.location.back();

@@ -34,6 +34,12 @@ export class ListSourceComponent implements OnInit {
         title: 'Name',
         type: 'string',
         filter: true
+      },            
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
       },             
       good: {
         title: 'Good',

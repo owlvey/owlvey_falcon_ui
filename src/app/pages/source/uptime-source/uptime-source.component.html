@@ -23,25 +23,17 @@
                             formControlName="end" name="end"
                             nbInput fullWidth id="inputEnd" placeholder="end"
                             class="input-full-width size-medium shape-rectangle">                     
-                    </div>
+                    </div>                    
                     <div class="col-sm-3">
                             <div class="form-group">
-                              <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
+                              <label for="inputAvailability" class="label col-sm-3 form-control-label">Uptime</label>
                               <input type="number" 
-                                  formControlName="good" name="good"
-                                  nbInput fullWidth id="inputGood" placeholder="good"
+                                  formControlName="uptime" name="uptime"
+                                  max="1" min="0" 
+                                  nbInput fullWidth id="inputAvailability" placeholder="uptime"
                                   class="input-full-width size-medium shape-rectangle">                     
                             </div>
-                    </div>                
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                          <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
-                          <input type="number" 
-                              formControlName="total" name="total"
-                              nbInput fullWidth id="inputTotal" placeholder="total"
-                              class="input-full-width size-medium shape-rectangle">                     
-                        </div>
-                    </div>                            
+                    </div>                                                
                 </div>                
                 <div class="row">
                     <div class="col-sm-11">

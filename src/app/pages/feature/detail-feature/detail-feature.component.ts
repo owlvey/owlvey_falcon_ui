@@ -109,12 +109,19 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         type: 'number',
         filter: false,
         sort:true,
+        width: '3em',
         sortDirection: 'asc'     
       },
       source: {
-        title: 'SLI',
+        title: 'Source',
         type: 'string',
-        filter: false
+        filter: false,        
+      },
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: false,        
+        width: '3em',
       },
       good:{
         title: 'Good',

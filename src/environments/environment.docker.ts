@@ -6,7 +6,7 @@ export const environment = {
   authority: 'https://falcon.com/',
   api: 'https://falcon.com/',
   type: 'docker',
-  showDevMenu: false,
+  showDevMenu: true,
   githubFalconURL: "https://github.com",
   facebookFalconURL: "https://facebook.com",
   twitterFalconURL: "http://twitter.com",

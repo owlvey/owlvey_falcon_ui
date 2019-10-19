@@ -16,6 +16,14 @@ export class CreateSourceComponent extends ProductBaseComponent {
 
   createForm: FormGroup;
 
+  optionsValue = "Interaction";
+
+  options = [
+    { value: 'Interaction', label: 'Interaction' },
+    { value: 'Uptime', label: 'Uptime'},    
+  ];
+  
+
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router,
@@ -24,7 +32,7 @@ export class CreateSourceComponent extends ProductBaseComponent {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);
     this.createForm = this.fb.group({
       id: [''],
-      name: ['', Validators.required]
+      name: ['', Validators.required],      
     });
     this.isLoading = false;
   }
@@ -36,7 +44,7 @@ export class CreateSourceComponent extends ProductBaseComponent {
     }
     this.isLoading = true;
     const model = this.createForm.value;
-    let  defer = this.sourceGateway.postSource(this.productId, model.name);
+    let  defer = this.sourceGateway.postSource(this.productId, model.name, this.optionsValue);
     defer.subscribe((data) => {
         this.toastr.success("Source Created Success");
         this.isLoading = false;
