@@ -42,6 +42,7 @@ export class EditSourceComponent extends ProductBaseComponent {
       this.editForm.get("avatar").setValue(data.avatar);
       this.editForm.get("goodDefinition").setValue(data.goodDefinition);
       this.editForm.get("totalDefinition").setValue(data.totalDefinition);
+      this.editForm.get("description").setValue(data.description);
     });
   }
 
@@ -51,7 +52,8 @@ export class EditSourceComponent extends ProductBaseComponent {
       name: ['', Validators.required],
       avatar: ['', Validators.required],
       goodDefinition: ['', Validators.required],
-      totalDefinition: ['', Validators.required]
+      totalDefinition: ['', Validators.required],
+      description: ['', Validators.required],
     });
   }
   onSubmit() {

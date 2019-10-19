@@ -44,25 +44,32 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       perPage: 20
     },
     columns: {            
-      mapId: {
-        title: 'Id',
+      sequence: {
+        title: 'IX',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
       },   
       id: {
-        title: 'FeatureId',
+        title: 'Id',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },                
       name: {
         title: 'Name',
         type: 'string',
         filter: false,        
         editable: false
+      },        
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '5em',
+        editable: false,        
       },            
       availability: {
         title: 'Availability',
@@ -71,7 +78,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         width: '3em',
         editable: false,        
       },        
-      slo: {
+      featureSlo: {
         title: 'SLO',
         type: 'number',
         filter: false,
@@ -84,7 +91,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },        
+      },              
     },
   };
   /*
@@ -138,27 +145,111 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
 
   getPortfolio(){    
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-      this.currentSource = data;            
-
-      const features = this.currentSource.features.map(c=>{
-        c.slo = this.currentSource.featureSlo;
-        c.budget = Math.round( (c.availability - c.slo) * 1000) / 1000;
-        return c;
+      this.currentSource = data;                  
+      const features = this.currentSource.features.map(c=>{                
+        return c;        
       });
 
-      this.source.load(this.currentSource.features);      
+      this.source.load(features);      
     });    
-  }
-  onFeaturesRowSelect(event){
-      const featureId = event.data.id;
-      let queryParams: Params = { featureId: featureId, portfolioId: null };      
-      this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  } 
+  }  
   getDaily(){
     this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
-    });
+    });  
   }
+
+  squadSource: LocalDataSource = new LocalDataSource();
+  indicatorSource : LocalDataSource = new LocalDataSource();
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }      
+    }
+  };
+
+  indicatorSettings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 10
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        sort:true,
+        width: '3em',
+        sortDirection: 'asc'     
+      },
+      source: {
+        title: 'SLI',
+        type: 'string',
+        filter: false
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },  
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },           
+      indicatorSlo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      budget: {
+        title: 'Budget',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+    },
+  };
+  currentFeature : any;
+  onFeaturesRowSelect(event){
+      
+      this.currentFeature = event.data;
+      const featureId = event.data.id;
+      const slo = event.data.featureSlo;
+      this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{        
+        const temporal = feature.indicators;
+        const indicators = temporal.map(c=>{
+          c.indicatorSlo = Math.round(Math.pow(slo, 1/temporal.length) * 10000) /10000;
+          c.budget =  Math.round( (c.availability - c.indicatorSlo) * 10000) /10000;
+          return c;
+        });
+
+        this.indicatorSource.load(indicators);
+        this.squadSource.load(feature.squads);                
+      });  
+  } 
   onReportClick(event){
     this.getDaily(); 
   }
@@ -183,15 +274,14 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     
   }
 
-  onDeleteClick(event){    
-    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
-      this.toastr.success("Portfolio was deleted");
-      let queryParams: Params = { portfolioId : null };
-      this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-    }, (error) => {
-      this.isLoading = false;
-      this.toastr.warning("Something went wrong, please try again.", "Warning")
-    });      
-    
+  onIndicatorsRowSelect(event){
+    const sourceId = event.data.sourceId;
+    let queryParams: Params = { sourceId: sourceId };
+    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onSquadRowSelect(event){
+    const squadId = event.data.id;
+    let queryParams: Params = { squadId: squadId };
+    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 }

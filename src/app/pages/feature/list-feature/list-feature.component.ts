@@ -42,6 +42,20 @@ export class ListFeatureComponent extends ProductBaseComponent {
         filter: true,
         editable: false
       },      
+      good: {
+        title: "Good",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
+      total: {
+        title: "Total",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
       availability: {
         title: "Availability",
         type: "number",

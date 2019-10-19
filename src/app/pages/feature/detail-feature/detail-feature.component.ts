@@ -116,13 +116,27 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         type: 'string',
         filter: false
       },
+      good:{
+        title: 'Good',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },            
       availability: {
         title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false,        
-      },            
+      },                  
     },
   };
 

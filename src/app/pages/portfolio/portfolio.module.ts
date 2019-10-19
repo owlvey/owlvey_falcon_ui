@@ -21,14 +21,22 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  NbTreeGridModule
+  NbTreeGridModule,
+  NbTabsetModule,
 } from '@nebular/theme';
 
 
 @NgModule({
   declarations: [DetailPortfolioComponent, ListPortfolioComponent, EditPortfolioComponent, CreatePortfolioComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, PortfolioRoutingModule, Ng2SmartTableModule, 
-     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
+  imports: [FormsModule,
+     ReactiveFormsModule, CommonModule, PortfolioRoutingModule, Ng2SmartTableModule, 
+     NbCardModule,
+     NgxEchartsModule, 
+     ChartModule,
+     NbDatepickerModule, 
+     NgxChartsModule, 
+     NbButtonModule,
+     NbTabsetModule,
      NbCardModule, ControlsModule]
 })
 export class PortfolioModule { }
