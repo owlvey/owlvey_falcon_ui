@@ -7,8 +7,7 @@
   </div>
   <nb-select class="mr-2" placeholder="themes" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select>
-  <br />
+  </nb-select>  
   <nb-select class="mr-2" placeholder="organizations" [(selected)]="currentCustomer" 
                (selectedChange)="changeCustomer($event)" status="primary">
     <nb-option *ngFor="let customer of customers" [value]="customer.id"> {{ customer.name }}</nb-option>
