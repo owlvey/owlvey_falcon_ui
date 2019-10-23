@@ -258,7 +258,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onDelete(event){        
+  onDeleteClick(event){        
     const featureId =  event.data.id;    
     this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
       this.getPortfolio();

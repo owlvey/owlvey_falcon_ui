@@ -1,8 +1,4 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthService, NB_AUTH_OPTIONS, NbAuthResult, getDeepFromObject, NbAuthSocialLink } from '@nebular/auth';
@@ -13,7 +9,7 @@ import { NbAuthService, NB_AUTH_OPTIONS, NbAuthResult, getDeepFromObject, NbAuth
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NbRegisterComponent {
+export class OwlveyRegisterComponent {
 
   redirectDelay: number = 0;
   showMessages: any = {};

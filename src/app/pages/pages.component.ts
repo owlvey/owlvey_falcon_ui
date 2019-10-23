@@ -28,7 +28,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.themeService.changeTheme("dark"); // change theme
+    //this.themeService.changeTheme("dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {      
       const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
       const currentProduct = this.activatedRoute.snapshot.queryParams.productId;
