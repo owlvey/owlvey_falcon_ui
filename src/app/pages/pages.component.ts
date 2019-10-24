@@ -22,6 +22,7 @@ export class PagesComponent implements OnInit {
   }
 
   private onCustomerAndProductMustSelected(){
+    console.log(JSON.stringify( this.activatedRoute.snapshot.queryParams));
     alert('please select customer and product');
     const queryParams: Params = {  };
     this.router.navigate(['/pages/home'], { relativeTo: this.activatedRoute, queryParams: queryParams });
