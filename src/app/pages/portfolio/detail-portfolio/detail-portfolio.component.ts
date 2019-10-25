@@ -259,10 +259,16 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
   onDeleteClick(event){        
-    const featureId =  event.data.id;    
-    this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
-      this.getPortfolio();
-    });
+    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
+      this.toastr.success("Portfolio was deleted");
+      let queryParams: Params = { portfolioId : null };
+      this.router.navigate(['/pages/portfolios'], {         
+        queryParams: queryParams, 
+        queryParamsHandling: 'merge' });     
+
+    }, (error) => {      
+      this.toastr.warning("Something went wrong, please try again.", "Warning")
+    });   
     
   } 
   onBackClick(event){    
