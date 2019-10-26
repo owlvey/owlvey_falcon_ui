@@ -15,9 +15,10 @@ import { FeaturesGateway } from '../../../@core/data/features.gateway';
   templateUrl: './detail-portfolio.component.html',
   styleUrls: ['./detail-portfolio.component.scss']
 })
-export class DetailPortfolioComponent implements OnInit, AfterViewInit {
+export class DetailPortfolioComponent implements OnInit {
   
-
+  currentFeature : any;
+  
   isLoading: boolean = false;  
   actionConfirmWord: string;
   currentSource : any= {};    
@@ -151,8 +152,11 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       });
 
       this.source.load(features);      
+      
     });    
   }  
+  
+
   getDaily(){
     this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
@@ -232,9 +236,8 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       },        
     },
   };
-  currentFeature : any;
-  onFeaturesRowSelect(event){
-      
+  
+  onFeaturesRowSelect(event){      
       this.currentFeature = event.data;
       const featureId = event.data.id;
       const slo = event.data.featureSlo;
@@ -271,14 +274,10 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     });   
     
   } 
-  onBackClick(event){    
-    //let queryParams: Params = { portfolioId: null };
-    //this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 
+  onBackClick(event){        
     this.location.back();
   }
-  ngAfterViewInit() {    
-    
-  }
+
 
   onIndicatorsRowSelect(event){
     const sourceId = event.data.sourceId;
@@ -291,106 +290,9 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
-   
-  chartData:any[] = [ 
-    {  
-      "value":40,
-      "name":"Accessibility",
-      "path":"Accessibility"
-    },
-    {  
-      "value":60,
-      "name":"Test",
-      "path":"Test"
-    },
-    
-  ];
-
-
-echartsIntance: any;
-sliOptions: any ={
-title: {
-  text: 'Disk Usage',
-  left: 'center'
-},
-
-tooltip: {
-  formatter: function (info) {
-      var value = info.value;
-      var treePathInfo = info.treePathInfo;
-      var treePath = [];
-
-      for (var i = 1; i < treePathInfo.length; i++) {
-          treePath.push(treePathInfo[i].name);
-      }
-
-      return [
-          '<div class="tooltip-title">' + treePath.join('/') + '</div>',
-          'Disk Usage: ' + value + ' KB',
-      ].join('');
-  }
-},
-
-
-series: [
-{
-      name:'Disk Usage',
-      type:'treemap',
-      visibleMin: 300,
-      label: {
-          show: true,
-          formatter: '{b}'
-      },
-      itemStyle: {
-          normal: {
-              borderColor: '#fff'
-          }
-      },
-      levels: this.getLevelOption(),
-      data: this.chartData
-  }
-]
-
-}
-
-
-
-onChartInit(ec) {
-this.echartsIntance = ec;
-}
+ 
 
 //region
-getLevelOption() {
-    return [
-        {
-            itemStyle: {
-                normal: {
-                    borderWidth: 0,
-                    gapWidth: 5
-                }
-            }
-        },
-        {
-            itemStyle: {
-                normal: {
-                    gapWidth: 1
-                }
-            }
-        },
-        {
-            colorSaturation: [0.35, 0.5],
-            itemStyle: {
-                normal: {
-                    gapWidth: 1,
-                    borderColorSaturation: 0.6
-                }
-            }
-        }
-    ];
-}
-
-
-
-
+  
 
 }

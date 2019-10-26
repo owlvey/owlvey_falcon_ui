@@ -28,8 +28,7 @@ export abstract class BaseComponent implements OnInit {
     }   
     
     protected goHome(){
-        let queryParams: Params = { 
-            uheader: null,
+        let queryParams: Params = {             
             productId: null, 
             customerId: null };
         this.router.navigate(['/pages/home'], { relativeTo: this.activatedRoute,

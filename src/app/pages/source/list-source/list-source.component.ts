@@ -105,6 +105,16 @@ export class ListSourceComponent implements OnInit {
     this.router.navigate(['/pages/sources/create'], extras);
   }
 
+  onGraph(event){
+    let queryParams: Params = {};
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/sources/treemap'], extras);
+  }
+
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;
     let queryParams: Params = { sourceId: sourceId };

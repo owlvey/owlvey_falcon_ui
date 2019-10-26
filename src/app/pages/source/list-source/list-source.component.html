@@ -1,13 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <nb-card>
-            <nb-card-header>
+            <nb-card-header>                
                 <div class="d-flex align-content-center">
                     <h5>{{ currentProduct?.name }} Sources</h5>          
-                    <button type="button" nbButton status="primary" (click)="onCreate($event)" class="btn btn-sm btn-outline-primary ml-auto">
-                        Create
-                    </button>
-                </div>              
+                    <button type="button" nbButton status="primary" (click)="onGraph($event)" class="ml-auto mr-2"> Graph </button>
+                    <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>
+                </div>
             </nb-card-header>
             <nb-card-body>
                 <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
