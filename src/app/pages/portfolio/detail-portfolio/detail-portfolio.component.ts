@@ -18,7 +18,9 @@ import { FeaturesGateway } from '../../../@core/data/features.gateway';
 export class DetailPortfolioComponent implements OnInit {
   
   currentFeature : any;
-  
+  echartsIntance: any;
+  echartCalendarInstance: any;
+  serviceCalendarOptions: any;
   isLoading: boolean = false;  
   actionConfirmWord: string;
   currentSource : any= {};    
@@ -152,7 +154,7 @@ export class DetailPortfolioComponent implements OnInit {
       });
 
       this.source.load(features);      
-      
+      this.renderAvailabilityReport();
     });    
   }  
   
@@ -160,6 +162,40 @@ export class DetailPortfolioComponent implements OnInit {
   getDaily(){
     this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
+      const slo = data.slo;
+      const datas = this.series[0].items.map(c=>{        
+        let target = 0; 
+        if ( c.oAva >= slo){
+          target = 100;
+        }
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), target, c.oAva];
+      });      
+      
+      this.serviceCalendarOptions = {
+        tooltip: {
+          formatter: function (params) {              
+              const ava = datas.filter(c=> c[0] === params.value[0])[0][2];              
+              return params.value[0] + ' | SLO: ' + slo + ', availability:' + ava;
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas.map(c=>[c[0], c[1]]),        
+        }
+      };
     });  
   }
 
@@ -251,6 +287,7 @@ export class DetailPortfolioComponent implements OnInit {
 
         this.indicatorSource.load(indicators);
         this.squadSource.load(feature.squads);                
+        
       });  
   } 
   onReportClick(event){
@@ -290,8 +327,87 @@ export class DetailPortfolioComponent implements OnInit {
     this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
- 
+  renderAvailabilityReport(){    
+    let legends = [];    
+    const debt = this.currentSource.features.filter((c: any) => c.budget < 0);
+    let  totaldebt: number = 0;
+    debt.forEach(element => {
+      totaldebt  += Math.abs(element.budget);      
+    });
+      
+    if (totaldebt === 0){
+      return;
+    }
 
+    const indicators = debt.map(c=>{
+      legends.push(c.name);            
+      return {
+        name: c.name, 
+        value:  Math.abs(c.budget) / totaldebt
+      };
+
+    });
+        
+    this.sliOptions ={
+      title : {
+          text: "Total Feature Debt: " + totaldebt,          
+          x:'center',          
+      },
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: legends
+      },
+      series : [
+          {
+              name: 'Debt',
+              type: 'pie',
+              radius : '70%',
+              center: ['50%', '60%'],
+              data: indicators,
+              itemStyle: {
+                  emphasis: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+              }
+          }
+      ]
+  };
+  
+  }
+
+  sliOptions:any; 
+
+  onChartInit(ec) {
+    this.echartsIntance = ec;
+  }
+
+  
+  onServiceCalendar(ec) {
+    this.echartCalendarInstance = ec;
+  }
+
+  
+  getVirtulData(year) {
+    year = year || '2017';
+    var date = +echarts.number.parseDate(year + '-01-01');
+    var end = +echarts.number.parseDate(year + '-12-31');
+    var dayTime = 3600 * 24 * 1000;
+    var data = [];
+    for (var time = date; time <= end; time += dayTime) {
+        data.push([
+            echarts.format.formatTime('yyyy-MM-dd', time),
+            Math.random()  * 100
+        ]);
+    }
+    return data;
+  }
 //region
   
 

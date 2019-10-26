@@ -46,6 +46,7 @@ export class TreeMapSourceComponent extends ProductBaseComponent {
     const charData = this.sources.map(c=>{            
       return {
         sourceId: c.id,
+        availability: c.availability,
         value: c.total,
         total: c.total,
         name : c.name,
@@ -72,6 +73,7 @@ export class TreeMapSourceComponent extends ProductBaseComponent {
 
             return [
                 '<div class="tooltip-title">' + treePath.join('/') + '</div>',
+                'Availability' + info.data.availability + '<br/>',
                 'Total: ' + info.data.total,
             ].join('');
         }
