@@ -94,9 +94,17 @@
                 <p>
                     <b> Feature : {{ currentFeature?.name }}</b>                
                 </p>
-                
-                <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                </ng2-smart-table>              
+                <div class="row">
+                  <div class="col-md-12">
+                      <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                      </ng2-smart-table>   
+                  </div>
+                </div>  
+                <div class="row">
+                  <div class="col-md-12">
+                      <div echarts [options]="sliOptions" style="height: 10rem;" class="echart" (chartInit)="onChartInit($event)"></div>
+                  </div>
+                </div>   
             </nb-tab>
             <nb-tab tabTitle="Squads">
                 <p>

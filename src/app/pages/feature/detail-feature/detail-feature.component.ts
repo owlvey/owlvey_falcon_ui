@@ -274,7 +274,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.toastr.warning("Something went wrong, please try again.", "Warning")
     });          
   }
-  
+
+
+
   ngAfterViewInit() {    
     
   }

@@ -76,7 +76,14 @@ export class ListFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: "3em",
         editable: false
-      }
+      },
+      squads:{
+        title: "Squads",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      }      
     }
   };
 
