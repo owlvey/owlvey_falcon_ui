@@ -130,7 +130,38 @@ export class ListPortfolioComponent implements OnInit {
   getDaily(){
     this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
-    });
+
+      const datas = this.series[0].items.map(c=>{        
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
+      });      
+      
+      this.serviceCalendarOptions = {
+        tooltip: {
+          formatter: function (params) {                          
+              return params.value[0] +  ', availability:' + params.value[1];
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas,        
+        }
+      };
+    });  
+
+
   }
   onCreate(event){    
     let queryParams: Params = {  };
@@ -140,5 +171,13 @@ export class ListPortfolioComponent implements OnInit {
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };
     this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
+
+  echartCalendarInstance: any;
+  serviceCalendarOptions: any;
+  
+  onServiceCalendar(ec) {
+    this.echartCalendarInstance = ec;
   }
 }

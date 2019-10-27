@@ -115,8 +115,17 @@
     Daily Report
   </nb-card-header>  
 
-  <nb-card-body>      
-      <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>          
+  <nb-card-body>
+      <div class="row">
+            <div class="col-sm-12">
+                 <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>        
+            </div>
+      </div>      
+      <div class="row">
+        <div class="col-sm-12">
+            <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+        </div>
+      </div>       
   </nb-card-body>
 
 </nb-card>

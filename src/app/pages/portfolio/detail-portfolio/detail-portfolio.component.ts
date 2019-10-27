@@ -350,7 +350,7 @@ export class DetailPortfolioComponent implements OnInit {
         
     this.sliOptions ={
       title : {
-          text: "Total Feature Debt: " + totaldebt,          
+          text: "Availability Feature Debt: " + totaldebt,          
           x:'center',          
       },
       tooltip : {
@@ -393,21 +393,6 @@ export class DetailPortfolioComponent implements OnInit {
     this.echartCalendarInstance = ec;
   }
 
-  
-  getVirtulData(year) {
-    year = year || '2017';
-    var date = +echarts.number.parseDate(year + '-01-01');
-    var end = +echarts.number.parseDate(year + '-12-31');
-    var dayTime = 3600 * 24 * 1000;
-    var data = [];
-    for (var time = date; time <= end; time += dayTime) {
-        data.push([
-            echarts.format.formatTime('yyyy-MM-dd', time),
-            Math.random()  * 100
-        ]);
-    }
-    return data;
-  }
 //region
   
 

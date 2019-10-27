@@ -60,7 +60,37 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   }
   getDaily(){
     this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
-      this.series = data.items;      
+      this.series = data.items;   
+      
+      const datas = this.series.map(c=>{        
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
+      });      
+      
+      this.calendarOptions = {
+        tooltip: {
+          formatter: function (params) {                            
+              return params.value[0] + ', availability:' + params.value[1];
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas,        
+        }
+      };
+
     });
   }
 
@@ -99,4 +129,11 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {    
     
   }
+
+  echartCalendarInstance: any;
+  calendarOptions: any;
+
+  onCalendar(ec) {
+    this.echartCalendarInstance = ec;
+  }  
 }

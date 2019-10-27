@@ -121,7 +121,20 @@
       </nb-card-header>  
     
       <nb-card-body>      
-          <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
+          <nb-tabset fullWidth>
+              <nb-tab tabTitle="Daily Report">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>  
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+                    </div>
+                </div>
+              </nb-tab>
+          </nb-tabset>     
       </nb-card-body>
     
     </nb-card>    
