@@ -104,7 +104,14 @@ export class PagesComponent implements OnInit {
 
       if (e.item.title == 'Product Dashboard'){
         const queryParams: Params = { };
-        this.router.navigate(['/pages/products/dashboard'],
+        this.router.navigate(['/pages/products/operation'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+        
+      }
+
+      if (e.item.title == 'Operation Dashboard'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/products/detail'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 

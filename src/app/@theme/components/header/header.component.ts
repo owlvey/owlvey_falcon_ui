@@ -111,8 +111,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
-
-  ngAfterViewInit(): void {
+  loadData(){
     this.customerGateway.getCustomers().subscribe(data => {
       
       this.customers = data;      
@@ -131,7 +130,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.onControlChangeRouter();      
     });
-
+  }
+  ngAfterViewInit(): void {
+    this.loadData();
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {       
 
       const custId = parseInt(paramMap.get("customerId"));
@@ -155,7 +156,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {        
-   
+    this.customerEventHub.customerCreated.subscribe(c=>{
+      this.loadData();
+    }); 
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
         if (token.isValid()) {

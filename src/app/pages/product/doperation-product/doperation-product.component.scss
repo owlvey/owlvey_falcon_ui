@@ -1,0 +1,75 @@
+@import '../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+@include nb-install-component() {
+
+  nb-user {
+    
+    .user-picture {
+      position: relative;
+      flex-shrink: 0;
+  
+      &.image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 100rem;
+      }  
+    }
+  }  
+
+  nb-card {
+    overflow: hidden;
+  }
+  .gauge{
+    height: 10rem;
+  }
+  .echart {
+    position: absolute;
+    left: 1em;
+    height: calc(100% - 2 * 1rem);
+    width: 50%;
+  }
+
+  nb-tabset {
+    display: flex;
+    flex-direction: column;
+
+    ::ng-deep ul {
+      // make same size as card header
+      padding-bottom: 1px;
+      ::ng-deep .tab-link {
+        padding: 1.25rem 2rem;
+      }
+    }
+  }
+
+  nb-tab {
+    padding: 0;
+  }
+
+  .info {
+    margin-left: 55%;
+    padding-top: 1rem;
+  }
+
+  .value {
+    margin: 0;
+  }
+
+  .details {
+    color: nb-theme(text-hint-color);
+  }
+
+  .source {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+}
+
+

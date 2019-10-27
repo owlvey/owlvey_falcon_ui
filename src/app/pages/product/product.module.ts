@@ -4,6 +4,7 @@ import { ListProductComponent } from "./list-product/list-product.component";
 import { DetailProductComponent } from "./detail-product/detail-product.component";
 import { CreateProductComponent } from "./create-product/create-product.component";
 import { DashboardProductComponent } from "./dashboard-product/dashboard-product.component";
+import { OperationDashboardComponent } from "./doperation-product/doperation-product.component";
 import { ProductRoutingModule } from "./product.routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -37,7 +38,8 @@ import { ThemeModule } from '../../@theme/theme.module';
     DetailProductComponent,
     CreateProductComponent,
     EditProductComponent,
-    DashboardProductComponent
+    DashboardProductComponent,
+    OperationDashboardComponent
   ],
   imports: [
     FormsModule,

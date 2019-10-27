@@ -20,6 +20,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
   },
   {
+    title: 'Operation Dashboard',
+    icon: 'home-outline',
+  },
+  {
     title: 'Concepts',
     group: true,
   },
