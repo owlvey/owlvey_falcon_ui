@@ -216,7 +216,72 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
       this.portfolioSource.load(feature.services);
+      this.renderSliBarOptions();
     });        
+  }
+
+  renderSliBarOptions(){
+    
+    const categories = this.currentSource.indicators.map(c=>{
+      return c.source;
+    });
+    const goods = this.currentSource.indicators.map(c=>{
+      return c.good;
+    });
+    const bads = this.currentSource.indicators.map(c=>{
+      return c.total - c.good;
+    });
+
+    this.sliBarOptions = {
+      tooltip : {
+          trigger: 'axis',
+          axisPointer : {            
+              type : 'shadow'       
+          }
+      },
+      legend: {
+          data: ['Good', 'Bad']
+      },
+      grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+      },
+      xAxis:  {
+          type: 'value'
+      },
+      yAxis: {
+          type: 'category',
+          data: categories
+      },
+      series: [
+          {
+              name: 'Interactions',
+              type: 'bar',
+              stack: 'availability',
+              label: {
+                  normal: {
+                      show: true,
+                      position: 'insideRight'
+                  }
+              },
+              data: goods
+          },
+          {
+              name: '邮件营销',
+              type: 'bar',
+              stack: 'availability',
+              label: {
+                  normal: {
+                      show: true,
+                      position: 'insideRight'
+                  }
+              },
+              data: bads
+          }
+      ]
+    };
   }
 
   getDaily(){
@@ -314,6 +379,11 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     this.echartCalendarInstance = ec;
   }   
 
+  echartSliBarInstance: any;
+  sliBarOptions: any;
+  onSliBarOptions(ec){
+    this.echartSliBarInstance = ec;
+  }
 
   ngAfterViewInit() {    
     
