@@ -20,13 +20,14 @@ import {
   NbCheckboxModule,
   NbDatepickerModule,
   NbIconModule,
-  NbTabsetModule,
+  NbTabsetModule,  
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
   NbListModule,
   NbTreeGridModule,
+  NbProgressBarModule
   
 } from "@nebular/theme";
 import { EditProductComponent } from './edit-product/edit-product.component';
@@ -61,6 +62,8 @@ import { ThemeModule } from '../../@theme/theme.module';
     NbUserModule,
     NbListModule,
     NbTabsetModule,
+    NbProgressBarModule,
+    NbActionsModule,
     ThemeModule,
   ]
 })

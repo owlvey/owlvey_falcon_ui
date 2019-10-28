@@ -1,15 +1,38 @@
-  <nb-card>
-    <nb-card-header>                
+<nb-card>
+    <nb-card-header>
+      <h5>
+        {{ currentProduct?.name }} 
+      </h5>
     </nb-card-header>
-    <nb-card-body>
-        <div style="height: 60rem; text-align: center; ">
-            <div echarts [options]="productSunOptions" style="height: 60rem;  width: 100%;" class="echart" 
-            (chartInit)="onSunChartInit($event)"></div>
-        </div>
-        
-    </nb-card-body>
-  </nb-card>
 
-  
-  
-  
+</nb-card>
+
+<div style="display: flex; width: 100%; flex-direction: row; flex-wrap: wrap;" >
+    <div style="width: 20rem; height: 10rem; margin-right: 2rem; margin-bottom: 4rem;" *ngFor="let group of serviceGroups" >                
+        <nb-card size="tiny">
+            <nb-card-header>
+              <div class="row">
+                 <div class="col-sm-9">
+                    <div class="h5"> {{ group.name }}  </div>                    
+                 </div> 
+                 <div class="col-sm-3">
+                    <h6 [class.active]="textStatusClass"> {{ group.percentage }}% </h6>                               
+                 </div> 
+              </div>
+                
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row" >  
+                    <div class="col-sm-8">
+                        <div><span> Total: {{ group.total }} </span></div>
+                        <div><span> Fail: {{ group.fail }} </span></div>
+                    </div> 
+                    <div class="col-sm-4">
+                        <button [id]="group.name" class="btn btn-outline-info" (click)="onServiceGroupDetail($event)">Detail</button>                        
+                    </div>
+                </div>                                                               
+                <nb-progress-bar style="margin-top: 3rem;" [status]="group.status" [value]="group.percentage"></nb-progress-bar>                
+            </nb-card-body>
+        </nb-card>                      
+    </div>    
+</div>

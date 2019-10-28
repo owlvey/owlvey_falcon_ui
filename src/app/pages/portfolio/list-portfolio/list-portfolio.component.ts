@@ -69,6 +69,12 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      group:{
+        title: 'Group',
+        type: 'string',
+        filter: true,
+        width: '5em',
+      },
       name: {
         title: 'Name',
         type: 'string',
@@ -96,7 +102,7 @@ export class ListPortfolioComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
   series: Array<any> = [];  
-
+  serviceGroup: string;
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -106,12 +112,15 @@ export class ListPortfolioComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { 
       
     }        
+
+
   ngOnInit() {    
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
       this.productId = parseInt(paramMap.get('productId'));            
       this.customerId = parseInt(paramMap.get('customerId'));      
       this.startDate = new Date(paramMap.get('start'));
       this.endDate = new Date(paramMap.get('end'));      
+      this.serviceGroup = paramMap.get('group');      
       this.getProduct(this.productId);
       this.getDaily(); 
     });          
@@ -119,7 +128,7 @@ export class ListPortfolioComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate).subscribe(portfolios=>{
+      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
         let c = portfolios.map(c=> {          
           return c;
         });
@@ -128,13 +137,13 @@ export class ListPortfolioComponent implements OnInit {
     });     
   }
   getDaily(){
-    this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate).subscribe(data=>{
+    this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, this.serviceGroup).subscribe(data=>{
       this.series = data.series;
 
       const datas = this.series[0].items.map(c=>{        
         return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
       });      
-      
+
       this.serviceCalendarOptions = {
         tooltip: {
           formatter: function (params) {                          

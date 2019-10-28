@@ -35,8 +35,9 @@ export class PortfoliosGateway{
     getPortfolios(productId: number): Observable<any>{
         return this.http.get(this.baseUrl + `services?productId=${productId}`);
     }
-    getPortfoliosWithAvailabilities(productId: number, start: Date, end: Date): Observable<any>{
-        return this.http.get(this.baseUrl + `services?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+    getPortfoliosWithAvailabilities(productId: number, start: Date, end: Date, group? : string): Observable<any>{
+        group = group && group || "";
+        return this.http.get(this.baseUrl + `services?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`);
     }
     getPortfolio(portflioId: number): Observable<any>{
         return this.http.get(this.baseUrl + `services/${portflioId}`);
