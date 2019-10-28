@@ -791,7 +791,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
         const featureMaps = data.featureMaps;
         const serviceMaps = data.serviceMaps;
 
-        const  groups = [...new Set(data.services.map(c=> {           
+        const  groups = [...new Set<string>(data.services.map(c=> {           
           return c.group;
         }))];
 
