@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbMenuService, NbThemeService } from '@nebular/theme';
 
 import { MENU_ITEMS } from './pages-menu';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'ngx-pages',
@@ -16,22 +16,30 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 })
 export class PagesComponent implements OnInit {
   menu = MENU_ITEMS;
+
+  private currentCustomer: number;
+  private currentProduct: number;
+
   constructor(private menuService: NbMenuService, private router: Router, private activatedRoute: ActivatedRoute,
     private themeService: NbThemeService) {
 
   }
 
   private onCustomerAndProductMustSelected(){
-    alert('please select customer and product');
-    const queryParams: Params = {  };
-    this.router.navigate(['/pages/home'], { relativeTo: this.activatedRoute, queryParams: queryParams });
+    console.log(JSON.stringify( this.activatedRoute.snapshot.queryParams));
+    alert('please select customer and product');    
+    this.router.navigateByUrl('/pages/home');    
   }
 
   ngOnInit(){
-    this.themeService.changeTheme("dark"); // change theme
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {  
+      this.currentCustomer = parseInt(paramMap.get("customerId"));
+      this.currentProduct = parseInt(paramMap.get("productId"));
+    });
+    //this.themeService.changeTheme("dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {      
-      const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
-      const currentProduct = this.activatedRoute.snapshot.queryParams.productId;
+      const currentCustomer = this.currentCustomer;
+      const currentProduct = this.currentProduct;
       if (e.item.title == 'Sources'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = {  };
@@ -64,8 +72,7 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/users'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
-
-      //uheader
+      
       if (e.item.title == 'Features'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = { };
@@ -98,6 +105,12 @@ export class PagesComponent implements OnInit {
       if (e.item.title == 'Product Dashboard'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/dashboard'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      }
+
+      if (e.item.title == 'Operation Dashboard'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/products/operation'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 

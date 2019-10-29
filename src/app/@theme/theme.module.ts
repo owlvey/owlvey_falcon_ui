@@ -52,6 +52,9 @@ import { OwlveyLogoutComponent } from './components/auth/logout/logout.component
 import { NbAuthModule } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
 import { OwlveyTileComponent } from './components/tile/tile.component';
+import { OwlveyRegisterComponent } from './components/auth/register/register.component';
+import { OwlveyResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { OwlveyRequestPasswordComponent } from './components/auth/request-password/request-password.component';
 
 const NB_MODULES = [
   NbInputModule,
@@ -83,7 +86,10 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
   OwlveyAuthComponent,
+  OwlveyRequestPasswordComponent,
+  OwlveyRegisterComponent,
   OwlveyLoginComponent,
+  OwlveyResetPasswordComponent,
   OwlveyLogoutComponent,
   OwlveyTileComponent,
 ];

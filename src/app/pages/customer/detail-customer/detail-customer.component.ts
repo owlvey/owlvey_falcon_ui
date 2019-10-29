@@ -71,11 +71,7 @@ export class DetailCustomerComponent implements OnInit {
   onBackClick(event){
     this.location.back();
   }
-  onProductRowSelect(event){
-    const productId = event.data.id;
-    const queryParams: Params = { customerId: this.customerId, productId: productId, uheader: null };
-    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
-  }
+
   onEditClick(event) {
     const queryParams: Params = {  };
     const extras: any = {

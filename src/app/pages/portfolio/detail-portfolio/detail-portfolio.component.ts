@@ -15,9 +15,12 @@ import { FeaturesGateway } from '../../../@core/data/features.gateway';
   templateUrl: './detail-portfolio.component.html',
   styleUrls: ['./detail-portfolio.component.scss']
 })
-export class DetailPortfolioComponent implements OnInit, AfterViewInit {
+export class DetailPortfolioComponent implements OnInit {
   
-
+  currentFeature : any;
+  echartsIntance: any;
+  echartCalendarInstance: any;
+  serviceCalendarOptions: any;
   isLoading: boolean = false;  
   actionConfirmWord: string;
   currentSource : any= {};    
@@ -151,11 +154,48 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       });
 
       this.source.load(features);      
+      this.renderAvailabilityReport();
     });    
   }  
+  
+
   getDaily(){
     this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
+      const slo = data.slo;
+      const datas = this.series[0].items.map(c=>{        
+        let target = 0; 
+        if ( c.oAva >= slo){
+          target = 100;
+        }
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), target, c.oAva];
+      });      
+      
+      this.serviceCalendarOptions = {
+        tooltip: {
+          formatter: function (params) {              
+              const ava = datas.filter(c=> c[0] === params.value[0])[0][2];              
+              return params.value[0] + ' | SLO: ' + slo + ', availability:' + ava;
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas.map(c=>[c[0], c[1]]),        
+        }
+      };
     });  
   }
 
@@ -232,9 +272,8 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       },        
     },
   };
-  currentFeature : any;
-  onFeaturesRowSelect(event){
-      
+  
+  onFeaturesRowSelect(event){      
       this.currentFeature = event.data;
       const featureId = event.data.id;
       const slo = event.data.featureSlo;
@@ -248,6 +287,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
 
         this.indicatorSource.load(indicators);
         this.squadSource.load(feature.squads);                
+        
       });  
   } 
   onReportClick(event){
@@ -258,21 +298,23 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onDelete(event){        
-    const featureId =  event.data.id;    
-    this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
-      this.getPortfolio();
-    });
+  onDeleteClick(event){        
+    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
+      this.toastr.success("Portfolio was deleted");
+      let queryParams: Params = { portfolioId : null };
+      this.router.navigate(['/pages/portfolios'], {         
+        queryParams: queryParams, 
+        queryParamsHandling: 'merge' });     
+
+    }, (error) => {      
+      this.toastr.warning("Something went wrong, please try again.", "Warning")
+    });   
     
   } 
-  onBackClick(event){    
-    //let queryParams: Params = { portfolioId: null };
-    //this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 
+  onBackClick(event){        
     this.location.back();
   }
-  ngAfterViewInit() {    
-    
-  }
+
 
   onIndicatorsRowSelect(event){
     const sourceId = event.data.sourceId;
@@ -284,4 +326,74 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
     let queryParams: Params = { squadId: squadId };
     this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
+
+  renderAvailabilityReport(){    
+    let legends = [];    
+    const debt = this.currentSource.features.filter((c: any) => c.budget < 0);
+    let  totaldebt: number = 0;
+    debt.forEach(element => {
+      totaldebt  += Math.abs(element.budget);      
+    });
+      
+    if (totaldebt === 0){
+      return;
+    }
+
+    const indicators = debt.map(c=>{
+      legends.push(c.name);            
+      return {
+        name: c.name, 
+        value:  Math.abs(c.budget) / totaldebt
+      };
+
+    });
+        
+    this.sliOptions ={
+      title : {
+          text: "Availability Feature Debt: " + totaldebt,          
+          x:'center',          
+      },
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: legends
+      },
+      series : [
+          {
+              name: 'Debt',
+              type: 'pie',
+              radius : '70%',
+              center: ['50%', '60%'],
+              data: indicators,
+              itemStyle: {
+                  emphasis: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+              }
+          }
+      ]
+  };
+  
+  }
+
+  sliOptions:any; 
+
+  onChartInit(ec) {
+    this.echartsIntance = ec;
+  }
+
+  
+  onServiceCalendar(ec) {
+    this.echartCalendarInstance = ec;
+  }
+
+//region
+  
+
 }

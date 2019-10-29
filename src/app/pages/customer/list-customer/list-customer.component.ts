@@ -98,7 +98,7 @@ export class ListCustomerComponent implements OnInit {
   }
   onCustomerRowSelect(event) {
     const customerId = event.data.id;
-    const queryParams: Params = { customerId: customerId, uheader: null };
+    const queryParams: Params = { customerId: customerId };
     const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,

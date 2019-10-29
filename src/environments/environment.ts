@@ -6,7 +6,7 @@ export const environment = {
   authority: "http://localhost:50000/",
   api: "http://localhost:50001/",
   type: "regular",
-  githubFalconURL: "https://github.com",
+  githubFalconURL: "https://github.com/owlvey",
   facebookFalconURL: "https://facebook.com",
   twitterFalconURL: "http://twitter.com",
   linkedinFalconURL: "https://linkedin.com",

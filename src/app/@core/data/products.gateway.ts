@@ -20,10 +20,11 @@ export class ProductsGateway {
     return this.http.get(this.baseUrl + `products/${productId}`);
   }
 
-  getServicesDailyReport(productId: number, start: Date, end: Date): Observable<any> {
+  getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
+    group = group && group || "";
     return this.http.get(
       this.baseUrl +
-        `products/${productId}/reports/daily/services/series?start=${start.toISOString()}&end=${end.toISOString()}`,
+        `products/${productId}/reports/daily/services/series?start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
     );
   }
 
@@ -54,6 +55,10 @@ export class ProductsGateway {
   getProductDashboard(productId: number, start: Date, end: Date): Observable<any>{
     return this.http.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
+
+  getProductServiceGroupDashboard(productId: number, start: Date, end: Date): Observable<any>{
+    return this.http.get(this.baseUrl + `products/${productId}/dashboard/services/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }  
 
   //#region Syncs
   getSyncs(productId: number) : Observable<any> {

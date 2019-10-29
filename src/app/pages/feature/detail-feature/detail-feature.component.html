@@ -77,7 +77,8 @@
           <nb-tabset fullWidth>
             <nb-tab tabTitle="Service Level Indicators (SLI)" >              
                 <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
-                </ng2-smart-table>              
+                </ng2-smart-table>
+              
             </nb-tab>
             <!--
             <nb-tab tabTitle="Incidents">
@@ -120,7 +121,17 @@
       </nb-card-header>  
     
       <nb-card-body>      
-          <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
+          <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>  
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+                    </div>
+                </div>
+              
       </nb-card-body>
     
     </nb-card>    

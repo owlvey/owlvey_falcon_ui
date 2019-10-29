@@ -70,7 +70,7 @@ export class ListUserComponent implements OnInit  {
     }
     onRowSelected(event){
         const userId = event.data.id;
-        let queryParams: Params = { userId: userId, uheader: null };
+        let queryParams: Params = { userId: userId};
         this.router.navigate(['/pages/users/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
 }
