@@ -163,16 +163,8 @@ export class OwlveyOAuth2AuthStrategy extends NbAuthStrategy {
 
     let headers = this.buildAuthHeader() || new HttpHeaders() ;
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');    
-    debugger;
     const body = this.buildPasswordRequestData(username, password);
-    const temp = this.http.post(url, body , { headers: headers });
-
-    temp.subscribe(data=>{
-        debugger;
-    }, error => {
-        debugger;
-    });
-    
+    const temp = this.http.post(url, body , { headers: headers });  
     return temp;
   }
 
