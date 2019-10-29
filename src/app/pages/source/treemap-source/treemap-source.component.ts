@@ -97,7 +97,9 @@ export class TreeMapSourceComponent extends ProductBaseComponent {
     };
   }
 
-
+  onBack(){
+    
+  }
   
   onChartInit(ec) {
     const router = this.router;
