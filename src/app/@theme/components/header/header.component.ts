@@ -17,7 +17,7 @@ import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
@@ -130,9 +130,15 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.onControlChangeRouter();      
     });
-  }
-  ngAfterViewInit(): void {
+  }  
+
+  ngOnInit() {        
+    this.customerEventHub.customerCreated.subscribe(c=>{
+      this.loadData();
+    }); 
+
     this.loadData();
+
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {       
 
       const custId = parseInt(paramMap.get("customerId"));
@@ -153,12 +159,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.currentProduct = prodId;
       }      
     });
-  }
 
-  ngOnInit() {        
-    this.customerEventHub.customerCreated.subscribe(c=>{
-      this.loadData();
-    }); 
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
         if (token.isValid()) {
@@ -210,7 +211,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.themeService.changeTheme(themeName);
   }
 
-  changeCustomer(customer: any) {    
+  changeCustomer(customer: any) {        
     this.currentProduct = null;
     this.productGateway.getProducts(customer).subscribe(data => {
       this.products = data;
