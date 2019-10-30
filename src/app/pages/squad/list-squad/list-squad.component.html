@@ -8,9 +8,49 @@
               <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>
           </div>
       </nb-card-header>
-      <nb-card-body>
+      <!-- <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onSquadRowSelect($event)">
         </ng2-smart-table>
+      </nb-card-body> -->
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4 squads" *ngFor="let item of squads; let i = index">
+    <nb-card class="squads__item">
+      <nb-card-body (click)="onSquadRowSelect(item)">
+        <div *ngIf="i < 3" class="squads__item__medal {{i < 3 ? 'medal-' + (i + 1) : ''}}">
+          <i class="fas fa-medal"></i>
+        </div>
+        <div class="squads__item__avatar">
+          <img src="{{item.avatar}}" alt="">
+        </div>
+        <h4 class="text-center squads__item__name">{{item.name}}</h4>
+        <table class="table squads__item__data">
+          <tr>
+            <td>Members</td>
+            <td>
+              <i class="fas fa-user mr-2 text-primary"></i>
+              {{item.members}}
+            </td>
+          </tr>
+          <tr>
+            <td>Features</td>
+            <td>
+              <i class="fas fa-cogs mr-2 text-success"></i>
+              {{item.features}}
+            </td>
+          </tr>
+          <tr>
+            <td>Points</td>
+            <td>
+              <i class="fas fa-frown mr-2 text-danger" *ngIf="item.points < 0"></i>
+              <i class="fas fa-meh mr-2 text-secondary" *ngIf="item.points == 0"></i>
+              <i class="fas fa-smile mr-2 text-warning" *ngIf="item.points > 0"></i>
+              {{item.points}}
+            </td>
+          </tr>
+        </table>
       </nb-card-body>
     </nb-card>
   </div>

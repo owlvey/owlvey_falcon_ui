@@ -1,0 +1,41 @@
+.squads {
+    &__item {
+        margin-bottom: 30px;
+        cursor: pointer;
+        &__medal {
+            position: absolute;
+            font-size: 36px;
+            top: 0;
+            right: 25px;
+            &.medal-1 {
+                color: #D4AF37;
+            }
+            &.medal-2 {
+                color: #c0c0c0 ;
+            }
+            &.medal-3 {
+                color: #cd7f32;
+            }
+        }
+        &__avatar {
+            margin-bottom: 10px;
+            img {
+                display: block;
+                margin: auto;
+                width: 100px;
+            }
+        }
+        &__name {
+            font-size: 16px !important;
+        }
+        &__data {
+            tr {
+                &:first-child {
+                    td {
+                        border-top: none;
+                    }
+                }
+            }
+        }
+    }
+}
