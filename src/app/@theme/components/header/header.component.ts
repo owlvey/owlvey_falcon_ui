@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild(NbSelectComponent, { static: false }) otherCustomerSelect: any;
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [{ title: 'Profile', icon: 'person-outline', pack: 'font-awesome' }, { title: 'Log out', icon: 'log-out' }];
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
