@@ -62,7 +62,7 @@
 </div>
 
 <div class="row">
-  <div class="col-xxxl-3 col-xxl-3 col-lg-4 col-md-4">
+  <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card size="large">
       <nb-tabset fullWidth>    
         <nb-tab tabTitle="Services">
@@ -83,7 +83,7 @@
       </nb-tabset>
     </nb-card>    
   </div>
-  <div class="col-xxxl-3 col-xxl-3 col-lg-4 col-md-4">
+  <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
       <nb-card size="large">
         <nb-tabset fullWidth>    
           <nb-tab tabTitle="Features">
@@ -105,70 +105,75 @@
       </nb-card>    
   </div>
 
-  <div class="col-xxxl-6 col-xxl-6 col-lg-8 col-md-8">
-      <nb-card size="gigant">
-        <nb-tabset fullWidth>    
-          <nb-tab tabTitle="Indicators">
-            <nb-list>
-              <nb-list-item class="indicator" *ngFor="let c of sources">
-                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
-                      size="large" (click)="onSourceClick($event)" [id]="c.id" 
-                      badgePosition="bottom end"
-                      [badgeStatus]="c.badgetStatus"
-                      [badgeText]="c.budget"     
-                      style="cursor: pointer"></nb-user>                                   
-              </nb-list-item>
-            </nb-list>
-          </nb-tab>    
-          <nb-tab tabTitle="Squads">
+  
+</div>
+
+<div class="row">
+    <div class="col-xxxl-12 col-xxl-12 col-lg-12 col-md-12">
+        <nb-card size="gigant">
+          <nb-tabset fullWidth>    
+            <nb-tab tabTitle="Indicators">
               <nb-list>
-                <nb-list-item class="squad" *ngFor="let c of squads">
-                  <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.name" 
-                        size="large" (click)="onSquadClick($event)" [id]="c.id" 
-                        style="cursor: pointer"></nb-user>
-                        <!--
-                          <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
-                        -->              
+                <nb-list-item class="indicator" *ngFor="let c of sources">
+                  <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
+                        size="large" (click)="onSourceClick($event)" [id]="c.id" 
+                        badgePosition="bottom end"
+                        [badgeStatus]="c.badgetStatus"
+                        [badgeText]="c.budget"     
+                        style="cursor: pointer"></nb-user>                                   
                 </nb-list-item>
               </nb-list>
-          </nb-tab>    
+            </nb-tab>    
+            <nb-tab tabTitle="Squads">
+                <nb-list>
+                  <nb-list-item class="squad" *ngFor="let c of squads">
+                    <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.name" 
+                          size="large" (click)="onSquadClick($event)" [id]="c.id" 
+                          style="cursor: pointer"></nb-user>
+                          <!--
+                            <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
+                          -->              
+                  </nb-list-item>
+                </nb-list>
+            </nb-tab>    
+  
+            <!--
+            <nb-tab tabTitle="Incidents">      
+                <nb-list>
+                    <nb-list-item>
+                        <h6>
+                            Total Incidents   :  {{ incident?.count }}
+                        </h6>                                             
+                    </nb-list-item>
+                    <nb-list-item>
+                        <h6>
+                            Mean time to detect   :  {{ incident?.mttd }}
+                        </h6>                                             
+                    </nb-list-item>
+                    <nb-list-item>
+                        <h6>
+                            Mean time to engage   : {{ incident?.mtte }}
+                        </h6>                                                                
+                    </nb-list-item>
+                    <nb-list-item>
+                        <h6>
+                            Mean time to fix      : {{ incident?.mttf }}
+                        </h6>                                                                
+                    </nb-list-item>
+                    <nb-list-item>
+                        <h6>
+                            Mean time to mitigate : {{ incident?.mttm }}                      
+                        </h6>                      
+                    </nb-list-item>
+                </nb-list>                                      
+            </nb-tab>    
+  
+            -->
+  
+            
+          </nb-tabset>
+        </nb-card>    
+    </div>
 
-          <!--
-          <nb-tab tabTitle="Incidents">      
-              <nb-list>
-                  <nb-list-item>
-                      <h6>
-                          Total Incidents   :  {{ incident?.count }}
-                      </h6>                                             
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to detect   :  {{ incident?.mttd }}
-                      </h6>                                             
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to engage   : {{ incident?.mtte }}
-                      </h6>                                                                
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to fix      : {{ incident?.mttf }}
-                      </h6>                                                                
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to mitigate : {{ incident?.mttm }}                      
-                      </h6>                      
-                  </nb-list-item>
-              </nb-list>                                      
-          </nb-tab>    
-
-          -->
-
-          
-        </nb-tabset>
-      </nb-card>    
-  </div>
 </div>
 

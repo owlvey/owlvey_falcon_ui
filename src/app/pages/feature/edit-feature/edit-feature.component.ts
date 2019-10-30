@@ -185,7 +185,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     this.featureGateway.getFeature(this.featureId).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
-      this.editForm.get("description").setValue(data.name);
+      this.editForm.get("description").setValue(data.description);
       this.editForm.get("avatar").setValue(data.avatar);      
       this.source.load(data.indicators);
       this.squadsSource.load(data.squads);
