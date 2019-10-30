@@ -31,15 +31,22 @@ export class PagesComponent implements OnInit {
     this.router.navigateByUrl('/pages/home');    
   }
 
-  ngOnInit(){
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {  
-      this.currentCustomer = parseInt(paramMap.get("customerId"));
-      this.currentProduct = parseInt(paramMap.get("productId"));
-    });
+  getParameterByName(name, url?: string) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  ngOnInit(){    
     //this.themeService.changeTheme("dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {      
-      const currentCustomer = this.currentCustomer;
-      const currentProduct = this.currentProduct;
+      
+      const currentCustomer =  parseInt(this.getParameterByName("customerId"));
+      const currentProduct = parseInt(this.getParameterByName("productId"));
       if (e.item.title == 'Sources'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = {  };
@@ -60,7 +67,7 @@ export class PagesComponent implements OnInit {
       }
       if (e.item.title == 'Services'){
         if (currentCustomer && currentProduct){
-          const queryParams: Params = { };
+          const queryParams: Params = { group: null };
           this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
