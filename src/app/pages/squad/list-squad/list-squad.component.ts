@@ -20,6 +20,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
   sources: any[];
   actionConfirmWord: string;
   customerId: any;
+  squads: any[];
 
   settings = {
     mode: 'external',
@@ -77,6 +78,8 @@ export class ListSquadComponent extends CustomerBaseComponent {
   getSquads() {
     this.squadGateway.getSquadsWithPoints(this.customerId, this.startDate, this.endDate).subscribe(data => {
       this.source.load(data);
+      data.sort((a, b) => (a.points < b.points) ? 1 : (a.points === b.points) ? ((a.features < b.features) ? 1 : -1) : -1 )
+      this.squads = data;
     });
   }
 
@@ -117,8 +120,9 @@ export class ListSquadComponent extends CustomerBaseComponent {
     this.router.navigate(['/pages/squads/create'], extras);
   }
   
-  onSquadRowSelect(event) {
-    const squadId = event.data.id;
+  onSquadRowSelect(item) {
+    console.log(item)
+    const squadId = item.id;
     const queryParams: Params = { squadId: squadId};
     const extras: any = {
       relativeTo: this.activatedRoute,

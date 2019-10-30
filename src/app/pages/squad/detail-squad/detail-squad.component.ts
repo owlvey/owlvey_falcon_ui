@@ -9,7 +9,6 @@ import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 
-
 @Component({
   selector: 'app-detail-squad',
   templateUrl: './detail-squad.component.html',
