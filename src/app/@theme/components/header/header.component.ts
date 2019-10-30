@@ -69,7 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private tokenService: NbTokenService,
-    private customerEventHub: CustomerEventHub
+    private customerEventHub: CustomerEventHub,
+    private usersGateway: UsersGateway
   ) {
       let qcustomerId = this.activatedRoute.snapshot.queryParams["customerId"];
       if (qcustomerId){
@@ -163,9 +164,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
         if (token.isValid()) {
-          this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable           
+          //this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable           
+          
+          this.usersGateway.getUserIdentity()
+            .subscribe((data: any) => {
+              this.user = data;
+            });
         }
       });
+
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

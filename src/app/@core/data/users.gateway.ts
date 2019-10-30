@@ -19,7 +19,7 @@ export class UsersGateway {
     );
   }
   getUserIdentity(): Observable<any> {
-    return this.http.get(this.identityUrl + `api/account/me`);
+    return this.http.get(this.baseUrl + `accounts/me`);
   }
   getUsers(): Observable<any> {
     return this.http.get(this.baseUrl + `users`);
