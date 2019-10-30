@@ -14,6 +14,11 @@ import {
   NbIconModule,
   NbThemeModule,
   NbDatepickerModule,
+  NbCardModule,
+  NbAlertModule,
+  NbCheckboxModule,
+  NbInputModule,
+  NbBadgeModule,  
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -41,8 +46,23 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 
+import { OwlveyLoginComponent } from './components/auth/login/login.component'
+import { OwlveyAuthComponent } from './components/auth/auth.component'
+import { OwlveyLogoutComponent } from './components/auth/logout/logout.component'
+import { NbAuthModule } from '@nebular/auth';
+import { RouterModule } from '@angular/router';
+import { OwlveyTileComponent } from './components/tile/tile.component';
+import { OwlveyRegisterComponent } from './components/auth/register/register.component';
+import { OwlveyResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { OwlveyRequestPasswordComponent } from './components/auth/request-password/request-password.component';
+
 const NB_MODULES = [
+  NbInputModule,
+  NbCheckboxModule,
+  NbAlertModule,
+  NbCardModule,
   NbLayoutModule,
+  NbAuthModule,
   NbMenuModule,
   NbUserModule,
   NbActionsModule,
@@ -55,6 +75,7 @@ const NB_MODULES = [
   NbIconModule,
   NbEvaIconsModule,
   NbDatepickerModule,
+  NbBadgeModule,
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -64,6 +85,13 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  OwlveyAuthComponent,
+  OwlveyRequestPasswordComponent,
+  OwlveyRegisterComponent,
+  OwlveyLoginComponent,
+  OwlveyResetPasswordComponent,
+  OwlveyLogoutComponent,
+  OwlveyTileComponent,
 ];
 const PIPES = [
   CapitalizePipe,
@@ -74,7 +102,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule,  ...NB_MODULES],
+  imports: [CommonModule, FormsModule, RouterModule,    ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

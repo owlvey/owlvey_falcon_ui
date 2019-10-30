@@ -4,6 +4,7 @@ import { ListProductComponent } from "./list-product/list-product.component";
 import { DetailProductComponent } from "./detail-product/detail-product.component";
 import { CreateProductComponent } from "./create-product/create-product.component";
 import { DashboardProductComponent } from "./dashboard-product/dashboard-product.component";
+import { OperationDashboardComponent } from "./doperation-product/doperation-product.component";
 import { ProductRoutingModule } from "./product.routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -19,16 +20,18 @@ import {
   NbCheckboxModule,
   NbDatepickerModule,
   NbIconModule,
-  NbTabsetModule,
+  NbTabsetModule,  
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
   NbListModule,
   NbTreeGridModule,
+  NbProgressBarModule
   
 } from "@nebular/theme";
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     DetailProductComponent,
     CreateProductComponent,
     EditProductComponent,
-    DashboardProductComponent
+    DashboardProductComponent,
+    OperationDashboardComponent
   ],
   imports: [
     FormsModule,
@@ -57,7 +61,10 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     NbIconModule,
     NbUserModule,
     NbListModule,
-    NbTabsetModule
+    NbTabsetModule,
+    NbProgressBarModule,
+    NbActionsModule,
+    ThemeModule,
   ]
 })
 export class ProductModule {}

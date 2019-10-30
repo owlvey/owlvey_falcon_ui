@@ -20,19 +20,22 @@ export class ProductBaseComponent extends CustomerBaseComponent {
         }        
     onChangeQueryParameters(paramMap: ParamMap): void {           
         this.productId = parseInt(paramMap.get('productId'));                                
-        super.onChangeQueryParameters(paramMap);        
+        this.customerId = parseInt(paramMap.get('customerId'));  
         this.loadProduct();
     }
     onNgOnInit(): void {
         
     }    
     public loadProduct(){
-        if (this.productId){
+        if (this.productId && this.customerId){
+            this.customerGateway.getCustomer(this.customerId).subscribe(data=>{                
+                this.currentCustomer = data;
+            });
             this.productGateway.getProduct(this.productId).subscribe(data=>{
                 this.currentProduct = data;
             });
-        }else{
-            alert('please select a product');
+        } else{
+            alert('please select a customer and product');
             this.goHome();
         }        
     }

@@ -20,8 +20,7 @@ import { NbToastrService } from "@nebular/theme";
 })
 export class EditUserComponent implements OnInit {
   isLoading: boolean = false;
-  userId = 0;
-  customerId = 0;
+  userId = 0;  
   editForm: FormGroup;
   constructor(
     private location: Location,
@@ -36,15 +35,16 @@ export class EditUserComponent implements OnInit {
   ) {
     this.editForm = this.fb.group({
       id: [""],
-      email: ["", Validators.required]
+      email: ["", Validators.required],
+      name: ["", Validators.required],
+      avatar: ["", Validators.required]
     });
     this.isLoading = false;
   }
 
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      this.userId = parseInt(paramMap.get("userId"));
-      this.customerId = parseInt(paramMap.get("customerId"));
+      this.userId = parseInt(paramMap.get("userId"));      
       this.getUser();
     });
   }
@@ -57,11 +57,12 @@ export class EditUserComponent implements OnInit {
     this.userGateway.getUser(this.userId).subscribe(data => {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("email").setValue(data.email);
+      this.editForm.get("name").setValue(data.name);
+      this.editForm.get("avatar").setValue(data.avatar);
     });
   }
 
-  onSubmit() {
-    console.log(this.editForm);
+  onSubmit() {    
     if (!this.editForm.valid) {
       this.toastr.warning(
         "Please check the form fields are filled correctly.",

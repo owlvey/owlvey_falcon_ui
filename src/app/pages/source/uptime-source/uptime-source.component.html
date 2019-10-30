@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+            <div class="d-flex align-content-center">              
+              <h5>{{ currentSource?.name }} Items</h5>                        
+              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>                              
+            </div>         
+        </nb-card-header>
+        <nb-card-body>
+            <form (ngSubmit)="onSubmit();" [formGroup]="editForm">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="inputStart" class="label col-sm-3 form-control-label">Start</label>
+                        <input type="date" 
+                            formControlName="start" name="start"
+                            nbInput fullWidth id="inputStart" placeholder="start"
+                            class="input-full-width size-medium shape-rectangle">                     
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="inputEnd" class="label col-sm-3 form-control-label">End</label>
+                        <input type="date" 
+                            formControlName="end" name="end"
+                            nbInput fullWidth id="inputEnd" placeholder="end"
+                            class="input-full-width size-medium shape-rectangle">                     
+                    </div>                    
+                    <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="inputAvailability" class="label col-sm-3 form-control-label">Uptime</label>
+                              <input type="number" 
+                                  formControlName="uptime" name="uptime"
+                                  max="1" min="0" 
+                                  nbInput fullWidth id="inputAvailability" placeholder="uptime"
+                                  class="input-full-width size-medium shape-rectangle">                     
+                            </div>
+                    </div>                                                
+                </div>                
+                <div class="row">
+                    <div class="col-sm-11">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="submit" nbbutton class="appearance-filled size-medium status-primary shape-rectangle transitions float-right"                        
+                          [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Add'}}
+                        </button>
+                    </div>                    
+                </div>
+            </form>   
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+              Source Items
+            </nb-card-header>          
+            <nb-card-body>
+                <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)">
+                </ng2-smart-table>
+            </nb-card-body>        
+        </nb-card>
+    </div>  
+</div>
+

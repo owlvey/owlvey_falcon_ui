@@ -43,8 +43,8 @@ export class FeaturesGateway {
   putIndicator(featureId: number, sourceId: number): Observable<any> {
     return this.http.put(this.baseUrl + `features/${featureId}/indicators/${sourceId}`, { });
   }
-  deleteIndicator(indicatorId: number){
-    return this.http.delete(this.baseUrl + `indicators/${indicatorId}`);
+  deleteIndicator(featureId: number, sourceId: number){
+    return this.http.delete(this.baseUrl + `features/${featureId}/indicators/${sourceId}`);    
   }
 
   getFeaturesWithAvailabilities(productId: number, start: Date, end: Date): Observable<any> {

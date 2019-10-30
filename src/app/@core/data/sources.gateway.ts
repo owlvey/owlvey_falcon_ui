@@ -20,8 +20,8 @@ export class SourcesGateway{
         return this.http.get(this.baseUrl + `sources?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
-    postSource(productId: number, name: String): Observable<any> {
-        return this.http.post(this.baseUrl + `sources`, { productId: productId , name: name});
+    postSource(productId: number, name: String, kind: string): Observable<any> {
+        return this.http.post(this.baseUrl + `sources`, { productId: productId , name: name, kind: kind});
     }
 
     deleteSource(sourceId: number): Observable<any> {
@@ -30,6 +30,9 @@ export class SourcesGateway{
 
     postSourceItem(model: any): Observable<any> {
         return this.http.post(this.baseUrl + `sourceItems`, model);
+    }
+    postSourceItemUptime(model: any): Observable<any> {
+        return this.http.post(this.baseUrl + `sourceItems/uptime`, model);
     }
 
     putSource(sourceId: number, model: any): Observable<any> {

@@ -1,158 +1,38 @@
-<div class="row">
-    <div class="col-xxxl-3 col-md-3" >
-        <nb-card size="tiny" class="gauge" >            
-            <nb-card-body>
-                <div echarts [options]="optionSLO" class="echart">
-                </div>
-                <div class="info">
-                  <div class="h5 value"> SLO </div>
-                  <div class="details subtitle-2"><span> Total: {{ serviceStats?.count }} </span> </div>
-                  <div class="details subtitle-2"><span> Fail: {{ sloFails }} </span> </div>
-                </div>                                                             
-            </nb-card-body>          
-        </nb-card>
-    </div>
+<nb-card>
+    <nb-card-header>
+      <h5>
+        {{ currentProduct?.name }} 
+      </h5>
+    </nb-card-header>
 
-    <div class="col-xxxl-3 col-md-3" >
-        <nb-card size="tiny" class="gauge">            
-            <nb-card-body>
-                <div echarts [options]="optionServices" class="echart">
-                </div>
-                <div class="info">
-                  <div class="h5 value"> Services </div>
-                  <div class="details subtitle-2"><span> Total: {{ serviceStats?.count }} </span> </div>
-                  <div class="details subtitle-2"><span> Min: {{ serviceStats?.min }} </span> </div>
-                  <div class="details subtitle-2"><span> Max: {{ serviceStats?.max }} </span> </div>
-                </div>                                                             
-            </nb-card-body>          
-        </nb-card>
-    </div>
+</nb-card>
 
-    <div class="col-xxxl-3 col-md-3" >
-        <nb-card size="tiny" class="gauge">            
+<div style="display: flex; width: 100%; flex-direction: row; flex-wrap: wrap;" >
+    <div style="width: 20rem; height: 10rem; margin-right: 2rem; margin-bottom: 4rem;" *ngFor="let group of serviceGroups" >                
+        <nb-card size="tiny">
+            <nb-card-header>
+              <div class="row">
+                 <div class="col-sm-9">
+                    <div class="h5"> {{ group.name }}  </div>                    
+                 </div> 
+                 <div class="col-sm-3">
+                    <h6 [class.active]="textStatusClass"> {{ group.percentage }}% </h6>                               
+                 </div> 
+              </div>
+                
+            </nb-card-header>
             <nb-card-body>
-                <div echarts [options]="optionFeatures" class="echart">
-                </div>
-                <div class="info">
-                  <div class="h5 value"> Features </div>                  
-                  <div class="details subtitle-2"><span> Total: {{ featuresStats?.count }} </span> </div>
-                  <div class="details subtitle-2"><span> Min: {{ featuresStats?.min }} </span> </div>
-                  <div class="details subtitle-2"><span> Max: {{ featuresStats?.max }} </span> </div>
-                </div>                                                             
-            </nb-card-body>          
-        </nb-card>
-    </div>      
-    <div class="col-xxxl-3 col-md-3" >
-      <nb-card size="tiny" class="gauge">            
-          <nb-card-body>                
-                <div echarts [options]="optionSources" class="echart">
-                </div>
-                <div class="info">
-                  <div class="h5 value"> Sources </div>                  
-                  <div class="details subtitle-2"><span> Total: {{ sourceStats?.count }} </span> </div>
-                  <div class="details subtitle-2"><span> Min: {{ sourceStats?.min }} </span> </div>
-                  <div class="details subtitle-2"><span> Max: {{ sourceStats?.max }} </span> </div>
-                  <div class="details subtitle-2"><span> Sum: {{ sourceTotal }} </span> </div>                  
-                </div>                                                                 
-          </nb-card-body>          
-      </nb-card>
-  </div>
-    
+                <div class="row" >  
+                    <div class="col-sm-8">
+                        <div><span> Total: {{ group.total }} </span></div>
+                        <div><span> Fail: {{ group.fail }} </span></div>
+                    </div> 
+                    <div class="col-sm-4">
+                        <button [id]="group.name" class="btn btn-outline-info" (click)="onServiceGroupDetail($event)">Detail</button>                        
+                    </div>
+                </div>                                                               
+                <nb-progress-bar style="margin-top: 3rem;" [status]="group.status" [value]="group.percentage"></nb-progress-bar>                
+            </nb-card-body>
+        </nb-card>                      
+    </div>    
 </div>
-
-<div class="row">
-  <div class="col-xxxl-3 col-xxl-3 col-lg-4 col-md-4">
-    <nb-card size="large">
-      <nb-tabset fullWidth>    
-        <nb-tab tabTitle="Services">
-          <nb-list>
-            <nb-list-item class="service" *ngFor="let c of services">
-              <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
-                    size="large" (click)="onServiceClick($event)" [id]="c.id" 
-                    style="cursor: pointer"></nb-user>
-                    <!--
-                      <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
-                    -->              
-            </nb-list-item>
-          </nb-list>
-        </nb-tab>    
-      </nb-tabset>
-    </nb-card>    
-  </div>
-  <div class="col-xxxl-3 col-xxl-3 col-lg-4 col-md-4">
-      <nb-card size="large">
-        <nb-tabset fullWidth>    
-          <nb-tab tabTitle="Features">
-            <nb-list>
-              <nb-list-item class="feature" *ngFor="let c of features">
-                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" 
-                      size="large" (click)="onFeatureClick($event)" [id]="c.id" 
-                      style="cursor: pointer"></nb-user>
-                      <!--
-                        <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
-                      -->              
-              </nb-list-item>
-            </nb-list>
-          </nb-tab>    
-        </nb-tabset>
-      </nb-card>    
-  </div>
-
-  <div class="col-xxxl-6 col-xxl-6 col-lg-8 col-md-8">
-      <nb-card size="gigant">
-        <nb-tabset fullWidth>    
-          <nb-tab tabTitle="Indicators">
-            <nb-list>
-              <nb-list-item class="indicator" *ngFor="let c of sources">
-                <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.availability" 
-                      size="large" (click)="onSourceClick($event)" [id]="c.id" 
-                      style="cursor: pointer"></nb-user>                                   
-              </nb-list-item>
-            </nb-list>
-          </nb-tab>    
-          <nb-tab tabTitle="Squads">
-              <nb-list>
-                <nb-list-item class="squad" *ngFor="let c of squads">
-                  <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.name" 
-                        size="large" (click)="onSquadClick($event)" [id]="c.id" 
-                        style="cursor: pointer"></nb-user>
-                        <!--
-                          <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
-                        -->              
-                </nb-list-item>
-              </nb-list>
-          </nb-tab>    
-          <nb-tab tabTitle="Incidents">      
-              <nb-list>
-                  <nb-list-item>
-                      <h6>
-                          Total Incidents   :  {{ incident?.count }}
-                      </h6>                                             
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to detect   :  {{ incident?.mttd }}
-                      </h6>                                             
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to engage   : {{ incident?.mtte }}
-                      </h6>                                                                
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to fix      : {{ incident?.mttf }}
-                      </h6>                                                                
-                  </nb-list-item>
-                  <nb-list-item>
-                      <h6>
-                          Mean time to mitigate : {{ incident?.mttm }}                      
-                      </h6>                      
-                  </nb-list-item>
-              </nb-list>                                      
-          </nb-tab>    
-        </nb-tabset>
-      </nb-card>    
-  </div>
-</div>
-

@@ -81,7 +81,7 @@ export class ListProductComponent implements OnInit {
 
   onProductRowSelect(event){
     const productId = event.data.id;
-    let queryParams: Params = { productId: productId, uheader: null };
+    let queryParams: Params = { productId: productId};
     this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 

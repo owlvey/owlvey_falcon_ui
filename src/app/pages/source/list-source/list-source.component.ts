@@ -34,6 +34,12 @@ export class ListSourceComponent implements OnInit {
         title: 'Name',
         type: 'string',
         filter: true
+      },            
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
       },             
       good: {
         title: 'Good',
@@ -97,6 +103,16 @@ export class ListSourceComponent implements OnInit {
       queryParamsHandling: 'merge'
     }
     this.router.navigate(['/pages/sources/create'], extras);
+  }
+
+  onGraph(event){
+    let queryParams: Params = {};
+    let extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/sources/treemap'], extras);
   }
 
   onUserRowSelect(event): void {    

@@ -30,7 +30,7 @@ export class CreateUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.createForm = this.fb.group({
-      email: ['', Validators.required]
+      email: ['', Validators.email]
     });
     this.isLoading = false;
   }

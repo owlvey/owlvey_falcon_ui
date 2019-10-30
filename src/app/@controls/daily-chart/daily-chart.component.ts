@@ -26,7 +26,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set dataItems(data: Array<any>){
+  set dataItems(data: Array<any>){    
     const line = data.map(c => ({ name: c.date, value: [ this.formatDate(c.date), 100 * c.oAva]}));
     const dates = data.map(c => new Date(c.date));
     const points = [{

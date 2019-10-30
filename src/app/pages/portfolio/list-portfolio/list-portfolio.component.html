@@ -29,10 +29,21 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-              Availability Report
+              Daily availability report
             </nb-card-header>            
             <nb-card-body>                                            
-              <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
+                  
+              <div class="row">
+                  <div class="col-sm-12">
+                      <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>    
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-12">
+                      <div echarts [options]="serviceCalendarOptions" style="height: 15rem;" class="echart"
+                       (chartInit)="onServiceCalendar($event)"></div>
+                  </div>
+              </div>
             </nb-card-body>          
           </nb-card>          
     </div>

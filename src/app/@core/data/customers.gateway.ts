@@ -58,6 +58,7 @@ export class CustomersGateway {
     return this.http.put(this.baseUrl + 'customers/' + id, model);
   }
   deleteCustomer(id: any) {
+    this.cacheManager.forceReload();
     return this.http.delete(this.baseUrl + 'customers/' + id);
   }  
 

@@ -28,7 +28,8 @@
                     </div>
                 </div>                
               </div>    
-              <div class="row">
+              <!--
+                <div class="row">
                   <div class="col-sm-6">
                       <label for="inputMTTD" class="label form-control-label">Mean time to Detect (MTTD)</label>
                       <input readonly="readonly" type="text" [value]="currentSource?.mttd" 
@@ -61,7 +62,10 @@
                           class="input-full-width size-medium shape-rectangle">                 
                     </div>
                 </div>                
-              </div>                        
+              </div>        
+
+              -->
+                              
         </nb-card-body>
       </nb-card>
     </div>
@@ -69,18 +73,23 @@
 
 <div class="row">
     <div class="col-12">
-        <nb-card size="medium">
+        <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
             <nb-tab tabTitle="Service Level Indicators (SLI)" >              
                 <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
-                </ng2-smart-table>              
+                </ng2-smart-table>
+              
             </nb-tab>
+            <!--
             <nb-tab tabTitle="Incidents">
                 <div>
                     <ng2-smart-table [settings]="incidentSettings" [source]="incidentSource" (userRowSelect)="onIncidentRowSelect($event)">
                     </ng2-smart-table>
                 </div>                
             </nb-tab>            
+
+            -->
+            
             <nb-tab tabTitle="Squads">
                 <div>
                     <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
@@ -108,11 +117,21 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-        Availability Report
+        Daily availability report
       </nb-card-header>  
     
       <nb-card-body>      
-          <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>          
+          <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>  
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+                    </div>
+                </div>
+              
       </nb-card-body>
     
     </nb-card>    

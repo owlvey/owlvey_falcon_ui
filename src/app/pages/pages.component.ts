@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbMenuService, NbThemeService } from '@nebular/theme';
 
 import { MENU_ITEMS } from './pages-menu';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'ngx-pages',
@@ -16,23 +16,44 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 })
 export class PagesComponent implements OnInit {
   menu = MENU_ITEMS;
+
+  private currentCustomer: number;
+  private currentProduct: number;
+
   constructor(private menuService: NbMenuService, private router: Router, private activatedRoute: ActivatedRoute,
     private themeService: NbThemeService) {
 
   }
 
-  ngOnInit(){
-    // this.themeService.changeTheme("cosmic"); // change theme
-    this.menuService.onItemClick().subscribe((e) => {
-      const currentCustomer = this.activatedRoute.snapshot.queryParams.customerId;
-      const currentProduct = this.activatedRoute.snapshot.queryParams.productId;
+  private onCustomerAndProductMustSelected(){
+    console.log(JSON.stringify( this.activatedRoute.snapshot.queryParams));
+    alert('please select customer and product');    
+    this.router.navigateByUrl('/pages/home');    
+  }
+
+  getParameterByName(name, url?: string) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  ngOnInit(){    
+    //this.themeService.changeTheme("dark"); // change theme
+    this.menuService.onItemClick().subscribe((e) => {      
+      
+      const currentCustomer =  parseInt(this.getParameterByName("customerId"));
+      const currentProduct = parseInt(this.getParameterByName("productId"));
       if (e.item.title == 'Sources'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = {  };
           this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
       if (e.item.title == 'Products'){
@@ -41,16 +62,16 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer');
+          this.onCustomerAndProductMustSelected();
         }
       }
       if (e.item.title == 'Services'){
         if (currentCustomer && currentProduct){
-          const queryParams: Params = { };
+          const queryParams: Params = { group: null };
           this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
 
@@ -58,15 +79,14 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/users'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
-
-      //uheader
+      
       if (e.item.title == 'Features'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = { };
           this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
 
@@ -76,7 +96,7 @@ export class PagesComponent implements OnInit {
           this.router.navigate(['/pages/incidents'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
         }
         else{
-          alert('please select customer and product');
+          this.onCustomerAndProductMustSelected();
         }
       }
 
@@ -92,16 +112,31 @@ export class PagesComponent implements OnInit {
       if (e.item.title == 'Product Dashboard'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/dashboard'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      }
+
+      if (e.item.title == 'Operation Dashboard'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/products/operation'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
-      if (e.item.title == 'Squads'){
+      if (e.item.title == 'Squads'){                
         if (currentCustomer){
           const queryParams: Params = { };
           this.router.navigate(['/pages/squads'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
 
         } else{
-          alert('please select customer');
+          this.onCustomerAndProductMustSelected();
+        }
+      }
+      if (e.item.title == 'Sync'){        
+        if (currentProduct && currentCustomer){
+          const queryParams: Params = {  };
+          this.router.navigate(['/pages/sync'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+        }
+        else{
+          this.onCustomerAndProductMustSelected();
         }
       }
     });

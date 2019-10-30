@@ -34,7 +34,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {      
       title: {
@@ -93,6 +93,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       }      
     }
   };
+
   settings = {    
     actions:{
       add:false,
@@ -100,28 +101,49 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       delete:false
     },
     pager: {
-      perPage: 5
+      perPage: 10
     },
     columns: {      
       id: {
         title: 'Id',
         type: 'number',
-        filter: false
+        filter: false,
+        sort:true,
+        width: '3em',
+        sortDirection: 'asc'     
       },
       source: {
-        title: 'SLI',
+        title: 'Source',
         type: 'string',
-        filter: false
+        filter: false,        
       },
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: false,        
+        width: '3em',
+      },
+      good:{
+        title: 'Good',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },            
       availability: {
         title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,
-        sort:true,
-        sortDirection: 'asc'     
-      },            
+        editable: false,        
+      },                  
     },
   };
 
@@ -194,13 +216,109 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
       this.portfolioSource.load(feature.services);
+      this.renderSliBarOptions();
     });        
+  }
+
+  renderSliBarOptions(){
+    
+    const categories = this.currentSource.indicators.map(c=>{
+      return c.source;
+    });
+    const goods = this.currentSource.indicators.map(c=>{
+      return c.good;
+    });
+    const bads = this.currentSource.indicators.map(c=>{
+      return c.total - c.good;
+    });
+
+    this.sliBarOptions = {
+      tooltip : {
+          trigger: 'axis',
+          axisPointer : {            
+              type : 'shadow'       
+          }
+      },
+      legend: {
+          data: ['Good', 'Bad']
+      },
+      grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+      },
+      xAxis:  {
+          type: 'value'
+      },
+      yAxis: {
+          type: 'category',
+          data: categories
+      },
+      series: [
+          {
+              name: 'Interactions',
+              type: 'bar',
+              stack: 'availability',
+              label: {
+                  normal: {
+                      show: true,
+                      position: 'insideRight'
+                  }
+              },
+              data: goods
+          },
+          {
+              name: '邮件营销',
+              type: 'bar',
+              stack: 'availability',
+              label: {
+                  normal: {
+                      show: true,
+                      position: 'insideRight'
+                  }
+              },
+              data: bads
+          }
+      ]
+    };
   }
 
   getDaily(){
     this.featuresGateway.getDaily(this.featureId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
-    });
+      const datas = this.series[0].items.map(c=>{        
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
+      });      
+      
+      this.calendarOptions = {
+        tooltip: {
+          formatter: function (params) {                            
+              return params.value[0] + ', availability:' + params.value[1];
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas,        
+        }
+      };
+    });  
+
+
+   
   }
 
   onReportClick(event){        
@@ -252,7 +370,21 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.toastr.warning("Something went wrong, please try again.", "Warning")
     });          
   }
-  
+
+
+  echartCalendarInstance: any;
+  calendarOptions: any;
+
+  onCalendar(ec) {
+    this.echartCalendarInstance = ec;
+  }   
+
+  echartSliBarInstance: any;
+  sliBarOptions: any;
+  onSliBarOptions(ec){
+    this.echartSliBarInstance = ec;
+  }
+
   ngAfterViewInit() {    
     
   }

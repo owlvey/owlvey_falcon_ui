@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 
-import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService } from '@nebular/auth';
+import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService, NbDummyAuthStrategyOptions, NbDummyAuthStrategy } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 import { environment } from '../environments/environment';
 
@@ -41,7 +41,7 @@ import { environment } from '../environments/environment';
     }),
     CoreModule.forRoot(),
     NbAuthModule.forRoot({
-      strategies: [
+      strategies: [                
         NbOAuth2AuthStrategy.setup(
           {
             name: 'password',
@@ -55,12 +55,16 @@ import { environment } from '../environments/environment';
               class: NbAuthOAuth2Token,
               requireValidToken: true
             },
+            redirect: {
+              success: '/pages/home', 
+              failure: null,
+            },
             refresh: {
               endpoint: 'token',
               grantType: NbOAuth2GrantType.REFRESH_TOKEN
             }
           }
-        ),
+        ),                
       ],
       forms: {
 
@@ -71,12 +75,15 @@ import { environment } from '../environments/environment';
           showMessages: {
             success: true,
             error: true,
-          },
+          },           
         },
-
         logout: {
           redirectDelay: 500,
           strategy: 'password',
+          redirect: {
+            success: '/auth/login',
+            failure: null,
+          },
         },
 
       }
@@ -84,8 +91,24 @@ import { environment } from '../environments/environment';
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function () { return false; } },
-  
+    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {         
+        // avoid CORS attack 
+        const whiteList = ["/customers", "/products", "/squads", "/services", "/features",
+                           "/sources", "/incidents", "/users", "/migrations", "/sourceItems"];
+        let found = false;
+        whiteList.forEach(item=>{
+           if ( req.url.indexOf(item) > -1 ){
+             found = true;
+           }
+        });        
+        if (found)
+        {
+           return false; // add header
+        }
+        else {
+           return true; // remove header
+        }        
+     } },
     AuthGuard],
   bootstrap: [AppComponent],
 })

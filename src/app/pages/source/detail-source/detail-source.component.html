@@ -12,7 +12,47 @@
         </nb-card-header>
         <nb-card-body>
             <div class="row">
-                <div class="col-sm-3">                    
+                <div class="col-sm-12">                    
+                    <div class="form-group">
+                        <label for="txtDescription" class="label col-sm-3 form-control-label">Description</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.description" 
+                            nbInput fullWidth id="txtDescription" placeholder="Good Definition"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>              
+            </div>
+            <div class="row">
+                <div class="col-sm-12">                    
+                    <div class="form-group">
+                        <label for="txtGoodDefinition" class="label col-sm-3 form-control-label">Good Definition</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.goodDefinition" 
+                            nbInput fullWidth id="txtGoodDefinition" placeholder="Good Definition"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>              
+            </div>
+            <div class="row">
+                <div class="col-sm-12">                    
+                    <div class="form-group">
+                        <label for="txtTotalDefinition" class="label col-sm-3 form-control-label">Total Definition</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.totalDefinition" 
+                            nbInput fullWidth id="txtTotalDefinition" placeholder="Total Definition"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>              
+            </div>
+
+            
+            <div class="row" *ngIf="currentSource?.kind == 'Interaction'">
+                <div class="col-sm-4">                    
+                    <div class="form-group">
+                        <label for="txtKind" class="label col-sm-3 form-control-label">Type</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.kind" 
+                            nbInput fullWidth id="txtKind" placeholder="kind"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>              
+                <div class="col-sm-2">                    
                     <div class="form-group">
                         <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
                         <input readonly="readonly" type="number" [value]="currentSource?.good" 
@@ -20,7 +60,7 @@
                             class="input-full-width size-medium shape-rectangle">                 
                       </div>
                 </div>              
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
                         <input readonly="readonly" type="number" [value]="currentSource?.total" 
@@ -28,7 +68,7 @@
                             class="input-full-width size-medium shape-rectangle">                 
                       </div>
                 </div>                
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputGood" class="label col-sm-3 form-control-label">Delta</label>
                       <input readonly="readonly" type="number" [value]="currentSource?.delta" 
@@ -36,15 +76,33 @@
                           class="input-full-width size-medium shape-rectangle">                 
                     </div>
                 </div>                
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                   <div class="form-group">
                     <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
                     <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                         nbInput fullWidth id="inputAvailability" placeholder="Availability"
                         class="input-full-width size-medium shape-rectangle">                 
                   </div>
-                </div>                
-              </div>            
+                </div>          
+            </div>
+            <div class="row" *ngIf="currentSource?.kind != 'Interaction'">
+                <div class="col-sm-4">                    
+                    <div class="form-group">
+                        <label for="txtKind" class="label col-sm-3 form-control-label">Type</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.kind" 
+                            nbInput fullWidth id="txtKind" placeholder="kind"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>                                             
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                    <input readonly="readonly" type="number" [value]="currentSource?.availability" 
+                        nbInput fullWidth id="inputAvailability" placeholder="Availability"
+                        class="input-full-width size-medium shape-rectangle">                 
+                  </div>
+                </div>   
+            </div>            
         </nb-card-body>
       </nb-card>
     </div>
@@ -57,8 +115,17 @@
     Daily Report
   </nb-card-header>  
 
-  <nb-card-body>      
-      <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>          
+  <nb-card-body>
+      <div class="row">
+            <div class="col-sm-12">
+                 <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>        
+            </div>
+      </div>      
+      <div class="row">
+        <div class="col-sm-12">
+            <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+        </div>
+      </div>       
   </nb-card-body>
 
 </nb-card>

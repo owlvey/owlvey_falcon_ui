@@ -15,9 +15,12 @@ import { FeaturesGateway } from '../../../@core/data/features.gateway';
   templateUrl: './detail-portfolio.component.html',
   styleUrls: ['./detail-portfolio.component.scss']
 })
-export class DetailPortfolioComponent implements OnInit, AfterViewInit {
+export class DetailPortfolioComponent implements OnInit {
   
-
+  currentFeature : any;
+  echartsIntance: any;
+  echartCalendarInstance: any;
+  serviceCalendarOptions: any;
   isLoading: boolean = false;  
   actionConfirmWord: string;
   currentSource : any= {};    
@@ -44,18 +47,32 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       perPage: 20
     },
     columns: {            
+      sequence: {
+        title: 'IX',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },   
       id: {
         title: 'Id',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },          
+      },                
       name: {
         title: 'Name',
         type: 'string',
         filter: false,        
         editable: false
+      },        
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '5em',
+        editable: false,        
       },            
       availability: {
         title: 'Availability',
@@ -63,8 +80,25 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },   
-      mttd: {
+      },        
+      featureSlo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      budget: {
+        title: 'Budget',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },              
+    },
+  };
+  /*
+   mttd: {
         title: 'MTTD',
         type: 'number',
         filter: false,
@@ -85,8 +119,7 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
         width: '10rem',
         editable: false
       },                
-    },
-  };
+  */
   
   constructor(
     private location: Location,
@@ -115,20 +148,148 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
 
   getPortfolio(){    
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-      this.currentSource = data;            
-      this.source.load(this.currentSource.features);      
+      this.currentSource = data;                  
+      const features = this.currentSource.features.map(c=>{                
+        return c;        
+      });
+
+      this.source.load(features);      
+      this.renderAvailabilityReport();
     });    
-  }
-  onFeaturesRowSelect(event){
-      const featureId = event.data.id;
-      let queryParams: Params = { featureId: featureId, portfolioId: null };      
-      this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  } 
+  }  
+  
+
   getDaily(){
     this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
       this.series = data.series;
-    });
+      const slo = data.slo;
+      const datas = this.series[0].items.map(c=>{        
+        let target = 0; 
+        if ( c.oAva >= slo){
+          target = 100;
+        }
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), target, c.oAva];
+      });      
+      
+      this.serviceCalendarOptions = {
+        tooltip: {
+          formatter: function (params) {              
+              const ava = datas.filter(c=> c[0] === params.value[0])[0][2];              
+              return params.value[0] + ' | SLO: ' + slo + ', availability:' + ava;
+          }
+        },
+        visualMap: {
+            show: false,
+            inRange: {
+              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+              opacity: 0.8
+            },
+            min: 0,
+            max: 100
+        },
+        calendar: {
+            range: String((new Date()).getFullYear())
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: datas.map(c=>[c[0], c[1]]),        
+        }
+      };
+    });  
   }
+
+  squadSource: LocalDataSource = new LocalDataSource();
+  indicatorSource : LocalDataSource = new LocalDataSource();
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }      
+    }
+  };
+
+  indicatorSettings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 10
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        sort:true,
+        width: '3em',
+        sortDirection: 'asc'     
+      },
+      source: {
+        title: 'SLI',
+        type: 'string',
+        filter: false
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },  
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },           
+      indicatorSlo: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      budget: {
+        title: 'Budget',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+    },
+  };
+  
+  onFeaturesRowSelect(event){      
+      this.currentFeature = event.data;
+      const featureId = event.data.id;
+      const slo = event.data.featureSlo;
+      this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{        
+        const temporal = feature.indicators;
+        const indicators = temporal.map(c=>{
+          c.indicatorSlo = Math.round(Math.pow(slo, 1/temporal.length) * 10000) /10000;
+          c.budget =  Math.round( (c.availability - c.indicatorSlo) * 10000) /10000;
+          return c;
+        });
+
+        this.indicatorSource.load(indicators);
+        this.squadSource.load(feature.squads);                
+        
+      });  
+  } 
   onReportClick(event){
     this.getDaily(); 
   }
@@ -137,31 +298,102 @@ export class DetailPortfolioComponent implements OnInit, AfterViewInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onDelete(event){        
-    const featureId =  event.data.id;    
-    this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
-      this.getPortfolio();
-    });
-    
-  } 
-  onBackClick(event){    
-    //let queryParams: Params = { portfolioId: null };
-    //this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 
-    this.location.back();
-  }
-  ngAfterViewInit() {    
-    
-  }
-
-  onDeleteClick(event){    
-    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(res=>{
+  onDeleteClick(event){        
+    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
       this.toastr.success("Portfolio was deleted");
       let queryParams: Params = { portfolioId : null };
-      this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-    }, (error) => {
-      this.isLoading = false;
+      this.router.navigate(['/pages/portfolios'], {         
+        queryParams: queryParams, 
+        queryParamsHandling: 'merge' });     
+
+    }, (error) => {      
       this.toastr.warning("Something went wrong, please try again.", "Warning")
-    });      
+    });   
     
+  } 
+  onBackClick(event){        
+    this.location.back();
   }
+
+
+  onIndicatorsRowSelect(event){
+    const sourceId = event.data.sourceId;
+    let queryParams: Params = { sourceId: sourceId };
+    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  onSquadRowSelect(event){
+    const squadId = event.data.id;
+    let queryParams: Params = { squadId: squadId };
+    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+
+  renderAvailabilityReport(){    
+    let legends = [];    
+    const debt = this.currentSource.features.filter((c: any) => c.budget < 0);
+    let  totaldebt: number = 0;
+    debt.forEach(element => {
+      totaldebt  += Math.abs(element.budget);      
+    });
+      
+    if (totaldebt === 0){
+      return;
+    }
+
+    const indicators = debt.map(c=>{
+      legends.push(c.name);            
+      return {
+        name: c.name, 
+        value:  Math.abs(c.budget) / totaldebt
+      };
+
+    });
+        
+    this.sliOptions ={
+      title : {
+          text: "Availability Feature Debt: " + totaldebt,          
+          x:'center',          
+      },
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: legends
+      },
+      series : [
+          {
+              name: 'Debt',
+              type: 'pie',
+              radius : '70%',
+              center: ['50%', '60%'],
+              data: indicators,
+              itemStyle: {
+                  emphasis: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+              }
+          }
+      ]
+  };
+  
+  }
+
+  sliOptions:any; 
+
+  onChartInit(ec) {
+    this.echartsIntance = ec;
+  }
+
+  
+  onServiceCalendar(ec) {
+    this.echartCalendarInstance = ec;
+  }
+
+//region
+  
+
 }

@@ -38,7 +38,15 @@ export class ListSquadComponent extends CustomerBaseComponent {
         title: 'Points',
         type: 'number',
         filter: false,
+        width: '3em'
+      },
+      members:{
+        title: 'Members',
+        type: 'number',
+        filter: false,
+        width: '3em'
       }
+
     },
     actions: {
       add: false,
@@ -111,7 +119,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
   
   onSquadRowSelect(event) {
     const squadId = event.data.id;
-    const queryParams: Params = { squadId: squadId, uheader: null };
+    const queryParams: Params = { squadId: squadId};
     const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,

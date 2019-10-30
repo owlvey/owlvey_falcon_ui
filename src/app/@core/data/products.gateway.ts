@@ -20,12 +20,21 @@ export class ProductsGateway {
     return this.http.get(this.baseUrl + `products/${productId}`);
   }
 
-  getDaily(productId: number, start: Date, end: Date): Observable<any> {
+  getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
+    group = group && group || "";
     return this.http.get(
       this.baseUrl +
-        `products/${productId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`,
+        `products/${productId}/reports/daily/services/series?start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
     );
   }
+
+  getFeaturesDailyReport(productId: number, start: Date, end: Date): Observable<any> {
+    return this.http.get(
+      this.baseUrl +
+        `products/${productId}/reports/daily/features/series?start=${start.toISOString()}&end=${end.toISOString()}`,
+    );
+  }
+
   getGraphView(productId: number, start: Date, end: Date): Observable<any> {
     return this.http.get(this.baseUrl + `products/${productId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
@@ -46,4 +55,27 @@ export class ProductsGateway {
   getProductDashboard(productId: number, start: Date, end: Date): Observable<any>{
     return this.http.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
+
+  getProductServiceGroupDashboard(productId: number, start: Date, end: Date): Observable<any>{
+    return this.http.get(this.baseUrl + `products/${productId}/dashboard/services/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }  
+
+  //#region Syncs
+  getSyncs(productId: number) : Observable<any> {
+    return this.http.get(this.baseUrl +  `products/${productId}/sync`);
+  }
+
+  getSync(productId: number, name: string) : Observable<any> {
+    return this.http.get(this.baseUrl +  `products/${productId}/sync/${name}`);
+  }
+  postSync(productId: number, name: string): Observable<any> {
+    return this.http.post(this.baseUrl +  `products/${productId}/sync/${name}`, {});
+  }
+  putSync(productId: number, name: string, model: any): Observable<any> {
+    return this.http.put(this.baseUrl +  `products/${productId}/sync/${name}`, model);
+  }
+  deleteSync(productId: number, name: string): Observable<any> {
+    return this.http.delete(this.baseUrl +  `products/${productId}/sync/${name}`);
+  }  
+  //#endregion
 }
