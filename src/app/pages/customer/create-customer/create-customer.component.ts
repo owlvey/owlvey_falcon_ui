@@ -39,7 +39,7 @@ export class CreateCustomerComponent implements OnInit {
   ) {
     this.createForm = this.fb.group({
       id: [''],
-      name: ['', Validators.required],
+      name: ['', Validators.required],      
     });
     this.isLoading = false;
   }

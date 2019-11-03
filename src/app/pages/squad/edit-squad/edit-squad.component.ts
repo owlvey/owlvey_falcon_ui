@@ -101,7 +101,8 @@ export class EditSquadComponent implements OnInit {
       id: [''],
       name: ['', Validators.required],
       description: [''],
-      avatar: ['', Validators.required]
+      avatar: ['', Validators.required],
+      leaders: ['']
     });
     this.isLoading = false;
   }
@@ -126,6 +127,7 @@ export class EditSquadComponent implements OnInit {
       this.createForm.get("name").setValue(data.name);
       this.createForm.get("description").setValue(data.description);
       this.createForm.get("avatar").setValue(data.avatar);
+      this.createForm.get("leaders").setValue(data.leaders);
       this.source.load(data.members);
     });
   }

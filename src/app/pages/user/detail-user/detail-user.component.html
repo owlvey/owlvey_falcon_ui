@@ -43,6 +43,14 @@
                       nbInput fullWidth id="inputName" placeholder="name"
                       class="input-full-width size-medium shape-rectangle">                         
                 </div>
+          </div>          
+          <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputName" class="label col-sm-3 form-control-label">Slack Member</label>
+                <input readonly="readonly" type="text" [value]="currentUser?.slackMember" 
+                    nbInput fullWidth id="inputName" placeholder="slack member"
+                    class="input-full-width size-medium shape-rectangle">                         
+              </div>
           </div>                                  
         </div>   
         <div class="row">

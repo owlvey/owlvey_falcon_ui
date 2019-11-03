@@ -48,6 +48,10 @@ const routes: Routes = [{
       loadChildren: () => import('./migrate/migrate.module').then(m => m.MigrateModule),
     },    
     {
+      path: 'exports',
+      loadChildren: () => import('./export/export.module').then(m => m.ExportModule),
+    },    
+    {
       path: 'sync',
       loadChildren: () => import('./sync/sync.module').then(m => m.SyncModule),
     },    

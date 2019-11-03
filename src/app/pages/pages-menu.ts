@@ -56,13 +56,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'archive-outline',
   },  
   {
-    title: 'Migrations',
+    title: 'Exports',
     icon: 'upload-outline',
   },
   {
     title: 'Sync',
     icon: 'upload-outline',
+  },  
+  {
+    title: 'Migrations',
+    icon: 'upload-outline',
   },
+  
   ...DEV_MENU,
 ];
 

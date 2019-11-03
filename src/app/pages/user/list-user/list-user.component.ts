@@ -27,19 +27,16 @@ export class ListUserComponent implements OnInit  {
         columns: {
           id: {
             title: 'Id',
-            type: 'number',
-            filter: false,
+            type: 'number',            
             width: '3em',
           },
           email: {
             title: 'Email',
-            type: 'string',
-            filter: false
+            type: 'string',            
           },          
           name: {
             title: 'Name',
-            type: 'string',
-            filter: false
+            type: 'string',            
           },          
         },
       };

@@ -9,6 +9,18 @@
           <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button>
         </div>
       </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="inputName" class="label col-sm-3 form-control-label">Leaders</label>
+                  <input readonly="readonly" type="text" [value]="currentCustomer?.leaders" 
+                      nbInput fullWidth id="inputName" placeholder="Leaders"
+                      class="input-full-width size-medium shape-rectangle">                         
+                </div>
+          </div>                                  
+        </div>   
+      </nb-card-body>
     </nb-card>
   </div>
 </div>

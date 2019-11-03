@@ -3,20 +3,36 @@
         <nb-card>
           <nb-card-header>
               <div class="d-flex align-content-center">
-                  <h5> {{ currentProduct.name }} </h5>
+                  <h5> {{ currentProduct?.name }} </h5>
                   <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
                   <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
                   <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
               </div>
           </nb-card-header>
           <nb-card-body>
-              <div class="network-canvas"
-              [visNetwork]="visNetwork"
-              [visNetworkData]="visNetworkData"
-              [visNetworkOptions]="visNetworkOptions"
-              (initialized)="networkInitialized()"></div>
-
+                <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                              <label for="inputAvailability" class="label col-sm-3 form-control-label">Leaders</label>
+                              <input readonly="readonly" type="text" [value]="currentProduct?.leaders" 
+                                  nbInput fullWidth id="inputAvailability" placeholder="Leaders"
+                                  class="input-full-width size-medium shape-rectangle">                         
+                            </div>
+                        </div>
+                </div>
           </nb-card-body>
         </nb-card>
       </div>
 </div>
+
+<nb-card>
+    <nb-card-header>
+    </nb-card-header>
+    <nb-card-body>
+            <div class="network-canvas"
+            [visNetwork]="visNetwork"
+            [visNetworkData]="visNetworkData"
+            [visNetworkOptions]="visNetworkOptions"
+            (initialized)="networkInitialized()"></div>
+    </nb-card-body>
+</nb-card>

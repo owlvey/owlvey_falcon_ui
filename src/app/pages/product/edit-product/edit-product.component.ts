@@ -34,6 +34,7 @@ export class EditProductComponent implements OnInit {
         name: ['', Validators.required],
         description: ['', Validators.required],
         avatar: ['', Validators.required],
+        leaders: [''],
       });
       this.isLoading = false;
     }
@@ -56,6 +57,7 @@ export class EditProductComponent implements OnInit {
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.description);
       this.editForm.get("avatar").setValue(data.avatar);
+      this.editForm.get("leaders").setValue(data.leaders);
     });
   }
 

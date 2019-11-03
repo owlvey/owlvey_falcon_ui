@@ -66,14 +66,7 @@ export class DetailPortfolioComponent implements OnInit {
         type: 'string',
         filter: false,        
         editable: false
-      },        
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: false,
-        width: '5em',
-        editable: false,        
-      },            
+      },                     
       availability: {
         title: 'Availability',
         type: 'number',
@@ -241,14 +234,7 @@ export class DetailPortfolioComponent implements OnInit {
         title: 'SLI',
         type: 'string',
         filter: false
-      },
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },  
+      },    
       availability: {
         title: 'Availability',
         type: 'number',

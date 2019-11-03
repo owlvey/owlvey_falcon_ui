@@ -62,7 +62,8 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       this.form.get('data').setValue(null);
       this.fileInput.nativeElement.value = '';
     }
-    onExport(event){
+    
+    onDataBackup(){
       this.customerGateway.exportData(this.customerId).subscribe(data=>{        
         const blob = new Blob([data], { type: data.type });
         const url= window.URL.createObjectURL(blob);
@@ -73,7 +74,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       });
     }
 
-    onExportMetadata(event){
+    onExportMetadata(){
 
       //window.location.href='http://example.com/myuri/report?param=x';
       this.customerGateway.exportMetadata(this.customerId).subscribe(data=>{        

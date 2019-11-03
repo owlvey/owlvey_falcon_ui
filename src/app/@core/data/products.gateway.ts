@@ -77,5 +77,10 @@ export class ProductsGateway {
   deleteSync(productId: number, name: string): Observable<any> {
     return this.http.delete(this.baseUrl +  `products/${productId}/sync/${name}`);
   }  
+  exportToExcel(productId: number, start: Date, end: Date): Observable<any>{
+    return this.http.get(this.baseUrl + `products/${productId}/reports/excel?start=${start.toISOString()}&end=${end.toISOString()}`,
+       { responseType: 'blob'});
+  }
+
   //#endregion
 }

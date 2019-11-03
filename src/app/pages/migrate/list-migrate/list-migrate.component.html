@@ -12,28 +12,26 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-      <nb-card class="inline-form-card">
-        <nb-card-header>Export to Excel</nb-card-header>
-        <nb-card-body>          
-            <div class="buttons-row">
-                <button type="submit" nbButton status="primary" (click)="onExport($event)">Export Data</button> 
-                <button type="submit" nbButton status="primary" (click)="onExportMetadata($event)">Export Metadata</button>
-            </div>              
-          
-        </nb-card-body>
-      </nb-card>
-    </div>
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>Backups </nb-card-header>
+      <nb-card-body>          
+          <div class="buttons-row">
+              <button type="submit" nbButton status="primary" (click)="onExportMetadata()">Export Metadata</button>               
+              <button type="submit" nbButton status="primary" (click)="onDataBackup()">Export Data</button>               
+          </div>                      
+      </nb-card-body>
+    </nb-card>
+  </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
       <nb-card class="inline-form-card">
-        <nb-card-header>Import metadata from Excel</nb-card-header>
+        <nb-card-header>Import Metadata or Data Backup</nb-card-header>
         <nb-card-body>
               <form [formGroup]="form" (ngSubmit)="onSubmit()">                
-                <div class="form-group">
-                  <label for="metadata">Metadata</label>
+                <div class="form-group">                  
                   <input type="file" id="metadata" (change)="onFileChange($event)" nbInput fullWidth class="form-control">
                   <button type="button" nbButton status="primary" (click)="clearFile()">clear file</button>
                 </div>

@@ -109,6 +109,11 @@ export class PagesComponent implements OnInit {
         this.router.navigate(['/pages/migrations'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
+      if (e.item.title == 'Exports'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/exports'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
+
       if (e.item.title == 'Product Dashboard'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/dashboard'],

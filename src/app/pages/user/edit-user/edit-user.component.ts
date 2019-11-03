@@ -37,7 +37,8 @@ export class EditUserComponent implements OnInit {
       id: [""],
       email: ["", Validators.required],
       name: ["", Validators.required],
-      avatar: ["", Validators.required]
+      avatar: ["", Validators.required],
+      slackMember: ["", Validators.required]
     });
     this.isLoading = false;
   }
@@ -59,6 +60,7 @@ export class EditUserComponent implements OnInit {
       this.editForm.get("email").setValue(data.email);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
+      this.editForm.get("slackMember").setValue(data.slackMember);      
     });
   }
 
