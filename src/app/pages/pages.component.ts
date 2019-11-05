@@ -42,7 +42,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit(){    
-    //this.themeService.changeTheme("dark"); // change theme
+    this.themeService.changeTheme("dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {      
       
       const currentCustomer =  parseInt(this.getParameterByName("customerId"));
@@ -68,7 +68,9 @@ export class PagesComponent implements OnInit {
       if (e.item.title == 'Services'){
         if (currentCustomer && currentProduct){
           const queryParams: Params = { group: null };
-          this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+          this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute,
+             queryParams: queryParams,
+             queryParamsHandling: 'merge' });
         }
         else{
           this.onCustomerAndProductMustSelected();

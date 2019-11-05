@@ -21,6 +21,108 @@ export class DetailUserComponent implements OnInit {
   currentUser: any;
   userId: number;
   isLoading: boolean = false;
+
+  serviceSettings: any = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    columns: {      
+      customer: {
+        title: 'customer',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },  
+      product: {
+        title: 'product',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },  
+      service: {
+        title: 'service',
+        type: 'string',
+        filter: false
+      },  
+      slo: {
+        title: 'slo',
+        type: 'number',
+        filter: false,
+        width: '5em',
+      },      
+    },
+  };
+
+  serviceSource: LocalDataSource = new LocalDataSource();
+
+  productSettings: any = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    columns: {      
+      customerName: {
+        title: 'customer',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },  
+      name: {
+        title: 'product',
+        type: 'string',
+        filter: false
+      },  
+      servicesCount: {
+        title: 'services',
+        type: 'number',
+        filter: false,
+        width: '5em',
+      },      
+    },
+  };
+
+  
+
+  productSource: LocalDataSource = new LocalDataSource();
+
+  featureSettings: any ={
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    columns: {      
+      customer: {
+        title: 'customer',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },  
+      product: {
+        title: 'product',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },  
+      feature: {
+        title: 'feature',
+        type: 'string',
+        filter: false,        
+      },  
+      squad: {
+        title: 'squad',
+        type: 'string',
+        filter: false,
+        width: '20em',
+      },        
+    },
+  };
+
+  featureSource: LocalDataSource = new LocalDataSource();
+
   constructor(
     private location: Location,
     private userGateway: UsersGateway,
@@ -33,6 +135,9 @@ export class DetailUserComponent implements OnInit {
       this.userId = parseInt(paramMap.get("userId"));
       this.userGateway.getUser(this.userId).subscribe(data => {
         this.currentUser = data;
+        this.productSource.load(data.products);
+        this.serviceSource.load(data.services);
+        this.featureSource.load(data.features);
       });
     });
   }
@@ -71,4 +176,27 @@ export class DetailUserComponent implements OnInit {
       event.confirm.reject();
     }
   }
+
+  onProductRowSelect(event){
+    const customerId = event.data.customerId;
+    const productId = event.data.id;
+    let queryParams: Params = { userId: null, customerId: customerId,  productId: productId};
+    this.router.navigate(['/pages/products/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+
+  onServiceRowSelect(event){
+    const customerId = event.data.customerId;
+    const productId = event.data.productId;
+    const serviceId = event.data.serviceId;
+    let queryParams: Params = { userId: null,  customerId: customerId,  productId: productId, portfolioId: serviceId};
+    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+  onFeatureRowSelect(event){
+    const customerId = event.data.customerId;
+    const productId = event.data.productId;
+    const featureId = event.data.featureId;
+    let queryParams: Params = { userId: null,  customerId: customerId,  productId: productId, featureId: featureId};
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+
 }

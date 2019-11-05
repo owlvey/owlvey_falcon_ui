@@ -65,6 +65,7 @@ export class ListUserComponent implements OnInit  {
         }
         this.router.navigate(['/pages/users/create'], extras);
     }
+
     onRowSelected(event){
         const userId = event.data.id;
         let queryParams: Params = { userId: userId};

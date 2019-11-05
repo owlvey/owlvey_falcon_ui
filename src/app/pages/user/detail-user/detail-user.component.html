@@ -61,9 +61,61 @@
                       nbInput fullWidth id="inputAvatar" placeholder="avatar"
                       class="input-full-width size-medium shape-rectangle">                         
                 </div>
-          </div>                                  
+          </div>                
+          <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputAvatar" class="label col-sm-3 form-control-label">Email</label>
+                <input readonly="readonly" type="text" [value]="currentUser?.email" 
+                    nbInput fullWidth id="inputAvatar" placeholder="email"
+                    class="input-full-width size-medium shape-rectangle">                         
+              </div>
+        </div>                                  
         </div>   
       </nb-card-body>
     </nb-card>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>
+          Product Leadership
+        </nb-card-header>
+        <nb-card-body>
+            <ng2-smart-table [settings]="productSettings" [source]="productSource" (userRowSelect)="onProductRowSelect($event)">
+            </ng2-smart-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  
+<div class="row">
+  <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>
+          Service Leadership
+        </nb-card-header>
+        <nb-card-body>
+            <ng2-smart-table [settings]="serviceSettings" [source]="serviceSource" (userRowSelect)="onServiceRowSelect($event)">
+            </ng2-smart-table>
+        </nb-card-body>
+      </nb-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+        <nb-card>
+          <nb-card-header>
+            Features
+          </nb-card-header>
+          <nb-card-body>
+              <ng2-smart-table [settings]="featureSettings" [source]="featureSource" (userRowSelect)="onFeatureRowSelect($event)">
+              </ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
   </div>
 </div>

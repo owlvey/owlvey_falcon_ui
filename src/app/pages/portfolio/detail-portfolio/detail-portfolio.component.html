@@ -95,22 +95,23 @@
     <div class="col-12">
         <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
+              <nb-tab tabTitle="Daily Report" >              
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>                             
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <div echarts [options]="serviceCalendarOptions" style="height: 15rem;" class="echart" (chartInit)="onServiceCalendar($event)"></div>
+                      </div>
+                  </div>
+                    
+                </nb-tab>   
             <nb-tab tabTitle="Feature Availability Debt" >              
                 <div echarts [options]="sliOptions" style="height: 30rem;" class="echart" (chartInit)="onChartInit($event)"></div>
             </nb-tab>
-            <nb-tab tabTitle="Daily Report" >              
-              <div class="row">
-                <div class="col-sm-12">
-                    <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>                             
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-12">
-                      <div echarts [options]="serviceCalendarOptions" style="height: 15rem;" class="echart" (chartInit)="onServiceCalendar($event)"></div>
-                  </div>
-              </div>
-                
-            </nb-tab>            
+                    
             <nb-tab tabTitle="Service Level Indicators" >              
                 <p>
                     <b> Feature : {{ currentFeature?.name }}</b>                
