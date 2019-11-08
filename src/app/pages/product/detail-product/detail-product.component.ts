@@ -103,14 +103,17 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         else if (c.group == "services"){
           if (c.budget >= 0 )
           {
-            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon', title: String(c.value),
+            //c.importance
+            return { id: c.id, value: 12, label: c.name, shape: 'hexagon', 
+                  title: String(c.value),
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
                   hover:{background:successLight, border: primaryLight}}};
           }
           else{
-            return { id: c.id, value: c.importance, label: c.name, shape: 'hexagon',title: String(c.value),
+            return { id: c.id, value: 12, 
+                  label: c.name, shape: 'hexagon',title: String(c.value),
                   font:{ color: fgText },
                   color: {background: danger, border: primaryLight,
                   highlight:{background: dangerLight, border: primaryLight},
@@ -118,7 +121,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           }
         }
         else if (c.group == "features"){
-          return { id: c.id, value: 14, label: c.name, group: "2", shape: 'dot', title: c.name,
+          return { id: c.id, value: 10, label: c.name, group: "2", shape: 'dot', title: c.name,
                     font:{ color: fgText },
                     color: {background:success, border: primaryLight ,
                     highlight:{background:successLight, border: primaryLight},
@@ -161,7 +164,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             avoidOverlap: 0
           },
           forceAtlas2Based: {
-            gravitationalConstant: -90,
+            gravitationalConstant: -290,
             centralGravity: 0.004,
             springConstant: 0.18,
             springLength: 100,
@@ -196,7 +199,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           adaptiveTimestep: false
         },
         layout: {
-          improvedLayout:true,
+          improvedLayout: false,
           hierarchical: {
             enabled:false,
             levelSeparation: 200,
@@ -224,7 +227,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         interaction: {hover: true},
         edges: {
             labelHighlightBold:false,
-            smooth: true,
+            smooth: false,
             width: 3,
             font:{
               face: 'arial'
