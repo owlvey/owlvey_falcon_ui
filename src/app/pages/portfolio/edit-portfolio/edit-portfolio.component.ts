@@ -23,6 +23,14 @@ export class EditPortfolioComponent extends ProductBaseComponent {
   editForm: FormGroup;
   source: LocalDataSource = new LocalDataSource();
 
+  optionsValue = "Minimun";
+
+  options = [
+    { value: 'Minimun', label: 'Minimun (Group)' },
+    { value: 'Multiplication', label: 'Multiplication (Sequence)'},    
+  ];
+
+
   settings = {
     mode: 'external',
     actions:{
@@ -190,11 +198,13 @@ export class EditPortfolioComponent extends ProductBaseComponent {
 
   loadSource(){
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
+      
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
       this.editForm.get("slo").setValue(data.slo);
       this.editForm.get("leaders").setValue(data.leaders);
+      this.editForm.get("aggregation").setValue(data.aggregation);      
       this.source.load(data.features);
     });
   }
@@ -211,6 +221,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       avatar: ['', Validators.required],
       slo: ['', Validators.required],
       leaders: [''],
+      aggregation: [''],
     });
   }
   onDelete(event){    
@@ -225,7 +236,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
-    this.isLoading = true;
+    this.isLoading = true;    
     const model = this.editForm.value;
     let  defer = this.portfolioGateway.putPortfolio(this.portfolioId, model);
     defer.subscribe((data) => {

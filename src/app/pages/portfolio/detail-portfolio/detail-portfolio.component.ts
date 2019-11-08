@@ -168,7 +168,7 @@ export class DetailPortfolioComponent implements OnInit {
         tooltip: {
           formatter: function (params) {              
               const ava = datas.filter(c=> c[0] === params.value[0])[0][2];              
-              return params.value[0] + ' | SLO: ' + slo + ', availability:' + ava;
+              return params.value[0] + ' | SLO: ' + slo + ' , availability:' + ava;
           }
         },
         visualMap: {
@@ -341,7 +341,7 @@ export class DetailPortfolioComponent implements OnInit {
       },
       tooltip : {
           trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{a} <br/> {b} : {c} ( {d}% ) "
       },
       legend: {
           orient: 'vertical',

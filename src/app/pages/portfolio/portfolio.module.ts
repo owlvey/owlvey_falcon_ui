@@ -35,6 +35,7 @@ import {
      ChartModule,
      NbDatepickerModule, 
      NgxChartsModule, 
+     NbRadioModule,
      NbButtonModule,
      NbTabsetModule,
      NbCardModule, ControlsModule]

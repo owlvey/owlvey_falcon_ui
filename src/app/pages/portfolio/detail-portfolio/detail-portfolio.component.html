@@ -16,6 +16,14 @@
             <div class="row">
                 <div class="col-sm-2">
                     <div class="form-group">
+                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
+                      <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
+                          nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
+                          class="input-full-width size-medium shape-rectangle">                         
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
                       <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
                       <input readonly="readonly" type="number" [value]="currentSource.availability" 
                           nbInput fullWidth id="inputAvailability" placeholder="Availability"
