@@ -55,9 +55,16 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
-      budget: {
+      budgetValue: {
         title: 'Budget',
         type: 'number',
+        filter: true,
+        width: '2em',
+        editable: false
+      },
+      budget: {
+        title: 'Budget',
+        type: 'html',
         filter: true,
         width: '2em',
         editable: false
@@ -129,9 +136,16 @@ export class ListPortfolioComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
-        let c = portfolios.map(c=> {          
+        let c = portfolios.map(c=> {  
+          c.budgetValue = c.budget;
+          if(c.budget < 0) {
+            c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
+          } else {
+            c.budget = `<i class="fas fa-circle text-success text-center d-block" title=${c.budgetValue}></i>`;
+          }
           return c;
         });
+        console.log(portfolios)
         this.source.load(portfolios);
       });
     });     
