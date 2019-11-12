@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, Input } from '@angular/core';
+import { Component, OnInit, ViewChildren, Input, ViewEncapsulation } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { SquadsGateway } from './../../../@core/data/squads.gateway';
@@ -12,7 +12,8 @@ import { CustomersGateway } from '../../../@core/data/customers.gateway';
 @Component({
   selector: 'app-detail-squad',
   templateUrl: './detail-squad.component.html',
-  styleUrls: ['./detail-squad.component.scss']
+  styleUrls: ['./detail-squad.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DetailSquadComponent extends CustomerBaseComponent {
 
@@ -55,7 +56,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       },          
       email: {
         title: 'Email',
-        type: 'string',
+        type: 'html',
         filter: true,        
         editable: false
       },                
@@ -73,13 +74,13 @@ export class DetailSquadComponent extends CustomerBaseComponent {
     columns: {      
       product: {
         title: 'Product',
-        type: 'string',
+        type: 'html',
         filter: false,        
         editable: false
       },                
       service: {
         title: 'Service',
-        type: 'string',
+        type: 'html',
         filter: false,        
         editable: false
       },          
@@ -112,9 +113,8 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       },              
       points: {
         title: 'Points',
-        type: 'number',
+        type: 'html',
         filter: false,        
-        width: '3em',
         editable: false
       },                    
     },
@@ -140,6 +140,24 @@ export class DetailSquadComponent extends CustomerBaseComponent {
   getSquad(){
     this.squadGateway.getSquadDetail(this.squadId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSquad = data;  
+
+      let members: any[] = [];
+      let features: any[] = [];
+
+      data.members.forEach((e, i) => {
+        e.email = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.email}`;
+      });
+
+      data.features.forEach((e, i) => {
+        e.product = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.product}`;
+        e.service = `<img src="${e.serviceAvatar}" class="avatar avatar-sm mr-2" />${e.service}`;
+        if(e.points < 0) {
+          e.points = `<i class="fas fa-circle text-danger mr-2" title=${e.points}></i>${e.points}`;
+        } else {
+          e.points = `<i class="fas fa-circle text-success mr-2" title=${e.points}></i>${e.points}`;
+        }
+      });
+
       this.membersSource.load(data.members); 
       this.source.load(data.features);      
     });

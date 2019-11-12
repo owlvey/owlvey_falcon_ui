@@ -2,7 +2,8 @@
   <div class="col-md-12">
     <nb-card class="inline-form-card">
       <nb-card-header>
-        <div class="d-flex align-content-center">
+        <div class="d-flex align-items-center">
+          <img [src]="currentSquad?.avatar" [alt]="currentSquad?.name">
           <h5>{{ currentSquad?.name }} , Points : {{ currentSquad?.points }}</h5>
           <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>
           <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>

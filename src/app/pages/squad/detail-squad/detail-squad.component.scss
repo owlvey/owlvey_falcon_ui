@@ -1,0 +1,22 @@
+nb-card-header {
+    img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+    }
+  }
+
+.avatar {
+    &.avatar-sm {
+        height: 25px;
+        width: auto;
+    }
+    &.avatar-md {
+        height: 40px;
+        width: auto;
+    }
+    &.avatar-lg {
+        height: 55px;
+        width: auto;
+    }
+}
