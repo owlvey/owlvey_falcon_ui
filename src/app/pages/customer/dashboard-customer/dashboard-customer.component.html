@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="d-flex align-content-center">
+              <h5>Organizations Dashboard</h5>                                
+        </div>               
+      </nb-card-header>
+      <nb-card-body>          
+        <div *ngFor="let currentProduct of products">
+            <div  class="row" >
+                <div class="col-md-2">
+                  <h6> {{ currentProduct.customer }} </h6>
+                  <span> Product: {{ currentProduct.product }} </span> <br/>
+                  <span> Effectivenes: {{ currentProduct.effectiveness }} </span> <br/>
+                  <span> Total: {{ currentProduct.total }} </span> <br/>
+                  <span> Good: {{ currentProduct.good }} </span> <br/>
+                </div>
+                <div class="col-md-10" style="padding-top: 1rem;;">                   
+                    <div echarts [options]="currentProduct.options" style="height: 10rem;" class="echart">
+                    </div>                  
+                </div>
+            </div>
+        </div>          
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

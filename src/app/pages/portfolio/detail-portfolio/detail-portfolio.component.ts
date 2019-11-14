@@ -74,7 +74,11 @@ export class DetailPortfolioComponent implements OnInit {
         width: '3em',
         editable: false,        
       },        
-      featureSlo: {
+                 
+    },
+  };
+  /*
+   featureSlo: {
         title: 'SLO',
         type: 'number',
         filter: false,
@@ -87,10 +91,7 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },              
-    },
-  };
-  /*
+      },  
    mttd: {
         title: 'MTTD',
         type: 'number',
@@ -284,17 +285,23 @@ export class DetailPortfolioComponent implements OnInit {
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onDeleteClick(event){        
-    this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
-      this.toastr.success("Portfolio was deleted");
-      let queryParams: Params = { portfolioId : null };
-      this.router.navigate(['/pages/portfolios'], {         
-        queryParams: queryParams, 
-        queryParamsHandling: 'merge' });     
+  onDeleteClick(event){     
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
+        this.toastr.success("Portfolio was deleted");
+        let queryParams: Params = { portfolioId : null };
+        this.router.navigate(['/pages/portfolios'], {         
+          queryParams: queryParams, 
+          queryParamsHandling: 'merge' });     
+  
+      }, (error) => {      
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });  
+    }
+    else {
 
-    }, (error) => {      
-      this.toastr.warning("Something went wrong, please try again.", "Warning")
-    });   
+    }   
+     
     
   } 
   onBackClick(event){        

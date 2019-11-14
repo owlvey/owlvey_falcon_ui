@@ -93,6 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.startDate = new Date();
         this.startDate.setDate(this.startDate.getDate() - 30); // Policy time
         this.endDate = new Date();
+        this.onControlChangeRouter();
       }
       else{
         this.startDate = new Date(qstart);
@@ -104,8 +105,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onControlChangeRouter(){
     const target = [this.router.url.split('?')[0]];
     const queryParams: Params = {      
-      customerId: this.currentCustomer,
-      productId: this.currentProduct,
+      customerId: this.currentCustomer || null,
+      productId: this.currentProduct || null,
       start: this.startDate.toISOString(),
       end: this.endDate.toISOString(),
     };
@@ -238,7 +239,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateHome() {
-    this.menuService.navigateHome();
+    this.onControlChangeRouter();
     return false;
   }
   onStartChange(start: Date){

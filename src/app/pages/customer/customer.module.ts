@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ListCustomerComponent } from "./list-customer/list-customer.component";
 import { DetailCustomerComponent } from "./detail-customer/detail-customer.component";
 import { CreateCustomerComponent } from "./create-customer/create-customer.component";
+import { DashboardCustomerComponent } from "./dashboard-customer/dashboard-customer.component";
 import { CustomerRoutingModule } from "./customer.routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -31,7 +32,8 @@ import { EditCustomerComponent } from "./edit-customer/edit-customer.component";
     DetailCustomerComponent,
     ListCustomerComponent,
     CreateCustomerComponent,
-    EditCustomerComponent
+    EditCustomerComponent,
+    DashboardCustomerComponent,
   ],
   imports: [
     FormsModule,

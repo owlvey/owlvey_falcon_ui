@@ -11,9 +11,12 @@ if (environment.showDevMenu) {
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Home',
-    icon: 'home-outline',
-    link: '/pages/home',
+    icon: 'home-outline',    
     home: true,
+  },
+  {
+    title: 'Organization Dashboard',
+    icon: 'home-outline',
   },
   {
     title: 'Product Dashboard',

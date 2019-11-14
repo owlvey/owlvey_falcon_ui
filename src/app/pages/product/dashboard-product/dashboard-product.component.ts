@@ -27,7 +27,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     protected theme: NbThemeService,
     protected router: Router, 
     protected activatedRoute: ActivatedRoute) {       
-      super(location, customerGateway, productGateway, theme, router, activatedRoute);
+      super(location, customerGateway, productGateway, theme, router, activatedRoute);      
     }   
 
     ngAfterViewInit(): void {
@@ -44,7 +44,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     getDashboard(){
       this.productGateway.getProductServiceGroupDashboard(this.productId, this.startDate, this.endDate).subscribe(data=>{
         this.serviceGroups = data.groups.map(c => {
-            c.percentage = c.proportion * 100;
+            c.percentage = Math.round(c.proportion * 100);
             
             if ( c.proportion === 1){
                 c.status = 'success';

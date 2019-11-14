@@ -63,7 +63,7 @@ export class ListPortfolioComponent implements OnInit {
         editable: false
       },
       budget: {
-        title: 'Budget',
+        title: 'Status',
         type: 'html',
         filter: true,
         width: '2em',

@@ -8,6 +8,7 @@ export abstract class BaseComponent implements OnInit {
     public startDate : Date; 
     public endDate: Date;
     public isLoading: boolean;
+    
     constructor(
         protected location: Location,
         protected theme: NbThemeService,

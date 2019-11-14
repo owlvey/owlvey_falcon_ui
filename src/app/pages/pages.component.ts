@@ -116,6 +116,18 @@ export class PagesComponent implements OnInit {
         this.router.navigate(['/pages/exports'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
+      if (e.item.title == 'Organization Dashboard'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/customers/dashboard'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      }
+
+      if (e.item.title == 'Home'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/home'],
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      }
+
       if (e.item.title == 'Product Dashboard'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/dashboard'],
