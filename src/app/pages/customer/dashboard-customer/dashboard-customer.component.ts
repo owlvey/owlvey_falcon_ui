@@ -36,8 +36,6 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
 
   echartInstances: any[] = [];
 
-  textStatusClass = true;
-
   onChartInit(ec) {
     this.echartInstances.push(ec);
   }
