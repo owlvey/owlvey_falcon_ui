@@ -61,6 +61,12 @@ export class ListSourceComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },             
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },             
     },
   };
   startDate: Date;

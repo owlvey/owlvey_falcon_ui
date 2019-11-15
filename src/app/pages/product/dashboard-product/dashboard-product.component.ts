@@ -39,10 +39,12 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
       this.getDashboard();      
     }
 
+    dashboardData: any;
     serviceGroups: any[];
 
     getDashboard(){
       this.productGateway.getProductServiceGroupDashboard(this.productId, this.startDate, this.endDate).subscribe(data=>{
+        this.dashboardData = data;
         this.serviceGroups = data.groups.map(c => {
             c.percentage = Math.round(c.proportion * 100);
             
@@ -68,6 +70,17 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
         let queryParams: Params = { group: group};
         this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
+
+    onFeaturesDetail(event){      
+      let queryParams: Params = { };
+      this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+    }
+
+    onSourcesDetail(event){      
+      let queryParams: Params = { };
+      this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+    }
+
     ngOnDestroy() {
       if (this.themeSubscription){
         this.themeSubscription.unsubscribe();
