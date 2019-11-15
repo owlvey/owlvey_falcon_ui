@@ -58,7 +58,7 @@
     "diff": ">=3.5.0",
     "echarts": "^4.0.2",
     "eva-icons": "^1.1.0",
-    "https-proxy-agent": ">=2.2.0",
+    "https-proxy-agent": "^3.0.1",
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "leaflet": "1.2.0",
