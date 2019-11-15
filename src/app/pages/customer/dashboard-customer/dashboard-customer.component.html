@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-header>
         <div class="d-flex align-content-center">
-              <h5>Organizations Dashboard</h5>                                
+            <h5>Organizations Dashboard</h5>                                
         </div>               
       </nb-card-header>
       <nb-card-body>          
@@ -12,8 +12,8 @@
                 <div  class="row" >
                     <div class="col-md-2">
                       <h6> {{ currentProduct.customer }} </h6>
-                      <span> Product: {{ currentProduct.product }} </span> <br/>
-                      <span> Effectivenes: {{ currentProduct.effectiveness }} </span> <br/>
+                      <b> Product: </b><span> {{ currentProduct.product }} </span> <br/>
+                      <b> Effectivenes: </b> <span style="font-weight: bolder" [ngClass]="currentProduct.textClass"> {{ currentProduct.effectiveness * 100 }}% </span> <br/>
                       <span> Total: {{ currentProduct.total }} </span> <br/>
                       <span> Good: {{ currentProduct.good }} </span> <br/>
                     </div>
