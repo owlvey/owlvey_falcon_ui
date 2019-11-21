@@ -13,30 +13,32 @@ import { delay } from 'rxjs/operators';
   templateUrl: './dashboard-product.component.html',
   styleUrls: ['./dashboard-product.component.scss']
 })
-export class DashboardProductComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {  
-  
-  
+export class DashboardProductComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {
+
+
   productSunOptions:any;
   echartInstance: any;
   themeSubscription: any;
 
-  constructor(    
-    protected location: Location,
-    protected customerGateway: CustomersGateway,            
-    protected productGateway: ProductsGateway,        
-    protected theme: NbThemeService,
-    protected router: Router, 
-    protected activatedRoute: ActivatedRoute) {       
-      super(location, customerGateway, productGateway, theme, router, activatedRoute);      
-    }   
+  textStatusClass = true;
 
-    ngAfterViewInit(): void {
-      
+  constructor(
+    protected location: Location,
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
+    protected theme: NbThemeService,
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
+      super(location, customerGateway, productGateway, theme, router, activatedRoute);
     }
 
-    onChangeQueryParameters(paramMap: ParamMap): void {                 
-      super.onChangeQueryParameters(paramMap);        
-      this.getDashboard();      
+    ngAfterViewInit(): void {
+
+    }
+
+    onChangeQueryParameters(paramMap: ParamMap): void {
+      super.onChangeQueryParameters(paramMap);
+      this.getDashboard();
     }
 
     dashboardData: any;
@@ -47,7 +49,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
         this.dashboardData = data;
         this.serviceGroups = data.groups.map(c => {
             c.percentage = Math.round(c.proportion * 100);
-            
+
             if ( c.proportion === 1){
                 c.status = 'success';
                 c.textStatusClass = 'text-success'
@@ -59,24 +61,24 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
             else {
                 c.status = 'danger';
                 c.textStatusClass = 'text-danger'
-            }            
+            }
             return c;
-        });      
+        });
       });
     }
- 
+
     onServiceGroupDetail(event){
-        const group = event.currentTarget.id;        
+        const group = event.currentTarget.id;
         let queryParams: Params = { group: group};
         this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
 
-    onFeaturesDetail(event){      
+    onFeaturesDetail(event){
       let queryParams: Params = { };
       this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
 
-    onSourcesDetail(event){      
+    onSourcesDetail(event){
       let queryParams: Params = { };
       this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
@@ -84,6 +86,6 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     ngOnDestroy() {
       if (this.themeSubscription){
         this.themeSubscription.unsubscribe();
-      }      
+      }
     }
 }

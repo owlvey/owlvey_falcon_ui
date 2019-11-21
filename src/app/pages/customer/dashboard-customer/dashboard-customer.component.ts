@@ -19,23 +19,23 @@ import { delay, takeWhile } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
 })
 export class DashboardCustomerComponent extends BaseComponent implements OnDestroy {
-  
+
   constructor(
     protected location: Location,
     protected theme: NbThemeService,
-    protected customerGateway: CustomersGateway,        
-    protected router: Router, 
+    protected customerGateway: CustomersGateway,
+    protected router: Router,
     protected activatedRoute: ActivatedRoute) {
       super(location, theme, router, activatedRoute);
-  }   
+  }
 
   options: any[] = [];
-  segments: any[] = [];  
+  segments: any[] = [];
   effectiveness : number = 0;
   products: any[] = [];
 
   echartInstances: any[] = [];
-  
+
   onChartInit(ec) {
     this.echartInstances.push(ec);
   }
@@ -46,17 +46,17 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
   }
 
 
-  onNgOnInit(): void {            
-    
-  }  
+  onNgOnInit(): void {
+
+  }
 
   loadCustomers(){
-    
+
   }
 
   onChangeQueryParameters(paramMap: import("@angular/router").ParamMap): void {
     this.theme.getJsTheme().subscribe(config=>{
-      const earningLineTheme: any = config.variables.earningLine;      
+      const earningLineTheme: any = config.variables.earningLine;
       const colors: any = config.variables;
       const echarts: any = config.variables.echarts;
       //color: [colors.danger, colors.primary, colors.info],
@@ -70,29 +70,29 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
             c.textClass = "text-danger";
           }
           else {
-            c.textClass = "text-success";            
+            c.textClass = "text-success";
           }
 
           const targetData = c.groups.map(d => {
             const temp = {
-                value: [ d.index, d.count],   
+                value: [ d.index, d.count],
                 tags: d.tags,
-                title: d.title,                                     
+                title: d.title,
                 itemStyle: {
                   normal: {
-                    color: colors[d.status]                      
+                    color: colors[d.status]
                   },
                 },
             };
             return temp;
           });
 
-          c.options = {              
+          c.options = {
             tooltip: {
                 position: 'bottom',
-                formatter: function (params) {                             
-                  let message =  'Group: ' + params.name + ' ' + params.data.title + " <br/>"; 
-                  
+                formatter: function (params) {
+                  let message =  'Group: ' + params.name + ' ' + params.data.title + " <br/>";
+
                   params.data.tags.forEach(item => {
                     message += item + " <br/>"
                   });
@@ -108,16 +108,16 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
                 boundaryGap: false,
                 data: this.segments,
                 top: (2 * 100 / 7 + 5) + '%',
-                height: (100 / 7 - 10) + '%',              
-              }            
+                height: (100 / 7 - 10) + '%',
+              }
             ],
-            series: [              
+            series: [
               {
                 name: '',
                 singleAxisIndex: 0,
                 coordinateSystem: 'singleAxis',
                 type: 'scatter',
-                data: targetData, 
+                data: targetData,
                 symbolSize: function (dataItem) {
                     return dataItem[1] * 10;
                 },
@@ -131,8 +131,8 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
 
 
     });
-    
+
   }
-  
-  
+
+
 }
