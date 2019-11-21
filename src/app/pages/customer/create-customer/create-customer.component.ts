@@ -34,8 +34,7 @@ export class CreateCustomerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: NbToastrService,
-    private router: Router,    
-    private customerEventHub: CustomerEventHub
+    private router: Router,        
   ) {
     this.createForm = this.fb.group({
       id: [''],
@@ -63,8 +62,7 @@ export class CreateCustomerComponent implements OnInit {
     const  defer = this.customerGateway.createCustomer(this.createForm.value);
     defer.subscribe((data) => {
         this.toastr.success('Customer Created Success');
-        this.isLoading = false;        
-        this.customerEventHub.customerCreated.next({ name: 'reloadCustomers' });
+        this.isLoading = false;                
         this.location.back();
       }, (error) => {
         this.isLoading = false;

@@ -10,6 +10,7 @@ import { ActivatedRoute, Route, Router, ParamMap, Params } from '@angular/router
 import { NbAuthService, NbAuthJWTToken, NbTokenService } from '@nebular/auth';
 import { UsersGateway } from '../../../@core/data/users.gateway';
 import { CustomerEventHub } from '../../../@core/hubs/customer.eventhub';
+import { CacheManager } from '../../../@core/data/cache.manager';
 
 @Component({
   selector: 'ngx-header',
@@ -70,6 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private tokenService: NbTokenService,
     private customerEventHub: CustomerEventHub,
+    private cacheManager: CacheManager,    
     private usersGateway: UsersGateway
   ) {
       let qcustomerId = this.activatedRoute.snapshot.queryParams["customerId"];
@@ -113,29 +115,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(target, { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
-  loadData(){
-    this.customerGateway.getCustomers().subscribe(data => {
-      
-      this.customers = data;      
-      this.cdRef.detectChanges();      
-      if (this.currentCustomer){
-        this.headerSelectors.toArray()[1].setSelection(this.currentCustomer);      
-        this.products = null;
-        this.cdRef.detectChanges();
-        this.productGateway.getProducts(this.currentCustomer).subscribe(dproducts=>{
-          this.products = dproducts;
-          this.cdRef.detectChanges();
-          if ( this.currentProduct ){
-            this.headerSelectors.toArray()[2].setSelection(this.currentProduct);                
-          }
-        });        
-      }
-      this.onControlChangeRouter();      
-    });
+
+  loadData(){  
+    const that = this;
+    setTimeout(()=>{      
+      that.customerGateway.getCustomers().subscribe(data => {                  
+        that.customers = data;      
+        that.cdRef.detectChanges();      
+        if (that.currentCustomer){
+          that.headerSelectors.toArray()[1].setSelection(that.currentCustomer);      
+          that.products = null;
+          that.cdRef.detectChanges();
+          that.productGateway.getProducts(that.currentCustomer).subscribe(dproducts=>{
+            that.products = dproducts;
+            that.cdRef.detectChanges();
+            if ( that.currentProduct ){
+              that.headerSelectors.toArray()[2].setSelection(that.currentProduct);                
+            }
+          });        
+        }
+        that.onControlChangeRouter();      
+      })
+    },  1000);         
   }  
 
   ngOnInit() {        
-    this.customerEventHub.customerCreated.subscribe(c=>{
+    this.customerEventHub.customerUpdated.subscribe(c=>{      
       this.loadData();
     }); 
 
@@ -238,7 +243,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  navigateHome() {
+  navigateHome() {    
+    this.loadData();
     this.onControlChangeRouter();
     return false;
   }

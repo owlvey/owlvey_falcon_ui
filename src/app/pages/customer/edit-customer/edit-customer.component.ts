@@ -35,7 +35,6 @@ export class EditCustomerComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: NbToastrService,
     private router: Router,    
-    private customerEventHub: CustomerEventHub
   ) {
     this.createForm = this.fb.group({
       id: [''],
@@ -72,9 +71,7 @@ export class EditCustomerComponent implements OnInit {
 
     this.isLoading = true;
     let defer = this.customerGateway.updateCustomer(this.createForm.get('id').value, this.createForm.value);
-    defer.subscribe((data) => {
-      this.cacheManager.forceReload();
-      this.customerEventHub.customerCreated.next({ name: 'reloadCustomers' });
+    defer.subscribe((data) => {            
       this.toastr.success("Customer Updated Success", "Success");
       this.isLoading = false;            
       this.location.back();

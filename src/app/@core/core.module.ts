@@ -63,6 +63,7 @@ import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
 import { environment as env } from '../../environments/environment';
 import { CustomerEventHub } from './hubs/customer.eventhub';
+import { OwlveyGateway } from './data/owlvey.gateway';
 import { CacheManager } from './data/cache.manager';
 
 
@@ -119,6 +120,8 @@ const DATA_SERVICES = [
   { provide: EnvironmentService, useClass: EnvironmentService } ,
   { provide: IncidentsGateway, useClass: IncidentsGateway },
   { provide: CacheManager, useClass: CacheManager },
+  { provide: OwlveyGateway, useClass: OwlveyGateway },
+
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

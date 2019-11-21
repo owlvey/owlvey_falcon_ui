@@ -51,21 +51,21 @@
                                         </h6>
                                         </div> 
                                         <div class="col-sm-3">       
-                                            <h6 [class.active]="textStatusClass"> {{ dashboardData.featureCoverage * 100 }}% </h6>                                                                                            
+                                            <h6 [class.active]="textStatusClass"> {{ dashboardData?.featureCoverage * 100 }}% </h6>                                                                                            
                                         </div> 
                                     </div>                    
                                 </nb-card-header>
                                 <nb-card-body>
                                     <div class="row" >  
                                         <div class="col-sm-8">
-                                            <div><span> Total: {{ dashboardData.featureTotal }} </span></div>
-                                            <div><span> Assigned: {{ dashboardData.featureAssigned }} </span></div>
+                                            <div><span> Total: {{ dashboardData?.featureTotal }} </span></div>
+                                            <div><span> Assigned: {{ dashboardData?.featureAssigned }} </span></div>
                                         </div>                                     
                                         <div class="col-sm-4">
                                             <button class="btn btn-outline-info" (click)="onFeaturesDetail($event)">Detail</button>                        
                                         </div>
                                     </div>                                                               
-                                    <nb-progress-bar style="margin-top: 3rem;" [value]="dashboardData.featureCoverage * 100"></nb-progress-bar>                
+                                    <nb-progress-bar style="margin-top: 3rem;" [value]="dashboardData?.featureCoverage * 100"></nb-progress-bar>                
                                 </nb-card-body>
                         </nb-card>
                 </div>
@@ -80,21 +80,21 @@
                                     </h6>
                                     </div> 
                                     <div class="col-sm-3">       
-                                        <h6 [class.active]="textStatusClass"> {{ dashboardData.sourceCoverage * 100 }}% </h6>                                                                                            
+                                        <h6 [class.active]="textStatusClass"> {{ dashboardData?.sourceCoverage * 100 }}% </h6>                                                                                            
                                     </div> 
                                 </div>                    
                             </nb-card-header>
                             <nb-card-body>
                                 <div class="row" >  
                                     <div class="col-sm-8">
-                                        <div><span> Total: {{ dashboardData.sourceTotal }} </span></div>
-                                        <div><span> Assigned: {{ dashboardData.sourceAssigned }} </span></div>
+                                        <div><span> Total: {{ dashboardData?.sourceTotal }} </span></div>
+                                        <div><span> Assigned: {{ dashboardData?.sourceAssigned }} </span></div>
                                     </div>              
                                     <div class="col-sm-4">
                                         <button class="btn btn-outline-info" (click)="onSourcesDetail($event)">Detail</button>                        
                                     </div>                       
                                 </div>                                                               
-                                <nb-progress-bar style="margin-top: 3rem;" [value]="dashboardData.sourceCoverage * 100"></nb-progress-bar>                
+                                <nb-progress-bar style="margin-top: 3rem;" [value]="dashboardData?.sourceCoverage * 100"></nb-progress-bar>                
                             </nb-card-body>
                     </nb-card>
                 </div>            

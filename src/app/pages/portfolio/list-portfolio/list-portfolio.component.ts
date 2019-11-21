@@ -136,7 +136,8 @@ export class ListPortfolioComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
-        let c = portfolios.map(c=> {  
+        const data = JSON.parse(JSON.stringify(portfolios))
+        let newData = data.map(c=> {  
           c.budgetValue = c.budget;
           if(c.budget < 0) {
             c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
@@ -144,9 +145,8 @@ export class ListPortfolioComponent implements OnInit {
             c.budget = `<i class="fas fa-circle text-success text-center d-block" title=${c.budgetValue}></i>`;
           }
           return c;
-        });
-        console.log(portfolios)
-        this.source.load(portfolios);
+        });        
+        this.source.load(newData);
       });
     });     
   }
@@ -200,7 +200,7 @@ export class ListPortfolioComponent implements OnInit {
   echartCalendarInstance: any;
   serviceCalendarOptions: any;
   
-  onServiceCalendar(ec) {
+  onServiceCalendar(ec) {    
     this.echartCalendarInstance = ec;
   }
 }

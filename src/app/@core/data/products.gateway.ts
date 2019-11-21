@@ -3,64 +3,68 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../utils/env.service';
 import { environment } from './../../../environments/environment';
+import { OwlveyGateway } from './owlvey.gateway';
 
 @Injectable()
 export class ProductsGateway {
   baseUrl: string;
   constructor(private http: HttpClient,
+              private owlveyGateway : OwlveyGateway,
               private envService: EnvironmentService) {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
   }
 
   getProducts(customerId: number): Observable<any> {
-    return this.http.get(this.baseUrl + `products?customerId=${customerId}`);
+    return this.owlveyGateway.get(this.baseUrl + `products?customerId=${customerId}`);
   }
 
   getProduct(productId: number): Observable<any> {
-    return this.http.get(this.baseUrl + `products/${productId}`);
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}`);
   }
 
   getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
     group = group && group || "";
-    return this.http.get(
+    return this.owlveyGateway.get(
       this.baseUrl +
         `products/${productId}/reports/daily/services/series?start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
     );
   }
 
   getFeaturesDailyReport(productId: number, start: Date, end: Date): Observable<any> {
-    return this.http.get(
+    return this.owlveyGateway.get(
       this.baseUrl +
         `products/${productId}/reports/daily/features/series?start=${start.toISOString()}&end=${end.toISOString()}`,
     );
   }
 
   getGraphView(productId: number, start: Date, end: Date): Observable<any> {
-    return this.http.get(this.baseUrl + `products/${productId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 
   createProduct(customerId: number, model: any) {
     model.customerId = customerId;
-    return this.http.post(this.baseUrl + 'products', model);
+    return this.owlveyGateway.post(this.baseUrl + 'products', model);
   }
 
   updateProduct(id: number, model: any) {
-    return this.http.put(this.baseUrl + `products/${id}`, model);
+    return this.owlveyGateway.put(this.baseUrl + `products/${id}`, model);
   }
 
   deleteProduct(id: number) {
-    return this.http.delete(this.baseUrl + 'products/' + id);
+    return this.owlveyGateway.delete(this.baseUrl + 'products/' + id);
   }
 
   getProductDashboard(productId: number, start: Date, end: Date): Observable<any>{
-    return this.http.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/dashboard?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 
   getProductServiceGroupDashboard(productId: number, start: Date, end: Date): Observable<any>{
-    return this.http.get(this.baseUrl + `products/${productId}/dashboard/services/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/dashboard/services/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
   }  
 
+  
   //#region Syncs
+
   getSyncs(productId: number) : Observable<any> {
     return this.http.get(this.baseUrl +  `products/${productId}/sync`);
   }
