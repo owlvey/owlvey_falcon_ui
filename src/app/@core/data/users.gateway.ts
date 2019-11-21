@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { EnvironmentService } from "../utils/env.service";
 import { environment } from "./../../../environments/environment";
+import { OwlveyGateway } from './owlvey.gateway';
 
 @Injectable()
 export class UsersGateway {
@@ -10,6 +11,7 @@ export class UsersGateway {
   identityUrl: string;
   constructor(
     private http: HttpClient,
+    private owlveyGateway : OwlveyGateway,
     private envService: EnvironmentService
   ) {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
@@ -19,21 +21,21 @@ export class UsersGateway {
     );
   }
   getUserIdentity(): Observable<any> {
-    return this.http.get(this.baseUrl + `accounts/me`);
+    return this.owlveyGateway.get(this.baseUrl + `accounts/me`);
   }
   getUsers(): Observable<any> {
-    return this.http.get(this.baseUrl + `users`);
+    return this.owlveyGateway.get(this.baseUrl + `users`);
   }
   getUser(userId: number): Observable<any> {
-    return this.http.get(this.baseUrl + `users/${userId}`);
+    return this.owlveyGateway.get(this.baseUrl + `users/${userId}`);
   }
   createUser(model: any) {
-    return this.http.post(this.baseUrl + "users", model);
+    return this.owlveyGateway.post(this.baseUrl + "users", model);
   }
   updateUser(id: number, model: any) {
-    return this.http.put(this.baseUrl + `users/${id}`, model);
+    return this.owlveyGateway.put(this.baseUrl + `users/${id}`, model);
   }
   deleteProduct(id: number) {
-    return this.http.delete(this.baseUrl + "users/" + id);
+    return this.owlveyGateway.delete(this.baseUrl + "users/" + id);
   }
 }
