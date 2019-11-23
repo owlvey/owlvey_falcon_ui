@@ -10,12 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: DockerInstaller@0
-  displayName: Docker Installer
-  inputs:
-    dockerVersion: 17.09.0-ce
-    releaseType: stable
-
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
@@ -27,16 +21,5 @@ steps:
 - script: npm rebuild node-sass
   displayName: Ensure sass dependency
  
-- script: npm run build:docker
-  displayName: ng-build for docker
-
-- task: Docker@2
-  displayName: buildAndPush
-  inputs:
-    containerRegistry: 'Owlvey Docker Connection'
-    repository: owlvey/site
-    Dockerfile: Dockerfile
-    buildContext: dist
-    tags: |
-     $(Build.BuildId)
-     latest
+- script: npm run build
+  displayName: ng-build
