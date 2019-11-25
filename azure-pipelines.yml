@@ -20,7 +20,7 @@ steps:
 
 - script: npm rebuild node-sass
   displayName: Ensure sass dependency
- 
+
 - script: npm run build
   displayName: ng-build
 
@@ -29,6 +29,13 @@ steps:
     PathtoPublish: 'firebase.json'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '.azure'
+    ArtifactName: 'drop/.azure'
+    publishLocation: 'Container'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'dist'
