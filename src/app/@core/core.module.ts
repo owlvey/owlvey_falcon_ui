@@ -23,14 +23,12 @@ import { OrdersProfitChartData } from './data/orders-profit-chart';
 import { TrafficBarData } from './data/traffic-bar';
 import { ProfitBarAnimationChartData } from './data/profit-bar-animation-chart';
 import { TemperatureHumidityData } from './data/temperature-humidity';
-import { SolarData } from './data/solar';
 import { TrafficChartData } from './data/traffic-chart';
 import { StatsBarData } from './data/stats-bar';
 import { CountryOrderData } from './data/country-order';
 import { StatsProgressBarData } from './data/stats-progress-bar';
 import { VisitorsAnalyticsData } from './data/visitors-analytics';
 import { SecurityCamerasData } from './data/security-cameras';
-
 import { UserService } from './mock/users.service';
 import { ElectricityService } from './mock/electricity.service';
 import { SmartTableService } from './mock/smart-table.service';
@@ -43,7 +41,6 @@ import { OrdersProfitChartService } from './mock/orders-profit-chart.service';
 import { TrafficBarService } from './mock/traffic-bar.service';
 import { ProfitBarAnimationChartService } from './mock/profit-bar-animation-chart.service';
 import { TemperatureHumidityService } from './mock/temperature-humidity.service';
-import { SolarService } from './mock/solar.service';
 import { TrafficChartService } from './mock/traffic-chart.service';
 import { StatsBarService } from './mock/stats-bar.service';
 import { CountryOrderService } from './mock/country-order.service';
@@ -63,6 +60,7 @@ import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
 import { environment as env } from '../../environments/environment';
 import { CustomerEventHub } from './hubs/customer.eventhub';
+import { OwlveyGateway } from './data/owlvey.gateway';
 import { CacheManager } from './data/cache.manager';
 
 
@@ -101,7 +99,6 @@ const DATA_SERVICES = [
   { provide: TrafficBarData, useClass: TrafficBarService },
   { provide: ProfitBarAnimationChartData, useClass: ProfitBarAnimationChartService },
   { provide: TemperatureHumidityData, useClass: TemperatureHumidityService },
-  { provide: SolarData, useClass: SolarService },
   { provide: TrafficChartData, useClass: TrafficChartService },
   { provide: StatsBarData, useClass: StatsBarService },
   { provide: CountryOrderData, useClass: CountryOrderService },
@@ -119,6 +116,8 @@ const DATA_SERVICES = [
   { provide: EnvironmentService, useClass: EnvironmentService } ,
   { provide: IncidentsGateway, useClass: IncidentsGateway },
   { provide: CacheManager, useClass: CacheManager },
+  { provide: OwlveyGateway, useClass: OwlveyGateway },
+
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {

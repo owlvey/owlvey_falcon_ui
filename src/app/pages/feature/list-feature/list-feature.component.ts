@@ -26,7 +26,7 @@ export class ListFeatureComponent extends ProductBaseComponent {
       delete: false
     },
     pager: {
-      perPage: 10
+      perPage: 30
     },
     columns: {
       id: {
