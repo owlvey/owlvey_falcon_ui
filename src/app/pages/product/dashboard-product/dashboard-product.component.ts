@@ -47,21 +47,24 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
     getDashboard(){
       this.productGateway.getProductServiceGroupDashboard(this.productId, this.startDate, this.endDate).subscribe(data=>{
         this.dashboardData = data;
-        this.serviceGroups = data.groups.map(c => {
+        this.serviceGroups = data.groups.map(c => {           
             c.percentage = Math.round(c.proportion * 100);
-
             if ( c.proportion === 1){
                 c.status = 'success';
                 c.textStatusClass = 'text-success'
             }
-            else if ( c.proportion > 0.8 ) {
+            else if ( c.proportion > 0 ) {
                 c.status = 'warning';
                 c.textStatusClass = 'text-warning'
             }
             else {
+                if (c.percentage === 0){
+                  c.percentage = 100;
+                }
                 c.status = 'danger';
                 c.textStatusClass = 'text-danger'
             }
+            
             return c;
         });
       });
