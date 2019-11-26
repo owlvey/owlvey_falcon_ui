@@ -33,5 +33,7 @@ Sonar integration
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=owlvey_owlvey_falcon_ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=owlvey_owlvey_falcon_ui)
 
+![Home](https://raw.githubusercontent.com/owlvey/owlvey_falcon_ui/master/resources/home.png)
 
-![Home](https://github.com/owlvey/owlvey_falcon_ui/resources/home.png)
+
+
