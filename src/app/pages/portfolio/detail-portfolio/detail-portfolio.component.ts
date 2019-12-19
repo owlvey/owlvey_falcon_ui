@@ -242,21 +242,7 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },           
-      indicatorSlo: {
-        title: 'SLO',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },        
-      budget: {
-        title: 'Budget',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },        
+      },                 
     },
   };
   

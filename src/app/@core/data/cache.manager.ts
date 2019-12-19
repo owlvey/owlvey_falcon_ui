@@ -18,7 +18,7 @@ export class CacheManager {
 
     constructor(protected http: HttpClient, private envService: EnvironmentService){        
         this.baseUrl = envService.getUrl(environment.api, environment.type);
-        interval(5000).pipe(startWith(0)).subscribe(_ => this.checkCache());
+        interval(50000).pipe(startWith(0)).subscribe(_ => this.checkCache());
     }    
 
     public getItem(key: string): Observable<any>{
