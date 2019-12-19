@@ -64,7 +64,7 @@
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.impact" 
+                        <input readonly="readonly" type="number" [value]="currentSource?.impact" 
                             nbInput fullWidth id="inputImpact" placeholder="Availability"
                             class="input-full-width size-medium shape-rectangle">
                       </div>
@@ -121,7 +121,8 @@
                     
                 </nb-tab>   
             <nb-tab tabTitle="Feature Availability Debt" >              
-                <div echarts [options]="sliOptions" style="height: 30rem;" class="echart" (chartInit)="onChartInit($event)"></div>
+                <div echarts [options]="sliOptions" style="height: 30rem;" 
+                  class="echart" (chartInit)="onSliChatInit($event)"></div>
             </nb-tab>
                     
             <nb-tab tabTitle="Service Level Indicators" >              

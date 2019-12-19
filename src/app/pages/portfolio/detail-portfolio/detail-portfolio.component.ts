@@ -23,7 +23,7 @@ export class DetailPortfolioComponent implements OnInit {
   serviceCalendarOptions: any;
   isLoading: boolean = false;  
   actionConfirmWord: string;
-  currentSource : any= {};    
+  currentSource : any= { impact: 0, availability: 0, slo: 0, budget: 0};    
   productId = 0;
   portfolioId = 0;
   themeSubscription: any;
@@ -141,7 +141,7 @@ export class DetailPortfolioComponent implements OnInit {
   }  
 
   getPortfolio(){    
-    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
+    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{      
       this.currentSource = data;                  
       const features = this.currentSource.features.map(c=>{                
         return c;        
@@ -320,12 +320,12 @@ export class DetailPortfolioComponent implements OnInit {
     this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
-  renderAvailabilityReport(){    
+  renderAvailabilityReport(){         
     let legends = [];    
-    const debt = this.currentSource.features.filter((c: any) => c.budget < 0);
+    const debt = this.currentSource.features.filter((c: any) => c.availability <= this.currentSource.slo);
     let  totaldebt: number = 0;
-    debt.forEach(element => {
-      totaldebt  += Math.abs(element.budget);      
+    debt.forEach(c => {
+      totaldebt  += Math.abs(this.currentSource.slo - c.availability);      
     });
       
     if (totaldebt === 0){
@@ -336,7 +336,7 @@ export class DetailPortfolioComponent implements OnInit {
       legends.push(c.name);            
       return {
         name: c.name, 
-        value:  Math.abs(c.budget) / totaldebt
+        value:  Math.abs(this.currentSource.slo - c.availability) / totaldebt
       };
 
     });
@@ -376,9 +376,13 @@ export class DetailPortfolioComponent implements OnInit {
   }
 
   sliOptions:any; 
+  sliEchartsIntance: any;
 
   onChartInit(ec) {
     this.echartsIntance = ec;
+  }
+  onSliChatInit(e){
+    this.sliEchartsIntance = e;
   }
 
   
