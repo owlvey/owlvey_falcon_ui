@@ -136,6 +136,18 @@
                   </div>
                 </div>                  
             </nb-tab>
+            <nb-tab tabTitle="Dependencies" >                            
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="network-canvas"
+                    [visNetwork]="visNetwork"
+                    [visNetworkData]="visNetworkData"
+                    [visNetworkOptions]="visNetworkOptions"
+                    (initialized)="networkInitialized()">
+                  </div>                    
+                </div>
+              </div>                  
+          </nb-tab>
             <nb-tab tabTitle="Squads">
                 <p>
                     <b> Feature : {{ currentFeature?.name }}</b>                

@@ -44,6 +44,9 @@ export class PortfoliosGateway{
     getPortfolio(portflioId: number): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/${portflioId}`);
     }
+    getPortfolioGraph(portfolioId: number, start: Date, end: Date): Observable<any> {
+        return this.owlveyGateway.get(this.baseUrl + `services/${portfolioId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
     getPortfolioWithAvailabilities(portflioId: number, start: Date, end: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/${portflioId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }

@@ -8,6 +8,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
+import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class DetailPortfolioComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
-
+  
   settings = {    
     mode: 'external',
     actions:{
@@ -125,6 +126,7 @@ export class DetailPortfolioComponent implements OnInit {
     private portfolioGateway: PortfoliosGateway,    
     private theme: NbThemeService,
     private router: Router, 
+    protected visNetworkService: VisNetworkService,
     private activatedRoute: ActivatedRoute) {       
       
     }        
@@ -137,8 +139,163 @@ export class DetailPortfolioComponent implements OnInit {
       this.endDate = new Date(paramMap.get('end'));      
       this.getPortfolio();
       this.getDaily(); 
+      this.buildGraphDependencies();
     });          
   }  
+
+  private buildGraphDependencies(){
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      this.colors = config.variables;
+      const echarts: any = config.variables.echarts;      
+
+      this.portfolioGateway.getPortfolioGraph(this.portfolioId, this.startDate, this.endDate).subscribe( data =>{
+        this.buildGraph(data);
+      });      
+
+    });
+  }
+
+  private buildGraph(data){
+    if (!this.colors){
+      return;
+    }
+    setTimeout(() => {
+
+      this.visNetworkService.setOptions(this.visNetwork, { physics: false });                  
+      this.visNetworkService.moveTo( this.visNetwork , {
+                  position: {x:-300, y:-300},
+                  scale: 1,
+                  animation: true                  
+      } );     
+
+    }, 3000);
+
+    const fgText = this.colors.fgText;
+    const primary = this.colors.primary;
+    const primaryLight = this.colors.primaryLight;
+    const info = this.colors.info;
+    const infoLight = this.colors.infoLight;
+    const danger = this.colors.danger;
+    const dangerLight = this.colors.dangerLight;
+    const warning = this.colors.warning;
+    const warningLight = this.colors.warningLight;
+    const success = this.colors.success;
+    const successLight = this.colors.successLight;
+    var nodeData = data.nodes.map(c=>{      
+      if (c.group == "products"){
+        return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
+      }
+      else if (c.group == "services"){
+        if (c.budget >= 0 )
+        {
+          //c.importance
+          return { id: c.id, value: 12, label: c.name, shape: 'hexagon', 
+                title: String(c.value),
+                font:{ color: fgText },
+                color: {background:success, border: primaryLight ,
+                highlight:{background:successLight, border: primaryLight},
+                hover:{background:successLight, border: primaryLight}}};
+        }
+        else{
+          return { id: c.id, value: 12, 
+                label: c.name, shape: 'hexagon',title: String(c.value),
+                font:{ color: fgText },
+                color: {background: danger, border: primaryLight,
+                highlight:{background: dangerLight, border: primaryLight},
+                hover:{background:dangerLight, border: primaryLight}}};
+        }
+      }
+      else if (c.group == "features"){
+        return { id: c.id, value: 10, label: c.name, group: "2", shape: 'dot', title: c.name,
+                  font:{ color: fgText },
+                  color: {background:success, border: primaryLight ,
+                  highlight:{background:successLight, border: primaryLight},
+                  hover:{background:successLight, border: primaryLight}}};
+      }
+    });
+    var edgeData = data.edges.map(c=>{
+      const ava = String(c.value);
+      if (c.value < 0){
+        return { font: {  align: 'top', color: fgText },
+              label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
+      }
+      else if ( c.value >=0 && c.value < 0.01 )
+      {
+        //, strokeColor : infoLight
+        return { font: {  align: 'top', color: fgText }, label: ava,
+            from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
+      }
+      else{
+        return { font: {  align: 'top', color: fgText }, label: ava,
+          from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
+      }
+    });
+    const nodes = new VisNodes(nodeData);
+    const edges = new VisEdges(edgeData);
+    this.visNetworkData = {
+      nodes,
+      edges,
+    };
+
+    this.visNetworkOptions = {      
+      physics:{
+        enabled: true,        
+        forceAtlas2Based: {
+          gravitationalConstant: -290,
+          centralGravity: 0.004,
+          springConstant: 0.18,
+          springLength: 100,
+          damping: 0.4,
+          avoidOverlap: 1.5
+        },       
+        maxVelocity: 146,
+        minVelocity: 0.1,
+        solver: 'forceAtlas2Based',
+        timestep: 0.35,
+        stabilization: {
+          enabled: true,
+          iterations: 1000,
+          updateInterval: 25,
+          onlyDynamicEdges: false,
+          fit: false
+        },
+        adaptiveTimestep: false
+      },
+      layout: {
+        improvedLayout: true,       
+      },
+      nodes: {
+        shape: 'dot',
+        font: {
+            color: '#ffffff'
+        },
+        color: {
+          border: '#222222',
+          background: '#666666'
+        },
+        borderWidth: 2,
+        shadow:false,
+      },
+      interaction: {hover: true},
+      edges: {
+          labelHighlightBold:false,
+          smooth: false,
+          width: 3,
+          font:{
+            face: 'arial'
+          },
+          arrows: 'to',
+          arrowStrikethrough: true,
+          dashes: true,
+          scaling:{
+            label: true,
+          }
+      },
+      configure:{
+        enabled: false
+      }
+    };
+  }
 
   getPortfolio(){    
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{      
@@ -374,6 +531,17 @@ export class DetailPortfolioComponent implements OnInit {
   
   onServiceCalendar(ec) {
     this.echartCalendarInstance = ec;
+  }
+
+
+  public visNetwork: string = 'networkId1';
+  public visNetworkData: VisNetworkData;
+  public visNetworkOptions: VisNetworkOptions;
+  colors: any;
+  graphData = {};
+
+  public networkInitialized(): void {
+        
   }
 
 //region

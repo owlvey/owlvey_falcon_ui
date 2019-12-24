@@ -24,6 +24,7 @@ import {
   NbTreeGridModule,
   NbTabsetModule,
 } from '@nebular/theme';
+import { VisModule } from 'ngx-vis';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {
      ChartModule,
      NbDatepickerModule, 
      NgxChartsModule, 
+     VisModule,
      NbRadioModule,
      NbButtonModule,
      NbTabsetModule,
