@@ -64,21 +64,23 @@
 <div class="row">
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card size="large">
-      <nb-tabset fullWidth>    
+      <nb-tabset fullWidth  style="height: 100%;">    
         <nb-tab tabTitle="Services">
-          <nb-list>
-            <nb-list-item class="service" *ngFor="let c of services">
-              <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
-                    size="large" (click)="onServiceClick($event)" [id]="c.id"                     
-                    badgePosition="bottom end"
-                    [badgeStatus]="c.badgetStatus"
-                    [badgeText]="c.budget"                    
-                    style="cursor: pointer; "></nb-user>
-                    <!--
-                      <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
-                    -->              
-            </nb-list-item>
-          </nb-list>
+          <div >
+              <nb-list >
+                  <nb-list-item class="service" *ngFor="let c of services">
+                    <nb-user [picture]="c.avatar" [name]="c.name" [title]="c.title" 
+                          size="large" (click)="onServiceClick($event)" [id]="c.id"                     
+                          badgePosition="bottom end"
+                          [badgeStatus]="c.badgetStatus"
+                          [badgeText]="c.budget"                    
+                          style="cursor: pointer; "></nb-user>
+                          <!--
+                            <nb-icon icon="phone-outline" pack="eva" (click)="onSourceClick($event)" [id]="c.id"></nb-icon>
+                          -->              
+                  </nb-list-item>
+                </nb-list>
+          </div>          
         </nb-tab>    
       </nb-tabset>
     </nb-card>    
