@@ -1,90 +1,90 @@
 <div class="row">
-    <div class="col-md-12">
-      <nb-card>
-        <nb-card-header>
-          
-            <div class="d-flex align-content-center">
-                <h4> {{ currentSource?.name }} </h4>                                
-                <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
-                <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
-                <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
-                
-            </div>
-        </nb-card-header>
-        <nb-card-body> 
-
-            <div class="row">
-                <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
-                      <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
-                          nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
-                          class="input-full-width size-medium shape-rectangle">                         
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.availability" 
-                          nbInput fullWidth id="inputAvailability" placeholder="Availability"
-                          class="input-full-width size-medium shape-rectangle">                         
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.slo" 
-                          nbInput fullWidth id="inputSLO" placeholder="Availability"
-                          class="input-full-width size-medium shape-rectangle">
-                    
-                    </div>
-
-                </div>
-                <!-- 
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="inputSLO" class="label form-control-label"> Estimated Feature SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.featureSlo" 
-                          nbInput fullWidth id="inputSLO" placeholder="Availability"
-                          class="input-full-width size-medium shape-rectangle">                     
-                    </div>
-                  </div>
-
-                -->
-                
+    <div class="col-md-12" >
+        <nb-card >
+          <nb-card-header>
+            
+              <div class="d-flex align-content-center">
+                  <h4> {{ currentSource?.name }} </h4>                                
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
+                  <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
+                  
+              </div>
+          </nb-card-header>
+          <nb-card-body> 
+  
+              <div class="row">
                   <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="inputBudget" class="label col-sm-3 form-control-label">Budget</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.budget" 
-                            nbInput fullWidth id="inputBudget" placeholder="Availability"
+                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
+                        <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
+                            nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
+                            class="input-full-width size-medium shape-rectangle">                         
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.availability" 
+                            nbInput fullWidth id="inputAvailability" placeholder="Availability"
+                            class="input-full-width size-medium shape-rectangle">                         
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.slo" 
+                            nbInput fullWidth id="inputSLO" placeholder="Availability"
                             class="input-full-width size-medium shape-rectangle">
                       
                       </div>
+  
                   </div>
-                  <div class="col-sm-2">
+                  <!-- 
+                    <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
-                        <input readonly="readonly" type="number" [value]="currentSource?.impact" 
-                            nbInput fullWidth id="inputImpact" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">
+                        <label for="inputSLO" class="label form-control-label"> Estimated Feature SLO</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.featureSlo" 
+                            nbInput fullWidth id="inputSLO" placeholder="Availability"
+                            class="input-full-width size-medium shape-rectangle">                     
                       </div>
-                  </div>
-            </div>
-       
-            <div class="row">
-              <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Leaders</label>
-                    <input readonly="readonly" type="text" [value]="currentSource?.leaders" 
-                        nbInput fullWidth id="inputAvailability" placeholder="Leaders"
-                        class="input-full-width size-medium shape-rectangle">                         
-                  </div>
+                    </div>
+  
+                  -->
+                  
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="inputBudget" class="label col-sm-3 form-control-label">Budget</label>
+                          <input readonly="readonly" type="number" [value]="currentSource.budget" 
+                              nbInput fullWidth id="inputBudget" placeholder="Availability"
+                              class="input-full-width size-medium shape-rectangle">
+                        
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
+                          <input readonly="readonly" type="number" [value]="currentSource?.impact" 
+                              nbInput fullWidth id="inputImpact" placeholder="Availability"
+                              class="input-full-width size-medium shape-rectangle">
+                        </div>
+                    </div>
               </div>
-            </div>
-
-        </nb-card-body>
-      </nb-card>
-    </div>
+         
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Leaders</label>
+                      <input readonly="readonly" type="text" [value]="currentSource?.leaders" 
+                          nbInput fullWidth id="inputAvailability" placeholder="Leaders"
+                          class="input-full-width size-medium shape-rectangle">                         
+                    </div>
+                </div>
+              </div>
+  
+          </nb-card-body>
+        </nb-card>
+      </div>
 </div>
 <div class="row">
     <div class="col-md-12">

@@ -186,27 +186,41 @@ export class DetailPortfolioComponent implements OnInit {
         return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
       }
       else if (c.group == "services"){
+        let service_node = { 
+          id: c.id,
+          value: 12, 
+          label: c.name, shape: 'hexagon', 
+          title: String(c.value),
+          font:{ color: fgText },                
+        };
         if (c.budget >= 0 )
-        {
-          //c.importance
-          return { id: c.id, value: 12, label: c.name, shape: 'hexagon', 
-                title: String(c.value),
-                font:{ color: fgText },
-                color: {background:success, border: primaryLight ,
-                highlight:{background:successLight, border: primaryLight},
-                hover:{background:successLight, border: primaryLight}}};
+        {    
+          Object.assign(service_node, {            
+            color: {
+              background: success, border: primaryLight ,
+              highlight:{background:successLight, border: primaryLight},
+              hover:{background:successLight, border: primaryLight}
+            }
+          });          
         }
         else{
-          return { id: c.id, value: 12, 
-                label: c.name, shape: 'hexagon',title: String(c.value),
-                font:{ color: fgText },
-                color: {background: danger, border: primaryLight,
-                highlight:{background: dangerLight, border: primaryLight},
-                hover:{background:dangerLight, border: primaryLight}}};
+          Object.assign(service_node, {            
+            color: 
+            {background: danger, border: primaryLight,
+              highlight:{background: dangerLight, border: primaryLight},
+              hover:{background:dangerLight, border: primaryLight}}
+          });                    
         }
-      }
+        if (service_node.id == `service_${this.portfolioId}`){
+          Object.assign(service_node, {
+            value: 16
+          });          
+        }
+        return service_node;
+      }      
       else if (c.group == "features"){
-        return { id: c.id, value: 10, label: c.name, group: "2", shape: 'dot', title: c.name,
+        return { id: c.id, value: 10, 
+                  label: `${c.name} [${c.value}]` , group: "2", shape: 'dot', title: c.name,
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
@@ -217,7 +231,9 @@ export class DetailPortfolioComponent implements OnInit {
       const ava = String(c.value);
       if (c.value < 0){
         return { font: {  align: 'top', color: fgText },
-              label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
+              label: ava, 
+              from: c.from, to: c.to,
+              color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
       }
       else if ( c.value >=0 && c.value < 0.01 )
       {
