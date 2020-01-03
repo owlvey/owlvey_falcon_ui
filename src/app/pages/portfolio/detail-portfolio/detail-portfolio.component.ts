@@ -69,7 +69,7 @@ export class DetailPortfolioComponent implements OnInit {
         editable: false
       },                     
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         type: 'number',
         filter: false,
         width: '3em',
@@ -410,7 +410,7 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false
       },    
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         type: 'number',
         filter: false,
         width: '3em',

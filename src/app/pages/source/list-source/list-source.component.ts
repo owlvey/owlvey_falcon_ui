@@ -30,31 +30,43 @@ export class ListSourceComponent implements OnInit {
       perPage: 50
     },
     columns: {      
+      id:{
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em'   
+      },
       name: {
         title: 'Name',
         type: 'string',
         filter: true
-      },            
+      },   
+      good: {
+        title: 'Good',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },         
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },           
+      group: {
+        title: 'Group',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },     
       kind: {
         title: 'Type',
         type: 'string',
         filter: true,
         width: '6em',
-      },             
-      good: {
-        title: 'Good',
-        type: 'number',
-        width: '2em',
-        filter: true
-      },             
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: true,
-        width: '2em',
-      },             
+      },                         
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         type: 'number',
         filter: true,
         width: '2em',

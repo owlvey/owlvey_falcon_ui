@@ -69,7 +69,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         editable: false
       },
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         type: 'number',
         filter: false,
         width: '3em',

@@ -78,7 +78,7 @@
                 </div>                
                 <div class="col-sm-2">
                   <div class="form-group">
-                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Quality</label>
                     <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                         nbInput fullWidth id="inputAvailability" placeholder="Availability"
                         class="input-full-width size-medium shape-rectangle">                 
@@ -86,17 +86,25 @@
                 </div>          
             </div>
             <div class="row" *ngIf="currentSource?.kind != 'Interaction'">
-                <div class="col-sm-4">                    
+                <div class="col-sm-2">                    
                     <div class="form-group">
                         <label for="txtKind" class="label col-sm-3 form-control-label">Type</label>
                         <input readonly="readonly" type="text" [value]="currentSource?.kind" 
                             nbInput fullWidth id="txtKind" placeholder="kind"
                             class="input-full-width size-medium shape-rectangle">                 
                       </div>
-                </div>                                             
+                </div>           
+                <div class="col-sm-2">                    
+                        <div class="form-group">
+                            <label for="txtKind" class="label col-sm-3 form-control-label">Group</label>
+                            <input readonly="readonly" type="text" [value]="currentSource?.group" 
+                                nbInput fullWidth id="txtKind" placeholder="group"
+                                class="input-full-width size-medium shape-rectangle">                 
+                          </div>
+                    </div>                                             
                 <div class="col-sm-2">
                   <div class="form-group">
-                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Quality</label>
                     <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                         nbInput fullWidth id="inputAvailability" placeholder="Availability"
                         class="input-full-width size-medium shape-rectangle">                 

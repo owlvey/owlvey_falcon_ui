@@ -21,8 +21,14 @@ export class SourcesGateway{
         return this.owlveyGateway.get(this.baseUrl + `sources?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
-    postSource(productId: number, name: String, kind: string): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources`, { productId: productId , name: name, kind: kind});
+    postSource(productId: number, name: String, kind: string, group: string): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sources`, 
+        { 
+            productId: productId,
+            name: name,
+            kind: kind,
+            group: group
+        });
     }
 
     deleteSource(sourceId: number): Observable<any> {
@@ -32,8 +38,8 @@ export class SourcesGateway{
     postSourceItem(model: any): Observable<any> {
         return this.owlveyGateway.post(this.baseUrl + `sourceItems`, model);
     }
-    postSourceItemUptime(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sourceItems/uptime`, model);
+    postSourceItemPercent(model: any): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sourceItems/percent`, model);
     }
 
     putSource(sourceId: number, model: any): Observable<any> {

@@ -10,11 +10,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 
 @Component({
-  selector: 'app-uptime-source',
-  templateUrl: './uptime-source.component.html',
-  styleUrls: ['./uptime-source.component.scss']
+  selector: 'app-percent-source',
+  templateUrl: './percent-source.component.html',
+  styleUrls: ['./percent-source.component.scss']
 })
-export class UptimeSourceComponent implements OnInit {
+export class PercentSourceComponent implements OnInit {
 
   isLoading: boolean = false;  
   actionConfirmWord: string;
@@ -73,7 +73,7 @@ export class UptimeSourceComponent implements OnInit {
         filter: true
       },      
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         width: '3rem',
         type: 'number',
         filter: true
@@ -122,7 +122,7 @@ export class UptimeSourceComponent implements OnInit {
 
     this.editForm = this.fb.group({      
       sourceId: [this.sourceId , Validators.required],
-      uptime: ['0.8', Validators.required],      
+      percent: [0.8, Validators.required],      
       start: [(d).toJSON().slice(0,10), Validators.required],
       end: [(new Date()).toJSON().slice(0,10), Validators.required]      
     });
@@ -162,7 +162,7 @@ export class UptimeSourceComponent implements OnInit {
     }    
     this.isLoading = true;    
     const model = this.editForm.value;    
-    let  defer = this.sourcesGateway.postSourceItemUptime(model);
+    let  defer = this.sourcesGateway.postSourceItemPercent(model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");
         this.isLoading = false;                

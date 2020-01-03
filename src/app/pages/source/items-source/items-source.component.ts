@@ -73,7 +73,7 @@ export class ItemsSourceComponent implements OnInit {
         filter: true
       },      
       availability: {
-        title: 'Availability',
+        title: 'Quality',
         width: '3rem',
         type: 'number',
         filter: true

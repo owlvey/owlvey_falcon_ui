@@ -20,10 +20,15 @@ export class CreateSourceComponent extends ProductBaseComponent {
 
   options = [
     { value: 'Interaction', label: 'Interaction' },
-    { value: 'Uptime', label: 'Uptime'},    
+    { value: 'Percent', label: 'Percent'},    
   ];
-  
 
+  groupOptions = [
+    {value: 'Availability', label: 'Availability' },
+    {value: 'Latency', label: 'Latency' }
+  ];
+  groupValue = "Availability"; 
+  
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router,
@@ -44,7 +49,7 @@ export class CreateSourceComponent extends ProductBaseComponent {
     }
     this.isLoading = true;
     const model = this.createForm.value;
-    let  defer = this.sourceGateway.postSource(this.productId, model.name, this.optionsValue);
+    let  defer = this.sourceGateway.postSource(this.productId, model.name, this.optionsValue, this.groupValue);
     defer.subscribe((data) => {
         this.toastr.success("Source Created Success");
         this.isLoading = false;

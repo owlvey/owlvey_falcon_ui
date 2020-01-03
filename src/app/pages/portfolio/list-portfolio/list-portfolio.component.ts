@@ -47,7 +47,7 @@ export class ListPortfolioComponent implements OnInit {
         editable: false
       },      
       availability: {
-        title: 'Availability',                
+        title: 'Quality',                
         type: 'number',
         filter: true,
         width: '3em',
