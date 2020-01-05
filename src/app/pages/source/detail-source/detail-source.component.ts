@@ -101,7 +101,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/pages/sources/items'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
     }
     else {
-      this.router.navigate(['/pages/sources/percent'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      this.router.navigate(['/pages/sources/proportion'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
     }
     
   }  

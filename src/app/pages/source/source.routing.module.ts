@@ -5,7 +5,7 @@ import { DetailSourceComponent } from './detail-source/detail-source.component';
 import { ListSourceComponent } from './list-source/list-source.component';
 import { ItemsSourceComponent } from './items-source/items-source.component';
 import { EditSourceComponent } from './edit-source/edit-source.component';
-import { PercentSourceComponent } from './percent-source/percent-source.component';
+import { ProportionSourceComponent } from './proportion-source/proportion-source.component';
 import { TreeMapSourceComponent } from './treemap-source/treemap-source.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'edit', component: EditSourceComponent},
   { path: 'detail', component: DetailSourceComponent},
   { path: 'items', component: ItemsSourceComponent},
-  { path: 'percent', component: PercentSourceComponent},
+  { path: 'proportion', component: ProportionSourceComponent},
   { path: 'treemap', component: TreeMapSourceComponent}
 ];
 

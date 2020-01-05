@@ -38,8 +38,8 @@ export class SourcesGateway{
     postSourceItem(model: any): Observable<any> {
         return this.owlveyGateway.post(this.baseUrl + `sourceItems`, model);
     }
-    postSourceItemPercent(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sourceItems/percent`, model);
+    postSourceItemProportion(model: any): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sourceItems/proportion`, model);
     }
 
     putSource(sourceId: number, model: any): Observable<any> {

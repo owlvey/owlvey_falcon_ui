@@ -41,9 +41,23 @@ export class ListFeatureComponent extends ProductBaseComponent {
         type: "string",
         filter: true,
         editable: false
-      },            
-      availability: {
+      },
+      quality: {
         title: "Quality",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },                       
+      availability: {
+        title: "Availability",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
+      latency: {
+        title: "Latency",
         type: "number",
         filter: true,
         width: "3em",

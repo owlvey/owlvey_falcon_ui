@@ -68,8 +68,22 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,        
         editable: false
       },                     
-      availability: {
+      quality: {
         title: 'Quality',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },        
+      latency: {
+        title: 'Latency',
         type: 'number',
         filter: false,
         width: '3em',

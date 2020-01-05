@@ -11,23 +11,42 @@
         </nb-card-header>
         <nb-card-body>          
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <div class="form-group">
-                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Quality</label>
+                      <label for="inputQuality" class="label col-sm-3 form-control-label">Quality</label>
+                      <input readonly="readonly" type="number" [value]="currentSource?.quality" 
+                          nbInput fullWidth id="inputQuality" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                  </div>
+                </div>                
+                <div class="col-sm-3">
+                  <div class="form-group">
+                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
                       <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                           nbInput fullWidth id="inputAvailability" placeholder=""
                           class="input-full-width size-medium shape-rectangle">                 
                   </div>
                 </div>                
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
-                        <input readonly="readonly" type="text" [value]="currentSource?.description" 
-                            nbInput fullWidth id="inputDescription" placeholder="Description"
-                            class="input-full-width size-medium shape-rectangle">                     
-                    </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                      <label for="inputLatency" class="label col-sm-3 form-control-label">Latency</label>
+                      <input readonly="readonly" type="number" [value]="currentSource?.latency" 
+                          nbInput fullWidth id="inputLatency" placeholder=""
+                          class="input-full-width size-medium shape-rectangle">                 
+                  </div>
                 </div>                
-              </div>    
+                
+            </div>    
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
+                    <input readonly="readonly" type="text" [value]="currentSource?.description" 
+                        nbInput fullWidth id="inputDescription" placeholder="Description"
+                        class="input-full-width size-medium shape-rectangle">                     
+                </div>
+              </div>                
+            </div>
               <!--
                 <div class="row">
                   <div class="col-sm-6">
@@ -73,7 +92,7 @@
 
 <div class="row">
     <div class="col-12">
-        <nb-card size="medium" style="height: 50rem">
+        <nb-card size="large" style="height: 65rem">
           <nb-tabset fullWidth>
             <nb-tab tabTitle="Service Level Indicators (SLI)" >              
                 <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">

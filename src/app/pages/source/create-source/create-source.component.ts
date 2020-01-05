@@ -20,7 +20,7 @@ export class CreateSourceComponent extends ProductBaseComponent {
 
   options = [
     { value: 'Interaction', label: 'Interaction' },
-    { value: 'Percent', label: 'Percent'},    
+    { value: 'Proportion', label: 'Proportion'},    
   ];
 
   groupOptions = [

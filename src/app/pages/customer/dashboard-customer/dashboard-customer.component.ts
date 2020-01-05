@@ -62,7 +62,7 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
       //color: [colors.danger, colors.primary, colors.info],
 
       this.customerGateway.getCustomerDashboard(this.startDate, this.endDate).subscribe(data=>{
-        debugger;
+        
         this.effectiveness = data.effectiveness;
         this.segments = data.categories;
         this.products = data.products.map(c=>{
