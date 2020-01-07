@@ -48,13 +48,7 @@ export class DetailPortfolioComponent implements OnInit {
       perPage: 20
     },
     columns: {            
-      sequence: {
-        title: 'IX',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false
-      },   
+      
       id: {
         title: 'Id',
         type: 'number',
