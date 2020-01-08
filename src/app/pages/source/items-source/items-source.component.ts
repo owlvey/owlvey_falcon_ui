@@ -92,7 +92,35 @@ export class ItemsSourceComponent implements OnInit {
     },
   };
 
+
+  cluesSettings = {    
+    mode: 'external',
+    actions:{      
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },    
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'string',
+        width: '9rem',
+        filter: true
+      },      
+      value: {
+        title: 'Value',
+        type: 'number',
+        width: '9rem',
+        filter: true
+      }                  
+    },
+  };
+
   source: LocalDataSource = new LocalDataSource();
+  cluesSource : LocalDataSource = new LocalDataSource();
   startDate: Date;
   endDate: Date;
   constructor(
@@ -171,4 +199,14 @@ export class ItemsSourceComponent implements OnInit {
       });
   }
 
+  onUserRowSelect(event): void {        
+    const sourceItemId = event.data.id;    
+    this.sourcesGateway.getSourceItemById(sourceItemId).subscribe(data=>{
+      let tmpSource = [ ];
+      for (let key in data.clues) {
+        tmpSource.push( { name: key, value: data.clues[key] });
+      }
+      this.cluesSource.load(tmpSource);
+    });    
+  }
 }

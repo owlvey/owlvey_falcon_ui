@@ -139,3 +139,17 @@
 </nb-card>
 
 
+<nb-card>
+    <nb-card-header>
+      Clues
+    </nb-card-header>    
+    <nb-card-body>        
+        <div class="row">
+          <div class="col-sm-12">
+              <div echarts [options]="clueBarOptions" style="height: 30rem;" class="echart" (chartInit)="onClueBar($event)"></div>
+          </div>
+        </div>       
+    </nb-card-body>  
+  </nb-card>
+  
+

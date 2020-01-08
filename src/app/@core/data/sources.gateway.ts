@@ -59,6 +59,10 @@ export class SourcesGateway{
         return this.owlveyGateway.get(this.baseUrl + `sourceItems?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
+    getSourceItemById(sourceItemId: number) : Observable<any> {
+        return this.owlveyGateway.get(this.baseUrl + `sourceItems/${sourceItemId}`);
+    }
+
     deleteSourceItem(sourceItemId: number): Observable<any>{
         return this.owlveyGateway.delete(this.baseUrl + `sourceItems/${sourceItemId}`);
     }

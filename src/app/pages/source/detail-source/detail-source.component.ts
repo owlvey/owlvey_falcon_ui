@@ -55,7 +55,37 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
 
   getSource(){    
     this.sourcesGateway.getSourceWithAvailability(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
-      this.currentSource = data;            
+      this.currentSource = data;      
+      let tmpSource = [ ['tvalue', 'name'] ];
+      for (let key in this.currentSource.clues) {
+        let value = this.currentSource.clues[key];
+        tmpSource.push([ value, key]);
+      }
+      let temporalDs = { source: tmpSource };
+      this.clueBarOptions = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+              type: 'shadow'
+          }
+        },
+        dataset: temporalDs,
+        grid: {containLabel: true},
+        xAxis: {name: 'amount'},
+        yAxis: {type: 'category'},
+        
+        series: [
+            {
+                type: 'bar',
+                encode: {
+                    // Map the "amount" column to X axis.
+                    x: 'amount',
+                    // Map the "product" column to Y axis
+                    y: 'name'
+                }
+            }
+        ]
+      };
     });    
   }
   getDaily(){
@@ -136,4 +166,14 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   onCalendar(ec) {
     this.echartCalendarInstance = ec;
   }  
+
+
+  echartClueBarInstance : any; 
+  clueBarOptions: any ;
+
+
+  onClueBar(ec){
+    this.echartClueBarInstance = ec;
+  }
+
 }
