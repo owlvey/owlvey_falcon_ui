@@ -59,7 +59,7 @@ export class DashboardProductComponent extends ProductBaseComponent implements A
             }
             else {
                 if (c.percentage === 0){
-                  c.percentage = 100;
+                  c.percentage = 0;
                 }
                 c.status = 'danger';
                 c.textStatusClass = 'text-danger'

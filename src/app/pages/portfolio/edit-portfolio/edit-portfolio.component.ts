@@ -205,6 +205,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       this.editForm.get("slo").setValue(data.slo);
       this.editForm.get("leaders").setValue(data.leaders);
       this.editForm.get("aggregation").setValue(data.aggregation);      
+      this.editForm.get("group").setValue(data.group);      
       this.source.load(data.features);
     });
   }
@@ -222,6 +223,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       slo: ['', Validators.required],
       leaders: [''],
       aggregation: [''],
+      group: ['']
     });
   }
   onDelete(event){    

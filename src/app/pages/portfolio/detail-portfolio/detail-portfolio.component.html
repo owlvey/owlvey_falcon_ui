@@ -35,23 +35,9 @@
                         <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
                         <input readonly="readonly" type="number" [value]="currentSource.slo" 
                             nbInput fullWidth id="inputSLO" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">
-                      
-                      </div>
-  
-                  </div>
-                  <!-- 
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="inputSLO" class="label form-control-label"> Estimated Feature SLO</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.featureSlo" 
-                            nbInput fullWidth id="inputSLO" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">                     
-                      </div>
-                    </div>
-  
-                  -->
-                  
+                            class="input-full-width size-medium shape-rectangle">                      
+                      </div>  
+                  </div>                                    
                     <div class="col-sm-2">
                         <div class="form-group">
                           <label for="inputBudget" class="label col-sm-3 form-control-label">Budget</label>
@@ -68,6 +54,14 @@
                               nbInput fullWidth id="inputImpact" placeholder="Availability"
                               class="input-full-width size-medium shape-rectangle">
                         </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="groupText" class="label form-control-label"> Group </label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.group" 
+                            nbInput fullWidth id="groupText" placeholder="group"
+                            class="input-full-width size-medium shape-rectangle">                     
+                      </div>
                     </div>
               </div>
          
