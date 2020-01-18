@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.startDate = new Date();
         this.startDate.setDate(this.startDate.getDate() - 15); // Policy time
         this.endDate = new Date();
-        this.startDate.setDate(this.endDate.getDate() - 1); // One Day Delay
+        this.endDate.setDate(this.endDate.getDate() - 1); // One Day Delay
         this.onControlChangeRouter();
       }
       else{

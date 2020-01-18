@@ -25,6 +25,7 @@ import {
   NbUserModule,
 } from '@nebular/theme';
 import { UserModule } from './user/user.module';
+import { TooltipComponent } from './common/components/tooltipComponent';
 
 @NgModule({
   imports: [
@@ -41,10 +42,13 @@ import { UserModule } from './user/user.module';
     UserModule,
     HomeModule,
     SyncModule,
+    NbIconModule,
   ],
   declarations: [
     PagesComponent,
+    TooltipComponent
   ],
+  entryComponents: [TooltipComponent],
 })
 export class PagesModule {
 

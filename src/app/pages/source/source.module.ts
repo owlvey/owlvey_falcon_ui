@@ -23,20 +23,19 @@ import {
   NbCheckboxModule,
   NbDatepickerModule, NbIconModule,
   NbInputModule,
+  NbTooltipModule,
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
   NbTreeGridModule,  
 } from '@nebular/theme';
 
-
-
 @NgModule({
   declarations: [CreateSourceComponent, EditSourceComponent, DetailSourceComponent, ListSourceComponent, ItemsSourceComponent, 
     ProportionSourceComponent, TreeMapSourceComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, 
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-     NbCardModule, ControlsModule, NbRadioModule]
+     NbCardModule, ControlsModule, NbRadioModule, NbTooltipModule, NbIconModule],  
 })
 export class SourceModule { }
 

@@ -7,6 +7,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
+import { TooltipComponent } from '../../common/components/tooltipComponent';
 
 
 @Component({
@@ -111,12 +112,13 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         sort:true,
         width: '3em',
         sortDirection: 'asc'     
-      },
+      },      
       source: {
-        title: 'Source',
-        type: 'string',
-        filter: false,        
-      },
+        title: 'Name',
+        filter: false,
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },   
       group: {
         title: 'Group',
         type: 'string',
@@ -205,7 +207,14 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   getSource(){
     this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(feature=>{
       this.currentSource = feature;      
-      this.source.load(feature.indicators);
+
+      const sources = feature.indicators.map(item=>{
+        item.name = item.source;
+        item.tooltip = item.description;
+        return item;
+      });
+
+      this.source.load(sources);
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
       this.portfolioSource.load(feature.services);

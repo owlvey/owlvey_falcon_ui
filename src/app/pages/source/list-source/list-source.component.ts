@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, NgModule, Input } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
+import { TooltipComponent } from '../../common/components/tooltipComponent';
 
 @Component({
   selector: 'app-list-source',
@@ -38,9 +39,10 @@ export class ListSourceComponent implements OnInit {
       },
       name: {
         title: 'Name',
-        type: 'string',
-        filter: true
+        type: 'custom',
+        renderComponent: TooltipComponent
       },   
+
       good: {
         title: 'Good',
         type: 'number',
@@ -108,6 +110,10 @@ export class ListSourceComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
+        const target = sources.map(item=>{
+          item.tooltip = item.description;
+          return item;
+        });
         this.source.load(sources);
       });
     });     
