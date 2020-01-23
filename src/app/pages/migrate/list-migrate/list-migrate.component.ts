@@ -74,6 +74,27 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       });
     }
 
+    onBackupMetadata(){
+      this.customerGateway.backupMetadata().subscribe(data=>{        
+        const blob = new Blob([data], { type: data.type });
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = "owlvey-metadata-backup.xlsx";
+        anchor.href = url;
+        anchor.click();
+      });
+    }
+    onBackupDataV2(){
+      this.customerGateway.backupData().subscribe(data=>{        
+        const blob = new Blob([data], { type: data.type });
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = "owlvey-backup.xlsx";
+        anchor.href = url;
+        anchor.click();
+      });
+    }
+
     onExportMetadata(){
 
       //window.location.href='http://example.com/myuri/report?param=x';

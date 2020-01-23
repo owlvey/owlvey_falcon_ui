@@ -17,8 +17,12 @@
       <nb-card-header>Backups </nb-card-header>
       <nb-card-body>          
           <div class="buttons-row">
-              <button type="submit" nbButton status="primary" (click)="onExportMetadata()">Export Metadata</button>               
-              <button type="submit" nbButton status="primary" (click)="onDataBackup()">Export Data</button>               
+              <button type="submit" nbButton status="primary" (click)="onExportMetadata()">Export Metadata Legacy</button>               
+              <button type="submit" nbButton status="primary" (click)="onDataBackup()">Export Data Legacy </button>               
+
+              <button type="submit" nbButton status="primary" (click)="onBackupMetadata()">Backup Metadata</button>               
+              <button type="submit" nbButton status="primary" (click)="onBackupDataV2()">Backup Data</button>               
+              
           </div>                      
       </nb-card-body>
     </nb-card>

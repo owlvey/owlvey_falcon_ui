@@ -69,6 +69,12 @@ export class CustomersGateway {
   exportData(customerId: number): Observable<any>{
     return this.http.get(this.baseUrl + `migrations/${customerId}/export/data/excel`, { responseType: 'blob'});
   }
+  backupMetadata(): Observable<any>{
+    return this.http.get(this.baseUrl + `migrations/backup/metadata`, { responseType: 'blob'});
+  }
+  backupData(): Observable<any>{
+    return this.http.get(this.baseUrl + `migrations/backup/data`, { responseType: 'blob'});
+  }
 
   getCustomerDashboard(start: Date, end: Date): Observable<any> {
     const key = `customers/dashboard/products/services?start=${start.toISOString()}&end=${end.toISOString()}`;
