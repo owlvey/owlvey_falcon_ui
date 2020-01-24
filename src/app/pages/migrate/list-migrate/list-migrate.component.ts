@@ -13,7 +13,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./list-migrate.component.scss']
 })
 export class ListMigrateComponent extends CustomerBaseComponent {
+
   form: FormGroup;
+  formV2: FormGroup;
+
   loading: boolean = false;
   
   @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
@@ -57,6 +60,8 @@ export class ListMigrateComponent extends CustomerBaseComponent {
         this.loading = false;
       });
     }
+
+    
   
     clearFile() {
       this.form.get('data').setValue(null);
@@ -111,5 +116,31 @@ export class ListMigrateComponent extends CustomerBaseComponent {
         anchor.click();
         body.removeChild(anchor);
       });
+    }
+
+
+    onSubmitV2(){
+      const formModel = this.prepareSaveV2();
+      this.loading = true;
+
+      this.customerGateway.importMetadata(this.customerId, formModel).subscribe(data=>{        
+        alert('done!');
+        this.loading = false;
+      }, (error:any) => {
+        this.loading = false;
+      });
+    }
+
+    private prepareSaveV2(): any {
+      let input = new FormData();      
+      input.append('data', this.formV2.get('data').value);
+      return input;
+    }
+    onFileChangeV2(event) {
+      //https://nehalist.io/uploading-files-in-angular2/
+      if(event.target.files.length > 0) {
+        let file = event.target.files[0];
+        this.formV2.get('data').setValue(file);
+      }
     }
 }
