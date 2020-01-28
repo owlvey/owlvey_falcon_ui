@@ -28,6 +28,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
   options = [
     { value: 'Minimun', label: 'Minimun (Group)' },
     { value: 'Multiplication', label: 'Multiplication (Sequence)'},    
+    { value: 'Average', label: 'Average'},    
   ];
 
 

@@ -44,14 +44,22 @@
 
             
             <div class="row" *ngIf="currentSource?.kind == 'Interaction'">
-                <div class="col-sm-4">                    
+                <div class="col-sm-2">                    
+                    <div class="form-group">
+                        <label for="txtGroup" class="label col-sm-3 form-control-label">Group</label>
+                        <input readonly="readonly" type="text" [value]="currentSource?.group" 
+                            nbInput fullWidth id="txtGroup" placeholder="group"
+                            class="input-full-width size-medium shape-rectangle">                 
+                      </div>
+                </div>              
+                <div class="col-sm-2">                    
                     <div class="form-group">
                         <label for="txtKind" class="label col-sm-3 form-control-label">Type</label>
                         <input readonly="readonly" type="text" [value]="currentSource?.kind" 
                             nbInput fullWidth id="txtKind" placeholder="kind"
                             class="input-full-width size-medium shape-rectangle">                 
                       </div>
-                </div>              
+                </div>                              
                 <div class="col-sm-2">                    
                     <div class="form-group">
                         <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
