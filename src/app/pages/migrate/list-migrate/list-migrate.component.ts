@@ -2,17 +2,18 @@ import { Component, OnInit, ViewChildren, ViewChild, ElementRef } from '@angular
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
-import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { NbThemeService } from '@nebular/theme';
 import 'rxjs/Rx' ;
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BaseComponent } from '../../common/components/base-component';
 
 @Component({
   selector: 'app-list-migrate',
   templateUrl: './list-migrate.component.html',
   styleUrls: ['./list-migrate.component.scss']
 })
-export class ListMigrateComponent extends CustomerBaseComponent {
+export class ListMigrateComponent extends BaseComponent {
+  
 
   form: FormGroup;
   formV2: FormGroup;
@@ -20,6 +21,8 @@ export class ListMigrateComponent extends CustomerBaseComponent {
   loading: boolean = false;
   
   @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
+  
+  public customerId : number; 
 
   constructor(
     protected location: Location,
@@ -27,14 +30,27 @@ export class ListMigrateComponent extends CustomerBaseComponent {
     protected theme: NbThemeService,
     protected router: Router, 
     protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {       
-      super(location, customerGateway, theme, router, activatedRoute);
+      super(location, theme, router, activatedRoute);
       this.createForm();
+      
     }   
+
+    onChangeQueryParameters(paramMap: ParamMap): void {
+      this.customerId = parseInt(paramMap.get('customerId'));        
+    }
+    onNgOnInit(): void {
+      
+    }
+
     createForm() {
       this.form = this.fb.group({        
         data: null
       });
+      this.formV2 = this.fb.group({
+        data: null
+      });
     }
+    
 
     onFileChange(event) {
       //https://nehalist.io/uploading-files-in-angular2/
@@ -73,7 +89,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
         const blob = new Blob([data], { type: data.type });
         const url= window.URL.createObjectURL(blob);
         var anchor = document.createElement("a");
-        anchor.download = this.currentCustomer.name + "-data.xlsx";
+        anchor.download = "owlvey-backup-data.xlsx";
         anchor.href = url;
         anchor.click();
       });
@@ -109,7 +125,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
 
         var anchor = document.createElement("a");
         var body = document.getElementsByTagName('body')[0];
-        anchor.download = this.currentCustomer.name + "-metadata.xlsx";
+        anchor.download = "owlvey-metadata.xlsx";
         anchor.href = url;
         anchor.target = "_blank";
         body.appendChild(anchor);
@@ -123,7 +139,7 @@ export class ListMigrateComponent extends CustomerBaseComponent {
       const formModel = this.prepareSaveV2();
       this.loading = true;
 
-      this.customerGateway.importMetadata(this.customerId, formModel).subscribe(data=>{        
+      this.customerGateway.restore(formModel).subscribe( _ =>{        
         alert('done!');
         this.loading = false;
       }, (error:any) => {
