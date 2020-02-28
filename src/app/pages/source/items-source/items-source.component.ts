@@ -42,18 +42,14 @@ export class ItemsSourceComponent implements OnInit {
       confirmDelete: true,                  
     },
     columns: {      
-      start: {
-        title: 'Start',
+      target: {
+        title: 'Target',
         type: 'date',
         width: '9rem',
-        filter: true
-      },      
-      end: {
-        title: 'End',
-        type: 'date',
-        width: '9rem',
-        filter: true
-      },            
+        filter: true,
+        sort: true,
+        sortDirection: 'asc'
+      },                    
       good: {
         title: 'Good',
         width: '6rem',
@@ -147,8 +143,8 @@ export class ItemsSourceComponent implements OnInit {
 
     this.editForm = this.fb.group({      
       sourceId: [this.sourceId , Validators.required],
-      good: ['800', Validators.required],
-      total: ['1000', Validators.required],
+      good: [800, Validators.required],
+      total: [1000, Validators.required],
       start: [(new Date()).toJSON().slice(0,10), Validators.required],
       end: [(new Date()).toJSON().slice(0,10), Validators.required]      
     });
@@ -159,8 +155,7 @@ export class ItemsSourceComponent implements OnInit {
       this.currentSource = source;
       this.sourcesGateway.getSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
         const transform  = data.map(c =>{ 
-          c.start =  this.formatService.getGridDateFromDate(new Date(c.start));
-          c.end = this.formatService.getGridDateFromDate(new Date(c.end));
+          c.target =  this.formatService.getGridDateFromDate(new Date(c.target));          
           c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));
           c.diff = c.total - c.good;
           return c;
