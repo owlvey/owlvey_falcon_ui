@@ -3,19 +3,77 @@
     <nb-card>
       <nb-card-header>
         <div class="d-flex align-content-center">
-            <h5>Organizations Dashboard</h5>                                
+            <h5>Organizations Performance</h5>                                
         </div>               
       </nb-card-header>
       <nb-card-body>          
         <div style="margin-bottom: 10rem;">
             <div *ngFor="let currentProduct of products">
                 <div  class="row" >
-                    <div class="col-md-2">
-                      <h6> {{ currentProduct.customer }} </h6>
-                      <b> Product: </b><span> {{ currentProduct.product }} </span> <br/>
-                      <b> Effectivenes: </b> <span style="font-weight: bolder" [ngClass]="currentProduct.textClass"> {{ currentProduct.effectiveness * 100 }}% </span> <br/>
-                      <span> Total: {{ currentProduct.total }} </span> <br/>
-                      <span> Good: {{ currentProduct.good }} </span> <br/>
+                    <div class="col-md-2">                      
+                        <div class="row">
+                          <h6>
+                            {{ currentProduct.customer }} | {{ currentProduct.product }} 
+                          </h6> 
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3" style="padding-top: 2rem;">
+                            <p style="display: inline-flex;">
+                              <span style="font-size: 2.2rem; font-weight: bold;"  [ngClass]="currentProduct.textClass">
+                                {{ currentProduct.effectiveness * 100 | number:'1.0-0' }}
+                              </span>
+                              <span style="font-weight: bold;"  [ngClass]="currentProduct.textClass">
+                                %
+                              </span>                              
+                            </p>                            
+                          </div>
+                          <div class="col-md-9">
+                            <div class='row'>                        
+                              <div class="col-md-10">
+                                Services:
+                              </div>
+                              <div class="col-md-2">
+                                <span style="font-weight: bolder"> {{ currentProduct.total }} </span> 
+                              </div>                        
+                            </div>            
+                            <div class='row'>                        
+                            <div class="col-md-10">
+                              Achieve SLO:
+                            </div>
+                            <div class="col-md-2">
+                              <span style="font-weight: bolder"> {{ currentProduct.good  }} </span> 
+                            </div>                        
+                          </div>                        
+                          <div class='row'>
+                            <div class="col-md-10">
+                              Effectivenes:
+                            </div>
+                            <div class="col-md-2">
+                              <span style="font-weight: bolder" [ngClass]="currentProduct.textClass"> {{ currentProduct.effectiveness * 100 | number:'1.1-2' }}% </span> 
+                            </div>                        
+                          </div>
+
+
+                          <div class='row'>
+                            <div class="col-md-10">
+                              Previous:
+                            </div>
+                            <div class="col-md-2">
+                              <span style="font-weight: bolder"> {{ currentProduct.previous * 100 | number:'1.1-2' }}% </span> 
+                            </div>                        
+                          </div>
+
+                          <div class='row'>
+                            <div class="col-md-10">
+                              Before:
+                            </div>
+                            <div class="col-md-2">
+                              <span style="font-weight: bolder"> {{ currentProduct.before * 100 | number:'1.1-2' }}% </span> 
+                            </div>                        
+                          </div>
+
+                        </div>
+                      </div>                      
                     </div>
                     <div class="col-md-10" style="padding-top: 1rem;;">                   
                         <div echarts [options]="currentProduct.options" style="height: 10rem;" class="echart">

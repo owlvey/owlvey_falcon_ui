@@ -76,6 +76,20 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      previous: {
+        title: 'Prev',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        editable: false
+      },
+      delta: {
+        title: 'Delta',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        editable: false
+      },
       group:{
         title: 'Group',
         type: 'string',
@@ -96,15 +110,7 @@ export class ListPortfolioComponent implements OnInit {
     },
   };
 
-  /*
-  mttms:{
-        title: 'MTTM',
-        type: 'string',
-        filter: true,
-        width: '10rem',
-        editable: false
-      },     
-  */ 
+
 
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
@@ -139,6 +145,7 @@ export class ListPortfolioComponent implements OnInit {
         const data = JSON.parse(JSON.stringify(portfolios))
         let newData = data.map(c=> {  
           c.budgetValue = c.budget;
+          c.delta =  Math.round( ((c.availability - c.previous) * 1000) ) /1000;          
           if(c.budget < 0) {
             c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
           } else {

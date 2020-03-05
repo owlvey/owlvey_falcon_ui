@@ -42,7 +42,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit(){    
-    //this.themeService.changeTheme("dark"); // change theme
+    this.themeService.changeTheme("dark"); // change theme
     this.menuService.onItemClick().subscribe((e) => {      
       
       const currentCustomer =  parseInt(this.getParameterByName("customerId"));
@@ -116,7 +116,7 @@ export class PagesComponent implements OnInit {
         this.router.navigate(['/pages/exports'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
-      if (e.item.title == 'Organization Dashboard'){
+      if (e.item.title == 'Organization Performance'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/customers/dashboard'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
@@ -128,13 +128,13 @@ export class PagesComponent implements OnInit {
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
       }
 
-      if (e.item.title == 'Product Dashboard'){
+      if (e.item.title == 'Product Performance'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/dashboard'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
       }
 
-      if (e.item.title == 'Operation Dashboard'){
+      if (e.item.title == 'Operation Performance'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/products/operation'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });

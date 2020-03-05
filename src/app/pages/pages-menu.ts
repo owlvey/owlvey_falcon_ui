@@ -15,15 +15,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Organization Dashboard',
+    title: 'Organization Performance',
     icon: 'home-outline',
   },
   {
-    title: 'Product Dashboard',
+    title: 'Product Performance',
     icon: 'home-outline',
   },
   {
-    title: 'Operation Dashboard',
+    title: 'Operation Performance',
     icon: 'home-outline',
   },
   {

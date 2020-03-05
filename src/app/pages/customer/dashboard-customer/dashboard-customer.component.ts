@@ -66,13 +66,13 @@ export class DashboardCustomerComponent extends BaseComponent implements OnDestr
         this.effectiveness = data.effectiveness;
         this.segments = data.categories;
         this.products = data.products.map(c=>{
-
+          
           if (c.effectiveness < 1){
             c.textClass = "text-danger";
           }
           else {
             c.textClass = "text-success";
-          }
+          }          
 
           const targetData = c.groups.map(d => {
             const temp = {
