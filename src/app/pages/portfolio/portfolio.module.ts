@@ -23,6 +23,7 @@ import {
   NbUserModule,
   NbTreeGridModule,
   NbTabsetModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { VisModule } from 'ngx-vis';
 
@@ -40,6 +41,7 @@ import { VisModule } from 'ngx-vis';
      NbRadioModule,
      NbButtonModule,
      NbTabsetModule,
+     NbAlertModule,
      NbCardModule, ControlsModule]
 })
 export class PortfolioModule { }

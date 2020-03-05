@@ -110,7 +110,9 @@ export class ListPortfolioComponent implements OnInit {
     },
   };
 
-
+  qualityAverage: number = 0;
+  qualityPrevious: number = 0;
+  qualityDelta: number = 0;
 
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
@@ -145,6 +147,8 @@ export class ListPortfolioComponent implements OnInit {
         const data = JSON.parse(JSON.stringify(portfolios))
         let newData = data.map(c=> {  
           c.budgetValue = c.budget;
+          this.qualityAverage += c.availability;
+          this.qualityPrevious += c.previous;
           c.delta =  Math.round( ((c.availability - c.previous) * 1000) ) /1000;          
           if(c.budget < 0) {
             c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
@@ -153,6 +157,12 @@ export class ListPortfolioComponent implements OnInit {
           }
           return c;
         });        
+        if (newData){          
+          this.qualityAverage = Math.round(this.qualityAverage / newData.length * 1000) / 1000;
+          this.qualityPrevious = Math.round(this.qualityPrevious / newData.length * 1000) / 1000;
+          this.qualityDelta =Math.round( (this.qualityAverage - this.qualityPrevious) * 1000) / 1000;
+        }
+        
         this.source.load(newData);
       });
     });     
