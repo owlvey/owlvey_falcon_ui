@@ -139,25 +139,36 @@
       </div>      
       <div class="row">
         <div class="col-sm-12">
-            <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+            <div echarts [options]="calendarOptions" style="height: 20rem;" class="echart" (chartInit)="onCalendar($event)"></div>
         </div>
       </div>       
   </nb-card-body>
 
 </nb-card>
-
-
 <nb-card>
     <nb-card-header>
-      Clues
+      Features
     </nb-card-header>    
     <nb-card-body>        
         <div class="row">
           <div class="col-sm-12">
-              <div echarts [options]="clueBarOptions" style="height: 30rem;" class="echart" (chartInit)="onClueBar($event)"></div>
+            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
           </div>
         </div>       
     </nb-card-body>  
-  </nb-card>
-  
-
+</nb-card>
+<div style="display: none" >
+    <nb-card>
+        <nb-card-header>
+          Clues
+        </nb-card-header>    
+        <nb-card-body>        
+            <div class="row">
+              <div class="col-sm-12">
+                  <div echarts [options]="clueBarOptions" style="height: 30rem;" class="echart" (chartInit)="onClueBar($event)"></div>
+              </div>
+            </div>       
+        </nb-card-body>  
+    </nb-card>    
+</div>

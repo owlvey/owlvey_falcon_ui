@@ -6,6 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -27,6 +28,31 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   series: Array<any> = [];
   startDate: Date = new Date();
   endDate: Date;  
+
+
+  settings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 20
+    },
+    columns: {      
+      id:{
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em'   
+      },
+      name: {
+        title: 'Name',        
+        filter: true,
+      },   
+    },
+  };
+  source: LocalDataSource = new LocalDataSource();
   
   constructor(
     private location: Location,
@@ -56,6 +82,12 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   getSource(){    
     this.sourcesGateway.getSourceWithAvailability(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSource = data;      
+      
+      let tmpFeatures = [];
+      Object.keys(this.currentSource.features).forEach( k => tmpFeatures.push( { "id": this.currentSource.features[k], "name": k }) );
+      this.source.load(tmpFeatures);
+
+
       let tmpSource = [ ['tvalue', 'name'] ];
       for (let key in this.currentSource.clues) {
         let value = this.currentSource.clues[key];
@@ -89,39 +121,86 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     });    
   }
   getDaily(){
-    this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
-      this.series = data.items;   
-      
-      const datas = this.series.map(c=>{        
-        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
-      });      
-      
-      this.calendarOptions = {
-        tooltip: {
-          formatter: function (params) {                            
-              return params.value[0] + ', availability:' + params.value[1];
-          }
-        },
-        visualMap: {
-            show: false,
-            inRange: {
-              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
-              opacity: 0.8
-            },
-            min: 0,
-            max: 100
-        },
-        calendar: {
-            range: String((new Date()).getFullYear())
-        },
-        series: {
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            data: datas,        
-        }
-      };
 
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      const echartsColors: any = config.variables.echarts;
+
+
+
+      this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
+        this.series = data.items;   
+        
+        const datas = this.series.map(c=>{        
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
+        });      
+        
+        this.calendarOptions = {
+          title: {         
+            top: 30,   
+            left: 'center',
+            text: 'Source Calendar',
+            textStyle: {
+                color: echartsColors.textColor
+            }
+          },
+          tooltip: {
+            formatter: function (params) {                            
+                return params.value[0] + ', availability: ' + params.value[1];
+            }
+          },
+          visualMap: {
+              show: true,
+              showLabel: true,
+              inRange: {
+                color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
+                opacity: 0.8
+              },
+              type: 'piecewise',
+              orient: 'horizontal',
+              left: 'center',
+              textStyle: {
+                color: echartsColors.textColor
+              },
+              top: 65,
+              min: 0,
+              max: 100
+          },
+          calendar: [{
+              top: 120,
+              range: String((new Date()).getFullYear()),              
+              textStyle: {
+                color: echartsColors.textColor
+              },              
+              yearLabel: {                
+                textStyle: {                    
+                    color: echartsColors.textColor
+                }
+              },
+              monthLabel:{
+                color: echartsColors.textColor                
+              },
+              dayLabel: {                      
+                color: echartsColors.textColor                
+              },
+          }],
+          series: {
+              type: 'heatmap',
+              coordinateSystem: 'calendar',
+              data: datas,        
+          }
+        };
+  
+      });
+
+      //color: [colors.danger, colors.primary, colors.info],
+      //color: echarts.axisLineColor,
+      //    color: echarts.splitLineColor,
+      //              color: echarts.textColor,
+      
     });
+
+    
   }
 
   
@@ -174,6 +253,11 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
 
   onClueBar(ec){
     this.echartClueBarInstance = ec;
+  }
+  onUserRowSelect(event): void {    
+    const featureId = event.data.id;
+    let queryParams: Params = { featureId : featureId };
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
 
 }

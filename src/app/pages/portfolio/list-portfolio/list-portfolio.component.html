@@ -4,11 +4,8 @@
       <nb-card-header>
           <div class="d-flex align-content-center">
               <h5> {{ currentProduct?.name }}  </h5>
-
-              <label class="ml-auto mr-2 text-info">
-                Quality Average: {{ qualityAverage }}| Previous Quality Average: {{qualityPrevious}} | Delta: {{ qualityDelta }}
-              </label>              
-              <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>
+                            
+              <button type="button" nbButton status="primary" (click)="onCreate($event)" class="ml-auto mr-2"> Create </button>
               
           </div>
       </nb-card-header>  

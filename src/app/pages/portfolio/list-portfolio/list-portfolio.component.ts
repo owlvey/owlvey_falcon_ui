@@ -39,6 +39,13 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
+      budget: {
+        title: 'Status',
+        type: 'html',
+        filter: true,
+        width: '2em',
+        editable: false
+      },  
       slo: {
         title: 'SLO',
         type: 'number',
@@ -62,13 +69,7 @@ export class ListPortfolioComponent implements OnInit {
         width: '2em',
         editable: false
       },
-      budget: {
-        title: 'Status',
-        type: 'html',
-        filter: true,
-        width: '2em',
-        editable: false
-      },                  
+                  
       deploy: {
         title: 'Action',
         type: 'string',
@@ -76,20 +77,33 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
-      previous: {
-        title: 'Prev',
-        type: 'number',
+      previousHtml: {
+        title: 'Previous',
+        type: 'html',
         filter: true,
         width: '2em',
-        editable: false
-      },
-      delta: {
-        title: 'Delta',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },
+        editable: false,
+        compareFunction:(direction: any, a: any, b: any) => {
+          debugger;
+          let first = typeof a === 'string' ? a.replace("<i class='fas fa-arrow-down text-danger text-center d-block'>", "")
+                                              .replace("<i class='fas fa-arrow-up text-success text-center d-block'>", "")
+                                              .replace("</i>","") : a;
+          let second = typeof b === 'string' ? b.replace("<i class='fas fa-arrow-down text-danger text-center d-block'>", "")
+                                              .replace("<i class='fas fa-arrow-up text-success text-center d-block'>", "")
+                                              .replace("</i>","") : b;
+
+          let number_a = Number(first);
+          let number_b = Number(second);
+          
+          if (number_a < number_b) {
+              return -1 * direction;
+          }
+          if (number_a > number_b) {
+              return direction;
+          }
+          return 0;
+        },
+      },      
       group:{
         title: 'Group',
         type: 'string',
@@ -150,6 +164,15 @@ export class ListPortfolioComponent implements OnInit {
           this.qualityAverage += c.availability;
           this.qualityPrevious += c.previous;
           c.delta =  Math.round( ((c.availability - c.previous) * 1000) ) /1000;          
+
+          if (c.delta < 0){
+            c.previousHtml = `<i class='fas fa-arrow-down text-danger text-center d-block'> ${c.delta} </i>`;
+          }
+          else {
+            c.previousHtml = `<i class='fas fa-arrow-up text-success text-center d-block'> ${c.delta} </i>`;
+          }
+
+
           if(c.budget < 0) {
             c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
           } else {
