@@ -28,7 +28,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   series: Array<any> = [];
   startDate: Date = new Date();
   endDate: Date;  
-
+  calendarSerie: Array<any> = [];
 
   settings = {    
     actions:{
@@ -60,7 +60,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     private productGateway: ProductsGateway,
     private sourcesGateway: SourcesGateway,    
     private toastr: NbToastrService,
-    private theme: NbThemeService,
+    private theme: NbThemeService, 
     private router: Router, 
     private activatedRoute: ActivatedRoute) {       
       this.endDate = new Date();
@@ -126,77 +126,13 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
 
-
-
-      this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
+      this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{              
         this.series = data.items;   
-        
-        const datas = this.series.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
-        });      
-        
-        this.calendarOptions = {
-          title: {         
-            top: 30,   
-            left: 'center',
-            text: 'Source Calendar',
-            textStyle: {
-                color: echartsColors.textColor
-            }
-          },
-          tooltip: {
-            formatter: function (params) {                            
-                return params.value[0] + ', availability: ' + params.value[1];
-            }
-          },
-          visualMap: {
-              show: true,
-              showLabel: true,
-              inRange: {
-                color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
-                opacity: 0.8
-              },
-              type: 'piecewise',
-              orient: 'horizontal',
-              left: 'center',
-              textStyle: {
-                color: echartsColors.textColor
-              },
-              top: 65,
-              min: 0,
-              max: 100
-          },
-          calendar: [{
-              top: 120,
-              range: String((new Date()).getFullYear()),              
-              textStyle: {
-                color: echartsColors.textColor
-              },              
-              yearLabel: {                
-                textStyle: {                    
-                    color: echartsColors.textColor
-                }
-              },
-              monthLabel:{
-                color: echartsColors.textColor                
-              },
-              dayLabel: {                      
-                color: echartsColors.textColor                
-              },
-          }],
-          series: {
-              type: 'heatmap',
-              coordinateSystem: 'calendar',
-              data: datas,        
-          }
-        };
+        this.calendarSerie = this.series.map(c=>{        
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+        });                     
   
       });
-
-      //color: [colors.danger, colors.primary, colors.info],
-      //color: echarts.axisLineColor,
-      //    color: echarts.splitLineColor,
-      //              color: echarts.textColor,
       
     });
 

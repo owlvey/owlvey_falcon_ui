@@ -4,7 +4,7 @@ export const environment = {
   clientId: "B0D76E84BF394F1297CABBD7337D42B9",
   clientSecret: "0da45603-282a-4fa6-a20b-2d4c3f2a2127",
   authority: "http://localhost:50000/",
-  api: "http://localhost:50001/",
+  api: "http://localhost:5000/",
   type: "regular",
   githubFalconURL: "https://github.com/owlvey",
   facebookFalconURL: "https://facebook.com/owlvey",

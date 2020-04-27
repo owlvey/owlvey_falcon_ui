@@ -24,7 +24,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   featureId = 0;
   themeSubscription: any;
   series: Array<any> = [];
-  
+  calendarSerie: Array<any> = [];
   startDate: Date = new Date();
   endDate: Date;  
 
@@ -294,65 +294,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
 
       this.featuresGateway.getDaily(this.featureId, this.startDate, this.endDate).subscribe(data=>{
         this.series = data.series;
-        const datas = this.series[0].items.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
+        this.calendarSerie = this.series[0].items.map(c=>{        
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
         });      
-        
-        this.calendarOptions = {
-          title: {         
-            top: 30,   
-            left: 'center',
-            text: 'Feature Quality Calendar',
-            textStyle: {
-                color: echartsColors.textColor
-            }
-          },
-          tooltip: {
-            formatter: function (params) {                            
-                return params.value[0] + ', availability: ' + params.value[1];
-            }
-          },
-          visualMap: {
-            show: true,
-            showLabel: true,
-            inRange: {
-              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
-              opacity: 0.8
-            },
-            type: 'piecewise',
-            orient: 'horizontal',
-            left: 'center',
-            textStyle: {
-              color: echartsColors.textColor
-            },
-            top: 65,
-            min: 0,
-            max: 100
-        },
-          calendar: {
-            top: 120,
-            range: String((new Date()).getFullYear()),              
-            textStyle: {
-              color: echartsColors.textColor
-            },              
-            yearLabel: {                
-              textStyle: {                    
-                  color: echartsColors.textColor
-              }
-            },
-            monthLabel:{
-              color: echartsColors.textColor                
-            },
-            dayLabel: {                      
-              color: echartsColors.textColor                
-            },
-          },
-          series: {
-              type: 'heatmap',
-              coordinateSystem: 'calendar',
-              data: datas,        
-          }
-        };
       });  
 
     });

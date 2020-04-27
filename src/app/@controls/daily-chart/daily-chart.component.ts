@@ -27,7 +27,8 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   set dataItems(data: Array<any>){    
-    const line = data.map(c => ({ name: c.date, value: [ this.formatDate(c.date), 100 * c.oAva]}));
+    
+    const line = data.map(c => ({ name: c.date, value: [ this.formatDate(c.date), 100 * c.oAve]}));
     const dates = data.map(c => new Date(c.date));
     const points = [{
          name : 'Availability',
@@ -61,7 +62,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         },
         legend: {
           left: 'left',
-          data: ['Availability'],
+          data: ['All'],
           textStyle: {
             color: echarts.textColor,
           },

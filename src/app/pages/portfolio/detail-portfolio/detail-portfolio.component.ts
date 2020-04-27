@@ -30,6 +30,7 @@ export class DetailPortfolioComponent implements OnInit {
   themeSubscription: any;
   options: any = {};
   series: Array<any> = [];
+  calendarSerie: Array<any> = [];
   startDate: Date = new Date();
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
@@ -167,14 +168,18 @@ export class DetailPortfolioComponent implements OnInit {
       return;
     }
     setTimeout(() => {
-
-      this.visNetworkService.setOptions(this.visNetwork, { physics: false });                  
-      this.visNetworkService.moveTo( this.visNetwork , {
-                  position: {x:-300, y:-300},
-                  scale: 1,
-                  animation: true                  
-      } );     
-
+      
+      try {
+        this.visNetworkService.setOptions(this.visNetwork, { physics: false });                  
+        this.visNetworkService.moveTo( this.visNetwork , {
+                    position: {x:-300, y:-300},
+                    scale: 1,
+                    animation: true                  
+        } );     
+      } catch (error) {
+        console.log(error);
+      }      
+      
     }, 3000);
 
     const fgText = this.colors.fgText;
@@ -327,6 +332,9 @@ export class DetailPortfolioComponent implements OnInit {
         return c;        
       });
 
+      this.currentSource.delta =  Math.round( ((this.currentSource.availability - this.currentSource.previousAvailability) * 1000) ) /1000;          
+      this.currentSource.delta2 =  Math.round( ((this.currentSource.availability - this.currentSource.previousAvailabilityII) * 1000) ) /1000;          
+
       this.source.load(features);      
       this.renderAvailabilityReport();
     });    
@@ -334,43 +342,18 @@ export class DetailPortfolioComponent implements OnInit {
   
 
   getDaily(){
-    this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-      this.series = data.series;
-      const slo = data.slo;
-      const datas = this.series[0].items.map(c=>{        
-        let target = 0; 
-        if ( c.oAva >= slo){
-          target = 100;
-        }
-        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), target, c.oAva];
-      });      
-      
-      this.serviceCalendarOptions = {
-        tooltip: {
-          formatter: function (params) {              
-              const ava = datas.filter(c=> c[0] === params.value[0])[0][2];              
-              return params.value[0] + ' | SLO: ' + slo + ' , availability:' + ava;
-          }
-        },
-        visualMap: {
-            show: false,
-            inRange: {
-              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
-              opacity: 0.8
-            },
-            min: 0,
-            max: 100
-        },
-        calendar: {
-            range: String((new Date()).getFullYear())
-        },
-        series: {
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            data: datas.map(c=>[c[0], c[1]]),        
-        }
-      };
-    });  
+
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      const echartsColors: any = config.variables.echarts;
+      this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
+        this.series = data.series;                 
+        this.calendarSerie = this.series[0].items.map(c=>{        
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date),    c.oAve * 100];
+        }); 
+      });  
+
+    });    
   }
 
   squadSource: LocalDataSource = new LocalDataSource();

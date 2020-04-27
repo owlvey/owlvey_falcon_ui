@@ -37,13 +37,13 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   showAll: boolean = false;
 
   @Input()
-  target: string = 'availability';
+  target: string = 'average';
 
-  private getValue(item){
-    if (this.target == 'availability'){
-      return item['oAva'];
-    }
-    else if (this.target == 'average'){
+  @Input()
+  all: string = 'All';
+
+  private getValue(item){        
+    if (this.target == 'average'){
       return item['oAve'];
     }
     throw new Error('No valid option');
@@ -93,7 +93,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
         legends_selected[c] = true;
       }
       else{
-        if (c !== 'Availability'){
+        if (c !== this.all){
           legends_selected[c] = false;
         }
       }
@@ -161,6 +161,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
           },
         ],
         visualMap: {
+          show: false,
           top: 1,
           right: 1,
           textStyle: {

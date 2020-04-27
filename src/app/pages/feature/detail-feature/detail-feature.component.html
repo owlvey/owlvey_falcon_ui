@@ -141,13 +141,14 @@
     
       <nb-card-body>      
           <div class="row">
-                    <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>  
+                    <div class="col-sm-12">                        
+                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>    
                     </div>
                 </div>    
                 <div class="row">
                     <div class="col-sm-12">
-                        <div echarts [options]="calendarOptions" style="height: 15rem;" class="echart" (chartInit)="onCalendar($event)"></div>
+                        
+                        <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                 
                     </div>
                 </div>
               

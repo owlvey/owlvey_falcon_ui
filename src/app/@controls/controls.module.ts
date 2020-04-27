@@ -14,12 +14,12 @@ import {
 } from '@nebular/theme';
 import { DailyChartComponent } from './daily-chart/daily-chart.component';
 import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.component';
-
+import { DailyCalendarChartComponent} from './daily-chart/daily-calendar.component';
 
 @NgModule({
    imports: [FormsModule, CommonModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule],
-   declarations: [ DailyChartComponent, DailyDetailChartComponent ],
-   exports: [DailyChartComponent, DailyDetailChartComponent],
+   declarations: [ DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent ],
+   exports: [DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent],
 })
 
 export class ControlsModule {

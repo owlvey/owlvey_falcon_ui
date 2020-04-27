@@ -21,6 +21,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
   actionConfirmWord: string;
   customerId: any;
   squads: any[];
+  themeSubscription: any;
 
   settings = {
     mode: 'external',
@@ -76,10 +77,16 @@ export class ListSquadComponent extends CustomerBaseComponent {
       
   }
   getSquads() {
-    this.squadGateway.getSquadsWithPoints(this.customerId, this.startDate, this.endDate).subscribe(data => {
-      this.source.load(data);
-      data.sort((a, b) => (a.points < b.points) ? 1 : (a.points === b.points) ? ((a.features < b.features) ? 1 : -1) : -1 )
-      this.squads = data;
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      const echartsColors: any = config.variables.echarts;
+      
+      this.squadGateway.getSquadsWithPoints(this.customerId, this.startDate, this.endDate).subscribe(data => {
+        this.source.load(data);
+        data.sort((a, b) => (a.points < b.points) ? 1 : (a.points === b.points) ? ((a.features < b.features) ? 1 : -1) : -1 )
+        this.squads = data;
+      });
+
     });
   }
 

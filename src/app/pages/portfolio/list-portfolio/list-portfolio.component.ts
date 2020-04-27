@@ -6,6 +6,8 @@ import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { NbThemeService } from '@nebular/theme';
+import { FormatService } from '../../../@core/utils/format.service';
 
 @Component({
   selector: 'app-list-portfolio',
@@ -31,21 +33,7 @@ export class ListPortfolioComponent implements OnInit {
     pager: {
       perPage: 20
     },
-    columns: {
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false
-      },
-      budget: {
-        title: 'Status',
-        type: 'html',
-        filter: true,
-        width: '2em',
-        editable: false
-      },  
+    columns: {           
       slo: {
         title: 'SLO',
         type: 'number',
@@ -53,7 +41,7 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },      
-      availability: {
+      quality: {
         title: 'Quality',                
         type: 'number',
         filter: true,
@@ -62,20 +50,14 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
+   
       budgetValue: {
         title: 'Budget',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        editable: false
-      },
-                  
-      deploy: {
-        title: 'Action',
-        type: 'string',
+        type: 'html',
         filter: true,
         width: '3em',
-        editable: false
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
       },
       previousHtml: {
         title: 'Previous',
@@ -83,27 +65,23 @@ export class ListPortfolioComponent implements OnInit {
         filter: true,
         width: '2em',
         editable: false,
-        compareFunction:(direction: any, a: any, b: any) => {
-          debugger;
-          let first = typeof a === 'string' ? a.replace("<i class='fas fa-arrow-down text-danger text-center d-block'>", "")
-                                              .replace("<i class='fas fa-arrow-up text-success text-center d-block'>", "")
-                                              .replace("</i>","") : a;
-          let second = typeof b === 'string' ? b.replace("<i class='fas fa-arrow-down text-danger text-center d-block'>", "")
-                                              .replace("<i class='fas fa-arrow-up text-success text-center d-block'>", "")
-                                              .replace("</i>","") : b;
-
-          let number_a = Number(first);
-          let number_b = Number(second);
-          
-          if (number_a < number_b) {
-              return -1 * direction;
-          }
-          if (number_a > number_b) {
-              return direction;
-          }
-          return 0;
-        },
-      },      
+        compareFunction:this.format.compareIconNumberColumn,
+      },        
+      availability: {
+        title: 'Ava...',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      latency: {
+        title: 'Lat...',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      
       group:{
         title: 'Group',
         type: 'string',
@@ -116,7 +94,7 @@ export class ListPortfolioComponent implements OnInit {
         filter: true
       },      
       featuresCount: {
-        title: 'Features',
+        title: 'Fea...',
         type: 'string',
         filter: true,
         width: '2em',
@@ -124,20 +102,25 @@ export class ListPortfolioComponent implements OnInit {
     },
   };
 
-  qualityAverage: number = 0;
-  qualityPrevious: number = 0;
-  qualityDelta: number = 0;
-
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
   series: Array<any> = [];  
+  calendarSerie : Array<any> = [];  
   serviceGroup: string;
+  themeSubscription: any;
+
+  totalServices: number = 0;
+  sloCompliance: number = 0;
+  efectiveness: number = 0;
+
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private portfolioGateway: PortfoliosGateway,    
     private router: Router, 
+    private theme: NbThemeService,    
+    private format: FormatService, 
     private activatedRoute: ActivatedRoute) { 
       
     }        
@@ -158,73 +141,55 @@ export class ListPortfolioComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
-        const data = JSON.parse(JSON.stringify(portfolios))
+        const data = portfolios;
+        this.totalServices = data.length;
+        this.sloCompliance = 0;
+        this.efectiveness = 0;
         let newData = data.map(c=> {  
-          c.budgetValue = c.budget;
-          this.qualityAverage += c.availability;
-          this.qualityPrevious += c.previous;
-          c.delta =  Math.round( ((c.availability - c.previous) * 1000) ) /1000;          
+
+          if (c.quality >= c.slo){
+            this.sloCompliance += 1;
+          }
+          
+          c.delta = this.format.round3Decimals(c.quality - c.previous);          
+          c.budget = this.format.round3Decimals(c.budget);                    
 
           if (c.delta < 0){
-            c.previousHtml = `<i class='fas fa-arrow-down text-danger text-center d-block'> ${c.delta} </i>`;
+            c.previousHtml = `<i class='fas fa-arrow-down text-danger text-center d-block'> ${c.delta.toFixed(3)} </i>`;
           }
           else {
-            c.previousHtml = `<i class='fas fa-arrow-up text-success text-center d-block'> ${c.delta} </i>`;
+            c.previousHtml = `<i class='fas fa-arrow-up text-success text-center d-block'> ${c.delta.toFixed(3)} </i>`;
           }
-
 
           if(c.budget < 0) {
-            c.budget = `<i class="fas fa-circle text-danger text-center d-block" title=${c.budgetValue}></i>`;
+            c.budgetValue = `<i class="fas fa-circle text-danger text-center d-block" title=${c.deploy}> ${c.budget.toFixed(3)} </i>`;
           } else {
-            c.budget = `<i class="fas fa-circle text-success text-center d-block" title=${c.budgetValue}></i>`;
+            c.budgetValue = `<i class="fas fa-circle text-success text-center d-block" title=${c.deploy}> ${c.budget.toFixed(3)} </i>`;
           }
           return c;
-        });        
-        if (newData){          
-          this.qualityAverage = Math.round(this.qualityAverage / newData.length * 1000) / 1000;
-          this.qualityPrevious = Math.round(this.qualityPrevious / newData.length * 1000) / 1000;
-          this.qualityDelta =Math.round( (this.qualityAverage - this.qualityPrevious) * 1000) / 1000;
-        }
-        
+        });                
+        if (this.totalServices){
+          this.efectiveness = this.format.round2Decimals( this.sloCompliance / this.totalServices );
+        }        
         this.source.load(newData);
       });
     });     
   }
   getDaily(){
-    this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, this.serviceGroup).subscribe(data=>{
-      this.series = data.series;
 
-      const datas = this.series[0].items.map(c=>{        
-        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAva * 100];
-      });      
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      const echartsColors: any = config.variables.echarts;
 
-      this.serviceCalendarOptions = {
-        tooltip: {
-          formatter: function (params) {                          
-              return params.value[0] +  ', availability:' + params.value[1];
-          }
-        },
-        visualMap: {
-            show: false,
-            inRange: {
-              color: ['#cc0033', '#ff9933', '#ffde33', '#096'],
-              opacity: 0.8
-            },
-            min: 0,
-            max: 100
-        },
-        calendar: {
-            range: String((new Date()).getFullYear())
-        },
-        series: {
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            data: datas,        
-        }
-      };
-    });  
+      this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, this.serviceGroup).subscribe(data=>{
+        this.series = data.series;
+        
+        this.calendarSerie = this.series[0].items.map(c=>{        
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+        });        
+      });  
 
-
+    });
   }
   onCreate(event){    
     let queryParams: Params = {  };
@@ -234,13 +199,5 @@ export class ListPortfolioComponent implements OnInit {
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };
     this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-
-
-  echartCalendarInstance: any;
-  serviceCalendarOptions: any;
-  
-  onServiceCalendar(ec) {    
-    this.echartCalendarInstance = ec;
-  }
+  }  
 }

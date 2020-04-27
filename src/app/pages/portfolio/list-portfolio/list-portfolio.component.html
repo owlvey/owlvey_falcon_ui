@@ -2,12 +2,22 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-header>
-          <div class="d-flex align-content-center">
+          <div class="row">
+            <div class="col-sm-2">
               <h5> {{ currentProduct?.name }}  </h5>
-                            
-              <button type="button" nbButton status="primary" (click)="onCreate($event)" class="ml-auto mr-2"> Create </button>
-              
+            </div>
+            <div class="col-sm-6 align-content-center">
+              <span class="text-info"> Quality = min(Availability, Latency) | Total: {{ totalServices }}, SLO compliance: {{ sloCompliance }}, Total Quality: {{ this.efectiveness }} </span>
+            </div>
+            <div class="col-sm-4">
+              <div class="d-flex align-content-center">
+                <button type="button" nbButton status="primary" (click)="onCreate($event)" class="ml-auto mr-2"> Create </button>              
+              </div>
+            </div>
+
+
           </div>
+          
       </nb-card-header>  
   
       <nb-card-body>
@@ -24,19 +34,18 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-              Daily availability report
+              Daily Efectiveness Percentage Report
             </nb-card-header>            
             <nb-card-body>                                            
                   
               <div class="row">
                   <div class="col-sm-12">
-                      <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>    
+                      <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>    
                   </div>
               </div>
-              <div class="row">
+              <div class="row">                
                   <div class="col-sm-12">
-                      <div echarts [options]="serviceCalendarOptions" style="height: 15rem;" class="echart"
-                       (chartInit)="onServiceCalendar($event)"></div>
+                    <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                 
                   </div>
               </div>
             </nb-card-body>          

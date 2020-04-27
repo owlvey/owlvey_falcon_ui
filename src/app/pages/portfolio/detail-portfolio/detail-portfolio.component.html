@@ -14,55 +14,97 @@
           <nb-card-body> 
   
               <div class="row">
-                  <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
-                        <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
-                            nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
-                            class="input-full-width size-medium shape-rectangle">                         
-                      </div>
-                  </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.slo" 
+                          nbInput fullWidth id="inputSLO" placeholder="Availability"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>  
+                  </div>       
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputAvailability" class="label col-sm-3 form-control-label">Quality</label>
                         <input readonly="readonly" type="number" [value]="currentSource.availability" 
                             nbInput fullWidth id="inputAvailability" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">                         
+                            class="input-full-width size-medium shape-rectangle">                                                     
                       </div>
                   </div>
+                                               
                   <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.slo" 
-                            nbInput fullWidth id="inputSLO" placeholder="Availability"
+                        <label for="inputBudget" class="label form-control-label">Error Budget</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.budget" 
+                            nbInput fullWidth id="inputBudget" placeholder="Availability"
                             class="input-full-width size-medium shape-rectangle">                      
-                      </div>  
-                  </div>                                    
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                          <label for="inputBudget" class="label col-sm-3 form-control-label">Budget</label>
-                          <input readonly="readonly" type="number" [value]="currentSource.budget" 
-                              nbInput fullWidth id="inputBudget" placeholder="Availability"
-                              class="input-full-width size-medium shape-rectangle">
-                        
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                          <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
-                          <input readonly="readonly" type="number" [value]="currentSource?.impact" 
-                              nbInput fullWidth id="inputImpact" placeholder="Availability"
-                              class="input-full-width size-medium shape-rectangle">
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="groupText" class="label form-control-label"> Group </label>
-                        <input readonly="readonly" type="text" [value]="currentSource?.group" 
-                            nbInput fullWidth id="groupText" placeholder="group"
-                            class="input-full-width size-medium shape-rectangle">                     
                       </div>
+                  </div>                  
+                  <div class="col-sm-2">
+                    <div class="form-group">
+
+                      <label for="inputBudget" class="label form-control-label">
+
+                        <div *ngIf="currentSource.delta >= 0">
+                          Previous  |  <i class='fas fa-arrow-up text-success'>  {{ currentSource.delta }} </i>  
+                        </div>
+                        <div *ngIf="currentSource.delta < 0">
+                          Previous  | <i class='fas fa-arrow-down text-danger'> {{ currentSource.delta }}</i>
+                        </div>
+                                                
+                      </label>
+                      <input readonly="readonly" type="number" [value]="currentSource.previousAvailability" 
+                          nbInput fullWidth id="inputBudget" placeholder="Availability" 
+                          class="input-full-width size-medium shape-rectangle"/>                      
                     </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label class="label form-control-label">
+                        <div *ngIf="currentSource.delta2 >= 0">
+                          Previous II | <i class='fas fa-arrow-up text-success'> {{ currentSource.delta2 }}</i>
+                        </div>
+                        <div *ngIf="currentSource.delta2 < 0">
+                          Previous II | <i class='fas fa-arrow-down text-danger'> {{ currentSource.delta2 }}</i>
+                        </div>
+                      </label>
+                      
+                      <input readonly="readonly" type="number" [value]="currentSource.previousAvailabilityII" 
+                          nbInput fullWidth id="inputBudget" placeholder="Availability"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
+                    <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
+                        nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
+                        class="input-full-width size-medium shape-rectangle">                         
+                  </div>
+                </div>
+                <div class="col-sm-2">
+
+                  
+                  <div class="form-group">
+                    <label for="groupText" class="label form-control-label"> Group </label>
+                    <input readonly="readonly" type="text" [value]="currentSource?.group" 
+                        nbInput fullWidth id="groupText" placeholder="group"
+                        class="input-full-width size-medium shape-rectangle">                     
+                  </div>
+                </div>
+
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
+                    <input readonly="readonly" type="number" [value]="currentSource?.impact" 
+                        nbInput fullWidth id="inputImpact" placeholder="Availability"
+                        class="input-full-width size-medium shape-rectangle">
+                  </div>
+                </div>
               </div>
          
               <div class="row">
@@ -104,20 +146,19 @@
               <nb-tab tabTitle="Daily Report" >              
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="series" ></ngx-daily-detail-chart>                             
+                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>                            
                     </div>
                   </div>
                   <div class="row">
                       <div class="col-sm-12">
-                          <div echarts [options]="serviceCalendarOptions" style="height: 15rem;" class="echart" (chartInit)="onServiceCalendar($event)"></div>
+                          <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                                           
                       </div>
-                  </div>
-                    
+                  </div>                    
                 </nb-tab>   
-            <nb-tab tabTitle="Feature Availability Debt" >              
+            <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >              
                 <div echarts [options]="sliOptions" style="height: 30rem;" 
                   class="echart" (chartInit)="onSliChatInit($event)"></div>
-            </nb-tab>
+            </nb-tab> -->
                     
             <nb-tab tabTitle="Service Level Indicators" >              
                 <p>
