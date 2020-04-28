@@ -127,7 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           that.headerSelectors.toArray()[1].setSelection(that.currentCustomer);      
           that.products = null;
           that.cdRef.detectChanges();
-          that.productGateway.getProducts(that.currentCustomer).subscribe(dproducts=>{
+          that.productGateway.getProductsLite(that.currentCustomer).subscribe(dproducts=>{
             that.products = dproducts;
             that.cdRef.detectChanges();
             if ( that.currentProduct ){
@@ -154,7 +154,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       if ( this.currentCustomer != custId){
         this.currentCustomer = custId;
-        this.productGateway.getProducts(this.currentCustomer).subscribe(data => {
+        this.productGateway.getProductsLite(this.currentCustomer).subscribe(data => {
           this.headerSelectors.toArray()[2].disabled = true;
           this.currentProduct = null;
           this.products = data;
@@ -227,7 +227,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeCustomer(customer: any) {        
     this.currentProduct = null;
-    this.productGateway.getProducts(customer).subscribe(data => {
+    this.productGateway.getProductsLite(customer).subscribe(data => {
       this.products = data;
       this.onControlChangeRouter();
     });

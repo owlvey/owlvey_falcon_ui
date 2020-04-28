@@ -65,6 +65,18 @@ export class PagesComponent implements OnInit {
           this.onCustomerAndProductMustSelected();
         }
       }
+      if (e.item.title == 'Groups'){
+        if (currentCustomer && currentProduct){
+          const queryParams: Params = { group: null };
+          this.router.navigate(['/pages/groups'], { relativeTo: this.activatedRoute,
+             queryParams: queryParams,
+             queryParamsHandling: 'merge' });
+        }
+        else{
+          this.onCustomerAndProductMustSelected();
+        }
+      }
+
       if (e.item.title == 'Services'){
         if (currentCustomer && currentProduct){
           const queryParams: Params = { group: null };

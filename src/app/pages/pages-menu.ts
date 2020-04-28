@@ -27,7 +27,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
   },
   {
-    title: 'Concepts',
+    title: 'Organization',
     group: true,
   },
   {
@@ -37,7 +37,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Members',
     icon: 'person-outline',
-  },  
+  },      
+  {
+    title: 'Products',
+    group: true,
+  },
   {
     title: 'Squads',
     icon: 'people-outline',
@@ -45,6 +49,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Products',
     icon: 'bulb-outline',
+  },
+  {
+    title: 'Groups',
+    icon: 'award-outline',
   },
   {
     title: 'Services',
@@ -58,6 +66,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Sources',
     icon: 'archive-outline',
   },  
+  {
+    title: 'Administration',
+    group: true,
+  },
   {
     title: 'Exports',
     icon: 'upload-outline',

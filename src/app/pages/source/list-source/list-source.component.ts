@@ -42,19 +42,6 @@ export class ListSourceComponent implements OnInit {
         type: 'custom',
         renderComponent: TooltipComponent
       },   
-
-      good: {
-        title: 'Good',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },         
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },           
       group: {
         title: 'Group',
         type: 'string',
@@ -83,9 +70,127 @@ export class ListSourceComponent implements OnInit {
       },             
     },
   };
+  latencySettings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {      
+      id:{
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em'   
+      },
+      name: {
+        title: 'Name',
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },   
+
+      good: {
+        title: 'Good',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },         
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },                 
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },                         
+      availability: {
+        title: 'Quality',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },             
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },             
+    },
+  };
+
+  availabilitySettings =  {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {      
+      id:{
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em'   
+      },
+      name: {
+        title: 'Name',
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },   
+
+      good: {
+        title: 'Good',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },         
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: true,
+        width: '3em',
+      },                 
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },                         
+      availability: {
+        title: 'Quality',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },             
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },             
+    },
+  };
   startDate: Date;
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
+  availabilitySource: LocalDataSource = new LocalDataSource();
+  latencySource: LocalDataSource = new LocalDataSource();
+
+  totalSources: number = 0;
+  totalAssigned: number = 0;
 
   constructor(
     private location: Location,
@@ -110,10 +215,17 @@ export class ListSourceComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
-        const target = sources.map(item=>{
-          item.tooltip = item.description;
-          return item;
-        });
+        
+        const avaialabilitySources = sources.filter(c=> c.group == "Availability");
+        const latencySources = sources.filter(c=> c.group == "Latency");
+        const referencesSources = sources.filter(c=> c.references > 0);
+        
+        this.totalSources = sources.length;
+        this.totalAssigned = referencesSources.length;
+        
+        
+        this.latencySource.load(latencySources);
+        this.availabilitySource.load(avaialabilitySources);
         this.source.load(sources);
       });
     });     

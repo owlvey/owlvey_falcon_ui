@@ -40,7 +40,37 @@ export class ListProductComponent implements OnInit {
         filter: false
       },
       servicesCount: {
-        title: 'Portfolios',
+        title: 'Services',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      featuresCount: {
+        title: 'Features',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      coverage: {
+        title: 'Coverage',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },
+      ownership: {
+        title: 'Ownership',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },
+      sourcesCount: {
+        title: 'Sources',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },
+      utilization: {
+        title: 'Utilization',
         type: 'number',
         filter: false,
         width: '3em',

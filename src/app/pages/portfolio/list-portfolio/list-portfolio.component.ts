@@ -149,8 +149,7 @@ export class ListPortfolioComponent implements OnInit {
 
           if (c.quality >= c.slo){
             this.sloCompliance += 1;
-          }
-          
+          }          
           c.delta = this.format.round3Decimals(c.quality - c.previous);          
           c.budget = this.format.round3Decimals(c.budget);                    
 

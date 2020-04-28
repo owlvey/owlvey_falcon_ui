@@ -34,6 +34,9 @@ export class PortfoliosGateway{
         return this.owlveyGateway.put(this.baseUrl + `services/${portfolioId}/features/${featureId}`, {});        
     }
 
+    getPortfoliosGroup(productId: number, start: Date, end: Date): Observable<any>{
+        return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
     getPortfolios(productId: number): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services?productId=${productId}`);
     }

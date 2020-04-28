@@ -56,6 +56,11 @@ const routes: Routes = [{
       loadChildren: () => import('./sync/sync.module').then(m => m.SyncModule),
     },    
     {
+      path: 'groups',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('./serviceGroup/serviceGroup.module').then(m => m.ServiceGroupModule),
+    },    
+    {
       path: 'portfolios',
       canActivate: [AuthGuard],
       loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),

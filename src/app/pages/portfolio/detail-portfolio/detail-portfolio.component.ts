@@ -332,8 +332,8 @@ export class DetailPortfolioComponent implements OnInit {
         return c;        
       });
 
-      this.currentSource.delta =  Math.round( ((this.currentSource.availability - this.currentSource.previousAvailability) * 1000) ) /1000;          
-      this.currentSource.delta2 =  Math.round( ((this.currentSource.availability - this.currentSource.previousAvailabilityII) * 1000) ) /1000;          
+      this.currentSource.delta =  Math.round( ((this.currentSource.quality - this.currentSource.previousQuality) * 1000) ) /1000;          
+      this.currentSource.delta2 =  Math.round( ((this.currentSource.quality - this.currentSource.previousQualityII) * 1000) ) /1000;          
 
       this.source.load(features);      
       this.renderAvailabilityReport();

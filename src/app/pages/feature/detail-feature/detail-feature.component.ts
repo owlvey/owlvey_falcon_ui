@@ -132,7 +132,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         width: '3em',
       },
        
-      availability: {
+      quality: {
         title: 'Quality',
         type: 'number',
         filter: false,
@@ -261,7 +261,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
           {
               name: 'Interactions',
               type: 'bar',
-              stack: 'availability',
+              stack: 'quality',
               label: {
                   normal: {
                       show: true,
@@ -273,7 +273,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
           {
               name: '邮件营销',
               type: 'bar',
-              stack: 'availability',
+              stack: 'quality',
               label: {
                   normal: {
                       show: true,

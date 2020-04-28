@@ -17,7 +17,9 @@ export class ProductsGateway {
   getProducts(customerId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products?customerId=${customerId}`);
   }
-
+  getProductsLite(customerId: number): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `products/lite?customerId=${customerId}`);
+  }
   getProduct(productId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}`);
   }

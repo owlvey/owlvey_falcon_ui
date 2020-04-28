@@ -9,6 +9,7 @@ import { SourceModule } from './source/source.module';
 import { CustomerModule} from './customer/customer.module';
 import { SyncModule } from './sync/sync.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
+import { ServiceGroupModule } from './serviceGroup/serviceGroup.module';
 import { SquadModule } from './squad/squad.module';
 import { HomeModule } from './home/home.module';
 
@@ -38,6 +39,7 @@ import { TooltipComponent } from './common/components/tooltipComponent';
     SourceModule,
     CustomerModule,
     PortfolioModule,
+    ServiceGroupModule,
     SquadModule,
     UserModule,
     HomeModule,

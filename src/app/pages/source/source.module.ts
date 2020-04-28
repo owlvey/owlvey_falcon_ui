@@ -27,6 +27,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbTabsetModule,
   NbTreeGridModule,  
 } from '@nebular/theme';
 
@@ -35,7 +36,7 @@ import {
     ProportionSourceComponent, TreeMapSourceComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule, 
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-     NbCardModule, ControlsModule, NbRadioModule, NbTooltipModule, NbIconModule],  
+     NbCardModule, ControlsModule, NbRadioModule, NbTooltipModule, NbIconModule, NbTabsetModule],  
 })
 export class SourceModule { }
 
