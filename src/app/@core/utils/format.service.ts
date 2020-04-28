@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { delay, share } from 'rxjs/operators';
+import { strictEqual } from 'assert';
 
 @Injectable()
 export class FormatService {
@@ -25,6 +26,34 @@ export class FormatService {
     }
     round3Decimals(target: number){
         return Math.round( ( target * 1000) ) /1000;          
+    }
+
+    buildStatusColumn(target: number, title: string = '',  values: Array<number>=null, classes: Array<string>=null){                        
+        if (!values){
+            values = [0.40, 0.80, 0.95, 1];
+            classes = ['text-danger', 'text-warning', 'text-warning', 'text-success']
+        }
+
+        for (let index = 0; index < values.length; index++) {            
+            if ( target <= values[index]){
+                return `<i class="fas fa-circle ${classes[index]} text-center d-block" title=${title}> ${target.toFixed(3)} </i>`;    
+            }
+        }
+        return `<i class="fas fa-circle ${classes[ classes.length - 1 ]} text-center d-block" title=${title}> ${target.toFixed(3)} </i>`;        
+    }
+
+    buildTrendColumn(target: number, previous: number){                                
+        const diff =  target - previous;               
+        const title = 'Efectiveness:' + String(previous);
+        if (diff === 0){
+            return `<i class='fas text-info text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+        }
+        else if (target >= previous){
+            return `<i class='fas fa-arrow-up text-success text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+        }
+        else{
+            return `<i class='fas fa-arrow-down text-danger text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+        }
     }
 
     compareIconNumberColumn (direction: any, a: any, b: any) {          

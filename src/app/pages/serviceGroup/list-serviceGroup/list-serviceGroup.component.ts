@@ -8,6 +8,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { NbThemeService } from '@nebular/theme';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { FormatService } from '../../../@core/utils/format.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,        
     protected portfoliosGateway : PortfoliosGateway,
     protected theme: NbThemeService,
+    protected format: FormatService,
     protected router: Router, 
     protected activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
@@ -39,17 +41,19 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         type: 'string',
         filter: false
       },
-      status: {
-        title: 'Status',
-        type: 'number',
+      statusHtml: {
+        title: 'Efectiveness',
+        type: 'html',
         filter: false,
-        width: '3em',
+        width: '5em',
+        compareFunction:this.format.compareIconNumberColumn,
       },
-      previous: {
+      previousHtml: {
         title: 'Previous',
-        type: 'number',
+        type: 'html',
         filter: false,
         width: '3em',
+        compareFunction:this.format.compareIconNumberColumn,
       },
       count: {
         title: 'Count',
@@ -111,7 +115,12 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
   onChangeQueryParameters(paramMap: ParamMap): void {       
     super.onChangeQueryParameters(paramMap);      
     this.portfoliosGateway.getPortfoliosGroup(this.productId, this.startDate, this.endDate).subscribe(data=>{
-      this.source.load(data);
+      const items =  data.map(c => {
+         c.statusHtml = this.format.buildStatusColumn(c.status);
+         c.previousHtml = this.format.buildTrendColumn(c.status, c.previous);
+         return c;
+        });
+      this.source.load(items);
     });
   }
   

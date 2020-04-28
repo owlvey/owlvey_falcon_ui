@@ -102,10 +102,9 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         }
         else if (c.group == "services"){
           if (c.budget >= 0 )
-          {
-            //c.importance
-            return { id: c.id, value: 12, label: c.name, shape: 'hexagon', 
-                  title: String(c.value),
+          {            
+            return { id: c.id, value: 12, 
+                  label: c.name, shape: 'hexagon', title: String(c.value),
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
@@ -113,7 +112,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           }
           else{
             return { id: c.id, value: 12, 
-                  label: c.name, shape: 'hexagon',title: String(c.value),
+                  label: c.name, shape: 'hexagon', title: String(c.value),
                   font:{ color: fgText },
                   color: {background: danger, border: primaryLight,
                   highlight:{background: dangerLight, border: primaryLight},
@@ -121,7 +120,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           }
         }
         else if (c.group == "features"){
-          return { id: c.id, value: 10, label: c.name, group: "2", shape: 'dot', title: c.name,
+          return { id: c.id, value: 10, 
+                    label: `${c.name} [${c.value}]`, group: "2", shape: 'dot', title: c.name,                    
                     font:{ color: fgText },
                     color: {background:success, border: primaryLight ,
                     highlight:{background:successLight, border: primaryLight},

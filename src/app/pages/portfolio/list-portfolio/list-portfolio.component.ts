@@ -41,23 +41,23 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },      
-      quality: {
+      qualityHtml: {
         title: 'Quality',                
-        type: 'number',
-        filter: true,
-        width: '3em',
-        editable: false,
-        sort:true,
-        sortDirection: 'asc'
-      },
-   
-      budgetValue: {
-        title: 'Budget',
         type: 'html',
         filter: true,
         width: '3em',
         editable: false,
+        sort:true,
+        sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
+      },
+   
+      budget: {
+        title: 'Budget',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false,        
       },
       previousHtml: {
         title: 'Previous',
@@ -151,20 +151,9 @@ export class ListPortfolioComponent implements OnInit {
             this.sloCompliance += 1;
           }          
           c.delta = this.format.round3Decimals(c.quality - c.previous);          
-          c.budget = this.format.round3Decimals(c.budget);                    
-
-          if (c.delta < 0){
-            c.previousHtml = `<i class='fas fa-arrow-down text-danger text-center d-block'> ${c.delta.toFixed(3)} </i>`;
-          }
-          else {
-            c.previousHtml = `<i class='fas fa-arrow-up text-success text-center d-block'> ${c.delta.toFixed(3)} </i>`;
-          }
-
-          if(c.budget < 0) {
-            c.budgetValue = `<i class="fas fa-circle text-danger text-center d-block" title=${c.deploy}> ${c.budget.toFixed(3)} </i>`;
-          } else {
-            c.budgetValue = `<i class="fas fa-circle text-success text-center d-block" title=${c.deploy}> ${c.budget.toFixed(3)} </i>`;
-          }
+          c.budget = this.format.round3Decimals(c.budget);                              
+          c.previousHtml = this.format.buildTrendColumn(c.quality, c.previous);         
+          c.qualityHtml = this.format.buildStatusColumn(c.quality, c.deploy, [c.slo], ['text-danger', 'text-success']);          
           return c;
         });                
         if (this.totalServices){
