@@ -399,7 +399,7 @@ export class DetailPortfolioComponent implements OnInit {
         type: 'string',
         filter: false
       },    
-      availability: {
+      quality: {
         title: 'Quality',
         type: 'number',
         filter: false,
