@@ -42,6 +42,22 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   @Input()
   all: string = 'All';
 
+  private _pieces: Array<any> = [
+      { gt: 95, lte: 100,  color: '#096',}, 
+      { gt: 80, lte: 95,   color: '#ffde33',},
+      { gt: 40, lte: 80,   color: '#ff9933',}, 
+      { gt: 0,  lte: 40,   color: '#cc0033',}];
+
+  get pieces(){
+    return this._pieces;
+  }
+
+  @Input()
+  set pieces(data: Array<any>){   
+    this._pieces = data;
+  }
+
+
   private getValue(item){        
     if (this.target == 'average'){
       return item['oAve'];
@@ -161,34 +177,19 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
           },
         ],
         visualMap: {
-          show: false,
-          top: 1,
-          right: 1,
+          show: true,
+          top: 0,
+          right: 0,
           textStyle: {
             color: echarts.textColor,
           },
-          pieces: [{
-              gt: 95,
-              lte: 100,
-              color: '#096',
-          }, {
-              gt: 80,
-              lte: 95,
-              color: '#ffde33',
-          }, {
-              gt: 40,
-              lte: 80,
-              color: '#ff9933',
-          }, {
-              gt: 0,
-              lte: 40,
-              color: '#cc0033',
-          }],
+          pieces: this.pieces,
           outOfRange: {
               color: '#999',
           },
         },
         grid: {
+          top: '25%',
           left: '5%',
           right: '6%',
           bottom: '5%',

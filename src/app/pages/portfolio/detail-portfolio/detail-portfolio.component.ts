@@ -35,6 +35,8 @@ export class DetailPortfolioComponent implements OnInit {
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
   
+  pieces: Array<any> = []
+
   settings = {    
     mode: 'external',
     actions:{
@@ -145,8 +147,7 @@ export class DetailPortfolioComponent implements OnInit {
       this.portfolioId = parseInt(paramMap.get('portfolioId'));   
       this.startDate = new Date(paramMap.get('start'));
       this.endDate = new Date(paramMap.get('end'));      
-      this.getPortfolio();
-      this.getDaily(); 
+      this.getPortfolio();      
       this.buildGraphDependencies();
     });          
   }  
@@ -328,15 +329,15 @@ export class DetailPortfolioComponent implements OnInit {
   getPortfolio(){    
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{      
       this.currentSource = data;                  
-      const features = this.currentSource.features.map(c=>{                
-        return c;        
-      });
+      const features = this.currentSource.features;
 
       this.currentSource.delta =  Math.round( ((this.currentSource.quality - this.currentSource.previousQuality) * 1000) ) /1000;          
       this.currentSource.delta2 =  Math.round( ((this.currentSource.quality - this.currentSource.previousQualityII) * 1000) ) /1000;          
 
       this.source.load(features);      
       this.renderAvailabilityReport();
+
+      this.getDaily(); 
     });    
   }  
   
@@ -347,9 +348,13 @@ export class DetailPortfolioComponent implements OnInit {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
       this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-        this.series = data.series;                 
+        this.series = data.series;               
+        this.pieces = [
+          { gte: this.currentSource.slo * 100, lte: 100,  color: '#096',}, 
+          { gt: 0, lt: this.currentSource.slo * 100, color: '#cc0033', }];                
+        
         this.calendarSerie = this.series[0].items.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date),    c.oAve * 100];
+          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
         }); 
       });  
 
@@ -405,7 +410,19 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },                 
+      },    
+      group: {
+        title: 'Group',
+        type: 'string',
+        filter: false,
+        width: '5em',
+      },           
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: false,
+        width: '5em',
+      },          
     },
   };
   

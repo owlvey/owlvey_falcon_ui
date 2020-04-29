@@ -104,7 +104,7 @@ export class ListPortfolioComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
-  series: Array<any> = [];  
+  series: Array<any> = [];    
   calendarSerie : Array<any> = [];  
   serviceGroup: string;
   themeSubscription: any;
@@ -164,7 +164,6 @@ export class ListPortfolioComponent implements OnInit {
     });     
   }
   getDaily(){
-
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;

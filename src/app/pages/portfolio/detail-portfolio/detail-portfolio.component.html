@@ -146,12 +146,12 @@
               <nb-tab tabTitle="Daily Report" >              
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>                            
+                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" [pieces]="pieces"></ngx-daily-detail-chart>                            
                     </div>
                   </div>
                   <div class="row">
                       <div class="col-sm-12">
-                          <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                                           
+                          <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="pieces"></ngx-daily-calendar-chart>                                                           
                       </div>
                   </div>                    
                 </nb-tab>   

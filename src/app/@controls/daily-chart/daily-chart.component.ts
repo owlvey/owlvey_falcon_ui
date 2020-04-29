@@ -116,23 +116,7 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
           textStyle: {
             color: echarts.textColor,
           },
-          pieces: [{
-              gt: 90,
-              lte: 100,
-              color: '#096',
-          }, {
-              gt: 60,
-              lte: 90,
-              color: '#ffde33',
-          }, {
-              gt: 40,
-              lte: 60,
-              color: '#ff9933',
-          }, {
-              gt: 0,
-              lte: 40,
-              color: '#cc0033',
-          }],
+          pieces: this.pieces,
           outOfRange: {
               color: '#999',
           },
@@ -146,6 +130,21 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
         series: points,
       };
     });
+  }
+
+  private _pieces: Array<any> = [
+    { gt: 90, lte: 100, color: '#096', }, 
+    { gt: 60, lte: 90, color: '#ffde33', }, 
+    { gt: 40, lte: 60, color: '#ff9933', }, 
+    { gt: 0, lte: 40, color: '#cc0033', }];
+
+  get pieces(){
+    return this._pieces;
+  }
+
+  @Input()
+  set pieces(data: Array<any>){   
+    this._pieces = data;
   }
 
   ngAfterViewInit() {

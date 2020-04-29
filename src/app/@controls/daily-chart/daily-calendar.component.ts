@@ -29,6 +29,22 @@ export class DailyCalendarChartComponent implements AfterViewInit, OnDestroy {
   onChartInit(ec) {
     this.echartsIntance = ec;
   }
+
+  private _pieces: Array<any> = [
+      { gt: 95,  lte: 100,  color: '#096',}, 
+      { gt: 80,  lte: 95,   color: '#ffde33',},
+      { gt: 40,  lte: 80,   color: '#ff9933',}, 
+      { gt: 0,   lte: 40,   color: '#cc0033',}];
+
+  get pieces(){
+    return this._pieces;
+  }
+
+  @Input()
+  set pieces(data: Array<any>){   
+    this._pieces = data;
+  }
+
   @Input()
   showAll: boolean = false;
 
@@ -61,23 +77,7 @@ export class DailyCalendarChartComponent implements AfterViewInit, OnDestroy {
           outOfRange: {
             color: '#999',
           },
-          pieces: [{
-              gt: 95,
-              lte: 100,
-              color: '#096',
-          }, {
-              gt: 80,
-              lte: 95,
-              color: '#ffde33',
-          }, {
-              gt: 40,
-              lte: 80,
-              color: '#ff9933',
-          }, {
-              gt: 0,
-              lte: 40,
-              color: '#cc0033',
-          }],
+          pieces: this.pieces,
           type: 'piecewise',
           orient: 'horizontal',
           left: 'center',
