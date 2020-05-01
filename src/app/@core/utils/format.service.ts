@@ -46,13 +46,26 @@ export class FormatService {
         const diff =  target - previous;               
         const title = 'Efectiveness:' + String(previous);
         if (diff === 0){
-            return `<i class='fas text-info text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+            return `<i class='fas text-info text-center text-nowrap' title=${title}> ${diff.toFixed(3)} </i>`;
         }
         else if (target >= previous){
-            return `<i class='fas fa-arrow-up text-success text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+            return `<i class='fas fa-arrow-up text-success text-center text-nowrap' title=${title}> ${diff.toFixed(3)} </i>`;
         }
         else{
-            return `<i class='fas fa-arrow-down text-danger text-center d-block' title=${title}> ${diff.toFixed(3)} </i>`;
+            return `<i class='fas fa-arrow-down text-danger text-center text-nowrap' title=${title}> ${diff.toFixed(3)} </i>`;
+        }
+    }
+    buildTrendColumnValue(target: number, previous: number){                                
+        const diff =  target - previous;               
+        const title = 'Diff: ' + diff.toFixed(3);
+        if (diff === 0){
+            return `<i class='fas text-info text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else if (target >= previous){
+            return ` <i class='fas fa-arrow-up text-success text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else{
+            return `<i class='fas fa-arrow-down text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
 

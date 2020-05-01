@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ListserviceGroupComponent } from "./list-serviceGroup/list-serviceGroup.component";
+import { AnnualServiceGroupComponent } from "./annual-serviceGroup/annual-serviceGroup.component";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
@@ -27,6 +28,7 @@ import {
 @NgModule({
   declarations: [
     ListserviceGroupComponent,
+    AnnualServiceGroupComponent,
   ],
   imports: [
     FormsModule,

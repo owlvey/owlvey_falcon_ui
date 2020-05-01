@@ -51,7 +51,7 @@ export class ProportionSourceComponent implements OnInit {
         sortDirection: 'asc'
       },        
       availability: {
-        title: 'Quality',
+        title: 'Proportion',
         width: '5rem',
         type: 'number',
         filter: true

@@ -28,6 +28,10 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     protected activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
   }   
+  groupSelected : string = null;
+  dailyTitle: String = "Please select a group";
+  series: Array<any> = [];    
+  calendarSerie : Array<any> = [];  
   source: LocalDataSource = new LocalDataSource();
   settings = {
     actions:{
@@ -125,9 +129,24 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
   }
   
   onRowSelect(event){
+    // http://localhost:5000/products/4/reports/daily/services/series?start=2020-01-01T05:00:00.000Z&end=2020-04-29T16:11:51.970Z&group=Transferencias
     const group = event.data.name;
-    let queryParams: Params = { group: group};
-    this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
-  }
+    this.dailyTitle = this.groupSelected = group;
 
+    this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, group).subscribe(data=>{      
+      this.series = data.series;      
+      this.calendarSerie = this.series[0].items.map(c=>{        
+        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+      });        
+    });
+    
+  }
+  onGotoServices(){
+     let queryParams: Params = { group: this.groupSelected};
+     this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+  onAnnualReport(event){    
+    let queryParams: Params = {  };
+    this.router.navigate(['/pages/groups/annual'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
 }
