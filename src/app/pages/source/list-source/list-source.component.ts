@@ -55,7 +55,7 @@ export class ListSourceComponent implements OnInit {
         width: '6em',
       },                         
       availability: {
-        title: 'Quality',
+        title: 'Proportion',
         type: 'number',
         filter: true,
         width: '2em',

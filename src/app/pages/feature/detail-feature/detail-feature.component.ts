@@ -133,7 +133,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       },
        
       quality: {
-        title: 'Quality',
+        title: 'Proportion',
         type: 'number',
         filter: false,
         width: '3em',

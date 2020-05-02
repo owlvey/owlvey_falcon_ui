@@ -29,26 +29,3 @@
     
   </div>
 </div>
-
-<div class="row">
-    <div class="col-md-12">
-        <nb-card>
-            <nb-card-header>
-              Daily Efectiveness Report
-            </nb-card-header>            
-            <nb-card-body>                                            
-                  
-              <div class="row">
-                  <div class="col-sm-12">
-                      <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>    
-                  </div>
-              </div>
-              <div class="row">                
-                  <div class="col-sm-12">
-                    <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                 
-                  </div>
-              </div>
-            </nb-card-body>          
-          </nb-card>          
-    </div>
-</div>

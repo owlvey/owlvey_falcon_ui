@@ -43,12 +43,12 @@
   </nb-card-header>
   <nb-card-body>
     <nb-tabset fullWidth>
-      <nb-tab tabTitle="Weekly Report">
-        <ngx-daily-detail-chart [dataItems]="series" target="average" all="All" showAll="True" ></ngx-daily-detail-chart>    
+      <nb-tab tabTitle="Debt Weekly Report">        
+        <ngx-daily-debt-chart [dataItems]="series"></ngx-daily-debt-chart>    
       </nb-tab>      
-      <nb-tab tabTitle="Daily Report">
+      <nb-tab tabTitle="Debt Daily Report">
         <h6> Selected Group: {{dailyTitle}} </h6>
-        <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                 
+        <ngx-calendar-debt-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-calendar-debt-chart>                                 
       </nb-tab>      
     </nb-tabset>
     

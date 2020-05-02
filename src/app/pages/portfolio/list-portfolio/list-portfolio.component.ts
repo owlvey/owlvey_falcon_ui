@@ -103,9 +103,7 @@ export class ListPortfolioComponent implements OnInit {
   };
 
   source: LocalDataSource = new LocalDataSource();
-  options: any = {};
-  series: Array<any> = [];    
-  calendarSerie : Array<any> = [];  
+  options: any = {};  
   serviceGroup: string;
   themeSubscription: any;
 
@@ -133,8 +131,7 @@ export class ListPortfolioComponent implements OnInit {
       this.startDate = new Date(paramMap.get('start'));
       this.endDate = new Date(paramMap.get('end'));      
       this.serviceGroup = paramMap.get('group');      
-      this.getProduct(this.productId);
-      this.getDaily(); 
+      this.getProduct(this.productId);      
     });          
   }  
   getProduct(productId: number){
@@ -163,21 +160,7 @@ export class ListPortfolioComponent implements OnInit {
       });
     });     
   }
-  getDaily(){
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      const echartsColors: any = config.variables.echarts;
-
-      this.productGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, this.serviceGroup).subscribe(data=>{
-        this.series = data.series;
-        
-        this.calendarSerie = this.series[0].items.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
-        });        
-      });  
-
-    });
-  }
+ 
   onCreate(event){    
     let queryParams: Params = {  };
     this.router.navigate(['/pages/portfolios/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     

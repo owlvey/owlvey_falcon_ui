@@ -15,11 +15,13 @@ import {
 import { DailyChartComponent } from './daily-chart/daily-chart.component';
 import { DailyDetailChartComponent } from './daily-chart/daily-detail-chart.component';
 import { DailyCalendarChartComponent} from './daily-chart/daily-calendar.component';
+import { DailyDebtChartComponent } from './daily-chart/daily-debt.component';
+import { CalendarDebtChartComponent } from './daily-chart/calendar-debt.component';
 
 @NgModule({
    imports: [FormsModule, CommonModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule],
-   declarations: [ DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent ],
-   exports: [DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent],
+   declarations: [ DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent ],
+   exports: [DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent],
 })
 
 export class ControlsModule {

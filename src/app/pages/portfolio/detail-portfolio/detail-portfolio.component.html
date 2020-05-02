@@ -160,10 +160,17 @@
                   class="echart" (chartInit)="onSliChatInit($event)"></div>
             </nb-tab> -->
                     
-            <nb-tab tabTitle="Service Level Indicators" >              
-                <p>
-                    <b> Feature : {{ currentFeature?.name }}</b>                
-                </p>
+            <nb-tab tabTitle="Service Level Indicators" >                            
+                <div class="d-flex" style="margin-bottom: 1rem;">
+                  <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
+                    <button
+                    type="button" 
+                    [disabled]="!currentFeature"
+                    nbButton status="primary" (click)="onFeatureDetail($event)"
+                    class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
+                    </button>                                            
+                </div>
+                
                 <div class="row">
                   <div class="col-md-12">
                       <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">

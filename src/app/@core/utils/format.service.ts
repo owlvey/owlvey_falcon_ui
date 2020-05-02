@@ -57,7 +57,7 @@ export class FormatService {
     }
     buildTrendColumnValue(target: number, previous: number){                                
         const diff =  target - previous;               
-        const title = 'Diff: ' + diff.toFixed(3);
+        const title = 'Diff:' + diff.toFixed(3);
         if (diff === 0){
             return `<i class='fas text-info text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
@@ -69,6 +69,21 @@ export class FormatService {
         }
     }
 
+    buildDebtColumnValue(target: number, previous: number){
+        target = target * 100;
+        previous = previous * 100;
+        const diff =  target - previous;               
+        const title = 'Diff:' + diff.toFixed(3);
+        if (target === 0){
+            return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else if (target >= previous){
+            return ` <i class='fas fa-arrow-up text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else{
+            return `<i class='fas fa-arrow-down text-warning text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+    }
     compareIconNumberColumn (direction: any, a: any, b: any) {          
 
         if ( typeof a !== 'string' || typeof b !== 'string')

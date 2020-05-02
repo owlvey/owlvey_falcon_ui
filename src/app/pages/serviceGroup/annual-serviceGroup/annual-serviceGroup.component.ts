@@ -52,11 +52,12 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
         filter: false,
         width: '3em',
       },         
-      jan: {
+      janHtml: {
         title: 'Jan',
-        type: 'number',
+        type: 'html',
         filter: false,
         width: '3em',
+        compareFunction:this.format.compareIconNumberColumn,
       },   
       febHtml: {
         title: 'Feb',
@@ -145,36 +146,38 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       const availability = data.availability;
       const latency = data.latency;
       
-      const tempQuality = quality.map(c=>{        
-        c.febHtml = this.format.buildTrendColumnValue(c.feb, c.jan);
-        c.marHtml = this.format.buildTrendColumnValue(c.mar, c.feb);
-        c.aprHtml = this.format.buildTrendColumnValue(c.apr, c.mar);
-        c.mayHtml = this.format.buildTrendColumnValue(c.may, c.apr);
-        c.junHtml = this.format.buildTrendColumnValue(c.jun, c.may);
-        c.julHtml = this.format.buildTrendColumnValue(c.jul, c.jun);
-        c.augHtml = this.format.buildTrendColumnValue(c.aug, c.jul);
-        c.sepHtml = this.format.buildTrendColumnValue(c.sep, c.aug);
-        c.octHtml = this.format.buildTrendColumnValue(c.oct, c.sep);
-        c.novHtml = this.format.buildTrendColumnValue(c.nov, c.oct);
-        c.decHtml = this.format.buildTrendColumnValue(c.dec, c.nov);
-        return c;
-      });
+      let result = [quality, availability, latency].map(group=>{
+        const temp = group.map(c=>{        
+          c.janHtml = this.format.buildDebtColumnValue(c.jan, 0);
+          c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
+          c.marHtml = this.format.buildDebtColumnValue(c.mar, c.feb);
+          c.aprHtml = this.format.buildDebtColumnValue(c.apr, c.mar);
+          c.mayHtml = this.format.buildDebtColumnValue(c.may, c.apr);
+          c.junHtml = this.format.buildDebtColumnValue(c.jun, c.may);
+          c.julHtml = this.format.buildDebtColumnValue(c.jul, c.jun);
+          c.augHtml = this.format.buildDebtColumnValue(c.aug, c.jul);
+          c.sepHtml = this.format.buildDebtColumnValue(c.sep, c.aug);
+          c.octHtml = this.format.buildDebtColumnValue(c.oct, c.sep);
+          c.novHtml = this.format.buildDebtColumnValue(c.nov, c.oct);
+          c.decHtml = this.format.buildDebtColumnValue(c.dec, c.nov);
+          return c;
+        });
+        return temp;
+      })
       
-      this.source.load(tempQuality);
-
-      this.sourceAvailability.load(availability);
-      this.sourceLatency.load(latency);
-      this.series = data.weekly.series;
+      this.source.load(result[0]);
+      this.sourceAvailability.load(result[1]);
+      this.sourceLatency.load(result[2]);
+      this.series = data.weekly;
+      
     });
   }
   
   onRowSelect(event){
-    const group = event.data.name;    
-    this.portfoliosGateway.getPortfoliosGroupAnnualCalendar(this.productId, group, this.startDate).subscribe( data=>{
-      this.dailyTitle = data.name;
-      this.calendarSerie = data.items.map( c=>{
-        return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
-      });         
+    const group = event.data.name;  
+    this.dailyTitle = group;
+    this.portfoliosGateway.getPortfoliosGroupAnnualCalendar(this.productId, group, this.startDate).subscribe(data=>{
+      this.calendarSerie = data;
     });
   }
 }

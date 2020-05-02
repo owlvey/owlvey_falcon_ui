@@ -22,16 +22,7 @@ export class ProductsGateway {
   }
   getProduct(productId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}`);
-  }
-
-  getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
-    group = group && group || "";
-    return this.owlveyGateway.get(
-      this.baseUrl +
-        `products/${productId}/reports/daily/services/series?start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
-    );
-  }
-  
+  }  
 
   getGraphView(productId: number, start: Date, end: Date): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);

@@ -35,7 +35,7 @@ export class PortfoliosGateway{
     }
 
     getPortfoliosGroup(productId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `services/serviceGroup?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
     getPortfoliosGroupAnnual(productId: number, start: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual?productId=${productId}&start=${start.toISOString()}`);
@@ -43,6 +43,14 @@ export class PortfoliosGateway{
     getPortfoliosGroupAnnualCalendar(productId: number, group: string, start: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual/calendar?productId=${productId}&group=${group}&start=${start.toISOString()}`);
     }
+
+    getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
+        group = group && group || "";
+        return this.owlveyGateway.get(
+          this.baseUrl + 
+            `services/reports/debt/daily/series?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
+        );
+      }
     
     getPortfolios(productId: number): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services?productId=${productId}`);

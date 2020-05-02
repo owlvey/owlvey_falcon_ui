@@ -567,6 +567,11 @@ export class DetailPortfolioComponent implements OnInit {
         
   }
 
+  onFeatureDetail(event){        
+    let queryParams: Params = { featureId: this.currentFeature.id };
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+
+  }
 //region
   
 
