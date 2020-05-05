@@ -226,7 +226,7 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     let queryParams: Params = { portfolioId: serviceId };
     this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
-  onGotoServices(){
+  onGotoServices(event){
      let queryParams: Params = { group: this.groupSelected};
      this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
