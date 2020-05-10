@@ -68,7 +68,7 @@ export class ItemsSourceComponent implements OnInit {
         type: 'number',
         filter: true
       },      
-      availability: {
+      proportion: {
         title: 'Proportion',
         width: '3rem',
         type: 'number',

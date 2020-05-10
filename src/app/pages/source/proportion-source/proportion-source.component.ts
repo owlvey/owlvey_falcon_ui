@@ -50,7 +50,7 @@ export class ProportionSourceComponent implements OnInit {
         sort: true,
         sortDirection: 'asc'
       },        
-      availability: {
+      proportion: {
         title: 'Proportion',
         width: '5rem',
         type: 'number',

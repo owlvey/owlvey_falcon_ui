@@ -84,8 +84,21 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         filter: false,        
         editable: false
       },          
+      name: {
+        title: 'Feature',
+        type: 'string',
+        filter: false,        
+        editable: false
+      },    
       slo: {
         title: 'SLO',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },             
+      quality: {
+        title: 'Quality',
         type: 'number',
         filter: false,        
         width: '3em',
@@ -97,20 +110,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         filter: false,        
         width: '3em',
         editable: false
-      },               
-      name: {
-        title: 'Feature',
-        type: 'string',
-        filter: false,        
-        editable: false
-      },              
-      availability: {
-        title: 'Quality',
-        type: 'number',
-        filter: false,        
-        width: '3em',
-        editable: false
-      },              
+      }, 
       points: {
         title: 'Points',
         type: 'html',
