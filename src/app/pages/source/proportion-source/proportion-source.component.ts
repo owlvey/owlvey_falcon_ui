@@ -149,5 +149,10 @@ export class ProportionSourceComponent implements OnInit {
         this.toastr.warning("Something went wrong, please try again.", "Warning")
       });
   }
+  onUserRowSelect(event): void {    
+    const featureId = event.data.id;
+    let queryParams: Params = { featureId : featureId };
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
 
 }
