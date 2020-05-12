@@ -41,6 +41,9 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
       edit:false,
       delete:false
     },
+    pager: {
+      perPage: 20
+    },
     columns: {      
       name: {
         title: 'Name',
