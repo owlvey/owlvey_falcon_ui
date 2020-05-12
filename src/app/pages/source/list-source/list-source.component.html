@@ -22,6 +22,10 @@
                         <ng2-smart-table [settings]="latencySettings" [source]="latencySource" (userRowSelect)="onUserRowSelect($event)">
                         </ng2-smart-table>                      
                     </nb-tab>
+                    <nb-tab tabTitle="Experience Sources" >              
+                        <ng2-smart-table [settings]="experienceSettings" [source]="experienceSource" (userRowSelect)="onUserRowSelect($event)">
+                        </ng2-smart-table>                      
+                    </nb-tab>
                 </nb-tabset>
                 
               </nb-card-body>

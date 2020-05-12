@@ -132,10 +132,10 @@ export class AppModule {
         class: NbAuthOAuth2Token,
         requireValidToken: true
       },
-      refresh: {
-        endpoint: 'token',
-        grantType: NbOAuth2GrantType.REFRESH_TOKEN
-      }
+      // refresh: {
+      //   endpoint: 'token',
+      //   grantType: NbOAuth2GrantType.REFRESH_TOKEN
+      // }
     });
   }
 }

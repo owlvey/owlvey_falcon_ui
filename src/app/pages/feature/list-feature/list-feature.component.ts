@@ -63,6 +63,13 @@ export class ListFeatureComponent extends ProductBaseComponent {
         width: "3em",
         editable: false
       },           
+      experience: {
+        title: "Experience",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
       indicatorsCount: {
         title: "Sources",
         type: "number",

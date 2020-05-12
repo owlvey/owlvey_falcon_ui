@@ -20,12 +20,13 @@ export class CreateSourceComponent extends ProductBaseComponent {
 
   options = [
     { value: 'Interaction', label: 'Interaction' },
-    { value: 'Proportion', label: 'Proportion'},    
+    { value: 'Proportion', label: 'Proportion'},        
   ];
 
   groupOptions = [
     {value: 'Availability', label: 'Availability' },
-    {value: 'Latency', label: 'Latency' }
+    {value: 'Latency', label: 'Latency' },
+    {value: 'Experience', label: 'Experience' }
   ];
   groupValue = "Availability"; 
   

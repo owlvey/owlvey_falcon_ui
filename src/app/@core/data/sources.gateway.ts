@@ -19,7 +19,7 @@ export class SourcesGateway{
 
     getSourcesWithAvailability(productId: number, start: Date, end: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `sources?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
-    }
+    }    
 
     postSource(productId: number, name: String, kind: string, group: string): Observable<any> {
         return this.owlveyGateway.post(this.baseUrl + `sources`, 

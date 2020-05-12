@@ -34,6 +34,7 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
   source: LocalDataSource = new LocalDataSource();
   sourceAvailability: LocalDataSource = new LocalDataSource();
   sourceLatency: LocalDataSource = new LocalDataSource();
+  sourceExperience: LocalDataSource = new LocalDataSource();
   settings = {
     actions:{
       add:false,
@@ -145,8 +146,9 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       const quality = data.quality;
       const availability = data.availability;
       const latency = data.latency;
+      const experience = data.experience;
       
-      let result = [quality, availability, latency].map(group=>{
+      let result = [quality, availability, latency, experience].map(group=>{
         const temp = group.map(c=>{        
           c.janHtml = this.format.buildDebtColumnValue(c.jan, 0);
           c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
@@ -168,6 +170,7 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       this.source.load(result[0]);
       this.sourceAvailability.load(result[1]);
       this.sourceLatency.load(result[2]);
+      this.sourceExperience.load(result[3]);
       this.series = data.weekly;
       
     });

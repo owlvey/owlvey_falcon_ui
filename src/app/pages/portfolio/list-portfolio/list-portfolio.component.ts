@@ -81,12 +81,18 @@ export class ListPortfolioComponent implements OnInit {
         width: '3em',
         editable: false
       },
-      
+      experience: {
+        title: "Exp...",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },          
       group:{
         title: 'Group',
         type: 'string',
         filter: true,
-        width: '5em',
+        width: '7em',
       },
       name: {
         title: 'Name',

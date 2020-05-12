@@ -94,6 +94,13 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         width: '3em',
         editable: false
       },      
+      experience: {
+        title: 'Exp...',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },      
      
       featuresCount: {
         title: 'Fea...',
@@ -173,17 +180,29 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         width: '3em',
       },        
       latencyAvg: {
-        title: 'Latency Avg',
+        title: 'Lat. Avg',
         type: 'number',
         filter: false,
         width: '3em',
       },   
       latencyMin: {
-        title: 'Latency Min',
+        title: 'Lat. Min',
         type: 'number',
         filter: false,
         width: '3em',
       },        
+      experienceAvg: {
+        title: 'Exp. Avg',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },        
+      experienceMin: {
+        title: 'Exp. Min',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },              
     },
   };
 

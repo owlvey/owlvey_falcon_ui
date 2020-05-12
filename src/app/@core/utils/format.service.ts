@@ -36,15 +36,15 @@ export class FormatService {
 
         for (let index = 0; index < values.length; index++) {            
             if ( target <= values[index]){
-                return `<i class="fas fa-circle ${classes[index]} text-center d-block" title=${title}> ${target.toFixed(3)} </i>`;    
+                return `<i class="fas fa-circle ${classes[index]} text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;    
             }
         }
-        return `<i class="fas fa-circle ${classes[ classes.length - 1 ]} text-center d-block" title=${title}> ${target.toFixed(3)} </i>`;        
+        return `<i class="fas fa-circle ${classes[ classes.length - 1 ]} text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;        
     }
 
     buildTrendColumn(target: number, previous: number){                                
         const diff =  target - previous;               
-        const title = 'Efectiveness:' + String(previous);
+        const title = 'Previous:' + String(previous);
         if (diff === 0){
             return `<i class='fas text-info text-center text-nowrap' title=${title}> ${diff.toFixed(3)} </i>`;
         }

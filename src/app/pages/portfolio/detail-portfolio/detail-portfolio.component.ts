@@ -85,6 +85,13 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false,        
+      },        
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
       },                         
     },
   };

@@ -90,19 +90,6 @@ export class ListSourceComponent implements OnInit {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
-      },   
-
-      good: {
-        title: 'Good',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },         
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: true,
-        width: '3em',
       },                 
       kind: {
         title: 'Type',
@@ -111,7 +98,7 @@ export class ListSourceComponent implements OnInit {
         width: '6em',
       },                         
       availability: {
-        title: 'Quality',
+        title: 'Proportion',
         type: 'number',
         filter: true,
         width: '2em',
@@ -147,20 +134,7 @@ export class ListSourceComponent implements OnInit {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
-      },   
-
-      good: {
-        title: 'Good',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },         
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: true,
-        width: '3em',
-      },                 
+      },           
       kind: {
         title: 'Type',
         type: 'string',
@@ -168,7 +142,7 @@ export class ListSourceComponent implements OnInit {
         width: '6em',
       },                         
       availability: {
-        title: 'Quality',
+        title: 'Proportion',
         type: 'number',
         filter: true,
         width: '2em',
@@ -183,11 +157,57 @@ export class ListSourceComponent implements OnInit {
       },             
     },
   };
+
+  experienceSettings =  {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {      
+      id:{
+        title: 'Id',
+        type: 'number',
+        filter: true,
+        width: '3em'   
+      },
+      name: {
+        title: 'Name',
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },           
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },                         
+      availability: {
+        title: 'Proportion',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },             
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },             
+    },
+  };
+
   startDate: Date;
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
   latencySource: LocalDataSource = new LocalDataSource();
+  experienceSource: LocalDataSource = new LocalDataSource();
 
   totalSources: number = 0;
   totalAssigned: number = 0;
@@ -214,10 +234,12 @@ export class ListSourceComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
+      
       this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
         
         const avaialabilitySources = sources.filter(c=> c.group == "Availability");
         const latencySources = sources.filter(c=> c.group == "Latency");
+        const experienceSources = sources.filter(c=> c.group == "Experience");
         const referencesSources = sources.filter(c=> c.references > 0);
         
         this.totalSources = sources.length;
@@ -226,6 +248,7 @@ export class ListSourceComponent implements OnInit {
         
         this.latencySource.load(latencySources);
         this.availabilitySource.load(avaialabilitySources);
+        this.experienceSource.load(experienceSources);
         this.source.load(sources);
       });
     });     
