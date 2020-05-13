@@ -153,7 +153,7 @@ export class ItemsSourceComponent implements OnInit {
   getSourceItems(){
     this.sourcesGateway.getSource(this.sourceId).subscribe(source=>{
       this.currentSource = source;
-      this.sourcesGateway.getSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
+      this.sourcesGateway.getInteractionSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
         const transform  = data.map(c =>{ 
           c.target =  this.formatService.getGridDateFromDate(new Date(c.target));          
           c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));

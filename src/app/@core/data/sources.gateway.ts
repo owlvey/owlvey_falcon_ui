@@ -59,6 +59,10 @@ export class SourcesGateway{
         return this.owlveyGateway.get(this.baseUrl + `sourceItems?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
+    getInteractionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
+        return this.owlveyGateway.get(this.baseUrl + `sourceItems/interactions?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
+
     getSourceItemById(sourceItemId: number) : Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sourceItems/${sourceItemId}`);
     }
