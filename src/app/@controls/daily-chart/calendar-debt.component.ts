@@ -58,7 +58,7 @@ export class CalendarDebtChartComponent implements AfterViewInit, OnDestroy {
     for (let index = 0; index < len_data; index++) {
       new_data[index] = 
         [ 
-          echarts.format.formatTime('yyyy-MM-dd', data[0].items[index].date), 
+          this.formatService.extractDateStringFromUtc(data[0].items[index].date),          
           state[index]
         ];      
     }

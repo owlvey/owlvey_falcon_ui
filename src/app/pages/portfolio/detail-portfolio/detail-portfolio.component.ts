@@ -9,6 +9,7 @@ import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
+import { FormatService } from '../../../@core/utils/format.service';
 
 
 @Component({
@@ -142,6 +143,7 @@ export class DetailPortfolioComponent implements OnInit {
     private featuresGateway: FeaturesGateway,    
     private portfolioGateway: PortfoliosGateway,    
     private theme: NbThemeService,
+    private format: FormatService,
     private router: Router, 
     protected visNetworkService: VisNetworkService,
     private activatedRoute: ActivatedRoute) {       
@@ -361,7 +363,7 @@ export class DetailPortfolioComponent implements OnInit {
           { gt: 0, lt: this.currentSource.slo * 100, color: '#cc0033', }];                
         
         this.calendarSerie = this.series[0].items.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         }); 
       });  
 

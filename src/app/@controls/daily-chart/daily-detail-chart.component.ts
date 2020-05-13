@@ -18,12 +18,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   constructor(private theme: NbThemeService,
     private formatService: FormatService) {
   }
-  private _dataItems: Array<any>;
-
-  private formatDate(date){
-    const target = new Date(date);
-    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');
-  }
+  private _dataItems: Array<any>; 
 
   get dataItems(){
     return this._dataItems;
@@ -77,7 +72,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
             if (value < minValue) {
               minValue = c[this.target];
             }
-            return { name: c.date, value: [this.formatDate(c.date), value] };
+            return { name: c.date, value: [this.formatService.extractDateStringFromUtc(c.date), value] };
           },
         );
         legends.push(serieData.name);

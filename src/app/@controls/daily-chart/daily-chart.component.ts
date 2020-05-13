@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { FormatService } from '../../@core/utils/format.service';
 
 @Component({
   selector: 'ngx-daily-chart',
@@ -12,14 +13,9 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
   options: any = {};
   themeSubscription: any;
 
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private format: FormatService) {
   }
   private _dataItems: Array<any>;
-
-  private formatDate(date){
-    const target = new Date(date);
-    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');
-  }
 
   get dataItems(){
     return this._dataItems;
@@ -28,8 +24,8 @@ export class DailyChartComponent implements AfterViewInit, OnDestroy {
   @Input()
   set dataItems(data: Array<any>){    
     
-    const line = data.map(c => ({ name: c.date, value: [ this.formatDate(c.date), 100 * c.oAve]}));
-    const dates = data.map(c => new Date(c.date));
+    const line = data.map(c => ({ name: c.date, value: [ this.format.extractDateStringFromUtc(c.date), 100 * c.oAve]}));
+    
     const points = [{
          name : 'Availability',
          type : 'line',

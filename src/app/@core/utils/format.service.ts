@@ -84,6 +84,10 @@ export class FormatService {
             return `<i class='fas fa-arrow-down text-warning text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
+    extractDateStringFromUtc(target: string) {
+        //2020-04-30T00:00:00+00:00
+        return target.substr(0, 4) + "-" + target.substr(5, 2) + "-" + target.substr(8, 2);
+    }
     compareIconNumberColumn (direction: any, a: any, b: any) {          
 
         if ( typeof a !== 'string' || typeof b !== 'string')

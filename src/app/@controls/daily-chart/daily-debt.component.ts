@@ -18,10 +18,6 @@ export class DailyDebtChartComponent implements AfterViewInit, OnDestroy {
   }
   private _dataItems: Array<any>;
 
-  private formatDate(date){
-    const target = new Date(date);
-    return [target.getFullYear(), target.getMonth() + 1, target.getDate()].join('/');
-  }
 
   get dataItems(){
     return this._dataItems;
@@ -46,7 +42,7 @@ export class DailyDebtChartComponent implements AfterViewInit, OnDestroy {
             if (value < minValue) {
               minValue = c['oAve'];
             }
-            return { name: c.date, value: [this.formatDate(c.date), value.toFixed(2)] };
+            return { name: c.date, value: [this.formatService.extractDateStringFromUtc(c.date), value.toFixed(2)] };
           },
         );
         legends.push(serieData.name);

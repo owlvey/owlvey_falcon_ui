@@ -8,6 +8,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { TooltipComponent } from '../../common/components/tooltipComponent';
+import { FormatService } from '../../../@core/utils/format.service';
 
 
 @Component({
@@ -183,6 +184,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private toastr: NbToastrService,
+    private format: FormatService,
     private sourcesGateway: SourcesGateway,    
     private featuresGateway: FeaturesGateway,   
     private theme: NbThemeService,    
@@ -295,7 +297,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.featuresGateway.getDaily(this.featureId, this.startDate, this.endDate).subscribe(data=>{
         this.series = data.series;
         this.calendarSerie = this.series[0].items.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         });      
       });  
 

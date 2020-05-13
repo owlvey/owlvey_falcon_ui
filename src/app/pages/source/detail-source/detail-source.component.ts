@@ -7,6 +7,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { map } from 'rxjs/operators';
+import { FormatService } from '../../../@core/utils/format.service';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
     private sourcesGateway: SourcesGateway,    
     private toastr: NbToastrService,
     private theme: NbThemeService, 
+    private format: FormatService,
     private router: Router, 
     private activatedRoute: ActivatedRoute) {       
       this.endDate = new Date();
@@ -123,13 +125,14 @@ export class DetailSourceComponent implements OnInit, AfterViewInit {
   getDaily(){
 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
 
-      this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{              
+      this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{                      
         this.series = data.items;   
         this.calendarSerie = this.series.map(c=>{        
-          return [ echarts.format.formatTime('yyyy-MM-dd', c.date), c.oAve * 100];
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         });                     
   
       });
