@@ -171,13 +171,13 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         width: '3em',
       },        
       availabilityAvg: {
-        title: 'Availability Avg',
+        title: 'Ava... Avg',
         type: 'number',
         filter: false,
         width: '3em',
       },   
       availabilityMin: {
-        title: 'Availability Min',
+        title: 'Ava... Min',
         type: 'number',
         filter: false,
         width: '3em',

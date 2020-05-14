@@ -18,10 +18,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Organization Performance',
     icon: 'home-outline',
   },
-  {
-    title: 'Product Performance',
-    icon: 'home-outline',
-  },
+  
   {
     title: 'Operation Performance',
     icon: 'home-outline',

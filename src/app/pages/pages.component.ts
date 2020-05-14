@@ -138,13 +138,7 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/home'],
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
-      }
-
-      if (e.item.title == 'Product Performance'){
-        const queryParams: Params = { };
-        this.router.navigate(['/pages/products/dashboard'],
-         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
-      }
+      }      
 
       if (e.item.title == 'Operation Performance'){
         const queryParams: Params = { };

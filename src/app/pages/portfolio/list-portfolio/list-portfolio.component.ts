@@ -53,7 +53,7 @@ export class ListPortfolioComponent implements OnInit {
       },
    
       budget: {
-        title: 'Budget',
+        title: 'Error Budget',
         type: 'number',
         filter: true,
         width: '3em',
