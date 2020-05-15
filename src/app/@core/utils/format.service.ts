@@ -70,8 +70,8 @@ export class FormatService {
     }
 
     buildDebtColumnValue(target: number, previous: number){
-        target = target * 100;
-        previous = previous * 100;
+        target = target;
+        previous = previous;
         const diff =  target - previous;               
         const title = 'Diff:' + diff.toFixed(3);
         if (target === 0){

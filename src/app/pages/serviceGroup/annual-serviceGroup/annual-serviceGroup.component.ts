@@ -149,7 +149,7 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       const experience = data.experience;
       
       let result = [quality, availability, latency, experience].map(group=>{
-        const temp = group.map(c=>{        
+        const temp = group.map(c =>{        
           c.janHtml = this.format.buildDebtColumnValue(c.jan, 0);
           c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
           c.marHtml = this.format.buildDebtColumnValue(c.mar, c.feb);
