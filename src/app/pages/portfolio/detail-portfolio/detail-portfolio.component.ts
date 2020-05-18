@@ -65,14 +65,7 @@ export class DetailPortfolioComponent implements OnInit {
         type: 'string',
         filter: false,        
         editable: false
-      },                     
-      quality: {
-        title: 'Quality',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },        
+      },                           
       availability: {
         title: 'Availability',
         type: 'number',
@@ -93,7 +86,16 @@ export class DetailPortfolioComponent implements OnInit {
         filter: false,
         width: '3em',
         editable: false,        
-      },                         
+      },             
+      indicatorsCount: {
+        title: 'SLIs',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,        
+      },                     
+      
+      
     },
   };
   /*
@@ -413,13 +415,13 @@ export class DetailPortfolioComponent implements OnInit {
         type: 'string',
         filter: false
       },    
-      quality: {
-        title: 'Quality',
+      measure: {
+        title: 'Measure',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false,        
-      },    
+      },         
       group: {
         title: 'Group',
         type: 'string',
@@ -439,17 +441,9 @@ export class DetailPortfolioComponent implements OnInit {
       this.currentFeature = event.data;
       const featureId = event.data.id;
       const slo = event.data.featureSlo;
-      this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{        
-        const temporal = feature.indicators;
-        const indicators = temporal.map(c=>{
-          c.indicatorSlo = Math.round(Math.pow(slo, 1/temporal.length) * 10000) /10000;
-          c.budget =  Math.round( (c.availability - c.indicatorSlo) * 10000) /10000;
-          return c;
-        });
-
-        this.indicatorSource.load(indicators);
-        this.squadSource.load(feature.squads);                
-        
+      this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{                
+        this.indicatorSource.load(feature.indicators);
+        this.squadSource.load(feature.squads);                        
       });  
   } 
   onReportClick(event){

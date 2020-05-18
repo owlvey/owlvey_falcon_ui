@@ -28,7 +28,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       position: 'right',
       add:false,
       edit:true,
-      delete:false
+      delete:false,      
     },    
     edit: {
       editButtonContent: '<i class="nb-trash"></i>',      
@@ -44,10 +44,23 @@ export class EditFeatureComponent extends ProductBaseComponent {
         width: '3em',
         editable: false
       },
+      
+      group: {
+        title: 'Group',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },
       source: {
         title: 'Source',
         type: 'string',
-        filter: true
+        filter: true,        
       }
     },
   };
@@ -76,6 +89,18 @@ export class EditFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: '3em',
         editable: false
+      },
+      group: {
+        title: 'Group',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },
+      kind: {
+        title: 'Type',
+        type: 'string',
+        filter: true,
+        width: '6em',
       },
       name: {
         title: 'Source',

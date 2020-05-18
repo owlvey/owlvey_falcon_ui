@@ -201,7 +201,9 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("slo").setValue(data.slo);
+      this.editForm.get("availabilitySLO").setValue(data.availabilitySLO);
+      this.editForm.get("latencySLO").setValue(data.latencySLO);
+      this.editForm.get("experienceSLO").setValue(data.experienceSLO);
       this.editForm.get("leaders").setValue(data.leaders);
       this.editForm.get("aggregation").setValue(data.aggregation);      
       this.editForm.get("group").setValue(data.group);      
@@ -219,7 +221,9 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      slo: ['', Validators.required],
+      availabilitySLO: ['', Validators.required],
+      latencySLO: ['', Validators.required],
+      experienceSLO: ['', Validators.required],
       leaders: [''],
       aggregation: [''],
       group: ['']

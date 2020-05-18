@@ -34,15 +34,15 @@ export class ListPortfolioComponent implements OnInit {
       perPage: 20
     },
     columns: {           
-      slo: {
+      availabilitySLO: {
         title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
       },      
-      qualityHtml: {
-        title: 'Quality',                
+      availabilityHtml: {
+        title: 'Availability',                
         type: 'html',
         filter: true,
         width: '3em',
@@ -50,44 +50,41 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },
-   
-      budget: {
-        title: 'Error Budget',
+      },            
+      latencySLO: {
+        title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
-        editable: false,        
-      },
-      previousHtml: {
-        title: 'Previous',
+        editable: false
+      }, 
+      latencyHtml: {
+        title: 'Latency',                
         type: 'html',
         filter: true,
-        width: '2em',
+        width: '3em',
         editable: false,
+        sort:true,
+        sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },        
-      availability: {
-        title: 'Ava...',
+      },            
+      experienceSLO: {
+        title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },
-      latency: {
-        title: 'Lat...',
-        type: 'number',
+      },         
+      experienceHtml: {
+        title: 'Experience',                
+        type: 'html',
         filter: true,
         width: '3em',
-        editable: false
-      },
-      experience: {
-        title: "Exp...",
-        type: "number",
-        filter: true,
-        width: "3em",
-        editable: false
-      },          
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },            
       group:{
         title: 'Group',
         type: 'string',
@@ -112,10 +109,6 @@ export class ListPortfolioComponent implements OnInit {
   options: any = {};  
   serviceGroup: string;
   themeSubscription: any;
-
-  totalServices: number = 0;
-  sloCompliance: number = 0;
-  efectiveness: number = 0;
 
   constructor(
     private location: Location,
@@ -144,24 +137,14 @@ export class ListPortfolioComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
-        const data = portfolios;
-        this.totalServices = data.length;
-        this.sloCompliance = 0;
-        this.efectiveness = 0;
+        const data = portfolios;        
         let newData = data.map(c=> {  
-
-          if (c.quality >= c.slo){
-            this.sloCompliance += 1;
-          }          
-          c.delta = this.format.round3Decimals(c.quality - c.previous);          
-          c.budget = this.format.round3Decimals(c.budget);                              
-          c.previousHtml = this.format.buildTrendColumn(c.quality, c.previous);         
-          c.qualityHtml = this.format.buildStatusColumn(c.quality, c.deploy, [c.slo], ['text-danger', 'text-success']);          
+          c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
+          c.latencyHtml = this.format.buildStatusColumn(c.latency, c.latencyErrorBudget , [c.latencySLO], ['text-danger', 'text-success']);          
+          c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                    
           return c;
         });                
-        if (this.totalServices){
-          this.efectiveness = this.format.round2Decimals( this.sloCompliance / this.totalServices );
-        }        
+        
         this.source.load(newData);
       });
     });     

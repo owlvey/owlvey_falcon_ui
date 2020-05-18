@@ -12,20 +12,20 @@
               </div>
           </nb-card-header>
           <nb-card-body> 
-  
+              <!--Availability-->
               <div class="row">
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.slo" 
+                      <input readonly="readonly" type="number" [value]="currentSource.availabilitySLO" 
                           nbInput fullWidth id="inputSLO" placeholder="Availability"
                           class="input-full-width size-medium shape-rectangle">                      
                     </div>  
                   </div>       
                   <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Quality</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.quality" 
+                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.availability" 
                             nbInput fullWidth id="inputAvailability" placeholder="Availability"
                             class="input-full-width size-medium shape-rectangle">                                                     
                       </div>
@@ -33,62 +33,173 @@
                                                
                   <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="inputBudget" class="label form-control-label">Error Budget</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.budget" 
+                        <label for="inputBudget" class="label form-control-label">Availability Error Budget</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.availabilityErrorBudget" 
                             nbInput fullWidth id="inputBudget" placeholder="Availability"
                             class="input-full-width size-medium shape-rectangle">                      
                       </div>
                   </div>                  
-                  <div class="col-sm-2">
-                    <div class="form-group">
 
-                      <label for="inputBudget" class="label form-control-label">
-
-                        <div *ngIf="currentSource.delta >= 0">
-                          Previous  |  <i class='fas fa-arrow-up text-success'>  {{ currentSource.delta }} </i>  
-                        </div>
-                        <div *ngIf="currentSource.delta < 0">
-                          Previous  | <i class='fas fa-arrow-down text-danger'> {{ currentSource.delta }}</i>
-                        </div>
-                                                
-                      </label>
-                      <input readonly="readonly" type="number" [value]="currentSource.previousQuality" 
-                          nbInput fullWidth id="inputBudget" placeholder="Availability" 
-                          class="input-full-width size-medium shape-rectangle"/>                      
-                    </div>
-                  </div>
-
-                  <div class="col-sm-2">
+                <div class="col-sm-2">
                     <div class="form-group">
                       <label class="label form-control-label">
-                        <div *ngIf="currentSource.delta2 >= 0">
-                          Previous II | <i class='fas fa-arrow-up text-success'> {{ currentSource.delta2 }}</i>
+                        <div *ngIf="currentSource.availability >= currentSource.previousAvailability">
+                          Previous | <i class='fas fa-arrow-up text-success'> {{ (currentSource.availability - currentSource.previousAvailability)  | number:'1.1-5' }}</i>
                         </div>
-                        <div *ngIf="currentSource.delta2 < 0">
-                          Previous II | <i class='fas fa-arrow-down text-danger'> {{ currentSource.delta2 }}</i>
+                        <div *ngIf="currentSource.availability < currentSource.previousAvailability">
+                          Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.availability - currentSource.previousAvailability)  | number:'1.1-5'}}</i>
                         </div>
                       </label>
-                      
-                      <input readonly="readonly" type="number" [value]="currentSource.previousQualityII" 
+                      <input readonly="readonly" type="number" [value]="currentSource.previousAvailability" 
                           nbInput fullWidth id="inputBudget" placeholder="Availability"
                           class="input-full-width size-medium shape-rectangle">                      
                     </div>
+                </div>                                  
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label class="label form-control-label">
+                      <div *ngIf="currentSource.availability >= currentSource.beforeAvailability">
+                        Before | <i class='fas fa-arrow-up text-success'> {{ (currentSource.availability - currentSource.beforeAvailability)  | number:'1.1-5' }}</i>
+                      </div>
+                      <div *ngIf="currentSource.availability < currentSource.beforeAvailability">
+                        Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.availability - currentSource.beforeAvailability)  | number:'1.1-5'}}</i>
+                      </div>
+                    </label>
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeAvailability" 
+                        nbInput fullWidth id="inputBudget" placeholder="Availability"
+                        class="input-full-width size-medium shape-rectangle">                      
                   </div>
+                </div>                                  
+
 
               </div>
 
+              <!--Latency-->
               <div class="row">
                 <div class="col-sm-2">
-                  <div class="form-group">
-                    <label for="inputAvailability" class="label col-sm-3 form-control-label">Aggregation</label>
-                    <input readonly="readonly" type="text" [value]="currentSource.aggregation" 
-                        nbInput fullWidth id="inputAvailability" placeholder="Aggregation"
-                        class="input-full-width size-medium shape-rectangle">                         
+                    <div class="form-group">
+                      <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.latencySLO" 
+                          nbInput fullWidth id="inputSLO" placeholder="latency"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>  
+                  </div>       
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Latency</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.latency" 
+                            nbInput fullWidth id="inputAvailability" placeholder="latency"
+                            class="input-full-width size-medium shape-rectangle">                                                     
+                      </div>
                   </div>
-                </div>
-                <div class="col-sm-2">
+                                               
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputBudget" class="label form-control-label">Latency Error Budget</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.latencyErrorBudget" 
+                            nbInput fullWidth id="inputBudget" placeholder="Latency"
+                            class="input-full-width size-medium shape-rectangle">                      
+                      </div>
+                  </div>                  
 
-                  
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label class="label form-control-label">
+                        <div *ngIf="currentSource.latency >= currentSource.previousLatency">
+                          Previous | <i class='fas fa-arrow-up text-success'> {{ (currentSource.latency - currentSource.previousLatency)  | number:'1.1-5' }}</i>
+                        </div>
+                        <div *ngIf="currentSource.latency < currentSource.previousLatency">
+                          Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.latency - currentSource.previousLatency)  | number:'1.1-5'}}</i>
+                        </div>
+                      </label>
+                      <input readonly="readonly" type="number" [value]="currentSource.previousLatency" 
+                          nbInput fullWidth id="inputBudget" placeholder="latency"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>
+                </div>                                  
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label class="label form-control-label">
+                      <div *ngIf="currentSource.latency >= currentSource.beforeLatency">
+                        Before | <i class='fas fa-arrow-up text-success'> {{ (currentSource.latency - currentSource.beforeLatency)  | number:'1.1-5' }}</i>
+                      </div>
+                      <div *ngIf="currentSource.latency < currentSource.beforeLatency">
+                        Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.latency - currentSource.beforeLatency)  | number:'1.1-5'}}</i>
+                      </div>
+                    </label>
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeLatency" 
+                        nbInput fullWidth id="inputBudget" placeholder="latency"
+                        class="input-full-width size-medium shape-rectangle">                      
+                  </div>
+                </div>                                  
+
+
+              </div>
+
+              <!--Experience-->
+              <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
+                      <input readonly="readonly" type="number" [value]="currentSource.experienceSLO" 
+                          nbInput fullWidth id="inputSLO" placeholder="experience"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>  
+                  </div>       
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputAvailability" class="label col-sm-3 form-control-label">Experience</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.experience" 
+                            nbInput fullWidth id="inputAvailability" placeholder="experience"
+                            class="input-full-width size-medium shape-rectangle">                                                     
+                      </div>
+                  </div>
+                                               
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="inputBudget" class="label form-control-label">Experience Error Budget</label>
+                        <input readonly="readonly" type="number" [value]="currentSource.experienceErrorBudget" 
+                            nbInput fullWidth id="inputBudget" placeholder="Availability"
+                            class="input-full-width size-medium shape-rectangle">                      
+                      </div>
+                  </div>                  
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label class="label form-control-label">
+                        <div *ngIf="currentSource.experience >= currentSource.previousExperience">
+                          Previous | <i class='fas fa-arrow-up text-success'> {{ (currentSource.experience - currentSource.previousExperience)  | number:'1.1-5' }}</i>
+                        </div>
+                        <div *ngIf="currentSource.experience < currentSource.previousExperience">
+                          Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.experience - currentSource.previousExperience)  | number:'1.1-5'}}</i>
+                        </div>
+                      </label>
+                      <input readonly="readonly" type="number" [value]="currentSource.previousExperience" 
+                          nbInput fullWidth id="inputBudget" placeholder="experience"
+                          class="input-full-width size-medium shape-rectangle">                      
+                    </div>
+                </div>                                  
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label class="label form-control-label">
+                      <div *ngIf="currentSource.experience >= currentSource.beforeExperience">
+                        Before | <i class='fas fa-arrow-up text-success'> {{ (currentSource.experience - currentSource.beforeExperience)  | number:'1.1-5' }}</i>
+                      </div>
+                      <div *ngIf="currentSource.experience < currentSource.beforeExperience">
+                        Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.experience - currentSource.beforeExperience)  | number:'1.1-5'}}</i>
+                      </div>
+                    </label>
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeExperience" 
+                        nbInput fullWidth id="inputBudget" placeholder="Experience"
+                        class="input-full-width size-medium shape-rectangle">                      
+                  </div>
+                </div>                                  
+
+
+              </div>
+
+              <div class="row">                
+                <div class="col-sm-2">                  
                   <div class="form-group">
                     <label for="groupText" class="label form-control-label"> Group </label>
                     <input readonly="readonly" type="text" [value]="currentSource?.group" 
@@ -96,17 +207,8 @@
                         class="input-full-width size-medium shape-rectangle">                     
                   </div>
                 </div>
-
-                <div class="col-sm-2">
-                  <div class="form-group">
-                    <label for="inputImpact" class="label col-sm-3 form-control-label">Impact</label>
-                    <input readonly="readonly" type="number" [value]="currentSource?.impact" 
-                        nbInput fullWidth id="inputImpact" placeholder="Availability"
-                        class="input-full-width size-medium shape-rectangle">
-                  </div>
-                </div>
-              </div>
-         
+                
+              </div>         
               <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
@@ -143,7 +245,25 @@
     <div class="col-12">
         <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
-              <nb-tab tabTitle="Daily Report" >              
+            <nb-tab tabTitle="Service Level Indicators" >                            
+              <div class="d-flex" style="margin-bottom: 1rem;">
+                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
+                  <button
+                  type="button" 
+                  [disabled]="!currentFeature"
+                  nbButton status="primary" (click)="onFeatureDetail($event)"
+                  class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
+                  </button>                                            
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                    <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                    </ng2-smart-table>   
+                </div>
+              </div>                  
+            </nb-tab>
+            <nb-tab tabTitle="Daily Report" >              
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" [pieces]="pieces"></ngx-daily-detail-chart>                            
@@ -154,30 +274,13 @@
                           <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="pieces"></ngx-daily-calendar-chart>                                                           
                       </div>
                   </div>                    
-                </nb-tab>   
+            </nb-tab>   
             <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >              
                 <div echarts [options]="sliOptions" style="height: 30rem;" 
                   class="echart" (chartInit)="onSliChatInit($event)"></div>
             </nb-tab> -->
                     
-            <nb-tab tabTitle="Service Level Indicators" >                            
-                <div class="d-flex" style="margin-bottom: 1rem;">
-                  <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
-                    <button
-                    type="button" 
-                    [disabled]="!currentFeature"
-                    nbButton status="primary" (click)="onFeatureDetail($event)"
-                    class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
-                    </button>                                            
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-12">
-                      <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                      </ng2-smart-table>   
-                  </div>
-                </div>                  
-            </nb-tab>
+            
             <nb-tab tabTitle="Dependencies" >                            
               <div class="row">
                 <div class="col-md-12">
@@ -199,6 +302,7 @@
                 
             </nb-tab>
           </nb-tabset>
+
         </nb-card>
       </div>
 </div>

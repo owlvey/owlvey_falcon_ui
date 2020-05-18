@@ -10,11 +10,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 
 @Component({
-  selector: 'app-items-source',
-  templateUrl: './items-source.component.html',
-  styleUrls: ['./items-source.component.scss']
+  selector: 'app-ava-int-items-source',
+  templateUrl: './ava-int-items-source.component.html',
+  styleUrls: ['./ava-int-items-source.component.scss']
 })
-export class ItemsSourceComponent implements OnInit {
+export class AvaIntItemsSourceComponent implements OnInit {
 
   isLoading: boolean = false;  
   actionConfirmWord: string;
@@ -62,13 +62,13 @@ export class ItemsSourceComponent implements OnInit {
         type: 'number',
         filter: true
       },
-      diff: {
+      delta: {
         title: 'Delta',
         width: '6rem',
         type: 'number',
         filter: true
       },      
-      proportion: {
+      measure: {
         title: 'Proportion',
         width: '3rem',
         type: 'number',
@@ -89,34 +89,8 @@ export class ItemsSourceComponent implements OnInit {
   };
 
 
-  cluesSettings = {    
-    mode: 'external',
-    actions:{      
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 20
-    },    
-    columns: {      
-      name: {
-        title: 'Name',
-        type: 'string',
-        width: '9rem',
-        filter: true
-      },      
-      value: {
-        title: 'Value',
-        type: 'number',
-        width: '9rem',
-        filter: true
-      }                  
-    },
-  };
 
-  source: LocalDataSource = new LocalDataSource();
-  cluesSource : LocalDataSource = new LocalDataSource();
+  source: LocalDataSource = new LocalDataSource();  
   startDate: Date;
   endDate: Date;
   constructor(
@@ -153,15 +127,13 @@ export class ItemsSourceComponent implements OnInit {
   getSourceItems(){
     this.sourcesGateway.getSource(this.sourceId).subscribe(source=>{
       this.currentSource = source;
-      this.sourcesGateway.getInteractionSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
+      this.sourcesGateway.getAvailabilityInteractionSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{        
         const transform  = data.map(c =>{ 
           c.target =  this.formatService.getGridDateFromDate(new Date(c.target));          
-          c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));
-          c.diff = c.total - c.good;
+          c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));          
           return c;
         });
-
-        this.source.load(data);
+        this.source.load(transform);
       });
     });        
   }  
@@ -183,7 +155,7 @@ export class ItemsSourceComponent implements OnInit {
     }    
     this.isLoading = true;    
     const model = this.editForm.value;    
-    let  defer = this.sourcesGateway.postSourceItem(model);
+    let  defer = this.sourcesGateway.postAvailabilitySourceItemInteraction(model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");
         this.isLoading = false;                
@@ -197,11 +169,7 @@ export class ItemsSourceComponent implements OnInit {
   onUserRowSelect(event): void {        
     const sourceItemId = event.data.id;    
     this.sourcesGateway.getSourceItemById(sourceItemId).subscribe(data=>{
-      let tmpSource = [ ];
-      for (let key in data.clues) {
-        tmpSource.push( { name: key, value: data.clues[key] });
-      }
-      this.cluesSource.load(tmpSource);
+      
     });    
   }
 }

@@ -10,11 +10,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 
 @Component({
-  selector: 'app-proportion-source',
-  templateUrl: './proportion-source.component.html',
-  styleUrls: ['./proportion-source.component.scss']
+  selector: 'app-ava-prop-items-source',
+  templateUrl: './ava-prop-items-source.component.html',
+  styleUrls: ['./ava-prop-items-source.component.scss']
 })
-export class ProportionSourceComponent implements OnInit {
+export class AvaPropItemsSourceComponent implements OnInit {
 
   isLoading: boolean = false;  
   actionConfirmWord: string;
@@ -50,7 +50,7 @@ export class ProportionSourceComponent implements OnInit {
         sort: true,
         sortDirection: 'asc'
       },        
-      proportion: {
+      measure: {
         title: 'Proportion',
         width: '5rem',
         type: 'number',
@@ -109,7 +109,7 @@ export class ProportionSourceComponent implements OnInit {
   getSourceItems(){
     this.sourcesGateway.getSource(this.sourceId).subscribe(source=>{
       this.currentSource = source;
-      this.sourcesGateway.getSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
+      this.sourcesGateway.getAvailabilityProportionSourceItemsByPeriod(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
         const transform  = data.map(c =>{ 
           c.target =  this.formatService.getGridDateFromDate(new Date(c.target));
           c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));
@@ -139,7 +139,7 @@ export class ProportionSourceComponent implements OnInit {
     }    
     this.isLoading = true;    
     const model = this.editForm.value;    
-    let  defer = this.sourcesGateway.postSourceItemProportion(model);
+    let  defer = this.sourcesGateway.postAvailabilitySourceItemProportion(model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");
         this.isLoading = false;                

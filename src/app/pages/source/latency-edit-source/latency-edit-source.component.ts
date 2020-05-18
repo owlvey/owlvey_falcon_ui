@@ -10,11 +10,11 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 
 
 @Component({
-  selector: 'app-edit-source',
-  templateUrl: './edit-source.component.html',
-  styleUrls: ['./edit-source.component.scss']
+  selector: 'app-latency-edit-source',
+  templateUrl: './latency-edit-source.component.html',
+  styleUrls: ['./latency-edit-source.component.scss']
 })
-export class EditSourceComponent extends ProductBaseComponent {
+export class LatencyEditSourceComponent extends ProductBaseComponent {
 
   editForm: FormGroup;
 
@@ -36,13 +36,14 @@ export class EditSourceComponent extends ProductBaseComponent {
   }
 
   loadSource(){
-    this.sourceGateway.getSource(this.sourceId).subscribe(data=>{
+    this.sourceGateway.getLatencySource(this.sourceId).subscribe(data=>{
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
       this.editForm.get("goodDefinition").setValue(data.goodDefinition);
       this.editForm.get("totalDefinition").setValue(data.totalDefinition);
       this.editForm.get("description").setValue(data.description);
+      this.editForm.get("percentile").setValue(data.percentile);      
     });
   }
 
@@ -54,6 +55,7 @@ export class EditSourceComponent extends ProductBaseComponent {
       goodDefinition: ['', Validators.required],
       totalDefinition: ['', Validators.required],
       description: ['', Validators.required],
+      percentile: [0, Validators.required],
     });
   }
   onSubmit() {
@@ -63,7 +65,8 @@ export class EditSourceComponent extends ProductBaseComponent {
     }
     this.isLoading = true;
     const model = this.editForm.value;
-    let  defer = this.sourceGateway.putSource(this.sourceId, model);
+    debugger;
+    let  defer = this.sourceGateway.putLatencySource(this.sourceId, model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");
         this.isLoading = false;

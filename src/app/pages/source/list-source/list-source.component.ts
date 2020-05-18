@@ -54,8 +54,8 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '6em',
       },                         
-      availability: {
-        title: 'Proportion',
+      measure: {
+        title: 'Measure',
         type: 'number',
         filter: true,
         width: '2em',
@@ -97,8 +97,8 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '6em',
       },                         
-      availability: {
-        title: 'Proportion',
+      measure: {
+        title: 'Latency',
         type: 'number',
         filter: true,
         width: '2em',
@@ -141,8 +141,8 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '6em',
       },                         
-      availability: {
-        title: 'Proportion',
+      measure: {
+        title: 'Availability',
         type: 'number',
         filter: true,
         width: '2em',
@@ -185,7 +185,7 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '6em',
       },                         
-      availability: {
+      measure: {
         title: 'Proportion',
         type: 'number',
         filter: true,
@@ -276,7 +276,33 @@ export class ListSourceComponent implements OnInit {
 
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;
-    let queryParams: Params = { sourceId: sourceId };
-    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    const group = event.data.group;
+    const kind = event.data.kind;
+    if (group == 'Availability'){
+      if ( kind == 'Interaction' ){
+        let queryParams: Params = { sourceId: sourceId };
+        this.router.navigate(['/pages/sources/availability/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }
+      else{
+        let queryParams: Params = { sourceId: sourceId };
+        this.router.navigate(['/pages/sources/availability/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }      
+    }
+    if (group == 'Latency')
+    {
+      let queryParams: Params = { sourceId: sourceId };
+      this.router.navigate(['/pages/sources/latency/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    }
+    if (group == 'Experience'){
+      if ( kind == 'Interaction' ){
+        let queryParams: Params = { sourceId: sourceId };
+        this.router.navigate(['/pages/sources/experience/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }
+      else{
+        let queryParams: Params = { sourceId: sourceId };
+        this.router.navigate(['/pages/sources/experience/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      }      
+    }
+    
   }
 }
