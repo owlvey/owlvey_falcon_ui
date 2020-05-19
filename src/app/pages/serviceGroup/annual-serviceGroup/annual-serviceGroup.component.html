@@ -15,11 +15,7 @@
       </div>
       </nb-card-header>
       <nb-card-body>
-        <nb-tabset fullWidth>
-          <nb-tab tabTitle="Quality">
-            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onRowSelect($event)">
-            </ng2-smart-table>
-          </nb-tab>
+        <nb-tabset fullWidth>          
           <nb-tab tabTitle="Availability">
             <ng2-smart-table [settings]="settings" [source]="sourceAvailability" (userRowSelect)="onRowSelect($event)">
             </ng2-smart-table>
@@ -32,8 +28,7 @@
             <ng2-smart-table [settings]="settings" [source]="sourceExperience" (userRowSelect)="onRowSelect($event)">
             </ng2-smart-table>
           </nb-tab>
-        </nb-tabset>
-      </nb-card-body>
+        </nb-tabset>      </nb-card-body>
     </nb-card>
   </div>
 

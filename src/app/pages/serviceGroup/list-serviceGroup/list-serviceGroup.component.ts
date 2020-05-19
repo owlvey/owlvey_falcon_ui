@@ -35,6 +35,91 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
   calendarSerie : Array<any> = [];  
   sourceServices: LocalDataSource = new LocalDataSource();
   source: LocalDataSource = new LocalDataSource();
+
+
+
+  settings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      },            
+      count: {
+        title: 'Count',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },         
+      availabilitySloMin: {
+        title: 'Min SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },               
+      availabilityMin: {
+        title: 'Min Availability',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      availabilityDebtHtml: {
+        title: 'Availability Debt',
+        type: 'html',        
+        filter: false,
+        compareFunction:this.format.compareIconNumberColumn,
+        width: '5em'        
+      },        
+
+      latencySloMin: {
+        title: 'Min SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },               
+      latencyMin: {
+        title: 'Min Latency',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      latencyDebtHtml: {
+        title: 'Latency Debt',
+        type: 'html',        
+        filter: false,
+        compareFunction:this.format.compareIconNumberColumn,
+        width: '5em'        
+      },        
+
+
+      experienceSloMin: {
+        title: 'Min SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },              
+      experienceMin: {
+        title: 'Min Experience',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      experienceDebtHtml: {
+        title: 'Experience Debt',
+        type: 'html',        
+        filter: false,
+        compareFunction:this.format.compareIconNumberColumn,
+        width: '5em'        
+      },  
+         
+    },
+  };
+
   settingsServices = {
     actions:{
       add:false,
@@ -50,15 +135,15 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         type: 'string',
         filter: false
       },      
-      slo: {
+      availabilitySLO: {
         title: 'SLO',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },      
-      qualityHtml: {
-        title: 'Quality',                
+      },            
+      availabilityHtml: {
+        title: 'Availability',                
         type: 'html',
         filter: false,
         width: '3em',
@@ -66,43 +151,40 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },
-      previousHtml: {
-        title: 'Previous',
+      },  
+      latencySLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      }, 
+      latencyHtml: {
+        title: 'Latency',                
         type: 'html',
         filter: false,
-        width: '2em',
+        width: '3em',
         editable: false,
+        sort:true,
+        sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },        
-      budget: {
-        title: 'Budget',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },
-      
-      availability: {
-        title: 'Ava...',
+      },     
+      experienceSLO: {
+        title: 'SLO',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },
-      latency: {
-        title: 'Lat...',
-        type: 'number',
+      },         
+      experienceHtml: {
+        title: 'Experience',                
+        type: 'html',
         filter: false,
         width: '3em',
-        editable: false
-      },      
-      experience: {
-        title: 'Exp...',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
       },      
      
       featuresCount: {
@@ -114,107 +196,13 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     },
   };
 
-
-  settings = {
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    columns: {      
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false
-      },
-      previous: {
-        title: 'Previous',
-        type: 'number',
-        filter: false,
-        width: '3em',        
-      },
-      errorHtml: {
-        title: 'Error Budget Debt',
-        type: 'html',        
-        filter: false,
-        compareFunction:this.format.compareIconNumberColumn,
-        width: '5em'        
-      },      
-      count: {
-        title: 'Count',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      sloAvg: {
-        title: 'SLO Avg',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      sloMin: {
-        title: 'SLO Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      qualityAvg: {
-        title: 'Quality Avg',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      qualityMin: {
-        title: 'Quality Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },        
-      availabilityAvg: {
-        title: 'Ava... Avg',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      availabilityMin: {
-        title: 'Ava... Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },        
-      latencyAvg: {
-        title: 'Lat. Avg',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },   
-      latencyMin: {
-        title: 'Lat. Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },        
-      experienceAvg: {
-        title: 'Exp. Avg',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },        
-      experienceMin: {
-        title: 'Exp. Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },              
-    },
-  };
-
   onChangeQueryParameters(paramMap: ParamMap): void {       
     super.onChangeQueryParameters(paramMap);      
     this.portfoliosGateway.getPortfoliosGroup(this.productId, this.startDate, this.endDate).subscribe(data=>{
-
-      const items =  data.items.map(c => {                
-         c.errorHtml = this.format.buildTrendColumnValue(c.errorBudget, c.previous);
+      const items =  data.items.map(c => {                         
+         c.availabilityDebtHtml = this.format.buildDebtColumnValueSingle(c.availabilityDebt, '');
+         c.latencyDebtHtml = this.format.buildDebtColumnValueSingle(c.latencyDebt, '');
+         c.experienceDebtHtml = this.format.buildDebtColumnValueSingle(c.experienceDebt, '');
          return c;
         });
       this.source.load(items);      
@@ -227,11 +215,10 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     const group = event.data.name;
     this.dailyTitle = this.groupSelected = group;
     this.portfoliosGateway.getPortfoliosWithAvailabilities(this.productId, this.startDate, this.endDate, group).subscribe(portfolios=>{                
-        let newData = portfolios.map(c=> {  
-            c.delta = this.format.round3Decimals(c.quality - c.previous);          
-            c.budget = this.format.round3Decimals(c.budget);                              
-            c.previousHtml = this.format.buildTrendColumn(c.quality, c.previous);         
-            c.qualityHtml = this.format.buildStatusColumn(c.quality, c.deploy, [c.slo], ['text-danger', 'text-success']);          
+        let newData = portfolios.map(c=> {              
+            c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
+            c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);                    
+            c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                                                           
             return c;
           });                
         this.sourceServices.load(newData);
@@ -247,11 +234,7 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     const serviceId = event.data.id;
     let queryParams: Params = { portfolioId: serviceId };
     this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }
-  onGotoServices(event){
-     let queryParams: Params = { group: this.groupSelected};
-     this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
-  }
+  }  
   onAnnualReport(event){    
     let queryParams: Params = {  };
     this.router.navigate(['/pages/groups/annual'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });

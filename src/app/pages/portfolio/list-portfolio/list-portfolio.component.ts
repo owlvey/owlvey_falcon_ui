@@ -140,7 +140,7 @@ export class ListPortfolioComponent implements OnInit {
         const data = portfolios;        
         let newData = data.map(c=> {  
           c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
-          c.latencyHtml = this.format.buildStatusColumn(c.latency, c.latencyErrorBudget , [c.latencySLO], ['text-danger', 'text-success']);          
+          c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);                    
           c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                    
           return c;
         });                

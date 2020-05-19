@@ -61,7 +61,7 @@ export class DailyDetailChartComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set dataItems(data: Array<any>){
+  set dataItems(data: Array<any>){    
     const legends = [];
     const series = [];
     let minValue = 50;

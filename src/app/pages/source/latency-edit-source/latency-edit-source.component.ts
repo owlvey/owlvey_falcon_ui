@@ -64,8 +64,7 @@ export class LatencyEditSourceComponent extends ProductBaseComponent {
       return;
     }
     this.isLoading = true;
-    const model = this.editForm.value;
-    debugger;
+    const model = this.editForm.value;    
     let  defer = this.sourceGateway.putLatencySource(this.sourceId, model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");

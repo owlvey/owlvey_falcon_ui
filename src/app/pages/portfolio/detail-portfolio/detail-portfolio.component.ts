@@ -98,43 +98,77 @@ export class DetailPortfolioComponent implements OnInit {
       
     },
   };
-  /*
-   featureSlo: {
-        title: 'SLO',
+
+  
+  squadSource: LocalDataSource = new LocalDataSource();
+
+  availabilityIndicatorSource : LocalDataSource = new LocalDataSource();
+  latencyIndicatorSource : LocalDataSource = new LocalDataSource();
+  experienceIndicatorSource : LocalDataSource = new LocalDataSource();
+
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }      
+    }
+  };
+
+  indicatorSettings = {    
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 10
+    },
+    columns: {      
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        sort:true,
+        width: '3em',
+        sortDirection: 'asc'     
+      },
+      source: {
+        title: 'SLI',
+        type: 'string',
+        filter: false
+      },    
+      measure: {
+        title: 'Measure',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false,        
-      },        
-      budget: {
-        title: 'Budget',
-        type: 'number',
+      },         
+      group: {
+        title: 'Group',
+        type: 'string',
         filter: false,
-        width: '3em',
-        editable: false,        
-      },  
-   mttd: {
-        title: 'MTTD',
-        type: 'number',
+        width: '5em',
+      },           
+      kind: {
+        title: 'Type',
+        type: 'string',
         filter: false,
-        width: '10rem',
-        editable: false
+        width: '5em',
       },          
-      mtte: {
-        title: 'MTTE',
-        type: 'number',
-        filter: false,
-        width: '10rem',
-        editable: false
-      },          
-      mttf: {
-        title: 'MTTF',
-        type: 'number',
-        filter: false,
-        width: '10rem',
-        editable: false
-      },                
-  */
+    },
+  };
+  
   
   constructor(
     private location: Location,
@@ -358,91 +392,36 @@ export class DetailPortfolioComponent implements OnInit {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
-      this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-        this.series = data.series;               
+      this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{        
+        
         this.pieces = [
-          { gte: this.currentSource.slo * 100, lte: 100,  color: '#096',}, 
-          { gt: 0, lt: this.currentSource.slo * 100, color: '#cc0033', }];                
+           { gte: this.currentSource.availabilitySLO * 100, lte: 100,  color: '#096',}, 
+           { gt: 0, lt: this.currentSource.availabilitySLO * 100, color: '#cc0033', }];                
+        this.series = data.series;                       
         
         this.calendarSerie = this.series[0].items.map(c=>{        
-          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+           return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         }); 
       });  
 
     });    
   }
 
-  squadSource: LocalDataSource = new LocalDataSource();
-  indicatorSource : LocalDataSource = new LocalDataSource();
-  squadsSettings = {
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 5
-    },
-    columns: {      
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false
-      }      
-    }
-  };
-
-  indicatorSettings = {    
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 10
-    },
-    columns: {      
-      id: {
-        title: 'Id',
-        type: 'number',
-        filter: false,
-        sort:true,
-        width: '3em',
-        sortDirection: 'asc'     
-      },
-      source: {
-        title: 'SLI',
-        type: 'string',
-        filter: false
-      },    
-      measure: {
-        title: 'Measure',
-        type: 'number',
-        filter: false,
-        width: '3em',
-        editable: false,        
-      },         
-      group: {
-        title: 'Group',
-        type: 'string',
-        filter: false,
-        width: '5em',
-      },           
-      kind: {
-        title: 'Type',
-        type: 'string',
-        filter: false,
-        width: '5em',
-      },          
-    },
-  };
-  
   onFeaturesRowSelect(event){      
       this.currentFeature = event.data;
       const featureId = event.data.id;
       const slo = event.data.featureSlo;
       this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{                
-        this.indicatorSource.load(feature.indicators);
+
+        const availabilitySLI = feature.indicators.filter(c=> c.group == 'Availability');
+        this.availabilityIndicatorSource.load(availabilitySLI);
+
+        const latencySLI = feature.indicators.filter(c=> c.group == 'Latency');
+        this.latencyIndicatorSource.load(latencySLI);
+
+        const experienceSLI = feature.indicators.filter(c=> c.group == 'Experience');
+        this.experienceIndicatorSource.load(experienceSLI);
+
         this.squadSource.load(feature.squads);                        
       });  
   } 

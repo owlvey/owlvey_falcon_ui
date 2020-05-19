@@ -42,6 +42,16 @@ export class FormatService {
         return `<i class="fas fa-circle ${classes[ classes.length - 1 ]} text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;        
     }
 
+    buildLatencyColumn(target: number, slo: number, title: string = ''){                        
+
+        if ( target > slo){
+            return `<i class="fas fa-circle text-danger text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;        
+        }
+        else {
+            return `<i class="fas fa-circle text-success text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;        
+        }        
+    }
+
     buildTrendColumn(target: number, previous: number){                                
         const diff =  target - previous;               
         const title = 'Previous:' + String(previous);
@@ -82,6 +92,15 @@ export class FormatService {
         }
         else{
             return `<i class='fas fa-arrow-down text-warning text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+    }
+    buildDebtColumnValueSingle(target: number, title: string){
+        target = target;                        
+        if (target === 0){
+            return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;        
+        }
+        else{
+            return `<i class='fas fa-star text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
     extractDateStringFromUtc(target: string) {

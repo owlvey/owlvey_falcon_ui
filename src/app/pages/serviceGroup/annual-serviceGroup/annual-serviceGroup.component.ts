@@ -31,7 +31,7 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
   dailyTitle: string =  "Please select a group";
   series: Array<any> = [];    
   calendarSerie : Array<any> = [];  
-  source: LocalDataSource = new LocalDataSource();
+  
   sourceAvailability: LocalDataSource = new LocalDataSource();
   sourceLatency: LocalDataSource = new LocalDataSource();
   sourceExperience: LocalDataSource = new LocalDataSource();
@@ -143,12 +143,12 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
   onChangeQueryParameters(paramMap: ParamMap): void {       
     super.onChangeQueryParameters(paramMap);      
     this.portfoliosGateway.getPortfoliosGroupAnnual(this.productId, this.startDate).subscribe( data=>{
-      const quality = data.quality;
+      
       const availability = data.availability;
       const latency = data.latency;
       const experience = data.experience;
       
-      let result = [quality, availability, latency, experience].map(group=>{
+      let result = [availability, latency, experience].map(group=>{
         const temp = group.map(c =>{        
           c.janHtml = this.format.buildDebtColumnValue(c.jan, 0);
           c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
@@ -166,11 +166,10 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
         });
         return temp;
       })
-      
-      this.source.load(result[0]);
-      this.sourceAvailability.load(result[1]);
-      this.sourceLatency.load(result[2]);
-      this.sourceExperience.load(result[3]);
+            
+      this.sourceAvailability.load(result[0]);
+      this.sourceLatency.load(result[1]);
+      this.sourceExperience.load(result[2]);
       this.series = data.weekly;
       
     });

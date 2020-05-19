@@ -245,7 +245,8 @@
     <div class="col-12">
         <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
-            <nb-tab tabTitle="Service Level Indicators" >                            
+
+            <nb-tab tabTitle="Availability Indicators" >                            
               <div class="d-flex" style="margin-bottom: 1rem;">
                 <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
                   <button
@@ -258,11 +259,50 @@
               
               <div class="row">
                 <div class="col-md-12">
-                    <ng2-smart-table [settings]="indicatorSettings" [source]="indicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                    <ng2-smart-table [settings]="indicatorSettings" [source]="availabilityIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
                     </ng2-smart-table>   
                 </div>
               </div>                  
             </nb-tab>
+
+            <nb-tab tabTitle="Latency Indicators" >                            
+              <div class="d-flex" style="margin-bottom: 1rem;">
+                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
+                  <button
+                  type="button" 
+                  [disabled]="!currentFeature"
+                  nbButton status="primary" (click)="onFeatureDetail($event)"
+                  class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
+                  </button>                                            
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                    <ng2-smart-table [settings]="indicatorSettings" [source]="latencyIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                    </ng2-smart-table>   
+                </div>
+              </div>                  
+            </nb-tab>
+
+            <nb-tab tabTitle="Experience Indicators" >                            
+              <div class="d-flex" style="margin-bottom: 1rem;">
+                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
+                  <button
+                  type="button" 
+                  [disabled]="!currentFeature"
+                  nbButton status="primary" (click)="onFeatureDetail($event)"
+                  class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
+                  </button>                                            
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                    <ng2-smart-table [settings]="indicatorSettings" [source]="experienceIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                    </ng2-smart-table>   
+                </div>
+              </div>                  
+            </nb-tab>
+
             <nb-tab tabTitle="Daily Report" >              
                   <div class="row">
                     <div class="col-sm-12">
@@ -302,6 +342,7 @@
                 
             </nb-tab>
           </nb-tabset>
+
 
         </nb-card>
       </div>
