@@ -11,13 +11,14 @@ import { ExpPropDetailSourceComponent } from './exp-prop-detail-source/exp-prop-
 import { DetailSourceComponent } from './detail-source/detail-source.component';
 import { ListSourceComponent } from './list-source/list-source.component';
 import { TreeMapSourceComponent } from './treemap-source/treemap-source.component';
-import { LatencyDetailSourceComponent } from './latency-detail-source/latency-detail-source.component';
+
 import { ExpIntItemsSourceComponent } from './exp-int-items-source/exp-int-items-source.component';
 import { ExpPropItemsSourceComponent } from './exp-prop-items-source/exp-prop-items-source.component';
 import { LatencySourceItemsComponent } from './latency-items-source/latency-items-source.component';
 import { AvaEditSourceComponent } from './ava-edit-source/ava-edit-source.component';
 import { ExpEditSourceComponent } from './exp-edit-source/exp-edit-source.component';
 import { LatencyEditSourceComponent } from './latency-edit-source/latency-edit-source.component';
+import { LatencyDetailSourceComponent } from './latency-detail-source/latency-detail-source.component';
 
 const routes: Routes = [
   { path: '', component: ListSourceComponent },

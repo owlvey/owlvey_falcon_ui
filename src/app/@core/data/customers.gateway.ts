@@ -60,18 +60,10 @@ export class CustomersGateway {
     return result;
   }  
 
-  importMetadata(customerId, model: any): Observable<any>{
-    return this.http.post(this.baseUrl + `migrations/${customerId}/import/metadata/excel`, model);
-  }
+  
   restore(model: any): Observable<any>{
     return this.http.post(this.baseUrl + `migrations/restore`, model);
-  }
-  exportMetadata(customerId: number): Observable<any>{
-    return this.http.get(this.baseUrl + `migrations/${customerId}/export/metadata/excel`, { responseType: 'blob'});
-  }
-  exportData(customerId: number): Observable<any>{
-    return this.http.get(this.baseUrl + `migrations/${customerId}/export/data/excel`, { responseType: 'blob'});
-  }
+  }  
   backupMetadata(): Observable<any>{
     return this.http.get(this.baseUrl + `migrations/backup/metadata`, { responseType: 'blob'});
   }

@@ -27,16 +27,7 @@
 
                   <label>Leaders</label>
                   <input type="text" name="leaders" formControlName="leaders" class="form-control" type="text" />                  
-                </div>      
-
-                <div class="form-group">
-                  <label>Type</label>
-                  <nb-radio-group formControlName="aggregation">
-                    <nb-radio  *ngFor="let option of options"  [value]="option.value">
-                      {{ option.label }}
-                    </nb-radio>
-                  </nb-radio-group>          
-                </div>  
+                </div>                      
                 <div class="text-right">
                   <button type="button" nbbutton class="appearance-filled size-medium status-info shape-rectangle transitions mr-2" (click)="onBackClick($event)" [disabled]="isLoading">Back</button>
                   <button type="submit" nbbutton class="appearance-filled size-medium status-primary shape-rectangle transitions" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button>

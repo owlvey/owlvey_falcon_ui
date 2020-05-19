@@ -65,35 +65,14 @@ export class ListMigrateComponent extends BaseComponent {
       return input;
     }
 
-    onSubmit() {
-      const formModel = this.prepareSave();
-      this.loading = true;
-
-      this.customerGateway.importMetadata(this.customerId, formModel).subscribe(data=>{        
-        alert('done!');
-        this.loading = false;
-      }, (error:any) => {
-        this.loading = false;
-      });
-    }
-
+ 
     
   
     clearFile() {
       this.form.get('data').setValue(null);
       this.fileInput.nativeElement.value = '';
     }
-    
-    onDataBackup(){
-      this.customerGateway.exportData(this.customerId).subscribe(data=>{        
-        const blob = new Blob([data], { type: data.type });
-        const url= window.URL.createObjectURL(blob);
-        var anchor = document.createElement("a");
-        anchor.download = "owlvey-backup-data.xlsx";
-        anchor.href = url;
-        anchor.click();
-      });
-    }
+       
 
     onBackupMetadata(){
       this.customerGateway.backupMetadata().subscribe(data=>{        
@@ -115,26 +94,6 @@ export class ListMigrateComponent extends BaseComponent {
         anchor.click();
       });
     }
-
-    onExportMetadata(){
-
-      //window.location.href='http://example.com/myuri/report?param=x';
-      this.customerGateway.exportMetadata(this.customerId).subscribe(data=>{        
-        const blob = new Blob([data], { type: data.type });
-        const url= window.URL.createObjectURL(blob);
-
-        var anchor = document.createElement("a");
-        var body = document.getElementsByTagName('body')[0];
-        anchor.download = "owlvey-metadata.xlsx";
-        anchor.href = url;
-        anchor.target = "_blank";
-        body.appendChild(anchor);
-        anchor.click();
-        body.removeChild(anchor);
-      });
-    }
-
-
     onSubmitV2(){
       const formModel = this.prepareSaveV2();
       this.loading = true;

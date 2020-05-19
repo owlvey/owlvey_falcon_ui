@@ -22,14 +22,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
 
   editForm: FormGroup;
   source: LocalDataSource = new LocalDataSource();
-
-  optionsValue = "Minimun";
-
-  options = [
-    { value: 'Minimun', label: 'Minimun (Group)' }
-  ];
-
-
+  
   settings = {
     mode: 'external',
     actions:{
@@ -204,8 +197,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       this.editForm.get("availabilitySLO").setValue(data.availabilitySLO);
       this.editForm.get("latencySLO").setValue(data.latencySLO);
       this.editForm.get("experienceSLO").setValue(data.experienceSLO);
-      this.editForm.get("leaders").setValue(data.leaders);
-      this.editForm.get("aggregation").setValue(data.aggregation);      
+      this.editForm.get("leaders").setValue(data.leaders);      
       this.editForm.get("group").setValue(data.group);      
       this.source.load(data.features);
     });
@@ -224,8 +216,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       availabilitySLO: ['', Validators.required],
       latencySLO: ['', Validators.required],
       experienceSLO: ['', Validators.required],
-      leaders: [''],
-      aggregation: [''],
+      leaders: [''],      
       group: ['']
     });
   }

@@ -17,9 +17,6 @@
       <nb-card-header>Backups </nb-card-header>
       <nb-card-body>          
           <div class="buttons-row">
-              <button type="submit" nbButton status="primary" (click)="onExportMetadata()">Export Metadata Legacy</button>               
-              <button type="submit" nbButton status="primary" (click)="onDataBackup()">Export Data Legacy </button>               
-
               <button type="submit" nbButton status="primary" (click)="onBackupMetadata()">Backup Metadata</button>               
               <button type="submit" nbButton status="primary" (click)="onBackupDataV2()">Backup Data</button>               
 
@@ -31,22 +28,7 @@
   </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-      <nb-card class="inline-form-card">
-        <nb-card-header>Import Metadata or Data Legacy</nb-card-header>
-        <nb-card-body>
-              <form [formGroup]="form" (ngSubmit)="onSubmit()">                
-                <div class="form-group">                  
-                  <input type="file" id="metadata" (change)="onFileChange($event)" nbInput fullWidth class="form-control">
-                  <button type="button" nbButton status="primary" (click)="clearFile()">clear file</button>
-                </div>
-                <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
-              </form>
-        </nb-card-body>
-      </nb-card>
-    </div>
-</div>
+
 
 <div class="row">
   <div class="col-md-12">
