@@ -245,7 +245,55 @@
     <div class="col-12">
         <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
+            <nb-tab tabTitle="Daily Report" >      
+              
+              <nb-tabset fullWidth>                
+               <nb-tab tabTitle="Availability" >                          
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="availabilitySeries" target="average" all="Availability" [pieces]="availabilityPieces"></ngx-daily-detail-chart>                            
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
+                        </ngx-daily-calendar-chart>                                                           
+                    </div>
+                  </div>                    
 
+                  
+                </nb-tab>   
+                <nb-tab tabTitle="Latency" >
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-latency-daily-detail-chart [dataItems]="latencySeries" target="average" all="Latency" [pieces]="latencyPieces"></ngx-latency-daily-detail-chart>                            
+                    </div>
+                  </div>                  
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-calendar-chart [dataItems]="latencyCalendarSerie" style="height: 15rem;"  [pieces]="latencyPieces">
+                        </ngx-daily-calendar-chart>                                                           
+                    </div>
+                  </div>                    
+                </nb-tab>
+
+                <nb-tab tabTitle="Experience" >
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-detail-chart [dataItems]="experienceSeries" target="average" all="Experience" [pieces]="experiencePieces"></ngx-daily-detail-chart>                            
+                    </div>
+                  </div>                  
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-calendar-chart [dataItems]="experienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
+                        </ngx-daily-calendar-chart>                                                           
+                    </div>
+                  </div>                    
+                </nb-tab>                  
+              </nb-tabset>       
+                
+                
+            </nb-tab>   
             <nb-tab tabTitle="Availability Indicators" >                            
               <div class="d-flex" style="margin-bottom: 1rem;">
                 <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
@@ -303,18 +351,10 @@
               </div>                  
             </nb-tab>
 
-            <nb-tab tabTitle="Daily Report" >              
-                  <div class="row">
-                    <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" [pieces]="pieces"></ngx-daily-detail-chart>                            
-                    </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-12">
-                          <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="pieces"></ngx-daily-calendar-chart>                                                           
-                      </div>
-                  </div>                    
-            </nb-tab>   
+            
+            <nb-tab tabTitle="Calendar Report" >                            
+              
+            </nb-tab>              
             <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >              
                 <div echarts [options]="sliOptions" style="height: 30rem;" 
                   class="echart" (chartInit)="onSliChatInit($event)"></div>

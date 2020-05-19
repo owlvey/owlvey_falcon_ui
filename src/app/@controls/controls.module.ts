@@ -19,11 +19,12 @@ import { DailyDebtChartComponent } from './daily-chart/daily-debt.component';
 import { CalendarDebtChartComponent } from './daily-chart/calendar-debt.component';
 import { LatencyDailyChartComponent } from './daily-chart/latency-daily-chart.component';
 import { LatencyDailyCalendarChartComponent } from './daily-chart/latency-daily-calendar.component';
+import { LatencyDailyDetailChartComponent } from './daily-chart/latency-daily-detail-chart.component copy';
 
 @NgModule({
    imports: [FormsModule, CommonModule, Ng2SmartTableModule, NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule, NbCardModule],
-   declarations: [LatencyDailyCalendarChartComponent, LatencyDailyChartComponent, DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent ],
-   exports: [LatencyDailyCalendarChartComponent, LatencyDailyChartComponent, DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent],
+   declarations: [LatencyDailyDetailChartComponent, LatencyDailyCalendarChartComponent, LatencyDailyChartComponent, DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent ],
+   exports: [LatencyDailyDetailChartComponent, LatencyDailyCalendarChartComponent, LatencyDailyChartComponent, DailyChartComponent, DailyDetailChartComponent, DailyCalendarChartComponent, DailyDebtChartComponent, CalendarDebtChartComponent],
 })
 
 export class ControlsModule {

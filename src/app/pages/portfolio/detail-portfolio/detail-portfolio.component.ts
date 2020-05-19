@@ -30,13 +30,19 @@ export class DetailPortfolioComponent implements OnInit {
   portfolioId = 0;
   themeSubscription: any;
   options: any = {};
-  series: Array<any> = [];
+  availabilitySeries: Array<any> = [];
+  latencySeries: Array<any> = [];
+  experienceSeries: Array<any> = [];
   calendarSerie: Array<any> = [];
+  latencyCalendarSerie: Array<any> = [];
+  experienceCalendarSerie: Array<any> = [];
   startDate: Date = new Date();
   endDate: Date;  
   source: LocalDataSource = new LocalDataSource();
   
-  pieces: Array<any> = []
+  availabilityPieces: Array<any> = []
+  latencyPieces: Array<any> = []
+  experiencePieces: Array<any> = []
 
   settings = {    
     mode: 'external',
@@ -394,13 +400,31 @@ export class DetailPortfolioComponent implements OnInit {
       const echartsColors: any = config.variables.echarts;
       this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{        
         
-        this.pieces = [
+        this.availabilityPieces = [
            { gte: this.currentSource.availabilitySLO * 100, lte: 100,  color: '#096',}, 
            { gt: 0, lt: this.currentSource.availabilitySLO * 100, color: '#cc0033', }];                
-        this.series = data.series;                       
+        this.availabilitySeries = [data.series[0]];                       
+
         
-        this.calendarSerie = this.series[0].items.map(c=>{        
+        this.latencyPieces = [
+          { gte: 0, lte: this.currentSource.latencySLO,  color: '#096',}, 
+          { gt: this.currentSource.latencySLO, lt:  this.currentSource.latencySLO * 30, color: '#cc0033', }];                
+        
+        this.latencySeries = [data.series[1]];                       
+
+        this.experiencePieces = [
+          { gte: this.currentSource.experienceSLO * 100, lte: 100,  color: '#096',}, 
+          { gt: 0, lt: this.currentSource.experienceSLO * 100, color: '#cc0033', }];                
+       this.experienceSeries = [data.series[2]];            
+        
+        this.calendarSerie = this.availabilitySeries[0].items.map(c=>{        
            return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+        }); 
+        this.latencyCalendarSerie  = this.latencySeries[0].items.map(c=>{        
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve];
+        }); 
+        this.experienceCalendarSerie  = this.experienceSeries[0].items.map(c=>{        
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         }); 
       });  
 
