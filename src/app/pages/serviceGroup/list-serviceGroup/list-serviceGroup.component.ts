@@ -57,19 +57,25 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         width: '3em',
       },         
       availabilitySloMin: {
-        title: 'Min SLO',
+        title: 'Min Availability SLO',
         type: 'number',
         filter: false,
         width: '3em',
       },               
       availabilityMin: {
-        title: 'Min Availability',
+        title: 'Min',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      availabilityAvg: {
+        title: 'Avg',
         type: 'number',
         filter: false,
         width: '3em',
       },      
       availabilityDebtHtml: {
-        title: 'Availability Debt',
+        title: 'Debt',
         type: 'html',        
         filter: false,
         compareFunction:this.format.compareIconNumberColumn,
@@ -77,19 +83,25 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
       },        
 
       latencySloMin: {
-        title: 'Min SLO',
+        title: 'Min Latency SLO',
         type: 'number',
         filter: false,
         width: '3em',
       },               
       latencyMin: {
-        title: 'Min Latency',
+        title: 'Min',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      latencyAvg: {
+        title: 'Avg',
         type: 'number',
         filter: false,
         width: '3em',
       },      
       latencyDebtHtml: {
-        title: 'Latency Debt',
+        title: 'Debt',
         type: 'html',        
         filter: false,
         compareFunction:this.format.compareIconNumberColumn,
@@ -98,19 +110,25 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
 
 
       experienceSloMin: {
-        title: 'Min SLO',
+        title: 'Min Experience SLO',
         type: 'number',
         filter: false,
         width: '3em',
       },              
       experienceMin: {
-        title: 'Min Experience',
+        title: 'Min',
+        type: 'number',
+        filter: false,
+        width: '3em',
+      },      
+      experienceAvg: {
+        title: 'Avg',
         type: 'number',
         filter: false,
         width: '3em',
       },      
       experienceDebtHtml: {
-        title: 'Experience Debt',
+        title: 'Debt',
         type: 'html',        
         filter: false,
         compareFunction:this.format.compareIconNumberColumn,
