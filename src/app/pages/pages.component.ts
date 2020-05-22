@@ -128,11 +128,11 @@ export class PagesComponent implements OnInit {
         this.router.navigate(['/pages/exports'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
-      if (e.item.title == 'Organization Performance'){
-        const queryParams: Params = { };
-        this.router.navigate(['/pages/customers/dashboard'],
-         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
-      }
+      // if (e.item.title == 'Organization Performance'){
+      //   const queryParams: Params = { };
+      //   this.router.navigate(['/pages/customers/dashboard'],
+      //    { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      // }
 
       if (e.item.title == 'Home'){
         const queryParams: Params = { };

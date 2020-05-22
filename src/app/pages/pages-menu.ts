@@ -14,15 +14,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',    
     home: true,
   },
-  {
-    title: 'Organization Performance',
-    icon: 'home-outline',
-  },
-  
-  {
-    title: 'Operation Performance',
-    icon: 'home-outline',
-  },
+  // {
+  //   title: 'Organization Performance',
+  //   icon: 'home-outline',
+  // },  
+  // {
+  //   title: 'Operation Performance',
+  //   icon: 'home-outline',
+  // },
   {
     title: 'Organization',
     group: true,

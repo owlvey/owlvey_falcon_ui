@@ -133,8 +133,8 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         width: '3em',
       },
        
-      quality: {
-        title: 'Proportion',
+      measure: {
+        title: 'Measure',
         type: 'number',
         filter: false,
         width: '3em',
@@ -143,7 +143,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  availabilitySource: LocalDataSource = new LocalDataSource();
+  latencySource: LocalDataSource = new LocalDataSource();
+  experienceSource: LocalDataSource = new LocalDataSource();
 
   squadSource: LocalDataSource = new LocalDataSource();
 
@@ -216,7 +218,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         return item;
       });
 
-      this.source.load(sources);
+      this.availabilitySource.load(sources.filter(c=> c.group == "Availability"));
+      this.latencySource.load(sources.filter(c=> c.group == "Latency"));
+      this.experienceSource.load(sources.filter(c=> c.group == "Experience"));
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
       this.portfolioSource.load(feature.services);

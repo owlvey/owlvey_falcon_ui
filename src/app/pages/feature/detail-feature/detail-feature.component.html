@@ -57,10 +57,14 @@
     <div class="col-12">
         <nb-card size="large" style="height: 65rem">
           <nb-tabset fullWidth>
-            <nb-tab tabTitle="Service Level Indicators (SLI)" >              
-                <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onIndicatorsRowSelect($event)">
-                </ng2-smart-table>
-              
+            <nb-tab tabTitle="Availability" >              
+                <ng2-smart-table [settings]="settings" [source]="availabilitySource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
+            </nb-tab>      
+            <nb-tab tabTitle="Latency" >              
+              <ng2-smart-table [settings]="settings" [source]="latencySource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
+            </nb-tab>      
+            <nb-tab tabTitle="Experience" >              
+              <ng2-smart-table [settings]="settings" [source]="experienceSource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
             </nb-tab>      
             
             <nb-tab tabTitle="Squads">
