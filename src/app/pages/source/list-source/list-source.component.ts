@@ -212,6 +212,11 @@ export class ListSourceComponent implements OnInit {
   totalSources: number = 0;
   totalAssigned: number = 0;
 
+  availabilityAvg: number = 0;
+  availabilityInteractionAvg: number = 0;
+  availabilityInteractionsTotal: number = 0;
+  availabilityInteractionsGood: number = 0;
+
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -235,8 +240,14 @@ export class ListSourceComponent implements OnInit {
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
       
-      this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(sources=>{
-        
+      this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(data=>{
+
+        this.availabilityAvg = data.availability;
+        this.availabilityInteractionAvg = data.availabilityInteractions;
+        this.availabilityInteractionsTotal = data.availabilityInteractionsTotal;
+        this.availabilityInteractionsGood = data.availabilityInteractionsGood;
+
+        const sources = data.items;
         const avaialabilitySources = sources.filter(c=> c.group == "Availability");
         const latencySources = sources.filter(c=> c.group == "Latency");
         const experienceSources = sources.filter(c=> c.group == "Experience");
