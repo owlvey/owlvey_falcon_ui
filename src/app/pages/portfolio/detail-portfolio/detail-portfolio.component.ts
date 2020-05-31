@@ -31,6 +31,9 @@ export class DetailPortfolioComponent implements OnInit {
   themeSubscription: any;
   options: any = {};
   availabilitySeries: Array<any> = [];
+  availabilityDetailSeries: Array<any> = [];
+  latencyDetailSeries: Array<any> = [];
+  experienceDetailSeries: Array<any> = [];
   latencySeries: Array<any> = [];
   experienceSeries: Array<any> = [];
   calendarSerie: Array<any> = [];
@@ -403,19 +406,21 @@ export class DetailPortfolioComponent implements OnInit {
         this.availabilityPieces = [
            { gte: this.currentSource.availabilitySLO * 100, lte: 100,  color: '#096',}, 
            { gt: 0, lt: this.currentSource.availabilitySLO * 100, color: '#cc0033', }];                
-        this.availabilitySeries = [data.series[0]];                       
-
+        this.availabilitySeries = [data.availability];                       
+        this.availabilityDetailSeries = data.availabilityDetail;
         
         this.latencyPieces = [
           { gte: 0, lte: this.currentSource.latencySLO,  color: '#096',}, 
           { gt: this.currentSource.latencySLO, lt:  this.currentSource.latencySLO * 30, color: '#cc0033', }];                
         
-        this.latencySeries = [data.series[1]];                       
+        this.latencySeries = [data.latency];                    
+        this.latencyDetailSeries = data.latencyDetail;   
 
         this.experiencePieces = [
           { gte: this.currentSource.experienceSLO * 100, lte: 100,  color: '#096',}, 
           { gt: 0, lt: this.currentSource.experienceSLO * 100, color: '#cc0033', }];                
-       this.experienceSeries = [data.series[2]];            
+       this.experienceSeries = [data.experience];        
+       this.experienceDetailSeries = data.experienceDetail;       
         
         this.calendarSerie = this.availabilitySeries[0].items.map(c=>{        
            return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];

@@ -254,12 +254,14 @@
                         <ngx-daily-detail-chart [dataItems]="availabilitySeries" target="average" all="Availability" [pieces]="availabilityPieces"></ngx-daily-detail-chart>                            
                     </div>
                   </div>
+               
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
                         </ngx-daily-calendar-chart>                                                           
                     </div>
                   </div>                    
+                
 
                   
                 </nb-tab>   
@@ -283,6 +285,10 @@
                         <ngx-daily-detail-chart [dataItems]="experienceSeries" target="average" all="Experience" [pieces]="experiencePieces"></ngx-daily-detail-chart>                            
                     </div>
                   </div>                  
+
+                             
+
+                  
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-calendar-chart [dataItems]="experienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
@@ -294,45 +300,35 @@
                 
                 
             </nb-tab>   
-            <nb-tab tabTitle="Availability Indicators" >                            
-              <div class="d-flex" style="margin-bottom: 1rem;">
-                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
-                  <button
-                  type="button" 
-                  [disabled]="!currentFeature"
-                  nbButton status="primary" (click)="onFeatureDetail($event)"
-                  class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
-                  </button>                                            
-              </div>
-              
-              <div class="row">
-                <div class="col-md-12">
-                    <ng2-smart-table [settings]="indicatorSettings" [source]="availabilityIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                    </ng2-smart-table>   
-                </div>
-              </div>                  
-            </nb-tab>
+            <nb-tab tabTitle="Debt Report" >
+              <nb-tabset fullWidth>                
+                <nb-tab tabTitle="Availability" >
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-debt-chart [dataItems]="availabilityDetailSeries"></ngx-daily-debt-chart>    
+                    </div>
+                  </div>  
+                </nb-tab>                        
+                
+                <nb-tab tabTitle="Latency" >
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <ngx-latency-daily-debt-chart [dataItems]="latencyDetailSeries"></ngx-latency-daily-debt-chart>    
+                    </div>
+                  </div>  
+                </nb-tab>                        
 
-            <nb-tab tabTitle="Latency Indicators" >                            
-              <div class="d-flex" style="margin-bottom: 1rem;">
-                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
-                  <button
-                  type="button" 
-                  [disabled]="!currentFeature"
-                  nbButton status="primary" (click)="onFeatureDetail($event)"
-                  class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
-                  </button>                                            
-              </div>
-              
-              <div class="row">
-                <div class="col-md-12">
-                    <ng2-smart-table [settings]="indicatorSettings" [source]="latencyIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                    </ng2-smart-table>   
-                </div>
-              </div>                  
-            </nb-tab>
+                <nb-tab tabTitle="Experience" >
 
-            <nb-tab tabTitle="Experience Indicators" >                            
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-daily-debt-chart [dataItems]="experienceDetailSeries"></ngx-daily-debt-chart>    
+                    </div>
+                  </div>  
+                </nb-tab>                        
+              </nb-tabset>              
+            </nb-tab> 
+            <nb-tab tabTitle="Feature Report" >                            
               <div class="d-flex" style="margin-bottom: 1rem;">
                 <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
                   <button
@@ -342,14 +338,33 @@
                   class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
                   </button>                                            
               </div>
-              
-              <div class="row">
-                <div class="col-md-12">
-                    <ng2-smart-table [settings]="indicatorSettings" [source]="experienceIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                    </ng2-smart-table>   
-                </div>
-              </div>                  
-            </nb-tab>
+              <nb-tabset fullWidth>                
+               <nb-tab tabTitle="Availability" >
+                <div class="row">
+                  <div class="col-md-12">
+                      <ng2-smart-table [settings]="indicatorSettings" [source]="availabilityIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                      </ng2-smart-table>   
+                  </div>
+                </div>  
+               </nb-tab>
+               <nb-tab tabTitle="Latency" >
+                <div class="row">
+                  <div class="col-md-12">
+                      <ng2-smart-table [settings]="indicatorSettings" [source]="latencyIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                      </ng2-smart-table>   
+                  </div>
+                </div>  
+               </nb-tab>
+               <nb-tab tabTitle="Experience" >
+                <div class="row">
+                  <div class="col-md-12">
+                      <ng2-smart-table [settings]="indicatorSettings" [source]="experienceIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                      </ng2-smart-table>   
+                  </div>
+                </div>                  
+              </nb-tab>   
+              </nb-tabset>                                         
+            </nb-tab>            
             <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >              
                 <div echarts [options]="sliOptions" style="height: 30rem;" 
                   class="echart" (chartInit)="onSliChatInit($event)"></div>
