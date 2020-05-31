@@ -72,6 +72,11 @@ export class ProductsGateway {
     return this.http.get(this.baseUrl + `products/${productId}/reports/excel?start=${start.toISOString()}&end=${end.toISOString()}`,
        { responseType: 'blob'});
   }
+
+  exportAvailabilityInteractionsToExcel(productId: number): Observable<any>{
+    return this.http.get(this.baseUrl + `products/${productId}/exports/availability/interactions`,
+       { responseType: 'blob'});
+  }
   exportItems(productId: number, start: Date, end: Date): Observable<any>{
     return this.http.get(this.baseUrl + `products/${productId}/exports/items?start=${start.toISOString()}&end=${end.toISOString()}`,
        { responseType: 'blob'});
