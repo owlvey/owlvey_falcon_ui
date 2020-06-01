@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+
+      <nb-card-header>
+          <div class="row">
+            <div class="col-sm-2">
+              <h5> {{ currentProduct?.name }}  </h5>
+            </div>
+            <div class="col-sm-6 align-content-center">
+              <!--
+<span class="text-info"> Quality = min(Availability, Latency) | Total: {{ totalServices }}, SLO compliance: {{ sloCompliance }}, General Quality: {{ this.efectiveness }} </span>
+              -->
+              
+            </div>
+            <div class="col-sm-4">
+              <div class="d-flex align-content-center">
+                <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>              
+              </div>
+            </div>
+
+
+          </div>
+          
+      </nb-card-header>  
+  
+      <nb-card-body>
+
+        <nb-tabset fullWidth>          
+          <nb-tab tabTitle="Availability">
+            <ng2-smart-table [settings]="settings" [source]="sourceAvailability" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+            <div class="row">
+              <div class="col-sm-12">
+
+                  <hr/>
+
+                  <br/>
+
+                  <h6> Service: {{ currentService?.name || 'Select a service' }} </h6>
+
+                  <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
+                  </ngx-daily-calendar-chart>                                                           
+              </div>
+            </div>           
+          </nb-tab>
+          <nb-tab tabTitle="Latency">
+
+              
+            <ng2-smart-table [settings]="settings" [source]="sourceLatency" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+            <div class="row">
+              <div class="col-sm-12">
+                  <hr/>
+                  <br/>
+                  <h6> Service: {{ currentService?.name || 'Select a service' }} </h6>
+                  <ngx-latency-daily-calendar-chart [dataItems]="latencyCalendarSerie" style="height: 15rem;"  [pieces]="latencyPieces">
+                  </ngx-latency-daily-calendar-chart>                 
+              </div>
+            </div>           
+          </nb-tab>
+          <nb-tab tabTitle="Experience">
+            <ng2-smart-table [settings]="settings" [source]="sourceExperience" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+            <div class="row">
+              <div class="col-sm-12">
+                  <hr/>
+                  <br/>
+                  <h6> Service: {{ currentService?.name || 'Select a service' }} </h6>
+                  <ngx-daily-calendar-chart [dataItems]="experienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
+                  </ngx-daily-calendar-chart>                                                           
+              </div>
+            </div>           
+          </nb-tab>
+        </nb-tabset>
+          
+      </nb-card-body>
+  
+    </nb-card>
+
+    
+  </div>
+</div>

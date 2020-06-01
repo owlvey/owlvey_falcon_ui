@@ -11,7 +11,7 @@ export class FormatService {
         date = new Date(date);
         return date.getUTCFullYear() + '-' +
            ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
-           ('0' + date.getUTCDate()).slice(-2);
+           ('0' + date.getUTCDate()).slice(-2) + ' ';           
     }
 
     getTooltipDateFromDate(date: Date): string {
@@ -79,6 +79,20 @@ export class FormatService {
         }
     }
 
+    buildTrendLatencyColumnValue(target: number, previous: number){                                
+        const diff =  target - previous;               
+        const title = 'Diff:' + diff.toFixed(3);
+        if (diff === 0){
+            return `<i class='fas text-info text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else if (target <= previous){
+            return ` <i class='fas fa-arrow-up text-success text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+        else{
+            return `<i class='fas fa-arrow-down text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+        }
+    }
+
     buildDebtColumnValue(target: number, previous: number){
         target = target;
         previous = previous;
@@ -106,6 +120,22 @@ export class FormatService {
     extractDateStringFromUtc(target: string) {
         //2020-04-30T00:00:00+00:00
         return target.substr(0, 4) + "-" + target.substr(5, 2) + "-" + target.substr(8, 2);
+    }
+
+    extractLead(target: string){
+        if (!target) return;
+
+        let value = '';
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            if( element == '.' || element == "@"){
+                return value;
+            }
+            else{
+                value += element;
+            }            
+        }
+        return value;
     }
     compareIconNumberColumn (direction: any, a: any, b: any) {          
 

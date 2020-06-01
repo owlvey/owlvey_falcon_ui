@@ -40,6 +40,9 @@ export class PortfoliosGateway{
     getPortfoliosGroupAnnual(productId: number, start: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual?productId=${productId}&start=${start.toISOString()}`);
     }
+    getPortfoliosAnnual(productId: number, start: Date): Observable<any>{
+        return this.owlveyGateway.get(this.baseUrl + `services/reports/annual?productId=${productId}&start=${start.toISOString()}`);
+    }
     getPortfoliosGroupAnnualCalendar(productId: number, group: string, start: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual/calendar?productId=${productId}&group=${group}&start=${start.toISOString()}`);
     }

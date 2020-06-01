@@ -300,7 +300,7 @@
                 
                 
             </nb-tab>   
-            <nb-tab tabTitle="Debt Report" >
+            <nb-tab tabTitle="Daily Debt Report" >
               <nb-tabset fullWidth>                
                 <nb-tab tabTitle="Availability" >
                   <div class="row">
@@ -328,6 +328,32 @@
                 </nb-tab>                        
               </nb-tabset>              
             </nb-tab> 
+            <nb-tab tabTitle="Annual Report" >
+
+              <div class="d-flex" style="margin-bottom: 1rem;">                
+                <button
+                  type="button"                   
+                  nbButton status="primary" (click)="onAnnualReport($event)"
+                  class="btn btn-sm btn-outline-primary ml-auto"> Load Annual Report
+                  </button>                                            
+              </div>
+              <nb-tabset fullWidth>                
+                <nb-tab tabTitle="Availability" >
+                  <ngx-daily-calendar-chart [dataItems]="annualCalendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
+                  </ngx-daily-calendar-chart>                 
+                </nb-tab>
+                <nb-tab tabTitle="Latency" >
+                  <ngx-latency-daily-calendar-chart [dataItems]="annualLatencyCalendarSerie" style="height: 15rem;"  [pieces]="latencyPieces">
+                  </ngx-latency-daily-calendar-chart>                 
+                </nb-tab>
+                <nb-tab tabTitle="Experience" >
+                  <ngx-daily-calendar-chart [dataItems]="annualExperienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
+                  </ngx-daily-calendar-chart>                 
+                </nb-tab>
+              </nb-tabset>
+              
+
+            </nb-tab>
             <nb-tab tabTitle="Feature Report" >                            
               <div class="d-flex" style="margin-bottom: 1rem;">
                 <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                

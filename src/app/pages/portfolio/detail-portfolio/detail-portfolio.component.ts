@@ -456,8 +456,31 @@ export class DetailPortfolioComponent implements OnInit {
   } 
   onReportClick(event){
     this.getDaily(); 
-  }
+  } 
+  
+  annualCalendarSerie: Array<any> = [];
+  annualLatencyCalendarSerie: Array<any> = [];
+  annualExperienceCalendarSerie: Array<any> = [];
 
+  onAnnualReport(event){
+    const start = new Date(this.startDate.getFullYear(), 0, 1); 
+    const end = new Date(this.startDate.getFullYear(), 11, 31); 
+    this.portfolioGateway.getDaily(this.currentSource.id, start, end).subscribe(data=>{                     
+      
+      this.annualCalendarSerie = data.availability.items.map(c=>{        
+         return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+      }); 
+      this.annualLatencyCalendarSerie  = data.latency.items.map(c=>{        
+        return [ this.format.extractDateStringFromUtc(c.date), c.oAve];
+      });       
+      this.annualExperienceCalendarSerie  = data.experience.items.map(c=>{        
+        return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+      }); 
+    });  
+
+
+
+  }
   onEditClick(event){      
       let queryParams: Params = { };      
       this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     

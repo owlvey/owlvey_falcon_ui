@@ -31,7 +31,7 @@ export class ListPortfolioComponent implements OnInit {
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 1000
     },
     columns: {           
       availabilitySLO: {
@@ -95,6 +95,12 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Name',
         type: 'string',
         filter: true
+      },     
+      lead: {
+        title: 'Lead',
+        type: 'string',
+        filter: true,
+        width: '6em',
       },      
       featuresCount: {
         title: 'Fea...',
@@ -142,6 +148,7 @@ export class ListPortfolioComponent implements OnInit {
           c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
           c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);                    
           c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                    
+          c.lead = this.format.extractLead(c.leaders);
           return c;
         });                
         
@@ -154,6 +161,11 @@ export class ListPortfolioComponent implements OnInit {
     let queryParams: Params = {  };
     this.router.navigate(['/pages/portfolios/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
   }
+  onAnnual(event){    
+    let queryParams: Params = {  };
+    this.router.navigate(['/pages/portfolios/annual'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  }
+  
   onUserRowSelect(event): void {    
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };
