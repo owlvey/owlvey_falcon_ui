@@ -172,4 +172,10 @@ export class AvaIntItemsSourceComponent implements OnInit {
       
     });    
   }
+  onDeleteItemsClick(event){
+    this.sourcesGateway.deleteAllSourceItem(this.sourceId).subscribe(data=>{
+      alert('items deleted');
+      this.getSourceItems();
+    });
+  }
 }

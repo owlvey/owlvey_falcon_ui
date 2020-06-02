@@ -2,11 +2,22 @@
     <div class="col-md-12">
       <nb-card class="inline-form-card">
         <nb-card-header>
-            <div class="d-flex align-content-center">              
-              <h5>{{ currentSource?.name }} Items</h5>                        
-              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>                              
-            </div>         
+            <div class="row">
+                <div class="col-sm-4">
+                    <h5>{{ currentSource?.name }} Items</h5>     
+                </div>
+                <div class="col-sm-4 align-content-center">
+                </div>
+                <div class="col-sm-4">
+                  <div class="d-flex align-content-center">
+                    <button type="button" nbButton status="primary" (click)="onDeleteItemsClick($event)" class="ml-auto mr-2"> Delete Items </button>                              
+                    <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                              
+                  </div>
+                </div>
+              </div>
+            
         </nb-card-header>
+
         <nb-card-body>
             <form (ngSubmit)="onSubmit();" [formGroup]="editForm">
                 <div class="row">

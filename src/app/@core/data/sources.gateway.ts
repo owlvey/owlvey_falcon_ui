@@ -130,6 +130,9 @@ export class SourcesGateway{
     deleteSourceItem(sourceItemId: number): Observable<any>{
         return this.owlveyGateway.delete(this.baseUrl + `sourceItems/${sourceItemId}`);
     }
+    deleteAllSourceItem(sourceId: number): Observable<any>{
+        return this.owlveyGateway.delete(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
+    }
 
     getDaily(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/${sourceId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
