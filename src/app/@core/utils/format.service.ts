@@ -93,11 +93,12 @@ export class FormatService {
         }
     }
 
-    buildDebtColumnValue(target: number, previous: number){
-        target = target;
-        previous = previous;
+    buildDebtColumnValue(target: number, previous: number){        
         const diff =  target - previous;               
-        const title = 'Diff:' + diff.toFixed(3);
+        let title = 'Diff:' + diff.toFixed(3);
+        if (previous){
+            title += '|Index:' + Math.round((((target / previous) * 100) - 100)) + '%';
+        }
         if (target === 0){
             return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;
         }
@@ -108,8 +109,7 @@ export class FormatService {
             return `<i class='fas fa-arrow-down text-warning text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
-    buildDebtColumnValueSingle(target: number, title: string){
-        target = target;                        
+    buildDebtColumnValueSingle(target: number, title: string){                     
         if (target === 0){
             return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;        
         }
@@ -117,6 +117,7 @@ export class FormatService {
             return `<i class='fas fa-star text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
+    
     extractDateStringFromUtc(target: string) {
         //2020-04-30T00:00:00+00:00
         return target.substr(0, 4) + "-" + target.substr(5, 2) + "-" + target.substr(8, 2);

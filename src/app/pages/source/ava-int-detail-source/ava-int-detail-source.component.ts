@@ -6,7 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
-import { map } from 'rxjs/operators';
+import { map, min, max } from 'rxjs/operators';
 import { FormatService } from '../../../@core/utils/format.service';
 import { BaseDetailSourceComponent } from '../base-detail-source-component';
 
@@ -29,6 +29,8 @@ export class AvaIntDetailSourceComponent extends BaseDetailSourceComponent imple
   series: Array<any> = [];  
   calendarSerie: Array<any> = [];
 
+  optionsScalability: any = {};
+  optionsDailyScalability: any = {};
   settings = {    
     actions:{
       add:false,
@@ -61,13 +63,14 @@ export class AvaIntDetailSourceComponent extends BaseDetailSourceComponent imple
     toastr: NbToastrService,
     theme: NbThemeService, 
     format: FormatService,
-    router: Router, 
+    router: Router,     
     activatedRoute: ActivatedRoute) {       
       super(location, customerGateway, productGateway, sourcesGateway, toastr, theme, format, router, activatedRoute);      
     }        
 
   ngOnInit() {         
     super.baseOnInit();
+  
   }  
   
   getSource(){    
@@ -110,13 +113,203 @@ export class AvaIntDetailSourceComponent extends BaseDetailSourceComponent imple
         ]
       };
     });    
+    this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      const echarts: any = config.variables.echarts;
+      this.sourcesGateway.getAvailabilityInteractionSourceScalability(this.sourceId, this.startDate, this.endDate).subscribe(data=>{      
+        const serieGood = {
+          name : "Good",
+          type : 'line',
+          data: data.dailyInteractions.map(c=>{
+              return { name: c.data, value: [ this.format.extractDateStringFromUtc(c.date), c.good.toFixed(2)] };
+            }
+          ),
+          stack: 'interaction',
+          areaStyle: {},
+          showSymbol: true,
+          hoverAnimation: false,          
+         };
+         const serieBad = {
+          name : "Bad",
+          type : 'line',
+          data: data.dailyInteractions.map(c=>{
+              return { name: c.data, value: [ this.format.extractDateStringFromUtc(c.date), c.bad.toFixed(2)] };
+            }
+          ),
+          stack: 'interaction',
+          areaStyle: {},
+          showSymbol: true,
+          hoverAnimation: false,          
+         };
+         
+         this.optionsDailyScalability = {          
+
+          backgroundColor: echarts.bg,
+          color: [colors.danger, colors.primary, colors.info],
+          
+          title: {
+            text: 'Daily Interactions',                        
+            left: 'center',            
+            textStyle: {
+              color: echarts.textColor,
+              fontSize: 16
+            },            
+          },
+
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: echarts.bg
+                }
+            }                    
+          },          
+          xAxis: 
+          {            
+              name: 'Dates',
+              nameLocation: 'middle',
+              nameGap: 50,  
+              type: 'time',
+              splitLine: {
+                show: false,
+              },
+              axisTick: {
+                alignWithLabel: true,
+              },
+              axisLine: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+              axisLabel: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+            }, yAxis: 
+            {
+              name: 'Requests Good and Bad per date',
+              nameLocation: 'middle',
+              nameGap: 50,
+              type: 'value',         
+              axisLine: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+              splitLine: {
+                lineStyle: {
+                  color: echarts.splitLineColor,
+                },
+              },
+              axisLabel: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+            },           
+          series: [serieGood, serieBad],
+        };
+
+        const min_value =  Math.min.apply(null, data.dailyTotal);        
+        const max_value = Math.max.apply(null, data.dailyTotal);        
+        const linealY = [];
+        for (let index = min_value; index < max_value; index += (max_value - min_value) / 100 ) {          
+           linealY.push([index, data.dailyIntercept + data.dailySlope * index]);
+        }        
+        
+        var linealX = data.dailyTotal.map(function(e, i) {
+          return [e, data.dailyBad[i]];
+        });
+        
+        this.optionsScalability = {
+          backgroundColor: echarts.bg,
+          color: [colors.danger, colors.primary, colors.info],
+          title: {
+            text: 'Scalability Regression',            
+            subtext: `Pearson: ${data.dailyCorrelation} | R2: ${data.dailyR2}| Y = ${data.dailyIntercept} + ${data.dailySlope}X` ,
+            left: 'center',            
+            textStyle: {
+              color: echarts.textColor,
+              fontSize: 16
+            },            
+          },
+
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  label: {
+                    backgroundColor: '#6a7985'
+                  }
+              }
+          },
+
+          xAxis: {
+              name: 'Total requests per day',
+              nameLocation: 'middle',
+              nameGap: 50,              
+              splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+              },              
+              axisLine: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+              axisLabel: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+          },
+          yAxis: {
+              type: 'value',
+              name: 'Bad requests per day',
+              nameGap: 50,
+              nameLocation: 'middle',
+              axisLine: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+              splitLine: {
+                lineStyle: {
+                  color: echarts.splitLineColor,
+                  type: 'dashed'
+                },
+              },
+              axisLabel: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+          },
+          series: [{
+                data: linealX,
+                type: 'scatter',
+                smooth: true
+              },
+              {
+                name: 'line',
+                type: 'line',
+                smooth: true, 
+                showSymbol: false,
+                data: linealY,                
+              }
+            ]
+        };
+      });
+    });
+    
   }
+
   getDaily(){
 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-
-      const colors: any = config.variables;
-      const echartsColors: any = config.variables.echarts;
 
       this.sourcesGateway.getDaily(this.sourceId, this.startDate, this.endDate).subscribe(data=>{                      
         this.series = data.items;   

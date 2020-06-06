@@ -100,20 +100,37 @@
 
 <nb-card>
   <nb-card-header>
-    Daily Report
+    Source Analysis 
   </nb-card-header>  
 
   <nb-card-body>
-      <div class="row">
-            <div class="col-sm-12">
-                <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>                        
-            </div>
-      </div>      
-      <div class="row">
-        <div class="col-sm-12">
-            <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                             
-        </div>
-      </div>       
+    <nb-tabset fullWidth>      
+        <nb-tab tabTitle="Availability Report">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ngx-daily-chart [dataItems]="series" ></ngx-daily-chart>                        
+                </div>
+            </div>      
+            <div class="row">
+                <div class="col-sm-12">
+                    <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                             
+                </div>
+            </div>       
+        </nb-tab>
+        <nb-tab tabTitle="Scalability">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div echarts [options]="optionsDailyScalability" class="echart"></div>                    
+                </div>
+            </div>      
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">                    
+                    <div echarts [options]="optionsScalability" class="echart"></div>                    
+                </div>
+            </div>      
+        </nb-tab>
+    </nb-tabset>      
   </nb-card-body>
 
 </nb-card>

@@ -68,12 +68,19 @@ export class DailyDebtChartComponent implements AfterViewInit, OnDestroy {
       const echarts: any = config.variables.echarts;
       this.options = {
         grid: {
-          top: '35',
+          top: '45',
           left: '5',
           right: '5',
           bottom: '5',
           containLabel: true,
         },        
+        title: {                      
+          left: 'center',
+          subtext: 'Debt multiply by 100',
+          textStyle: {
+              color: echarts.textColor
+          }
+        },
         backgroundColor: echarts.bg,
         color: [colors.danger, colors.primary, colors.info],
         tooltip: {

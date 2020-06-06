@@ -42,11 +42,33 @@
         <ng2-smart-table [settings]="settingsServices" [source]="sourceServices" (userRowSelect)="onServiceSelect($event)">
         </ng2-smart-table>
       </nb-tab>      
-      <nb-tab tabTitle="Service Error Budget Debt">
-        <ngx-daily-debt-chart [dataItems]="series" ></ngx-daily-debt-chart>    
+      <nb-tab tabTitle="Reliability Debt">
+        <nb-tabset fullWidth>      
+          <nb-tab tabTitle="Availability">
+            <ngx-daily-debt-chart [dataItems]="series" ></ngx-daily-debt-chart>    
+          </nb-tab>
+          <nb-tab tabTitle="Latency">
+            <ngx-latency-daily-debt-chart [dataItems]="latencySeries" ></ngx-latency-daily-debt-chart>    
+          </nb-tab>
+          <nb-tab tabTitle="Experience">
+            <ngx-daily-debt-chart [dataItems]="experienceSeries" ></ngx-daily-debt-chart>    
+          </nb-tab>
+        </nb-tabset>
+        
       </nb-tab>      
-      <nb-tab tabTitle="Calendar">        
-        <ngx-calendar-debt-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-calendar-debt-chart>                                 
+      <nb-tab tabTitle="Calendar Reliability Debt">        
+        <nb-tabset fullWidth>      
+          <nb-tab tabTitle="Availability">
+            <ngx-calendar-debt-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-calendar-debt-chart>                                 
+          </nb-tab>
+          <nb-tab tabTitle="Latency">
+            <ngx-calendar-debt-chart [dataItems]="latencyCalendarSerie" style="height: 15rem;" ></ngx-calendar-debt-chart>                                 
+          </nb-tab>
+          <nb-tab tabTitle="Experience">
+            <ngx-calendar-debt-chart [dataItems]="experienceCalendarSerie" style="height: 15rem;" ></ngx-calendar-debt-chart>                                 
+          </nb-tab>
+        </nb-tabset>
+        
       </nb-tab>      
     </nb-tabset>    
   </nb-card-body>

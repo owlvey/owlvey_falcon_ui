@@ -33,8 +33,7 @@ export class CalendarDebtChartComponent implements AfterViewInit, OnDestroy {
   //#region dataitems
   private _dataItems: Array<any>;
   @Input()
-  set dataItems(data: Array<any>){
-    
+  set dataItems(data: Array<any>){    
     if(!data) return;
     if(!data.length) return;
     if(!data[0].items.length) return;
@@ -69,17 +68,16 @@ export class CalendarDebtChartComponent implements AfterViewInit, OnDestroy {
       const echartsColors: any = config.variables.echarts;      
 
       this.options = {
-        // title: {         
-        //   top: 30,   
-        //   left: 'center',
-        //   text: 'Quality Calendar',
-        //   textStyle: {
-        //       color: echartsColors.textColor
-        //   }
-        // },
+        title: {                      
+          left: 'center',
+          subtext: 'Debt by 100',
+          textStyle: {
+              color: echartsColors.textColor
+          }
+        },
         tooltip: {
           formatter: function (params) {                          
-              return params.value[0] +  ', value: ' + formatService.round2Decimals(params.value[1]);
+              return params.value[0] +  ', value: ' + formatService.round2Decimals(params.value[1] / 100);
           }
         },
         visualMap: {

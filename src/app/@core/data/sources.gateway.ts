@@ -76,10 +76,16 @@ export class SourcesGateway{
     getSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
+    
 
     getAvailabilityInteractionSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/interaction?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
+
+    getAvailabilityInteractionSourceScalability(sourceId: number, start: Date, end: Date): Observable<any> {
+        return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/interaction/scalability?start=${start.toISOString()}&end=${end.toISOString()}`);
+    }
+
     getAvailabilityProportionSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/proportion?start=${start.toISOString()}&end=${end.toISOString()}`);
     }

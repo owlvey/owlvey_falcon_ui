@@ -31,8 +31,12 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
   groupSelected : string = null;
   dailyTitle: String = "None";
   series: Array<any> = [];  
+  latencySeries: Array<any> = [];  
+  experienceSeries: Array<any> = [];  
   debtSeries: Array<any> = [];  
   calendarSerie : Array<any> = [];  
+  latencyCalendarSerie : Array<any> = [];  
+  experienceCalendarSerie : Array<any> = [];  
   sourceServices: LocalDataSource = new LocalDataSource();
   source: LocalDataSource = new LocalDataSource();
 
@@ -55,19 +59,7 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         type: 'number',
         filter: false,
         width: '3em',
-      },         
-      availabilitySloMin: {
-        title: 'Min Availability SLO',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },               
-      availabilityMin: {
-        title: 'Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },      
+      },                       
       availabilityAvg: {
         title: 'Avg',
         type: 'number',
@@ -81,19 +73,6 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         compareFunction:this.format.compareIconNumberColumn,
         width: '5em'        
       },        
-
-      latencySloMin: {
-        title: 'Min Latency SLO',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },               
-      latencyMin: {
-        title: 'Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },      
       latencyAvg: {
         title: 'Avg',
         type: 'number',
@@ -107,20 +86,6 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         compareFunction:this.format.compareIconNumberColumn,
         width: '5em'        
       },        
-
-
-      experienceSloMin: {
-        title: 'Min Experience SLO',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },              
-      experienceMin: {
-        title: 'Min',
-        type: 'number',
-        filter: false,
-        width: '3em',
-      },      
       experienceAvg: {
         title: 'Avg',
         type: 'number',
@@ -170,6 +135,13 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
       },  
+      availabilityDebt:{
+        title: 'Debt',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
+      },
       latencySLO: {
         title: 'SLO',
         type: 'number',
@@ -186,6 +158,13 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
+      },
+      latencyDebt:{
+        title: 'Debt',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false
       },     
       experienceSLO: {
         title: 'SLO',
@@ -203,14 +182,14 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },      
-     
-      featuresCount: {
-        title: 'Fea...',
-        type: 'string',
+      },     
+      experienceDebt:{
+        title: 'Debt',
+        type: 'number',
         filter: false,
-        width: '2em',
-      },               
+        width: '3em',
+        editable: false
+      },                          
     },
   };
 
@@ -243,8 +222,12 @@ export class ListserviceGroupComponent extends ProductBaseComponent {
     });
 
     this.portfoliosGateway.getServicesDailyReport(this.productId, this.startDate, this.endDate, group).subscribe(data=>{      
-      this.series = data;      
-      this.calendarSerie = data;
+      this.series = data.availabilityDetail;      
+      this.latencySeries = data.latencyDetail;
+      this.experienceSeries = data.experienceDetail;      
+      this.calendarSerie = [data.availability];
+      this.latencyCalendarSerie = [data.latency];
+      this.experienceCalendarSerie = [data.experience];
     });
     
   }

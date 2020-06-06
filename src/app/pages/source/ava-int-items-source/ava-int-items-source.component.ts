@@ -173,9 +173,12 @@ export class AvaIntItemsSourceComponent implements OnInit {
     });    
   }
   onDeleteItemsClick(event){
-    this.sourcesGateway.deleteAllSourceItem(this.sourceId).subscribe(data=>{
-      alert('items deleted');
-      this.getSourceItems();
-    });
+    if (confirm('Are you sure to remove all items in this source?')){
+      this.sourcesGateway.deleteAllSourceItem(this.sourceId).subscribe(data=>{
+        alert('items deleted');
+        this.getSourceItems();
+      });
+    }
+    
   }
 }

@@ -155,6 +155,12 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '3em'        
       },             
+      correlation: {
+        title: 'Correlation',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },             
     },
   };
 
@@ -198,7 +204,13 @@ export class ListSourceComponent implements OnInit {
         type: 'number',
         filter: true,
         width: '3em'        
-      },             
+      },       
+      correlation: {
+        title: 'Correlation',
+        type: 'number',
+        filter: true,
+        width: '3em'        
+      },                   
     },
   };
 

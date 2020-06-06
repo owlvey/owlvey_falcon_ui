@@ -30,7 +30,11 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
   }   
   dailyTitle: string =  "Please select a group";
   series: Array<any> = [];    
+  latencySeries: Array<any> = [];    
+  experienceSeries: Array<any> = [];    
   calendarSerie : Array<any> = [];  
+  latencyCalendarSerie : Array<any> = [];  
+  experienceCalendarSerie : Array<any> = [];  
   
   sourceAvailability: LocalDataSource = new LocalDataSource();
   sourceLatency: LocalDataSource = new LocalDataSource();
@@ -149,8 +153,8 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       const experience = data.experience;
       
       let result = [availability, latency, experience].map(group=>{
-        const temp = group.map(c =>{        
-          c.janHtml = this.format.buildDebtColumnValue(c.jan, 0);
+        const temp = group.map(c =>{                  
+          c.janHtml = this.format.buildDebtColumnValueSingle(c.jan, '');
           c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
           c.marHtml = this.format.buildDebtColumnValue(c.mar, c.feb);
           c.aprHtml = this.format.buildDebtColumnValue(c.apr, c.mar);
@@ -170,8 +174,13 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       this.sourceAvailability.load(result[0]);
       this.sourceLatency.load(result[1]);
       this.sourceExperience.load(result[2]);
-      this.series = data.weekly;
-      
+      this.series = data.series.availabilityDetail;      
+      this.latencySeries = data.series.latencyDetail;
+      this.experienceSeries = data.series.experienceDetail;
+
+      this.calendarSerie = [data.series.availability];
+      this.latencyCalendarSerie = [data.series.latency];
+      this.experienceCalendarSerie = [data.series.experience];
     });
   }
   
