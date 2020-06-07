@@ -25,7 +25,11 @@ export class CustomersGateway {
   }  
 
   getCustomers(): Observable<any> {      
-    const result = this.owlveyGateway.get(this.baseUrl + 'customers');        
+    const result = this.owlveyGateway.get(this.baseUrl + 'customers/lite');        
+    return result;
+  }  
+  getCustomersWithQuality(start: Date, end: Date): Observable<any> {      
+    const result = this.owlveyGateway.get(this.baseUrl + `customers?start=${start.toISOString()}&end=${end.toISOString()}`);        
     return result;
   }  
   getCustomer(customerId: number): Observable<any> {        
@@ -37,7 +41,7 @@ export class CustomersGateway {
   } 
 
   getCustomerWithAvailability(customerId: number, start: Date, end: Date): Observable<any> {
-    const key = `customers/${customerId}?start=${start.toISOString()}&end=${end.toISOString()}`;
+    const key = `customers/${customerId}/quality?start=${start.toISOString()}&end=${end.toISOString()}`;
     return this.owlveyGateway.get(this.baseUrl + key);        
   }
 

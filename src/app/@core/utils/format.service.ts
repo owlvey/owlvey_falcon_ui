@@ -6,6 +6,15 @@ import { strictEqual } from 'assert';
 @Injectable()
 export class FormatService {
 
+    getProportion(a: number, b: number){
+        if (b){
+            return  this.round2Decimals(a/b);
+        }
+        else{
+            return 1;
+        }
+    }
+
     getGridDateFromDate(date: Date): string {
         //return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
         date = new Date(date);
@@ -40,6 +49,16 @@ export class FormatService {
             }
         }
         return `<i class="fas fa-circle ${classes[ classes.length - 1 ]} text-center d-block text-nowrap" title=${title}> ${target.toFixed(3)} </i>`;        
+    }
+
+    buildAvailabilitySLOColumn(slo: number){                        
+        return `<i class="fas fa-shield-alt text-center d-block text-nowrap"> ${slo.toFixed(3)} </i>`;                
+    }
+    buildLatencySLOColumn(slo: number){                        
+        return `<i class="fas fa-shield-alt text-center d-block text-nowrap"> ${slo.toFixed(3)} </i>`;                
+    }
+    buildExperienceSLOColumn(slo: number){                        
+        return `<i class="fas fa-shield-alt text-center d-block text-nowrap"> ${slo.toFixed(3)} </i>`;                
     }
 
     buildLatencyColumn(target: number, slo: number, title: string = ''){                        
@@ -97,7 +116,14 @@ export class FormatService {
         const diff =  target - previous;               
         let title = 'Diff:' + diff.toFixed(3);
         if (previous){
-            title += '|Index:' + Math.round((((target / previous) * 100) - 100)) + '%';
+            const index =  Math.round((((target / previous) * 100) - 100));
+            if (index >= 0){
+                title += '|Worsen:' + index + '%';
+            }
+            else {
+                title += '|Improve:' + Math.abs(index) + '%';
+            }
+            
         }
         if (target === 0){
             return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;
@@ -109,12 +135,12 @@ export class FormatService {
             return `<i class='fas fa-arrow-down text-warning text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
-    buildDebtColumnValueSingle(target: number, title: string){                     
+    buildDebtColumnValueSingle(target: number, title: string = ''){                     
         if (target === 0){
-            return `<i class='fas fa-star text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;        
+            return `<i class='fas fa-grin-alt text-center text-nowrap text-success' title=${title}> ${target.toFixed(3)} </i>`;        
         }
         else{
-            return `<i class='fas fa-star text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
+            return `<i class='fas fa-frown-open text-danger text-center text-nowrap' title=${title}> ${target.toFixed(3)} </i>`;
         }
     }
     

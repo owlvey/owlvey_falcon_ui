@@ -3,16 +3,45 @@
     <nb-card class="inline-form-card">
       <nb-card-header>
         <div class="d-flex align-items-center">
-          <img [src]="currentSquad?.avatar" [alt]="currentSquad?.name">
-          <h5>{{ currentSquad?.name }} , Points : {{ currentSquad?.points }}</h5>
+          <img *ngIf="currentSquad != null" [src]="currentSquad.avatar">
+          <h5>{{ currentSquad?.name }} </h5>
           <button type="button" nbButton status="info" (click)="onBackClick($event)" class="ml-auto mr-2"> Back </button>
           <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="mr-2"> Edit </button>
           <button type="button" nbButton status="danger" (click)="onDeleteConfirm($event)" class=""> Delete </button>
         </div>
       </nb-card-header>
       <nb-card-body>
-          <div class="row">
-              <div class="col-sm-12">
+        <div class="row">                                   
+          <div class="col-sm-2">
+           <div class="form-group">
+              <label class="label form-control-label">                  
+                  Availabilty Debt                  
+              </label>
+              <input readonly="readonly" type="number" [value]="currentSquad?.debt.availability" 
+                  nbInput fullWidth id="inputBudget" placeholder="Availability" class="input-full-width size-medium shape-rectangle">                      
+            </div>
+          </div>  
+          <div class="col-sm-2">
+            <div class="form-group">
+               <label class="label form-control-label">                  
+                   Latency Debt                  
+               </label>
+               <input readonly="readonly" type="number" [value]="currentSquad?.debt.latency" 
+                   nbInput fullWidth id="inputBudget" placeholder="Availability" class="input-full-width size-medium shape-rectangle">                      
+             </div>
+           </div>  
+           <div class="col-sm-2">
+            <div class="form-group">
+               <label class="label form-control-label">                  
+                   Experience Debt                  
+               </label>
+               <input readonly="readonly" type="number" [value]="currentSquad?.debt.experience" 
+                   nbInput fullWidth id="inputBudget" placeholder="Availability" class="input-full-width size-medium shape-rectangle">                      
+             </div>
+           </div>  
+        </div>    
+        <div class="row">                                   
+          <div class="col-sm-12">
                   <div class="form-group">
                     <label for="inputAvailability" class="label col-sm-3 form-control-label">Leaders</label>
                     <input readonly="readonly" type="text" [value]="currentSquad?.leaders" 

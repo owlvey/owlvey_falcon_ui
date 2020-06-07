@@ -127,8 +127,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
     this.router.navigate(['/pages/squads/create'], extras);
   }
   
-  onSquadRowSelect(item) {
-    console.log(item)
+  onSquadRowSelect(item) {    
     const squadId = item.id;
     const queryParams: Params = { squadId: squadId};
     const extras: any = {

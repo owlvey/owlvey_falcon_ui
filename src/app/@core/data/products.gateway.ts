@@ -14,8 +14,8 @@ export class ProductsGateway {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
   }
 
-  getProducts(customerId: number): Observable<any> {
-    return this.owlveyGateway.get(this.baseUrl + `products?customerId=${customerId}`);
+  getProducts(customerId: number, start: Date, end: Date): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `products?customerId=${customerId}&start=${start.toISOString()}&end=${end.toISOString()}`);
   }
   getProductsLite(customerId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/lite?customerId=${customerId}`);

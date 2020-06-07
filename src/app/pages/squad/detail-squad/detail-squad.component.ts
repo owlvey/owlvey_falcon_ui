@@ -8,6 +8,8 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
+import { FormatService } from '../../../@core/utils/format.service';
+import { BaseComponent } from '../../common/components/base-component';
 
 @Component({
   selector: 'app-detail-squad',
@@ -83,40 +85,82 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         type: 'html',
         filter: false,        
         editable: false
-      },          
+      },                
       name: {
         title: 'Feature',
         type: 'string',
         filter: false,        
         editable: false
-      },    
-      slo: {
+      },       
+      availabilitySLO: {
         title: 'SLO',
-        type: 'number',
-        filter: false,        
-        width: '3em',
-        editable: false
-      },             
-      quality: {
-        title: 'Quality',
-        type: 'number',
-        filter: false,        
-        width: '3em',
-        editable: false
-      },             
-      impact: {
-        title: 'Impact',
-        type: 'number',
-        filter: false,        
-        width: '3em',
-        editable: false
-      }, 
-      points: {
-        title: 'Points',
         type: 'html',
         filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      },             
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: false,        
+        width: '3em',
         editable: false
-      },                    
+      },
+      availabilityDebt: {
+        title: 'Debt',
+        type: 'html',
+        filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      latencySLO: {
+        title: 'SLO',
+        type: 'html',
+        filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      },        
+      latency: {
+        title: 'Latency',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },             
+      latencyDebt: {
+        title: 'Debt',
+        type: 'html',
+        filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      },           
+      experienceSLO: {
+        title: 'SLO',
+        type: 'html',
+        filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      },          
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: false,        
+        width: '3em',
+        editable: false
+      },             
+      experienceDebt: {
+        title: 'Debt',
+        type: 'html',
+        filter: false,        
+        width: '3em',
+        editable: false,
+        compareFunction:this.format.compareIconNumberColumn,
+      }                     
     },
   };  
     constructor(
@@ -125,6 +169,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       private squadGateway: SquadsGateway,    
       protected theme: NbThemeService,
       private toastr: NbToastrService,
+      protected format: FormatService,
       protected router: Router, 
       protected activatedRoute: ActivatedRoute) {       
         super(location, customerGateway, theme, router, activatedRoute);
@@ -138,11 +183,8 @@ export class DetailSquadComponent extends CustomerBaseComponent {
 
   }
   getSquad(){
-    this.squadGateway.getSquadDetail(this.squadId, this.startDate, this.endDate).subscribe(data=>{
+    this.squadGateway.getSquadDetailQuality(this.squadId, this.startDate, this.endDate).subscribe(data=>{
       this.currentSquad = data;  
-
-      let members: any[] = [];
-      let features: any[] = [];
 
       data.members.forEach((e, i) => {
         e.email = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.email}`;
@@ -150,6 +192,17 @@ export class DetailSquadComponent extends CustomerBaseComponent {
 
       data.features.forEach((e, i) => {
         e.product = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.product}`;
+        e.availabilitySLO = this.format.buildAvailabilitySLOColumn(e.slo.availability);
+        e.latencySLO = this.format.buildLatencySLOColumn(e.slo.latency);
+        e.experienceSLO = this.format.buildExperienceSLOColumn(e.slo.experience);
+        e.availabilityDebt = this.format.buildDebtColumnValueSingle(e.debt.availability);
+        e.latencyDebt = this.format.buildDebtColumnValueSingle(e.debt.latency);
+        e.experienceDebt = this.format.buildDebtColumnValueSingle(e.debt.experience);
+
+        e.availability = e.quality.availability;
+        e.latency = e.quality.latency;
+        e.experience = e.quality.experience;
+
         e.service = `<img src="${e.serviceAvatar}" class="avatar avatar-sm mr-2" />${e.service}`;
         if(e.points < 0) {
           e.points = `<i class="fas fa-circle text-danger mr-2" title=${e.points}></i>${e.points}`;
@@ -160,6 +213,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
 
       this.membersSource.load(data.members); 
       this.source.load(data.features);      
+
     });
   }
   

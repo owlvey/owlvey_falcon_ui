@@ -50,15 +50,38 @@
         </div>
         <div class="row">
           <div class="col-md-7">
-            Points
+            Availability Debt
           </div>
           <div class="col-md-3">
-            {{item.points}}            
+            {{item.debt.availability}}            
           </div>
           <div class="col-md-2">            
-            <i class="fas fa-frown mr-2 text-danger" *ngIf="item.points < 0"></i>
-            <i class="fas fa-meh mr-2 text-secondary" *ngIf="item.points == 0"></i>
-            <i class="fas fa-smile mr-2 text-warning" *ngIf="item.points > 0"></i>              
+            <i class="fas fa-ambulance mr-2 text-danger" *ngIf="item.debt.availability > 0"></i>            
+            <i class="fas fa-smile mr-2 text-success" *ngIf="item.debt.availability <= 0"></i>              
+          </div>
+        </div>        
+        <div class="row">
+          <div class="col-md-7">
+            Latency Debt (Sec)
+          </div>
+          <div class="col-md-3">
+            {{item.debt.latency}}            
+          </div>
+          <div class="col-md-2">            
+            <i class="fas fa-ambulance mr-2 text-danger" *ngIf="item.debt.latency > 0"></i>            
+            <i class="fas fa-smile mr-2 text-success" *ngIf="item.debt.latency <= 0"></i>              
+          </div>
+        </div>        
+        <div class="row">
+          <div class="col-md-7">
+            Experience Debt 
+          </div>
+          <div class="col-md-3">
+            {{item.debt.experience}}            
+          </div>
+          <div class="col-md-2">            
+            <i class="fas fa-ambulance mr-2 text-danger" *ngIf="item.debt.experience > 0"></i>            
+            <i class="fas fa-smile mr-2 text-success" *ngIf="item.debt.experience <= 0"></i>              
           </div>
         </div>        
       </nb-card-body>

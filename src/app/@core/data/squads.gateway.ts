@@ -27,6 +27,9 @@ export class SquadsGateway{
   getSquadDetail(squadId: number, start: Date, end: Date): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `squads/${squadId}?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
+  getSquadDetailQuality(squadId: number, start: Date, end: Date): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `squads/${squadId}/quality?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }
 
   createSquad(model: any) {
     return this.owlveyGateway.post(this.baseUrl + 'squads', model);
