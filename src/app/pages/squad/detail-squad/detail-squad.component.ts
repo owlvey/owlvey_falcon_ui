@@ -203,7 +203,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         e.latency = e.quality.latency;
         e.experience = e.quality.experience;
 
-        e.service = `<img src="${e.serviceAvatar}" class="avatar avatar-sm mr-2" />${e.service}`;
+        e.service = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.service}`;
         if(e.points < 0) {
           e.points = `<i class="fas fa-circle text-danger mr-2" title=${e.points}></i>${e.points}`;
         } else {
