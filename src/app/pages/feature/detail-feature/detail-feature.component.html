@@ -13,7 +13,7 @@
             <div class="row">                
                 <div class="col-sm-3">
                   <div class="form-group">
-                      <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
+                      <label for="inputAvailability" class="label form-control-label">Availability</label>
                       <input readonly="readonly" type="number" [value]="currentSource?.availability" 
                           nbInput fullWidth id="inputAvailability" placeholder=""
                           class="input-full-width size-medium shape-rectangle">                 
@@ -21,7 +21,7 @@
                 </div>                
                 <div class="col-sm-3">
                   <div class="form-group">
-                      <label for="inputLatency" class="label col-sm-3 form-control-label">Latency</label>
+                      <label for="inputLatency" class="label form-control-label">Latency (ms)</label>
                       <input readonly="readonly" type="number" [value]="currentSource?.latency" 
                           nbInput fullWidth id="inputLatency" placeholder=""
                           class="input-full-width size-medium shape-rectangle">                 
@@ -30,7 +30,7 @@
                 
                 <div class="col-sm-3">
                   <div class="form-group">
-                      <label for="inputExperience" class="label col-sm-3 form-control-label">Experience</label>
+                      <label for="inputExperience" class="label form-control-label">Experience</label>
                       <input readonly="readonly" type="number" [value]="currentSource?.experience" 
                           nbInput fullWidth id="inputExperience" placeholder=""
                           class="input-full-width size-medium shape-rectangle">                 
@@ -38,6 +38,36 @@
                 </div>   
                 
             </div>    
+
+            <div class="row">                
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="inputAvailability" class="label  form-control-label">Availability Debt</label>
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt.availability" 
+                        nbInput fullWidth id="inputAvailability" placeholder=""
+                        class="input-full-width size-medium shape-rectangle">                 
+                </div>
+              </div>                
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="inputLatency" class="label  form-control-label">Latency Debt (ms)</label>
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt.latency" 
+                        nbInput fullWidth id="inputLatency" placeholder=""
+                        class="input-full-width size-medium shape-rectangle">                 
+                </div>
+              </div>   
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="inputExperience" class="label  form-control-label">Experience Debt</label>
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt.experience" 
+                        nbInput fullWidth id="inputExperience" placeholder=""
+                        class="input-full-width size-medium shape-rectangle">                 
+                </div>
+              </div>   
+              
+          </div>    
+
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">

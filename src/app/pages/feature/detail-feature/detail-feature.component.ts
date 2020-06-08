@@ -170,8 +170,22 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         type: 'string',
         filter: false
       },       
-      slo: {
-        title: 'slo',
+      availabilitySLO: {
+        title: 'Availability SLO',
+        type: 'number',
+        filter: false,
+        width: '2em',
+        editable: false
+      }, 
+      latencySLO: {
+        title: 'Latency SLO',
+        type: 'number',
+        filter: false,
+        width: '2em',
+        editable: false
+      },  
+      experienceSLO: {
+        title: 'Experience SLO',
         type: 'number',
         filter: false,
         width: '2em',

@@ -49,6 +49,14 @@ export class ListFeatureComponent extends ProductBaseComponent {
         width: "3em",
         editable: false
       },           
+      availabilityDebt: {
+        title: "Debt",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
+
       latency: {
         title: "Latency",
         type: "number",
@@ -56,8 +64,22 @@ export class ListFeatureComponent extends ProductBaseComponent {
         width: "3em",
         editable: false
       },           
+      latencyDebt: {
+        title: "Debt",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
       experience: {
         title: "Experience",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },           
+      experienceDebt: {
+        title: "Debt",
         type: "number",
         filter: true,
         width: "3em",
@@ -118,6 +140,12 @@ export class ListFeatureComponent extends ProductBaseComponent {
     this.featureGateway
       .getFeaturesWithAvailabilities(this.productId, this.startDate, this.endDate)
       .subscribe(data => {
+        const target = data.map(c=>{
+          c.availabilityDebt = c.debt.availability;
+          c.latencyDebt = c.debt.latency;
+          c.experienceDebt = c.debt.experience;
+          return c;
+        });
         this.source.load(data);        
     });
   }
