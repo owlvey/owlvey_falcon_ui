@@ -34,9 +34,20 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   graphData = {};
   themeSubscription: any;
 
-  public visNetwork: string = 'networkId1';
-  public visNetworkData: VisNetworkData;
-  public visNetworkOptions: VisNetworkOptions;
+  public visNetworkAvailability: string = 'networkIdAvailability';
+  public visNetworkAvailabilityData: VisNetworkData;
+  public visNetworkAvailabilityOptions: VisNetworkOptions;
+
+  public visNetworkLatency: string = 'networkIdLatency';
+  public visNetworkLatencyData: VisNetworkData;
+  public visNetworkLatencyOptions: VisNetworkOptions;
+
+  public visNetworkExperience: string = 'networkIdExperience';
+  public visNetworkExperienceData: VisNetworkData;
+  public visNetworkExperienceOptions: VisNetworkOptions;
+
+
+
   colors: any;
 
 
@@ -59,7 +70,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     this.productId = parseInt(paramMap.get('productId'));
     super.onChangeQueryParameters(paramMap);
     this.loadProduct();
-    this.buildGraph();
+    this.buildAvailabilityGraph();
   }
 
   public loadProduct(){
@@ -70,20 +81,14 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
   onNgOnInit(): void {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      this.colors = config.variables;
-      const echarts: any = config.variables.echarts;
-      this.buildGraph();
+      this.colors = config.variables;     
+      this.buildAvailabilityGraph();
+      this.buildLatencyGraph();
+      this.buildExperienceGraph();
     });
   }
 
-  buildGraph(){
-    if (!this.colors){
-      return;
-    }
-    setTimeout(() => {
-      this.visNetworkService.setOptions(this.visNetwork, { physics: false });
-    }, 4000);
-
+  buildGraphControl(response){
     const fgText = this.colors.fgText;
     const primary = this.colors.primary;
     const primaryLight = this.colors.primaryLight;
@@ -95,157 +100,168 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     const warningLight = this.colors.warningLight;
     const success = this.colors.success;
     const successLight = this.colors.successLight;
-    this.productGateway.getGraphView(this.productId, this.startDate, this.endDate).subscribe(data=>{
-      var nodeData = data.nodes.map(c=>{
-        if (c.group == "products"){
-          return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
+    var nodeData = response.nodes.map(c=>{
+      if (c.group == "products"){
+        return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
+      }
+      else if (c.group == "services"){
+        if (c.budget >= 0 )
+        {            
+          return { id: c.id, value: 12, 
+                label: c.name, shape: 'hexagon', title: String(c.value),
+                font:{ color: fgText },
+                color: {background:success, border: primaryLight ,
+                highlight:{background:successLight, border: primaryLight},
+                hover:{background:successLight, border: primaryLight}}};
         }
-        else if (c.group == "services"){
-          if (c.budget >= 0 )
-          {            
-            return { id: c.id, value: 12, 
-                  label: c.name, shape: 'hexagon', title: String(c.value),
+        else{
+          return { id: c.id, value: 12, 
+                label: c.name, shape: 'hexagon', title: String(c.value),
+                font:{ color: fgText },
+                color: {background: danger, border: primaryLight,
+                highlight:{background: dangerLight, border: primaryLight},
+                hover:{background:dangerLight, border: primaryLight}}};
+        }
+      }
+      else if (c.group == "features"){
+        return { id: c.id, value: 10, 
+                  label: `${c.name} [${c.value}]`, group: "2", shape: 'dot', title: c.name,                    
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
                   hover:{background:successLight, border: primaryLight}}};
-          }
-          else{
-            return { id: c.id, value: 12, 
-                  label: c.name, shape: 'hexagon', title: String(c.value),
-                  font:{ color: fgText },
-                  color: {background: danger, border: primaryLight,
-                  highlight:{background: dangerLight, border: primaryLight},
-                  hover:{background:dangerLight, border: primaryLight}}};
-          }
-        }
-        else if (c.group == "features"){
-          return { id: c.id, value: 10, 
-                    label: `${c.name} [${c.value}]`, group: "2", shape: 'dot', title: c.name,                    
-                    font:{ color: fgText },
-                    color: {background:success, border: primaryLight ,
-                    highlight:{background:successLight, border: primaryLight},
-                    hover:{background:successLight, border: primaryLight}}};
-        }
-      });
-      var edgeData = data.edges.map(c=>{
-        const ava = String(c.value);
-        if (c.value < 0){
-          return { font: {  align: 'top', color: fgText },
-                label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
-        }
-        else if ( c.value >=0 && c.value < 0.01 )
-        {
-          //, strokeColor : infoLight
-          return { font: {  align: 'top', color: fgText }, label: ava,
-              from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
-        }
-        else{
-          return { font: {  align: 'top', color: fgText }, label: ava,
-            from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
-        }
-      });
-      const nodes = new VisNodes(nodeData);
-      const edges = new VisEdges(edgeData);
-      this.visNetworkData = {
-        nodes,
-        edges,
-      };
-
-      this.visNetworkOptions = {
-        physics:{
-          enabled: true,
-          barnesHut: {
-            gravitationalConstant: -2000,
-            centralGravity: 0.3,
-            springLength: 95,
-            springConstant: 0.04,
-            damping: 0.09,
-            avoidOverlap: 0
-          },
-          forceAtlas2Based: {
-            gravitationalConstant: -290,
-            centralGravity: 0.004,
-            springConstant: 0.18,
-            springLength: 100,
-            damping: 0.4,
-            avoidOverlap: 1.5
-          },
-          repulsion: {
-            centralGravity: 0.2,
-            springLength: 200,
-            springConstant: 0.05,
-            nodeDistance: 100,
-            damping: 0.09
-          },
-          hierarchicalRepulsion: {
-            centralGravity: 0.0,
-            springLength: 100,
-            springConstant: 0.01,
-            nodeDistance: 120,
-            damping: 0.09
-          },
-          maxVelocity: 146,
-          minVelocity: 0.1,
-          solver: 'forceAtlas2Based',
-          timestep: 0.35,
-          stabilization: {
-            enabled: true,
-            iterations: 1000,
-            updateInterval: 25,
-            onlyDynamicEdges: false,
-            fit: false
-          },
-          adaptiveTimestep: false
-        },
-        layout: {
-          improvedLayout: false,
-          hierarchical: {
-            enabled:false,
-            levelSeparation: 200,
-            nodeSpacing: 250,
-            treeSpacing: 250,
-            blockShifting: true,
-            edgeMinimization: true,
-            parentCentralization: true,
-            direction: 'UD',        // UD, DU, LR, RL
-            sortMethod: 'directed'   // hubsize, directed
-          }
-        },
-        nodes: {
-          shape: 'dot',
-          font: {
-              color: '#ffffff'
-          },
-          color: {
-            border: '#222222',
-            background: '#666666'
-          },
-          borderWidth: 2,
-          shadow:false,
-        },
-        interaction: {hover: true},
-        edges: {
-            labelHighlightBold:false,
-            smooth: false,
-            width: 3,
-            font:{
-              face: 'arial'
-            },
-            arrows: 'to',
-            arrowStrikethrough: true,
-            dashes: true,
-            scaling:{
-              label: true,
-            }
-        },
-        configure:{
-          enabled: false
-        }
-      };
+      }
     });
+    var edgeData = response.edges.map(c=>{
+      const ava = String(c.value);
+      if (c.value < 0){
+        return { font: { bold: false, strokeWidth:0, align: 'top', color: fgText },
+              label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
+      }
+      else if ( c.value >=0 && c.value < 0.01 )
+      {
+        //, strokeColor : infoLight
+        return { font: {  bold: false, align: 'top', color: fgText }, label: ava,
+            from: c.from, to: c.to, color:{ color: warning , highlight: warningLight , hover: warningLight}};
+      }
+      else{
+        return { font: {  bold: false, align: 'top', color: fgText }, label: ava,
+          from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
+      }
+    });
+    const nodes = new VisNodes(nodeData);
+    const edges = new VisEdges(edgeData);
+    let visNetworkData = {
+      nodes,
+      edges,
+    };
 
-
+    let visNetworkOptions = {
+      physics:{
+        enabled: true,          
+        forceAtlas2Based: {
+          gravitationalConstant: -290,
+          centralGravity: 0.004,
+          springConstant: 0.18,
+          springLength: 100,
+          damping: 0.4,
+          avoidOverlap: 1.5
+        },          
+        maxVelocity: 146,
+        minVelocity: 0.1,
+        solver: 'forceAtlas2Based',
+        timestep: 0.35,
+        stabilization: {
+          enabled: true,
+          iterations: 1000,
+          updateInterval: 25,
+          onlyDynamicEdges: false,
+          fit: false
+        },
+        adaptiveTimestep: false
+      },
+      layout: {
+        improvedLayout: false,
+        hierarchical: {
+          enabled:false,
+          levelSeparation: 200,
+          nodeSpacing: 250,
+          treeSpacing: 250,
+          blockShifting: true,
+          edgeMinimization: true,
+          parentCentralization: true,
+          direction: 'UD',        // UD, DU, LR, RL
+          sortMethod: 'directed'   // hubsize, directed
+        }
+      },
+      nodes: {
+        shape: 'dot',
+        font: {
+            color: '#ffffff'
+        },
+        color: {
+          border: '#222222',
+          background: '#666666'
+        },
+        borderWidth: 2,
+        shadow:false,
+      },
+      interaction: {hover: true},
+      edges: {
+          labelHighlightBold:false,
+          smooth: false,
+          width: 3,
+          font:{
+            face: 'arial'
+          },
+          arrows: 'to',
+          arrowStrikethrough: true,
+          dashes: true,
+          scaling:{
+            label: true,
+          }
+      },
+      configure:{
+        enabled: false
+      }
+    };
+    return {
+      data: visNetworkData,
+      options: visNetworkOptions
+    };
+  }
+  buildAvailabilityGraph(){
+    if (!this.colors){ return; }
+    setTimeout(() => {
+      this.visNetworkService.setOptions(this.visNetworkAvailability, { physics: false });
+    }, 4000);    
+    this.productGateway.getGraphAvailabilityView(this.productId, this.startDate, this.endDate).subscribe(data=>{
+      const result = this.buildGraphControl(data);
+      this.visNetworkAvailabilityData = result.data;
+      this.visNetworkAvailabilityOptions = result.options;
+    });
+  }
+  buildLatencyGraph(){
+    if (!this.colors){ return; }
+    setTimeout(() => {
+      this.visNetworkService.setOptions(this.visNetworkLatency, { physics: false });
+    }, 4000);    
+    this.productGateway.getGraphLatencyView(this.productId, this.startDate, this.endDate).subscribe(data=>{
+      const result = this.buildGraphControl(data);
+      this.visNetworkLatencyData = result.data;
+      this.visNetworkLatencyOptions = result.options;
+    });
+  }
+  buildExperienceGraph(){
+    if (!this.colors){ return; }
+    setTimeout(() => {
+      this.visNetworkService.setOptions(this.visNetworkExperience, { physics: false });
+    }, 4000);    
+    this.productGateway.getGraphExperienceView(this.productId, this.startDate, this.endDate).subscribe(data=>{
+      const result = this.buildGraphControl(data);
+      this.visNetworkExperienceData = result.data;
+      this.visNetworkExperienceOptions = result.options;
+    });
   }
 
   onServiceRowSelect(event){
@@ -261,20 +277,27 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
   }
 
-  public networkInitialized(): void {
+  public networkAvailabilityInitialized(): void {
     // now we can use the service to register on events
-    this.visNetworkService.on(this.visNetwork, 'click');
-
+    this.visNetworkService.on(this.visNetworkAvailability, 'click');
     // stop adjustments
     // open your console/dev tools to see the click params
     this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{
     });
     this.visNetworkService.click
         .subscribe((eventData: any[]) => {
-            if (eventData[0] === this.visNetwork) {
+            if (eventData[0] === this.visNetworkAvailability) {
               console.log(eventData[1]);
             }
         });
+  }
+  public networkLatencyInitialized(): void {    
+    this.visNetworkService.on(this.visNetworkLatency, 'click');    
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });    
+  }
+  public networkExperienceInitialized(): void {    
+    this.visNetworkService.on(this.visNetworkExperience, 'click');    
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });   
   }
 
   onEditClick(event) {
@@ -288,7 +311,9 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   }
 
   public ngOnDestroy(): void {
-    this.visNetworkService.off(this.visNetwork, 'click');
+    this.visNetworkService.off(this.visNetworkAvailability, 'click');
+    this.visNetworkService.off(this.visNetworkLatency, 'click');
+    this.visNetworkService.off(this.visNetworkExperience, 'click');
 
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();

@@ -27,12 +27,32 @@
 
 <nb-card>
     <nb-card-header>
+        Reliability Diagrams 
     </nb-card-header>
+
     <nb-card-body>
-            <div class="network-canvas"
-            [visNetwork]="visNetwork"
-            [visNetworkData]="visNetworkData"
-            [visNetworkOptions]="visNetworkOptions"
-            (initialized)="networkInitialized()"></div>
+        <nb-tabset fullWidth>
+            <nb-tab tabTitle="Availability" >
+                <div class="network-canvas"
+                [visNetwork]="visNetworkAvailability"
+                [visNetworkData]="visNetworkAvailabilityData"
+                [visNetworkOptions]="visNetworkAvailabilityOptions"
+                (initialized)="networkAvailabilityInitialized()"></div>
+            </nb-tab>
+            <nb-tab tabTitle="Latency" >
+                <div class="network-canvas"
+                [visNetwork]="visNetworkLatency"
+                [visNetworkData]="visNetworkLatencyData"
+                [visNetworkOptions]="visNetworkLatencyOptions"
+                (initialized)="networkLatencyInitialized()"></div>
+            </nb-tab>
+            <nb-tab tabTitle="Experience" >
+                <div class="network-canvas"
+                [visNetwork]="visNetworkExperience"
+                [visNetworkData]="visNetworkExperienceData"
+                [visNetworkOptions]="visNetworkExperienceOptions"
+                (initialized)="networkExperienceInitialized()"></div>
+            </nb-tab>
+        </nb-tabset>                
     </nb-card-body>
 </nb-card>

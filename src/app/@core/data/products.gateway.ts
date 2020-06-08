@@ -24,8 +24,14 @@ export class ProductsGateway {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}`);
   }  
 
-  getGraphView(productId: number, start: Date, end: Date): Observable<any> {
-    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
+  getGraphAvailabilityView(productId: number, start: Date, end: Date): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph/availability?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }
+  getGraphLatencyView(productId: number, start: Date, end: Date): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph/latency?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }
+  getGraphExperienceView(productId: number, start: Date, end: Date): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph/experience?start=${start.toISOString()}&end=${end.toISOString()}`);
   }
 
   createProduct(customerId: number, model: any) {
