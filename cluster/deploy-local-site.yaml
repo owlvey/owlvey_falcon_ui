@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owlvey-site-local-deployment
+  namespace: owlvey
+spec:  
+  replicas: 1
+  selector:
+    matchLabels:
+      key: owlvey-site-pod
+  template:
+    metadata:
+      labels:
+        key: owlvey-site-pod
+    spec:      
+      containers:
+      - name: owlvey-site
+        image: localhost:48700/owlvey/site:latest
+        imagePullPolicy: Always        
+        ports:
+            - containerPort: 80
+        env:
+            - name: "ENVIRONMENT"
+              value: "k8s"

@@ -1,0 +1,6 @@
+# comment
+*/temp*
+*/*/temp*
+node_modules
+dist
+.vscode

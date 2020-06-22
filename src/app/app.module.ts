@@ -119,9 +119,22 @@ export class AppModule {
     private oauthStrategy: NbOAuth2AuthStrategy
   ) {
     // window.location should be available here
+
+    let targetUrl = null;
+
+    if (  env.type === 'docker'){
+      targetUrl = `http://${window.location.hostname}:45002/`;
+    }
+    else if(env.type === 'ks8'){      
+      targetUrl = `http://${window.location.hostname}:${window.location.port}/site`;
+    }
+    else{
+      targetUrl = env.authority;
+    }
+
     this.oauthStrategy.setOptions({
       name: 'password',
-      baseEndpoint: env.type === 'docker' ? `http://${window.location.hostname}:45002/` : env.authority,
+      baseEndpoint: targetUrl,
       clientId: env.clientId,
       clientSecret: env.clientSecret,
       clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
