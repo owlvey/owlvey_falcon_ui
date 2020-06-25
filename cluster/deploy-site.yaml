@@ -15,7 +15,7 @@ spec:
     spec:      
       containers:
       - name: owlvey-site
-        image: localhost:48700/owlvey/site:latest
+        image: owlvey/site:latest
         imagePullPolicy: Always        
         ports:
             - containerPort: 80
