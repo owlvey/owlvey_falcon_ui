@@ -40,7 +40,7 @@ stages:
       displayName: Build
       inputs:
         containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerRegistryEndpoint: 'Owlvey Docker Connection'
         dockerComposeFile: './containers/docker/docker-compose.yaml'
         action: 'Build docker'
         qualifyImageNames: true
@@ -50,7 +50,7 @@ stages:
       displayName: Publish
       inputs:
         containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerRegistryEndpoint: 'Owlvey Docker Connection'
         dockerComposeFile: './containers/docker/docker-compose.yaml'
         action: Push services
         qualifyImageNames: true
