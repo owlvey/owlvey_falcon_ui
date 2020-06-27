@@ -13,13 +13,13 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)'
         targetType: 'inline'
         script: |
-          sed -i -e 's/registry/owlveydevcommit/g' ./containers/docker-compose.yaml
+          sed -i -e 's/registry/owlveydevcommit/g' ./containers/k8s/docker-compose.yaml
     - task: DockerCompose@0
       displayName: Build
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'OwlveyDevopsDocker'
-        dockerComposeFile: './containers/docker-compose.yaml'
+        dockerComposeFile: './containers/k8s/docker-compose.yaml'
         action: 'Build services'
         qualifyImageNames: true
         additionalImageTags: 'V0.0.$(Build.BuildId)'
@@ -29,9 +29,30 @@ stages:
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'OwlveyDevopsDocker'
-        dockerComposeFile: './containers/docker-compose.yaml'
+        dockerComposeFile: './containers/k8s/docker-compose.yaml'
         action: Push services
         qualifyImageNames: true
         includeLatestTag: true
         additionalImageTags: 'V0.0.$(Build.BuildId)'
 
+# build docker image
+    - task: DockerCompose@0
+      displayName: Build
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerComposeFile: './containers/docker/docker-compose.yaml'
+        action: 'Build docker'
+        qualifyImageNames: true
+        additionalImageTags: 'V0.0.$(Build.BuildId)'
+
+    - task: DockerCompose@0
+      displayName: Publish
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerComposeFile: './containers/docker/docker-compose.yaml'
+        action: Push services
+        qualifyImageNames: true
+        includeLatestTag: true
+        additionalImageTags: 'V0.0.$(Build.BuildId)'
