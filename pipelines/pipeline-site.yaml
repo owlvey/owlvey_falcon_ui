@@ -11,7 +11,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - checkout: self@develop
+    - checkout: self
     - task: Bash@3
       displayName: replace commmit artifactory
       inputs:
@@ -46,7 +46,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - checkout: self@develop
+    - checkout: self
       clean: true
     - task: DockerCompose@0
       displayName: Build
