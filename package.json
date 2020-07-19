@@ -16,6 +16,7 @@
     "build": "ng build",
     "build:docker": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=docker",
     "build:k8s": "ng build --configuration=k8s --output-hashing=all",
+    "build:k8si": "ng build --configuration=k8si --output-hashing=all",
     "build:prod": "npm run build -- --prod --aot --output-hashing=all",
     "test": "ng test",
     "test:coverage": "npm&& npm run test -- --code-coverage",

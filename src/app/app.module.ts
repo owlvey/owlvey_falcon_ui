@@ -125,18 +125,8 @@ export class AppModule {
     if (  env.type === 'docker'){
       targetUrl = `http://${window.location.hostname}:45002/`;
     }
-    else if(env.type === 'k8s'){
-
-      if (window.location.hostname.includes("owlvey.com")){
-        // out of cluster git
-        targetUrl = env.authority;
-      }
-      else {
-        targetUrl = env.clusterAuthority;
-      }
-
-    }
-    else{
+    else
+    {
       targetUrl = env.authority;
     }
 

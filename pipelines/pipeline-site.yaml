@@ -41,6 +41,45 @@ stages:
         includeLatestTag: true
         additionalImageTags: 'V0.0.$(Build.BuildId)'
 
+
+- stage: commitK8SI
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: self
+    - script: git checkout develop
+    - task: Bash@3
+      displayName: replace commmit artifactory
+      inputs:
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        targetType: 'inline'
+        script: |
+          sed -i -e 's/registry/owlveydevcommit/g' ./containers/k8si/docker-compose.yaml
+
+    - task: DockerCompose@0
+      displayName: Build
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerComposeFile: './containers/k8si/docker-compose.yaml'
+        action: 'Build services'
+        qualifyImageNames: true
+        additionalImageTags: 'V0.0.$(Build.BuildId)'
+
+    - task: DockerCompose@0
+      displayName: Publish
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'OwlveyDevopsDocker'
+        dockerComposeFile: './containers/k8si/docker-compose.yaml'
+        action: Push services
+        qualifyImageNames: true
+        includeLatestTag: true
+        additionalImageTags: 'V0.0.$(Build.BuildId)'
+
+
 - stage: dockerLegacyStage
   jobs:
   - job:
