@@ -18,10 +18,10 @@ spec:
         image: owlveydevcommit/k8ssite:latest
         imagePullPolicy: Always
         ports:
-            - containerPort: 80
+          - containerPort: 80
         env:
-            - name: "ENVIRONMENT"
-              value: "k8s"
+          - name: "ENVIRONMENT"
+            value: "k8s"
 
 ---
 apiVersion: apps/v1
