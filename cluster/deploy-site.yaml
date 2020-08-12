@@ -22,3 +22,29 @@ spec:
         env:
           - name: "ENVIRONMENT"
             value: "k8s"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owlvey-site-internal-deployment
+  namespace: owlvey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: owlvey-site-internal-pod
+  template:
+    metadata:
+      labels:
+        key: owlvey-site-internal-pod
+    spec:
+      containers:
+      - name: owlvey-site
+        image: owlveydevcommit/k8sisite:latest
+        imagePullPolicy: Always
+        ports:
+            - containerPort: 80
+        env:
+            - name: "ENVIRONMENT"
+              value: "k8si"

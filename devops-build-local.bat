@@ -1,8 +1,8 @@
-pushd "./containers"
+pushd "./containers/k8s"
 
 docker-compose build
 
 popd
 
-docker tag owlvey/site localhost:48700/owlvey/site
-docker push localhost:48700/owlvey/site
+docker tag registry/k8ssite localhost:5000/registry/k8ssite
+docker push localhost:5000/registry/k8ssite

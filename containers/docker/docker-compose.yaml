@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  service-site:
+        build:
+          context: ./../../.
+          dockerfile: ./containers/docker/Dockerfile
+        image: owlvey/site
+
+

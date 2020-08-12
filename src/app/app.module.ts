@@ -29,7 +29,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    ThemeModule.forRoot(),    
+    ThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -41,7 +41,7 @@ import { environment } from '../environments/environment';
     }),
     CoreModule.forRoot(),
     NbAuthModule.forRoot({
-      strategies: [                
+      strategies: [
         NbOAuth2AuthStrategy.setup(
           {
             name: 'password',
@@ -56,7 +56,7 @@ import { environment } from '../environments/environment';
               requireValidToken: true
             },
             redirect: {
-              success: '/pages/home', 
+              success: '/pages/home',
               failure: null,
             },
             refresh: {
@@ -64,7 +64,7 @@ import { environment } from '../environments/environment';
               grantType: NbOAuth2GrantType.REFRESH_TOKEN
             }
           }
-        ),                
+        ),
       ],
       forms: {
 
@@ -75,7 +75,7 @@ import { environment } from '../environments/environment';
           showMessages: {
             success: true,
             error: true,
-          },           
+          },
         },
         logout: {
           redirectDelay: 500,
@@ -91,8 +91,8 @@ import { environment } from '../environments/environment';
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {         
-        // avoid CORS attack 
+    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {
+        // avoid CORS attack
         const whiteList = ["/accounts", "/customers", "/products", "/squads", "/services", "/features",
                            "/sources", "/incidents", "/users", "/migrations", "/sourceItems", "/cache"];
         let found = false;
@@ -100,14 +100,14 @@ import { environment } from '../environments/environment';
            if ( req.url.indexOf(item) > -1 ){
              found = true;
            }
-        });        
+        });
         if (found)
         {
            return false; // add header
         }
         else {
            return true; // remove header
-        }        
+        }
      } },
     AuthGuard],
   bootstrap: [AppComponent],
@@ -115,7 +115,7 @@ import { environment } from '../environments/environment';
 
 export class AppModule {
   constructor(
-    private authService: NbAuthService, 
+    private authService: NbAuthService,
     private oauthStrategy: NbOAuth2AuthStrategy
   ) {
     // window.location should be available here
@@ -125,10 +125,8 @@ export class AppModule {
     if (  env.type === 'docker'){
       targetUrl = `http://${window.location.hostname}:45002/`;
     }
-    else if(env.type === 'ks8'){      
-      targetUrl = `http://${window.location.hostname}:${window.location.port}/site`;
-    }
-    else{
+    else
+    {
       targetUrl = env.authority;
     }
 
