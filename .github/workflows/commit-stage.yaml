@@ -17,7 +17,7 @@ jobs:
           run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
         - name: docker tag
           run: |
-                  docker tag registry/k8ssite owlveydevcommit/k8ssite:latest
-                  docker tag registry/k8ssite owlveydevcommit/k8ssite:${{ github.sha }}                  
-                  docker push owlveydevcommit/k8ssite
+            docker tag registry/k8ssite owlveydevcommit/k8ssite:latest
+            docker tag registry/k8ssite owlveydevcommit/k8ssite:${{ github.sha }}                  
+            docker push owlveydevcommit/k8ssite
     
