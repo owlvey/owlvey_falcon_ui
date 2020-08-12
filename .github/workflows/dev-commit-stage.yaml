@@ -11,7 +11,7 @@ jobs:
       steps:        
         - uses: actions/checkout@v2                           
         - name: docker compose build                  
-          working-directory: ./containers
+          working-directory: ./containers/k8s
           run: docker-compose build
         - name: docker login
           run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
