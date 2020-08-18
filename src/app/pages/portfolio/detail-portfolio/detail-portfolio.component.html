@@ -15,6 +15,14 @@
               <!--Availability-->
               <div class="row">
                 <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="inputSLO" class="label col-sm-3 form-control-label">SLA</label>
+                    <input readonly="readonly" type="number" [value]="currentSource.slaValue.availability" 
+                        nbInput fullWidth id="inputSLO" placeholder="Availability"
+                        class="input-full-width size-medium shape-rectangle">                      
+                  </div>  
+                </div>       
+                <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
                       <input readonly="readonly" type="number" [value]="currentSource.availabilitySLO" 
@@ -77,6 +85,14 @@
               <!--Latency-->
               <div class="row">
                 <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="inputSLO" class="label col-sm-3 form-control-label">SLA</label>
+                    <input readonly="readonly" type="number" [value]="currentSource.slaValue.latency" 
+                        nbInput fullWidth id="inputSLO" placeholder="Availability"
+                        class="input-full-width size-medium shape-rectangle">                      
+                  </div>  
+                </div>       
+                <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
                       <input readonly="readonly" type="number" [value]="currentSource.latencySLO" 
@@ -138,6 +154,9 @@
 
               <!--Experience-->
               <div class="row">
+                <div class="col-sm-2">
+                  
+                </div>       
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>

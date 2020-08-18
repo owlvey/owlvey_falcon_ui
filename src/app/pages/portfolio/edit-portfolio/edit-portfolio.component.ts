@@ -199,6 +199,8 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       this.editForm.get("experienceSLO").setValue(data.experienceSLO);
       this.editForm.get("leaders").setValue(data.leaders);      
       this.editForm.get("group").setValue(data.group);      
+      this.editForm.get("availabilitySLA").setValue(data.slaValue.availability); 
+      this.editForm.get("latencySLA").setValue(data.slaValue.latency); 
       this.source.load(data.features);
     });
   }
@@ -217,7 +219,9 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       latencySLO: ['', Validators.required],
       experienceSLO: ['', Validators.required],
       leaders: [''],      
-      group: ['']
+      group: [''],
+      availabilitySLA: ['', Validators.required],
+      latencySLA: ['', Validators.required],
     });
   }
   onDelete(event){    
@@ -233,7 +237,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       return;
     }
     this.isLoading = true;    
-    const model = this.editForm.value;
+    const model = this.editForm.value;    
     let  defer = this.portfolioGateway.putPortfolio(this.portfolioId, model);
     defer.subscribe((data) => {
         this.toastr.success("Portfolio Modified Success");
