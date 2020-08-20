@@ -4,6 +4,6 @@ services:
         build:
           context: ./../../.
           dockerfile: ./containers/docker/Dockerfile
-        image: owlvey/site
+        image: registry/site
 
 
