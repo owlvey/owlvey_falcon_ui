@@ -2,8 +2,7 @@ name: Build Image Develop
 
 on:
   push:
-    branches:
-    - 'develop/**'
+    branches: [ master ]
 
 jobs:
     build:
@@ -12,12 +11,12 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: docker compose build
-          working-directory: ./containers/k8s
+          working-directory: ./containers/docker
           run: docker-compose build
         - name: docker login
           run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
         - name: docker tag
           run: |
-            docker tag registry/k8ssite owlveydevcommit/k8ssite:latest
-            docker tag registry/k8ssite owlveydevcommit/k8ssite:${{ github.sha }}
-            docker push owlveydevcommit/k8ssite
+            docker tag registry/site owlvey/site:latest
+            docker tag registry/site owlvey/site:${{ github.sha }}
+            docker push owlvey/site

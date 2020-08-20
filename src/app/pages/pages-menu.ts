@@ -51,7 +51,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'award-outline',
   },
   {
-    title: 'Services',
+    title: 'Journeys',
     icon: 'award-outline',
   },
   {

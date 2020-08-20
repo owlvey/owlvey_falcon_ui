@@ -33,7 +33,14 @@ export class ListPortfolioComponent implements OnInit {
     pager: {
       perPage: 1000
     },
-    columns: {           
+    columns: {  
+      availabilitySLA: {
+        title: 'SLA',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },               
       availabilitySLO: {
         title: 'SLO',
         type: 'number',
@@ -51,6 +58,13 @@ export class ListPortfolioComponent implements OnInit {
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
       },            
+      latencySLA: {
+        title: 'SLA',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      }, 
       latencySLO: {
         title: 'SLO',
         type: 'number',
@@ -142,9 +156,10 @@ export class ListPortfolioComponent implements OnInit {
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
-        const data = portfolios;        
-        let newData = data.map(c=> {  
+      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{           
+        let newData = portfolios.map(c=> {  
+          c.availabilitySLA = c.slaValue.availability;
+          c.latencySLA = c.slaValue.latency;
           c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
           c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);                    
           c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                    

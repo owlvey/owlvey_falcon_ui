@@ -19,7 +19,7 @@
                 <div echarts [options]="optionServices" class="echart">
                 </div>
                 <div class="info">
-                  <div class="h5 value"> Services </div>
+                  <div class="h5 value"> Journeys </div>
                   <div class="details subtitle-2"><span> Total: {{ serviceStats?.count }} </span> </div>
                   <div class="details subtitle-2"><span> Min: {{ serviceStats?.min }} </span> </div>
                   <div class="details subtitle-2"><span> Max: {{ serviceStats?.max }} </span> </div>
@@ -65,7 +65,7 @@
   <div class="col-xxxl-6 col-xxl-6 col-lg-6 col-md-6">
     <nb-card size="large">
       <nb-tabset fullWidth  style="height: 100%;">    
-        <nb-tab tabTitle="Services">
+        <nb-tab tabTitle="Journeys">
           <div >
               <nb-list >
                   <nb-list-item class="service" *ngFor="let c of services">

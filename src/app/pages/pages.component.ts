@@ -77,7 +77,7 @@ export class PagesComponent implements OnInit {
         }
       }
 
-      if (e.item.title == 'Services'){
+      if (e.item.title == 'Journeys'){
         if (currentCustomer && currentProduct){
           const queryParams: Params = { group: null };
           this.router.navigate(['/pages/portfolios'], { relativeTo: this.activatedRoute,
