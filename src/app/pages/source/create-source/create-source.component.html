@@ -3,32 +3,25 @@
       <h4>Create Source</h4>
     </nb-card-header>
     <nb-card-body>
-      <form (ngSubmit)="onSubmit();" [formGroup]="createForm">        
+      <form (ngSubmit)="onSubmit();" [formGroup]="createForm">
         <div class="form-group">
               <label>Name</label>
               <input type="text" name="name" formControlName="name" class="form-control" />
-        </div>             
-        <div class="form-group">
-          <label>Group</label>
-          <nb-radio-group [(value)]="groupValue"  [(ngModel)]="groupValue" name="group-radio-group">
-            <nb-radio  *ngFor="let option of groupOptions"  [value]="option.value">
-              {{ option.label }}
-            </nb-radio>
-          </nb-radio-group>          
-        </div>    
-        
-        <div class="form-group">
+        </div>
+
+
+        <!-- <div class="form-group">
           <label>Type</label>
           <nb-radio-group [(value)]="optionsValue"  [(ngModel)]="optionsValue"  name="kind-radio-group" >
             <nb-radio  *ngFor="let option of options"  [value]="option.value">
               {{ option.label }}
             </nb-radio>
-          </nb-radio-group>          
-        </div>      
+          </nb-radio-group>
+        </div> -->
 
-        
 
-        
+
+
         <div class="text-right">
           <button type="button" nbbutton class="appearance-filled size-medium status-info shape-rectangle transitions mr-2" (click)="onBackClick($event)" [disabled]="isLoading">Back</button>
           <button type="submit" nbbutton class="appearance-filled size-medium status-primary shape-rectangle transitions" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button>
@@ -36,5 +29,4 @@
       </form>
     </nb-card-body>
   </nb-card>
-  
-  
+

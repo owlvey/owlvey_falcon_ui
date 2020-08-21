@@ -1,33 +1,25 @@
 <div class="row">
     <div class="col-md-12">
         <nb-card>
-            <nb-card-header>                
+            <nb-card-header>
                 <div class="d-flex align-content-center">
-                    <h5 >{{ currentProduct?.name }} Sources</h5>  
+                    <h5 >{{ currentProduct?.name }} Sources</h5>
                     <button type="button" nbButton status="primary" (click)="onGraph($event)" class="ml-auto mr-2"> Graph </button>
                     <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>
                 </div>
             </nb-card-header>
             <nb-card-body>
                 <nb-tabset fullWidth>
-                    <nb-tab tabTitle="All Sources | Total: {{totalSources}} | Assigned: {{ totalAssigned }} " >              
+                    <nb-tab tabTitle="All Sources | Total: {{totalSources}} | Assigned: {{ totalAssigned }} " >
                         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
-                        </ng2-smart-table>                      
+                        </ng2-smart-table>
                     </nb-tab>
-                    <nb-tab tabTitle="Availability {{availabilityAvg}} | Interactions {{availabilityInteractionsGood}} / {{availabilityInteractionsTotal}} = {{availabilityInteractionAvg}}" >              
+                    <nb-tab tabTitle="Availability {{availabilityAvg}} | Interactions {{availabilityInteractionsGood}} / {{availabilityInteractionsTotal}} = {{availabilityInteractionAvg}}" >
                         <ng2-smart-table [settings]="availabilitySettings" [source]="availabilitySource" (userRowSelect)="onUserRowSelect($event)">
-                        </ng2-smart-table>                      
-                    </nb-tab>
-                    <nb-tab tabTitle="Latency Sources" >              
-                        <ng2-smart-table [settings]="latencySettings" [source]="latencySource" (userRowSelect)="onUserRowSelect($event)">
-                        </ng2-smart-table>                      
-                    </nb-tab>
-                    <nb-tab tabTitle="Experience Sources" >              
-                        <ng2-smart-table [settings]="experienceSettings" [source]="experienceSource" (userRowSelect)="onUserRowSelect($event)">
-                        </ng2-smart-table>                      
+                        </ng2-smart-table>
                     </nb-tab>
                 </nb-tabset>
-                
+
               </nb-card-body>
         </nb-card>
     </div>

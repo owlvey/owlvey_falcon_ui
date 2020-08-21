@@ -17,11 +17,11 @@ export class ListSourceComponent implements OnInit {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
-  currentProduct: any;  
+  currentProduct: any;
   productId = 0;
   customerId = 0;
 
-  settings = {    
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -30,91 +30,58 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {      
+    columns: {
       id:{
         title: 'Id',
         type: 'number',
         filter: true,
-        width: '3em'   
+        width: '3em'
       },
       name: {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
-      },   
-      group: {
-        title: 'Group',
-        type: 'string',
-        filter: true,
-        width: '6em',
-      },     
+      },
       kind: {
         title: 'Type',
         type: 'string',
         filter: true,
         width: '6em',
-      },                         
-      measure: {
-        title: 'Measure',
+      },
+      availability: {
+        title: 'Availability',
         type: 'number',
         filter: true,
         width: '2em',
         sort:true,
         sortDirection: 'asc'
-      },             
-      references: {
-        title: 'Refs',
-        type: 'number',
-        filter: true,
-        width: '3em'        
-      },             
-    },
-  };
-  latencySettings = {    
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 50
-    },
-    columns: {      
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'   
       },
-      name: {
-        title: 'Name',
-        type: 'custom',
-        renderComponent: TooltipComponent
-      },                 
-      kind: {
-        title: 'Type',
-        type: 'string',
-        filter: true,
-        width: '6em',
-      },                         
-      measure: {
+      latency: {
         title: 'Latency',
         type: 'number',
         filter: true,
         width: '2em',
         sort:true,
         sortDirection: 'asc'
-      },             
+      },
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
       references: {
         title: 'Refs',
         type: 'number',
         filter: true,
-        width: '3em'        
-      },             
+        width: '3em'
+      },
     },
   };
 
-  availabilitySettings =  {    
+  availabilitySettings =  {
     actions:{
       add:false,
       edit:false,
@@ -123,24 +90,24 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {      
+    columns: {
       id:{
         title: 'Id',
         type: 'number',
         filter: true,
-        width: '3em'   
+        width: '3em'
       },
       name: {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
-      },           
+      },
       kind: {
         title: 'Type',
         type: 'string',
         filter: true,
         width: '6em',
-      },                         
+      },
       measure: {
         title: 'Availability',
         type: 'number',
@@ -148,74 +115,25 @@ export class ListSourceComponent implements OnInit {
         width: '2em',
         sort:true,
         sortDirection: 'asc'
-      },             
+      },
       references: {
         title: 'Refs',
         type: 'number',
         filter: true,
-        width: '3em'        
-      },             
+        width: '3em'
+      },
       correlation: {
         title: 'Correlation',
         type: 'number',
         filter: true,
-        width: '3em'        
-      },             
+        width: '3em'
+      },
     },
   };
 
-  experienceSettings =  {    
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 50
-    },
-    columns: {      
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'   
-      },
-      name: {
-        title: 'Name',
-        type: 'custom',
-        renderComponent: TooltipComponent
-      },           
-      kind: {
-        title: 'Type',
-        type: 'string',
-        filter: true,
-        width: '6em',
-      },                         
-      measure: {
-        title: 'Proportion',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        sort:true,
-        sortDirection: 'asc'
-      },             
-      references: {
-        title: 'Refs',
-        type: 'number',
-        filter: true,
-        width: '3em'        
-      },       
-      correlation: {
-        title: 'Correlation',
-        type: 'number',
-        filter: true,
-        width: '3em'        
-      },                   
-    },
-  };
 
   startDate: Date;
-  endDate: Date;  
+  endDate: Date;
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
   latencySource: LocalDataSource = new LocalDataSource();
@@ -233,25 +151,25 @@ export class ListSourceComponent implements OnInit {
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,    
-    private router: Router, 
-    private activatedRoute: ActivatedRoute) { 
-      
-    }        
-  ngOnInit() {    
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
-      this.productId = parseInt(paramMap.get('productId'));            
-      this.customerId = parseInt(paramMap.get('customerId'));      
+    private sourcesGateway: SourcesGateway,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+
+    }
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.productId = parseInt(paramMap.get('productId'));
+      this.customerId = parseInt(paramMap.get('customerId'));
       this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));      
+      this.endDate = new Date(paramMap.get('end'));
       this.getProduct(this.productId);
-    });          
+    });
   }
 
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      
+
       this.sourcesGateway.getSourcesWithAvailability(productId, this.startDate, this.endDate).subscribe(data=>{
 
         this.availabilityAvg = data.availability;
@@ -259,22 +177,22 @@ export class ListSourceComponent implements OnInit {
         this.availabilityInteractionsTotal = data.availabilityInteractionsTotal;
         this.availabilityInteractionsGood = data.availabilityInteractionsGood;
 
-        const sources = data.items;
+        const sources = data.items.map(c=>{
+            c.availability = c.measure.availability;
+            c.latency = c.measure.latency;
+            c.experience = c.measure.experience;
+            return c;
+          }
+        );
         const avaialabilitySources = sources.filter(c=> c.group == "Availability");
-        const latencySources = sources.filter(c=> c.group == "Latency");
-        const experienceSources = sources.filter(c=> c.group == "Experience");
         const referencesSources = sources.filter(c=> c.references > 0);
-        
+
         this.totalSources = sources.length;
         this.totalAssigned = referencesSources.length;
-        
-        
-        this.latencySource.load(latencySources);
         this.availabilitySource.load(avaialabilitySources);
-        this.experienceSource.load(experienceSources);
         this.source.load(sources);
       });
-    });     
+    });
   }
 
   onCreate(event) {
@@ -297,35 +215,35 @@ export class ListSourceComponent implements OnInit {
     this.router.navigate(['/pages/sources/treemap'], extras);
   }
 
-  onUserRowSelect(event): void {    
+  onUserRowSelect(event): void {
     const sourceId = event.data.id;
     const group = event.data.group;
     const kind = event.data.kind;
     if (group == 'Availability'){
       if ( kind == 'Interaction' ){
         let queryParams: Params = { sourceId: sourceId };
-        this.router.navigate(['/pages/sources/availability/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+        this.router.navigate(['/pages/sources/availability/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
       else{
         let queryParams: Params = { sourceId: sourceId };
-        this.router.navigate(['/pages/sources/availability/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-      }      
+        this.router.navigate(['/pages/sources/availability/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
     }
     if (group == 'Latency')
     {
       let queryParams: Params = { sourceId: sourceId };
-      this.router.navigate(['/pages/sources/latency/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      this.router.navigate(['/pages/sources/latency/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }
     if (group == 'Experience'){
       if ( kind == 'Interaction' ){
         let queryParams: Params = { sourceId: sourceId };
-        this.router.navigate(['/pages/sources/experience/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+        this.router.navigate(['/pages/sources/experience/interaction/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
       else{
         let queryParams: Params = { sourceId: sourceId };
-        this.router.navigate(['/pages/sources/experience/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-      }      
+        this.router.navigate(['/pages/sources/experience/proportion/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
     }
-    
+
   }
 }

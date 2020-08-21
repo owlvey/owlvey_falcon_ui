@@ -19,15 +19,13 @@ export class SourcesGateway{
 
     getSourcesWithAvailability(productId: number, start: Date, end: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `sources?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
-    }    
+    }
 
-    postSource(productId: number, name: String, kind: string, group: string): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources`, 
-        { 
+    postSource(productId: number, name: String): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sources`,
+        {
             productId: productId,
-            name: name,
-            kind: kind,
-            group: group
+            name: name
         });
     }
 
@@ -76,7 +74,7 @@ export class SourcesGateway{
     getSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
-    
+
 
     getAvailabilityInteractionSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/interaction?start=${start.toISOString()}&end=${end.toISOString()}`);
@@ -90,7 +88,7 @@ export class SourcesGateway{
         return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/proportion?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
-    
+
     getExperienceInteractionSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/experience/${sourceId}/interaction?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
@@ -101,7 +99,7 @@ export class SourcesGateway{
     getLatencySourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/latency/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
-    
+
 
     getSourceItems(sourceId: number): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
@@ -127,7 +125,7 @@ export class SourcesGateway{
 
     getExperienceProportionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
         return this.owlveyGateway.get(this.baseUrl + `sources/experience/${sourceId}/proportion/items?start=${start.toISOString()}&end=${end.toISOString()}`);
-    }    
+    }
 
     getSourceItemById(sourceItemId: number) : Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sourceItems/${sourceItemId}`);
