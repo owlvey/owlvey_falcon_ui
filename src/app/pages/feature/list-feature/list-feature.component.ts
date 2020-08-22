@@ -18,7 +18,7 @@ export class ListFeatureComponent extends ProductBaseComponent {
   isLoading: boolean = false;
   sources: any[];
   actionConfirmWord: string;
-    
+
   settings = {
     actions: {
       add: false,
@@ -41,21 +41,22 @@ export class ListFeatureComponent extends ProductBaseComponent {
         type: "string",
         filter: true,
         editable: false
-      },                
+      },
+
       availability: {
         title: "Availability",
         type: "number",
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
       availabilityDebt: {
         title: "Debt",
         type: "number",
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
 
       latency: {
         title: "Latency",
@@ -63,28 +64,35 @@ export class ListFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
       latencyDebt: {
         title: "Debt",
         type: "number",
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
       experience: {
         title: "Experience",
         type: "number",
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
       experienceDebt: {
         title: "Debt",
         type: "number",
         filter: true,
         width: "3em",
         editable: false
-      },           
+      },
+      total: {
+        title: "Total",
+        type: "number",
+        filter: true,
+        width: "3em",
+        editable: false
+      },
       indicatorsCount: {
         title: "Sources",
         type: "number",
@@ -105,7 +113,7 @@ export class ListFeatureComponent extends ProductBaseComponent {
         filter: true,
         width: "3em",
         editable: false
-      }      
+      }
     }
   };
 
@@ -113,40 +121,45 @@ export class ListFeatureComponent extends ProductBaseComponent {
   mttm: {
         title: 'MTTM',
         type: 'number',
-        filter: true,       
-        width: '12em', 
+        filter: true,
+        width: '12em',
         editable: false
-      },             
-  */ 
+      },
+  */
 
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,        
-    protected productGateway: ProductsGateway,        
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
     protected featureGateway: FeaturesGateway,
     protected theme: NbThemeService,
-    protected router: Router, 
-    protected activatedRoute: ActivatedRoute) {       
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
-    }          
-  onChangeQueryParameters(paramMap: ParamMap): void {               
-    super.onChangeQueryParameters(paramMap);        
+    }
+  onChangeQueryParameters(paramMap: ParamMap): void {
+    super.onChangeQueryParameters(paramMap);
     this.getFeature();
   }
 
-  getFeature() {    
+  getFeature() {
     this.featureGateway
       .getFeaturesWithAvailabilities(this.productId, this.startDate, this.endDate)
       .subscribe(data => {
         const target = data.map(c=>{
+          c.availability = c.quality.availability;
+          c.latency = c.quality.latency;
+          c.experience = c.quality.experience;
+          c.total = c.quality.total;
+          c.good = c.quality.good;
           c.availabilityDebt = c.debt.availability;
           c.latencyDebt = c.debt.latency;
           c.experienceDebt = c.debt.experience;
           return c;
         });
-        this.source.load(data);        
+        this.source.load(data);
     });
   }
 

@@ -33,31 +33,20 @@ export class SourcesGateway{
         return this.owlveyGateway.delete(this.baseUrl + `sources/${sourceId}`);
     }
 
-    postSourceItem(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sourceItems`, model);
-    }
-
-    postAvailabilitySourceItemInteraction(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources/availability/interaction/items`, model);
-    }
-    postAvailabilitySourceItemProportion(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources/availability/proportion/items`, model);
+    postAvailabilitySourceItem(model: any): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sourceItems/availability`, model);
     }
 
     postLatencySourceItem(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources/latency/items`, model);
+        return this.owlveyGateway.post(this.baseUrl + `sourceItems/latency`, model);
     }
 
-    postExperienceSourceItemProportion(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sources/experience/proportion/items`, model);
+    postExperienceSourceItem(model: any): Observable<any> {
+        return this.owlveyGateway.post(this.baseUrl + `sourceItems/experience`, model);
     }
 
-    postSourceItemProportion(model: any): Observable<any> {
-        return this.owlveyGateway.post(this.baseUrl + `sourceItems/proportion`, model);
-    }
-
-    putAvailabilitySource(sourceId: number, model: any): Observable<any> {
-        return this.owlveyGateway.put(this.baseUrl + `sources/availability/${sourceId}`, model);
+    putSource(sourceId: number, model: any): Observable<any> {
+        return this.owlveyGateway.put(this.baseUrl + `sources/${sourceId}`, model);
     }
     putExperienceSource(sourceId: number, model: any): Observable<any> {
         return this.owlveyGateway.put(this.baseUrl + `sources/experience/${sourceId}`, model);
@@ -71,8 +60,9 @@ export class SourcesGateway{
     getLatencySource(sourceId: number): Observable<any> {
         return this.owlveyGateway.get(this.baseUrl + `sources/latency/${sourceId}`);
     }
-    getSourceWithAvailability(sourceId: number, start: Date, end: Date): Observable<any> {
-        return this.owlveyGateway.get(this.baseUrl + `sources/${sourceId}?start=${start.toISOString()}&end=${end.toISOString()}`);
+
+    getSourceWithDetail(sourceId: number, start: Date, end: Date): Observable<any> {
+        return this.owlveyGateway.get(this.baseUrl + `sources/${sourceId}/detail?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
 
@@ -101,30 +91,17 @@ export class SourcesGateway{
     }
 
 
-    getSourceItems(sourceId: number): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sourceItems?sourceId=${sourceId}`);
-    }
-    getSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sourceItems?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
-    }
 
-    getInteractionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sourceItems/interactions?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
-    }
-
-    getAvailabilityInteractionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/interaction/items?start=${start.toISOString()}&end=${end.toISOString()}`);
-    }
-    getAvailabilityProportionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sources/availability/${sourceId}/proportion/items?start=${start.toISOString()}&end=${end.toISOString()}`);
+    getAvailabilitySourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
+        return this.owlveyGateway.get(this.baseUrl + `sourceItems/availability?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
     getLatencySourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sources/latency/${sourceId}/items?start=${start.toISOString()}&end=${end.toISOString()}`);
+      return this.owlveyGateway.get(this.baseUrl + `sourceItems/latency?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
-    getExperienceProportionSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `sources/experience/${sourceId}/proportion/items?start=${start.toISOString()}&end=${end.toISOString()}`);
+    getExperienceSourceItemsByPeriod(sourceId: number, start: Date, end: Date): Observable<any>{
+      return this.owlveyGateway.get(this.baseUrl + `sourceItems/experience?sourceId=${sourceId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 
     getSourceItemById(sourceItemId: number) : Observable<any> {
