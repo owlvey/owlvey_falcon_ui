@@ -122,6 +122,10 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/threats'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
+      if (e.item.title == 'Risks'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/risks'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
       if (e.item.title == 'Migrations'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/migrations'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });

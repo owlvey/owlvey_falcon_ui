@@ -9,12 +9,12 @@ import { RisksGateway } from '../../../@core/data/risks.gateway';
 
 
 @Component({
-  selector: 'app-detail-security-threat',
-  templateUrl: './detail-threat.component.html',
-  styleUrls: ['./detail-threat.component.scss'],
+  selector: 'app-create-security-risk',
+  templateUrl: './create-risk.component.html',
+  styleUrls: ['./create-risk.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DetailSecurityThreatComponent implements OnInit {
+export class CreateSecurityRiskComponent implements OnInit {
 
   isLoading: boolean = false;
   sources: any[];

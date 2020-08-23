@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListThreatComponent } from './list-threat/list-threat.component';
-import { CreateSecurityThreatComponent } from './create-security-threat/create-threat.component';
-import { DetailSecurityThreatComponent } from './detail-security-threat/detail-threat.component';
-import { EditSecurityThreatComponent } from './edit-security-threat/edit-threat.component';
+import { ListRiskComponent } from './list-risk/list-risk.component';
+import { CreateSecurityRiskComponent } from './create-security-risk/create-risk.component';
+import { DetailSecurityRiskComponent } from './detail-security-risk/detail-risk.component';
 
-
-import { ThreatRoutingModule } from "./threat.routing.module";
+import { RiskRoutingModule } from "./risks.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -28,9 +26,9 @@ import {
 } from '@nebular/theme';
 
 @NgModule({
-  declarations: [ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent, EditSecurityThreatComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, ThreatRoutingModule, Ng2SmartTableModule, 
+  declarations: [ListRiskComponent, CreateSecurityRiskComponent, DetailSecurityRiskComponent],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RiskRoutingModule, Ng2SmartTableModule, 
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
     NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule, NbActionsModule]
 })
-export class ThreatModule { }
+export class RiskModule { }

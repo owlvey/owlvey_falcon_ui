@@ -18,5 +18,5 @@ const routes: Routes = [
 export class ThreatRoutingModule { }
  
 export const routedComponents = [
-    ListThreatComponent,
+    ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent
 ];

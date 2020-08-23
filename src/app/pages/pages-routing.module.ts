@@ -29,6 +29,11 @@ const routes: Routes = [{
       loadChildren: () => import('./threats/threat.module').then(m => m.ThreatModule),
     },    
     {
+      path: 'risks',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('./risks/risks.module').then(m => m.RiskModule),
+    },    
+    {
       path: 'sources',
       canActivate: [AuthGuard],
       loadChildren: () => import('./source/source.module').then(m => m.SourceModule),
