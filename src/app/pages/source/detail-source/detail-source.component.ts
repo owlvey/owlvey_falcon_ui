@@ -355,7 +355,7 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
 
   onEditClick(event){
     let queryParams: Params = { };
-    this.router.navigate(['/pages/sources/availability/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+    this.router.navigate(['/pages/sources/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
   ngAfterViewInit() {

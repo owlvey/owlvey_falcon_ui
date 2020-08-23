@@ -11,6 +11,7 @@ import { SyncModule } from './sync/sync.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
 import { ServiceGroupModule } from './serviceGroup/serviceGroup.module';
 import { SquadModule } from './squad/squad.module';
+import { ThreatModule } from './threats/threat.module'
 import { HomeModule } from './home/home.module';
 
 
@@ -42,6 +43,7 @@ import { TooltipComponent } from './common/components/tooltipComponent';
     ServiceGroupModule,
     SquadModule,
     UserModule,
+    ThreatModule,
     HomeModule,
     SyncModule,
     NbIconModule,

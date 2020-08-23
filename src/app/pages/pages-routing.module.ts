@@ -22,6 +22,11 @@ const routes: Routes = [{
       path: 'squads',
       canActivate: [AuthGuard],
       loadChildren: () => import('./squad/squad.module').then(m => m.SquadModule),
+    },  
+    {
+      path: 'threats',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('./threats/threat.module').then(m => m.ThreatModule),
     },    
     {
       path: 'sources',

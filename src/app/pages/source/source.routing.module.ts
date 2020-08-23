@@ -11,21 +11,15 @@ import { DetailSourceComponent } from './detail-source/detail-source.component';
 import { ListSourceComponent } from './list-source/list-source.component';
 import { TreeMapSourceComponent } from './treemap-source/treemap-source.component';
 
-import { LatencySourceItemsComponent } from './latency-items-source/latency-items-source.component';
 import { EditSourceComponent } from './edit-source/edit-source.component';
-import { LatencyEditSourceComponent } from './latency-edit-source/latency-edit-source.component';
-import { LatencyDetailSourceComponent } from './latency-detail-source/latency-detail-source.component';
 
 const routes: Routes = [
   { path: '', component: ListSourceComponent },
   { path: 'create', component: CreateSourceComponent},
-  { path: 'availability/edit', component: EditSourceComponent},
-  { path: 'latency/edit', component: LatencyEditSourceComponent},
+  { path: 'edit', component: EditSourceComponent},
   { path: 'items/create/proportion', component: CreatePropItemsSourceComponent},
   { path: 'items/create/interaction', component: CreateIntItemsSourceComponent},
   { path: 'items/create/latency', component: CreateLatencyItemsSourceComponent},
-  { path: 'latency/detail', component: LatencyDetailSourceComponent},
-  { path: 'latency/items', component: LatencySourceItemsComponent},
   { path: 'detail', component: DetailSourceComponent},
   { path: 'items', component: ItemsSourceComponent},
   { path: 'treemap', component: TreeMapSourceComponent}

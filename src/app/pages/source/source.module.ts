@@ -12,7 +12,6 @@ import { CreateIntItemsSourceComponent  } from './create-int-items-source/create
 import { CreateLatencyItemsSourceComponent  } from './create-latency-items-source/create-latency-items-source.component';
 
 
-import { LatencyDetailSourceComponent } from './latency-detail-source/latency-detail-source.component';
 import { SourceRoutingModule } from "./source.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -36,17 +35,13 @@ import {
   NbTabsetModule,
   NbTreeGridModule,
 } from '@nebular/theme';
-import { LatencySourceItemsComponent } from './latency-items-source/latency-items-source.component';
 import { EditSourceComponent } from './edit-source/edit-source.component';
-import { LatencyEditSourceComponent } from './latency-edit-source/latency-edit-source.component';
 
 
 @NgModule({
   declarations: [CreateSourceComponent, CreateLatencyItemsSourceComponent,
     CreateIntItemsSourceComponent,
-    LatencyEditSourceComponent,
     ItemsSourceComponent, CreatePropItemsSourceComponent,
-    LatencyDetailSourceComponent,  LatencySourceItemsComponent,
     DetailSourceComponent, ListSourceComponent, EditSourceComponent,
     TreeMapSourceComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule,
