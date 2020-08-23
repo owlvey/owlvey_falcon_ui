@@ -2,82 +2,82 @@
     <div class="col-md-12">
       <nb-card class="inline-form-card">
         <nb-card-header>
-          <div class="d-flex align-content-center">              
-              <h5>Feature: {{ currentSource?.name }} </h5>                                      
+          <div class="d-flex align-content-center">
+              <h5>Feature: {{ currentSource?.name }} </h5>
               <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>
               <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
-              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class=""> Back </button>              
-          </div>       
+              <button type="button" nbButton status="primary" (click)="onBackClick($event)" class=""> Back </button>
+          </div>
         </nb-card-header>
-        <nb-card-body>          
-            <div class="row">                
+        <nb-card-body>
+            <div class="row">
                 <div class="col-sm-3">
                   <div class="form-group">
                       <label for="inputAvailability" class="label form-control-label">Availability</label>
-                      <input readonly="readonly" type="number" [value]="currentSource?.availability" 
+                      <input readonly="readonly" type="number" [value]="currentSource?.availability"
                           nbInput fullWidth id="inputAvailability" placeholder=""
-                          class="input-full-width size-medium shape-rectangle">                 
+                          class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>                
+                </div>
                 <div class="col-sm-3">
                   <div class="form-group">
                       <label for="inputLatency" class="label form-control-label">Latency (ms)</label>
-                      <input readonly="readonly" type="number" [value]="currentSource?.latency" 
+                      <input readonly="readonly" type="number" [value]="currentSource?.latency"
                           nbInput fullWidth id="inputLatency" placeholder=""
-                          class="input-full-width size-medium shape-rectangle">                 
+                          class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>   
-                
+                </div>
+
                 <div class="col-sm-3">
                   <div class="form-group">
                       <label for="inputExperience" class="label form-control-label">Experience</label>
-                      <input readonly="readonly" type="number" [value]="currentSource?.experience" 
+                      <input readonly="readonly" type="number" [value]="currentSource?.experience"
                           nbInput fullWidth id="inputExperience" placeholder=""
-                          class="input-full-width size-medium shape-rectangle">                 
+                          class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>   
-                
-            </div>    
+                </div>
 
-            <div class="row">                
+            </div>
+
+            <div class="row">
               <div class="col-sm-3">
                 <div class="form-group">
                     <label for="inputAvailability" class="label  form-control-label">Availability Debt</label>
-                    <input readonly="readonly" type="number" [value]="currentSource?.debt.availability" 
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt?.availability"
                         nbInput fullWidth id="inputAvailability" placeholder=""
-                        class="input-full-width size-medium shape-rectangle">                 
+                        class="input-full-width size-medium shape-rectangle">
                 </div>
-              </div>                
+              </div>
               <div class="col-sm-3">
                 <div class="form-group">
                     <label for="inputLatency" class="label  form-control-label">Latency Debt (ms)</label>
-                    <input readonly="readonly" type="number" [value]="currentSource?.debt.latency" 
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt?.latency"
                         nbInput fullWidth id="inputLatency" placeholder=""
-                        class="input-full-width size-medium shape-rectangle">                 
+                        class="input-full-width size-medium shape-rectangle">
                 </div>
-              </div>   
-              
+              </div>
+
               <div class="col-sm-3">
                 <div class="form-group">
                     <label for="inputExperience" class="label  form-control-label">Experience Debt</label>
-                    <input readonly="readonly" type="number" [value]="currentSource?.debt.experience" 
+                    <input readonly="readonly" type="number" [value]="currentSource?.debt?.experience"
                         nbInput fullWidth id="inputExperience" placeholder=""
-                        class="input-full-width size-medium shape-rectangle">                 
+                        class="input-full-width size-medium shape-rectangle">
                 </div>
-              </div>   
-              
-          </div>    
+              </div>
+
+          </div>
 
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
                     <label for="inputDescription" class="label col-sm-3 form-control-label">Description</label>
-                    <input readonly="readonly" type="text" [value]="currentSource?.description" 
+                    <input readonly="readonly" type="text" [value]="currentSource?.description"
                         nbInput fullWidth id="inputDescription" placeholder="Description"
-                        class="input-full-width size-medium shape-rectangle">                     
+                        class="input-full-width size-medium shape-rectangle">
                 </div>
-              </div>                
-            </div>            
+              </div>
+            </div>
         </nb-card-body>
       </nb-card>
     </div>
@@ -87,27 +87,21 @@
     <div class="col-12">
         <nb-card size="large" style="height: 65rem">
           <nb-tabset fullWidth>
-            <nb-tab tabTitle="Availability" >              
-                <ng2-smart-table [settings]="settings" [source]="availabilitySource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
-            </nb-tab>      
-            <nb-tab tabTitle="Latency" >              
-              <ng2-smart-table [settings]="settings" [source]="latencySource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
-            </nb-tab>      
-            <nb-tab tabTitle="Experience" >              
-              <ng2-smart-table [settings]="settings" [source]="experienceSource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>              
-            </nb-tab>      
-            
+            <nb-tab tabTitle="Quality" >
+                <ng2-smart-table [settings]="settings" [source]="qualitySource" (userRowSelect)="onIndicatorsRowSelect($event)">                </ng2-smart-table>
+            </nb-tab>
+
             <nb-tab tabTitle="Squads">
                 <div>
                     <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
                     </ng2-smart-table>
-                </div>                
+                </div>
             </nb-tab>
             <nb-tab tabTitle="Journeys">
                 <div>
                     <ng2-smart-table [settings]="portfolioSettings" [source]="portfolioSource" (userRowSelect)="onPortfolioRowSelect($event)">
                     </ng2-smart-table>
-                </div>                
+                </div>
             </nb-tab>
           </nb-tabset>
         </nb-card>
@@ -125,24 +119,24 @@
     <nb-card>
       <nb-card-header>
         Daily availability report
-      </nb-card-header>  
-    
-      <nb-card-body>      
+      </nb-card-header>
+
+      <nb-card-body>
           <div class="row">
-                    <div class="col-sm-12">                        
-                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>    
-                    </div>
-                </div>    
-                <div class="row">
                     <div class="col-sm-12">
-                        
-                        <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>                                 
+                        <ngx-daily-detail-chart [dataItems]="series" target="average" all="Quality" ></ngx-daily-detail-chart>
                     </div>
                 </div>
-              
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;" ></ngx-daily-calendar-chart>
+                    </div>
+                </div>
+
       </nb-card-body>
-    
-    </nb-card>    
+
+    </nb-card>
   </div>
 </div>
 

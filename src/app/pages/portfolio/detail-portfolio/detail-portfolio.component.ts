@@ -18,14 +18,14 @@ import { FormatService } from '../../../@core/utils/format.service';
   styleUrls: ['./detail-portfolio.component.scss']
 })
 export class DetailPortfolioComponent implements OnInit {
-  
+
   currentFeature : any;
   echartsIntance: any;
   echartCalendarInstance: any;
   serviceCalendarOptions: any;
-  isLoading: boolean = false;  
+  isLoading: boolean = false;
   actionConfirmWord: string;
-  currentSource : any= { impact: 0, availability: 0, slo: 0, budget: 0};    
+  currentSource : any= { impact: 0, availability: 0, slo: 0, budget: 0};
   productId = 0;
   portfolioId = 0;
   themeSubscription: any;
@@ -40,14 +40,14 @@ export class DetailPortfolioComponent implements OnInit {
   latencyCalendarSerie: Array<any> = [];
   experienceCalendarSerie: Array<any> = [];
   startDate: Date = new Date();
-  endDate: Date;  
+  endDate: Date;
   source: LocalDataSource = new LocalDataSource();
-  
+
   availabilityPieces: Array<any> = []
   latencyPieces: Array<any> = []
   experiencePieces: Array<any> = []
 
-  settings = {    
+  settings = {
     mode: 'external',
     actions:{
       columnTitle:'Delete',
@@ -56,64 +56,63 @@ export class DetailPortfolioComponent implements OnInit {
       add:false,
       edit:false,
       delete:false
-    },    
+    },
     pager: {
       perPage: 20
     },
-    columns: {            
-      
+    columns: {
+
       id: {
         title: 'Id',
         type: 'number',
         filter: false,
         width: '3em',
         editable: false
-      },                
+      },
       name: {
         title: 'Name',
         type: 'string',
-        filter: false,        
+        filter: false,
         editable: false
-      },                           
+      },
       availability: {
         title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },        
+        editable: false,
+      },
       latency: {
         title: 'Latency',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },        
+        editable: false,
+      },
       experience: {
         title: 'Experience',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },             
+        editable: false,
+      },
       indicatorsCount: {
         title: 'SLIs',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },                     
-      
-      
+        editable: false,
+      },
+
+
     },
   };
 
-  
+
   squadSource: LocalDataSource = new LocalDataSource();
 
-  availabilityIndicatorSource : LocalDataSource = new LocalDataSource();
-  latencyIndicatorSource : LocalDataSource = new LocalDataSource();
-  experienceIndicatorSource : LocalDataSource = new LocalDataSource();
+  qualityIndicatorSource : LocalDataSource = new LocalDataSource();
+
 
   squadsSettings = {
     actions:{
@@ -124,96 +123,106 @@ export class DetailPortfolioComponent implements OnInit {
     pager: {
       perPage: 5
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
         filter: false
-      }      
+      }
     }
   };
 
-  indicatorSettings = {    
+  indicatorSettings = {
     actions:{
       add:false,
       edit:false,
       delete:false
     },
     pager: {
-      perPage: 10
+      perPage: 20
     },
-    columns: {      
+    columns: {
       id: {
         title: 'Id',
         type: 'number',
         filter: false,
         sort:true,
         width: '3em',
-        sortDirection: 'asc'     
+        sortDirection: 'asc'
       },
       source: {
-        title: 'SLI',
-        type: 'string',
-        filter: false
-      },    
-      measure: {
-        title: 'Measure',
+        title: 'Name',
+        filter: false,
+        type: 'string'
+      },
+      availability: {
+        title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },         
-      group: {
-        title: 'Group',
-        type: 'string',
+        editable: false,
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
         filter: false,
-        width: '5em',
-      },           
-      kind: {
-        title: 'Type',
-        type: 'string',
+        width: '3em',
+        editable: false,
+      },
+      latency: {
+        title: 'Latency',
+        type: 'number',
         filter: false,
-        width: '5em',
-      },          
+        width: '3em',
+        editable: false,
+      },
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,
+      },
     },
   };
-  
-  
+
+
+
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private sourcesGateway: SourcesGateway,    
+    private sourcesGateway: SourcesGateway,
     private toastr: NbToastrService,
-    private featuresGateway: FeaturesGateway,    
-    private portfolioGateway: PortfoliosGateway,    
+    private featuresGateway: FeaturesGateway,
+    private portfolioGateway: PortfoliosGateway,
     private theme: NbThemeService,
     private format: FormatService,
-    private router: Router, 
+    private router: Router,
     protected visNetworkService: VisNetworkService,
-    private activatedRoute: ActivatedRoute) {       
-      
-    }        
+    private activatedRoute: ActivatedRoute) {
 
-  ngOnInit() {         
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
-      this.productId = parseInt(paramMap.get('productId'));            
-      this.portfolioId = parseInt(paramMap.get('portfolioId'));   
+    }
+
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.productId = parseInt(paramMap.get('productId'));
+      this.portfolioId = parseInt(paramMap.get('portfolioId'));
       this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));      
-      this.getPortfolio();      
+      this.endDate = new Date(paramMap.get('end'));
+      this.getPortfolio();
       this.buildGraphDependencies();
-    });          
-  }  
+    });
+  }
 
   private buildGraphDependencies(){
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       this.colors = config.variables;
-      const echarts: any = config.variables.echarts;      
+      const echarts: any = config.variables.echarts;
 
       this.portfolioGateway.getPortfolioGraph(this.portfolioId, this.startDate, this.endDate).subscribe( data =>{
         this.buildGraph(data);
-      });      
+      });
 
     });
   }
@@ -223,18 +232,18 @@ export class DetailPortfolioComponent implements OnInit {
       return;
     }
     setTimeout(() => {
-      
+
       try {
-        this.visNetworkService.setOptions(this.visNetwork, { physics: false });                  
+        this.visNetworkService.setOptions(this.visNetwork, { physics: false });
         this.visNetworkService.moveTo( this.visNetwork , {
                     position: {x:-300, y:-300},
                     scale: 1,
-                    animation: true                  
-        } );     
+                    animation: true
+        } );
       } catch (error) {
         console.log(error);
-      }      
-      
+      }
+
     }, 3000);
 
     const fgText = this.colors.fgText;
@@ -248,45 +257,45 @@ export class DetailPortfolioComponent implements OnInit {
     const warningLight = this.colors.warningLight;
     const success = this.colors.success;
     const successLight = this.colors.successLight;
-    var nodeData = data.nodes.map(c=>{      
+    var nodeData = data.nodes.map(c=>{
       if (c.group == "products"){
         return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
       }
       else if (c.group == "services"){
-        let service_node = { 
+        let service_node = {
           id: c.id,
-          value: 12, 
-          label: c.name, shape: 'hexagon', 
+          value: 12,
+          label: c.name, shape: 'hexagon',
           title: String(c.value),
-          font:{ color: fgText },                
+          font:{ color: fgText },
         };
         if (c.budget >= 0 )
-        {    
-          Object.assign(service_node, {            
+        {
+          Object.assign(service_node, {
             color: {
               background: success, border: primaryLight ,
               highlight:{background:successLight, border: primaryLight},
               hover:{background:successLight, border: primaryLight}
             }
-          });          
+          });
         }
         else{
-          Object.assign(service_node, {            
-            color: 
+          Object.assign(service_node, {
+            color:
             {background: danger, border: primaryLight,
               highlight:{background: dangerLight, border: primaryLight},
               hover:{background:dangerLight, border: primaryLight}}
-          });                    
+          });
         }
         if (service_node.id == `service_${this.portfolioId}`){
           Object.assign(service_node, {
             value: 16
-          });          
+          });
         }
         return service_node;
-      }      
+      }
       else if (c.group == "features"){
-        return { id: c.id, value: 10, 
+        return { id: c.id, value: 10,
                   label: `${c.name} [${c.value}]` , group: "2", shape: 'dot', title: c.name,
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
@@ -298,7 +307,7 @@ export class DetailPortfolioComponent implements OnInit {
       const ava = String(c.value);
       if (c.value < 0){
         return { font: {  align: 'top', color: fgText },
-              label: ava, 
+              label: ava,
               from: c.from, to: c.to,
               color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
       }
@@ -320,9 +329,9 @@ export class DetailPortfolioComponent implements OnInit {
       edges,
     };
 
-    this.visNetworkOptions = {      
+    this.visNetworkOptions = {
       physics:{
-        enabled: true,        
+        enabled: true,
         forceAtlas2Based: {
           gravitationalConstant: -290,
           centralGravity: 0.004,
@@ -330,7 +339,7 @@ export class DetailPortfolioComponent implements OnInit {
           springLength: 100,
           damping: 0.4,
           avoidOverlap: 1.5
-        },       
+        },
         maxVelocity: 146,
         minVelocity: 0.1,
         solver: 'forceAtlas2Based',
@@ -345,7 +354,7 @@ export class DetailPortfolioComponent implements OnInit {
         adaptiveTimestep: false
       },
       layout: {
-        improvedLayout: true,       
+        improvedLayout: true,
       },
       nodes: {
         shape: 'dot',
@@ -380,131 +389,135 @@ export class DetailPortfolioComponent implements OnInit {
     };
   }
 
-  getPortfolio(){    
-    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{      
-      this.currentSource = data;                  
+  getPortfolio(){
+    this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
+      this.currentSource = data;
       const features = this.currentSource.features;
 
-      this.currentSource.delta =  Math.round( ((this.currentSource.quality - this.currentSource.previousQuality) * 1000) ) /1000;          
-      this.currentSource.delta2 =  Math.round( ((this.currentSource.quality - this.currentSource.previousQualityII) * 1000) ) /1000;          
+      this.currentSource.delta =  Math.round( ((this.currentSource.quality - this.currentSource.previousQuality) * 1000) ) /1000;
+      this.currentSource.delta2 =  Math.round( ((this.currentSource.quality - this.currentSource.previousQualityII) * 1000) ) /1000;
 
-      this.source.load(features);      
+      this.source.load(features);
       this.renderAvailabilityReport();
 
-      this.getDaily(); 
-    });    
-  }  
-  
+      this.getDaily();
+    });
+  }
+
 
   getDaily(){
 
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
-      this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{        
-        
+      this.portfolioGateway.getDaily(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
+
         this.availabilityPieces = [
-           { gte: this.currentSource.availabilitySLO * 100, lte: 100,  color: '#096',}, 
-           { gt: 0, lt: this.currentSource.availabilitySLO * 100, color: '#cc0033', }];                
-        this.availabilitySeries = [data.availability];                       
+           { gte: this.currentSource.availabilitySLO * 100, lte: 100,  color: '#096',},
+           { gt: 0, lt: this.currentSource.availabilitySLO * 100, color: '#cc0033', }];
+        this.availabilitySeries = [data.availability];
         this.availabilityDetailSeries = data.availabilityDetail;
-        
+
         this.latencyPieces = [
-          { gte: 0, lte: this.currentSource.latencySLO,  color: '#096',}, 
-          { gt: this.currentSource.latencySLO, lt:  this.currentSource.latencySLO * 30, color: '#cc0033', }];                
-        
-        this.latencySeries = [data.latency];                    
-        this.latencyDetailSeries = data.latencyDetail;   
+          { gte: 0, lte: this.currentSource.latencySLO,  color: '#096',},
+          { gt: this.currentSource.latencySLO, lt:  this.currentSource.latencySLO * 30, color: '#cc0033', }];
+
+        this.latencySeries = [data.latency];
+        this.latencyDetailSeries = data.latencyDetail;
 
         this.experiencePieces = [
-          { gte: this.currentSource.experienceSLO * 100, lte: 100,  color: '#096',}, 
-          { gt: 0, lt: this.currentSource.experienceSLO * 100, color: '#cc0033', }];                
-       this.experienceSeries = [data.experience];        
-       this.experienceDetailSeries = data.experienceDetail;       
-        
-        this.calendarSerie = this.availabilitySeries[0].items.map(c=>{        
-           return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
-        }); 
-        this.latencyCalendarSerie  = this.latencySeries[0].items.map(c=>{        
-          return [ this.format.extractDateStringFromUtc(c.date), c.oAve];
-        }); 
-        this.experienceCalendarSerie  = this.experienceSeries[0].items.map(c=>{        
-          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
-        }); 
-      });  
+          { gte: this.currentSource.experienceSLO * 100, lte: 100,  color: '#096',},
+          { gt: 0, lt: this.currentSource.experienceSLO * 100, color: '#cc0033', }];
+       this.experienceSeries = [data.experience];
+       this.experienceDetailSeries = data.experienceDetail;
 
-    });    
+        this.calendarSerie = this.availabilitySeries[0].items.map(c=>{
+           return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+        });
+        this.latencyCalendarSerie  = this.latencySeries[0].items.map(c=>{
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve];
+        });
+        this.experienceCalendarSerie  = this.experienceSeries[0].items.map(c=>{
+          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
+        });
+      });
+
+    });
   }
 
-  onFeaturesRowSelect(event){      
+  onFeaturesRowSelect(event){
       this.currentFeature = event.data;
       const featureId = event.data.id;
       const slo = event.data.featureSlo;
-      this.featuresGateway.getFeatureWithAvailabilities(featureId, this.startDate, this.endDate).subscribe(feature=>{                
+      this.featuresGateway.getFeatureWithQuality(featureId, this.startDate, this.endDate).subscribe(feature=>{
 
-        const availabilitySLI = feature.indicators.filter(c=> c.group == 'Availability');
-        this.availabilityIndicatorSource.load(availabilitySLI);
+        var qualityItems = feature.indicators.map(item=>{
+          let c = {
+            id : item.id,
+            source : item.source,
+            availability : item.measure.availability,
+            total : item.measure.total,
+            latency: item.measure.latency,
+            experience: item.measure.experience
+          };
+          return c;
+        });
+        this.qualityIndicatorSource.load(qualityItems);
 
-        const latencySLI = feature.indicators.filter(c=> c.group == 'Latency');
-        this.latencyIndicatorSource.load(latencySLI);
-
-        const experienceSLI = feature.indicators.filter(c=> c.group == 'Experience');
-        this.experienceIndicatorSource.load(experienceSLI);
-
-        this.squadSource.load(feature.squads);                        
-      });  
-  } 
+        this.squadSource.load(feature.squads);
+      });
+  }
   onReportClick(event){
-    this.getDaily(); 
-  } 
-  
+    this.getDaily();
+  }
+
   annualCalendarSerie: Array<any> = [];
   annualLatencyCalendarSerie: Array<any> = [];
   annualExperienceCalendarSerie: Array<any> = [];
 
   onAnnualReport(event){
-    const start = new Date(this.startDate.getFullYear(), 0, 1); 
-    const end = new Date(this.startDate.getFullYear(), 11, 31); 
-    this.portfolioGateway.getDaily(this.currentSource.id, start, end).subscribe(data=>{                     
-      
-      this.annualCalendarSerie = data.availability.items.map(c=>{        
+    const start = new Date(this.startDate.getFullYear(), 0, 1);
+    const end = new Date(this.startDate.getFullYear(), 11, 31);
+    this.portfolioGateway.getDaily(this.currentSource.id, start, end).subscribe(data=>{
+
+      this.annualCalendarSerie = data.availability.items.map(c=>{
          return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
-      }); 
-      this.annualLatencyCalendarSerie  = data.latency.items.map(c=>{        
+      });
+      this.annualLatencyCalendarSerie  = data.latency.items.map(c=>{
         return [ this.format.extractDateStringFromUtc(c.date), c.oAve];
-      });       
-      this.annualExperienceCalendarSerie  = data.experience.items.map(c=>{        
+      });
+      this.annualExperienceCalendarSerie  = data.experience.items.map(c=>{
         return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
-      }); 
-    });  
+      });
+    });
 
 
 
   }
-  onEditClick(event){      
-      let queryParams: Params = { };      
-      this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+  onEditClick(event){
+      let queryParams: Params = { };
+      this.router.navigate(['/pages/portfolios/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
-  onDeleteClick(event){     
+  onDeleteClick(event){
     if (window.confirm('Are you sure you want to delete?')) {
       this.portfolioGateway.deletePortfolio(this.portfolioId).subscribe(data=>{
         this.toastr.success("Portfolio was deleted");
         let queryParams: Params = { portfolioId : null };
-        this.router.navigate(['/pages/portfolios'], {         
-          queryParams: queryParams, 
-          queryParamsHandling: 'merge' });     
-  
-      }, (error) => {      
+        this.router.navigate(['/pages/portfolios'], {
+          queryParams: queryParams,
+          queryParamsHandling: 'merge' });
+
+      }, (error) => {
         this.toastr.warning("Something went wrong, please try again.", "Warning")
-      });  
+      });
     }
     else {
 
-    }   
-     
-    
-  } 
-  onBackClick(event){        
+    }
+
+
+  }
+  onBackClick(event){
     this.location.back();
   }
 
@@ -512,39 +525,39 @@ export class DetailPortfolioComponent implements OnInit {
   onIndicatorsRowSelect(event){
     const sourceId = event.data.sourceId;
     let queryParams: Params = { sourceId: sourceId };
-    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onSquadRowSelect(event){
     const squadId = event.data.id;
     let queryParams: Params = { squadId: squadId };
-    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
-  renderAvailabilityReport(){         
-    let legends = [];    
+  renderAvailabilityReport(){
+    let legends = [];
     const debt = this.currentSource.features.filter((c: any) => c.availability <= this.currentSource.slo);
     let  totaldebt: number = 0;
     debt.forEach(c => {
-      totaldebt  += Math.abs(this.currentSource.slo - c.availability);      
+      totaldebt  += Math.abs(this.currentSource.slo - c.availability);
     });
-      
+
     if (totaldebt === 0){
       return;
     }
 
     const indicators = debt.map(c=>{
-      legends.push(c.name);            
+      legends.push(c.name);
       return {
-        name: c.name, 
+        name: c.name,
         value:  Math.abs(this.currentSource.slo - c.availability) / totaldebt
       };
 
     });
-        
+
     this.sliOptions ={
       title : {
-          text: "Availability Feature Debt: " + totaldebt,          
-          x:'center',          
+          text: "Availability Feature Debt: " + totaldebt,
+          x:'center',
       },
       tooltip : {
           trigger: 'item',
@@ -572,10 +585,10 @@ export class DetailPortfolioComponent implements OnInit {
           }
       ]
   };
-  
+
   }
 
-  sliOptions:any; 
+  sliOptions:any;
   sliEchartsIntance: any;
 
   onChartInit(ec) {
@@ -585,7 +598,7 @@ export class DetailPortfolioComponent implements OnInit {
     this.sliEchartsIntance = e;
   }
 
-  
+
   onServiceCalendar(ec) {
     this.echartCalendarInstance = ec;
   }
@@ -598,15 +611,15 @@ export class DetailPortfolioComponent implements OnInit {
   graphData = {};
 
   public networkInitialized(): void {
-        
+
   }
 
-  onFeatureDetail(event){        
+  onFeatureDetail(event){
     let queryParams: Params = { featureId: this.currentFeature.id };
-    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
 
   }
 //region
-  
+
 
 }

@@ -45,7 +45,7 @@ export class FeaturesGateway {
     return this.owlveyGateway.put(this.baseUrl + `features/${featureId}/indicators/${sourceId}`, { });
   }
   deleteIndicator(featureId: number, sourceId: number){
-    return this.owlveyGateway.delete(this.baseUrl + `features/${featureId}/indicators/${sourceId}`);    
+    return this.owlveyGateway.delete(this.baseUrl + `features/${featureId}/indicators/${sourceId}`);
   }
 
   getFeaturesWithAvailabilities(productId: number, start: Date, end: Date): Observable<any> {
@@ -56,7 +56,7 @@ export class FeaturesGateway {
   getFeature(featureId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `features/${featureId}`);
   }
-  getFeatureWithAvailabilities(featureId: number, start: Date,  end: Date): Observable<any> {
+  getFeatureWithQuality(featureId: number, start: Date,  end: Date): Observable<any> {
     return this.owlveyGateway.get(
       this.baseUrl + `features/${featureId}?start=${start.toISOString()}&end=${end.toISOString()}`,
     );

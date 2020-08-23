@@ -10,19 +10,19 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 
 
 @Component({
-  selector: 'app-exp-edit-source',
-  templateUrl: './exp-edit-source.component.html',
-  styleUrls: ['./exp-edit-source.component.scss']
+  selector: 'edit-source',
+  templateUrl: './edit-source.component.html',
+  styleUrls: ['./edit-source.component.scss']
 })
-export class ExpEditSourceComponent extends ProductBaseComponent {
+export class EditSourceComponent extends ProductBaseComponent {
 
   editForm: FormGroup;
 
   constructor(
     protected location: Location, private fb: FormBuilder, protected customerGateway: CustomersGateway,
     protected productGateway: ProductsGateway, protected theme: NbThemeService, protected router: Router,
-    protected activatedRoute: ActivatedRoute, 
-    private toastr: NbToastrService, 
+    protected activatedRoute: ActivatedRoute,
+    private toastr: NbToastrService,
     private sourceGateway: SourcesGateway ) {
     super(location, customerGateway, productGateway, theme, router, activatedRoute);
 
@@ -40,9 +40,14 @@ export class ExpEditSourceComponent extends ProductBaseComponent {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
-      this.editForm.get("goodDefinition").setValue(data.goodDefinition);
-      this.editForm.get("totalDefinition").setValue(data.totalDefinition);
+      this.editForm.get("availabilityGoodDefinition").setValue(data.availabilityDefinition.goodDefinition);
+      this.editForm.get("availabilityTotalDefinition").setValue(data.availabilityDefinition.totalDefinition);
+      this.editForm.get("latencyGoodDefinition").setValue(data.latencyDefinition.goodDefinition);
+      this.editForm.get("latencyTotalDefinition").setValue(data.latencyDefinition.totalDefinition);
+      this.editForm.get("experienceGoodDefinition").setValue(data.experienceDefinition.goodDefinition);
+      this.editForm.get("experienceTotalDefinition").setValue(data.experienceDefinition.totalDefinition);
       this.editForm.get("description").setValue(data.description);
+      this.editForm.get("percentile").setValue(data.percentile);
     });
   }
 
@@ -51,9 +56,14 @@ export class ExpEditSourceComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      goodDefinition: ['', Validators.required],
-      totalDefinition: ['', Validators.required],
+      availabilityGoodDefinition: ['', Validators.required],
+      availabilityTotalDefinition: ['', Validators.required],
+      latencyGoodDefinition: ['', Validators.required],
+      latencyTotalDefinition: ['', Validators.required],
+      experienceGoodDefinition: ['', Validators.required],
+      experienceTotalDefinition: ['', Validators.required],
       description: ['', Validators.required],
+      percentile: [0.99, Validators.required],
     });
   }
   onSubmit() {
@@ -63,7 +73,7 @@ export class ExpEditSourceComponent extends ProductBaseComponent {
     }
     this.isLoading = true;
     const model = this.editForm.value;
-    let  defer = this.sourceGateway.putExperienceSource(this.sourceId, model);
+    let  defer = this.sourceGateway.putSource(this.sourceId, model);
     defer.subscribe((data) => {
         this.toastr.success("Source Modified Success");
         this.isLoading = false;

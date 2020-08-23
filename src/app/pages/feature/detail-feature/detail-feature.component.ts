@@ -17,17 +17,17 @@ import { FormatService } from '../../../@core/utils/format.service';
   styleUrls: ['./detail-feature.component.scss']
 })
 export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy {
-  
-  isLoading: boolean = false;  
+
+  isLoading: boolean = false;
   actionConfirmWord: string;
-  currentSource : any= {};    
+  currentSource : any= {};
   productId = 0;
   featureId = 0;
   themeSubscription: any;
   series: Array<any> = [];
   calendarSerie: Array<any> = [];
   startDate: Date = new Date();
-  endDate: Date;  
+  endDate: Date;
 
   incidentSettings={
     actions:{
@@ -38,15 +38,15 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       title: {
         title: 'title',
         type: 'string',
         filter: false
       },
       start:{
-        title: 'Start',        
-        filter: false,        
+        title: 'Start',
+        filter: false,
         editable: false,
         width: '20em'
       },
@@ -77,7 +77,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   };
   incidentSource: LocalDataSource = new LocalDataSource();
-  
+
   squadsSettings = {
     actions:{
       add:false,
@@ -87,16 +87,16 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     pager: {
       perPage: 5
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
         filter: false
-      }      
+      }
     }
   };
 
-  settings = {    
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -105,47 +105,52 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       id: {
         title: 'Id',
         type: 'number',
         filter: false,
         sort:true,
         width: '3em',
-        sortDirection: 'asc'     
-      },      
+        sortDirection: 'asc'
+      },
       source: {
         title: 'Name',
         filter: false,
-        type: 'custom',
-        renderComponent: TooltipComponent
-      },   
-      group: {
-        title: 'Group',
-        type: 'string',
-        filter: false,        
-        width: '3em',
+        type: 'string'
       },
-      kind: {
-        title: 'Type',
-        type: 'string',
-        filter: false,        
-        width: '3em',
-      },
-       
-      measure: {
-        title: 'Measure',
+      availability: {
+        title: 'Availability',
         type: 'number',
         filter: false,
         width: '3em',
-        editable: false,        
-      },                  
+        editable: false,
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,
+      },
+      latency: {
+        title: 'Latency',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,
+      },
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: false,
+        width: '3em',
+        editable: false,
+      },
     },
   };
 
-  availabilitySource: LocalDataSource = new LocalDataSource();
-  latencySource: LocalDataSource = new LocalDataSource();
-  experienceSource: LocalDataSource = new LocalDataSource();
+  qualitySource: LocalDataSource = new LocalDataSource();
 
   squadSource: LocalDataSource = new LocalDataSource();
 
@@ -158,7 +163,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     pager: {
       perPage: 5
     },
-    columns: {      
+    columns: {
       id: {
         title: 'Id',
         type: 'number',
@@ -169,81 +174,85 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         title: 'name',
         type: 'string',
         filter: false
-      },       
+      },
       availabilitySLO: {
         title: 'Availability SLO',
         type: 'number',
         filter: false,
         width: '2em',
         editable: false
-      }, 
+      },
       latencySLO: {
         title: 'Latency SLO',
         type: 'number',
         filter: false,
         width: '2em',
         editable: false
-      },  
+      },
       experienceSLO: {
         title: 'Experience SLO',
         type: 'number',
         filter: false,
         width: '2em',
         editable: false
-      }  
+      }
     },
   }
-  portfolioSource: LocalDataSource = new LocalDataSource(); 
-  
+  portfolioSource: LocalDataSource = new LocalDataSource();
+
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
     private toastr: NbToastrService,
     private format: FormatService,
-    private sourcesGateway: SourcesGateway,    
-    private featuresGateway: FeaturesGateway,   
-    private theme: NbThemeService,    
-    private router: Router, 
-    private activatedRoute: ActivatedRoute) {       
+    private sourcesGateway: SourcesGateway,
+    private featuresGateway: FeaturesGateway,
+    private theme: NbThemeService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
       this.endDate = new Date();
       this.startDate = new Date();
       this.startDate.setDate(this.startDate.getDate() - 365);
-    }        
+    }
 
-  ngOnInit() {         
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
-      this.productId = parseInt(paramMap.get('productId'));            
-      this.featureId = parseInt(paramMap.get('featureId'));       
-      this.startDate = new Date(paramMap.get("start"));           
-      this.endDate = new Date(paramMap.get("end"));                 
-      this.getSource();      
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.productId = parseInt(paramMap.get('productId'));
+      this.featureId = parseInt(paramMap.get('featureId'));
+      this.startDate = new Date(paramMap.get("start"));
+      this.endDate = new Date(paramMap.get("end"));
+      this.getSource();
       this.getDaily();
-    });          
-  }  
+    });
+  }
 
   getSource(){
-    this.featuresGateway.getFeatureWithAvailabilities(this.featureId, this.startDate, this.endDate).subscribe(feature=>{
-      this.currentSource = feature;      
+    this.featuresGateway.getFeatureWithQuality(this.featureId, this.startDate, this.endDate).subscribe(feature=>{
+      this.currentSource = feature;
 
-      const sources = feature.indicators.map(item=>{
-        item.name = item.source;
-        item.tooltip = item.description;
-        return item;
+      var qualityItems = feature.indicators.map(item=>{
+        let c = {
+          id : item.id,
+          source : item.source,
+          availability : item.measure.availability,
+          total : item.measure.total,
+          latency: item.measure.latency,
+          experience: item.measure.experience
+        };
+        return c;
       });
+      this.qualitySource.load(qualityItems);
 
-      this.availabilitySource.load(sources.filter(c=> c.group == "Availability"));
-      this.latencySource.load(sources.filter(c=> c.group == "Latency"));
-      this.experienceSource.load(sources.filter(c=> c.group == "Experience"));
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
       this.portfolioSource.load(feature.services);
       this.renderSliBarOptions();
-    });        
+    });
   }
 
   renderSliBarOptions(){
-    
+
     const categories = this.currentSource.indicators.map(c=>{
       return c.source;
     });
@@ -257,8 +266,8 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     this.sliBarOptions = {
       tooltip : {
           trigger: 'axis',
-          axisPointer : {            
-              type : 'shadow'       
+          axisPointer : {
+              type : 'shadow'
           }
       },
       legend: {
@@ -314,67 +323,67 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
 
       this.featuresGateway.getDaily(this.featureId, this.startDate, this.endDate).subscribe(data=>{
         this.series = data.series;
-        this.calendarSerie = this.series[0].items.map(c=>{        
+        this.calendarSerie = this.series[0].items.map(c=>{
           return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
-        });      
-      });  
+        });
+      });
 
     });
 
-    
 
 
-   
+
+
   }
 
-  onReportClick(event){        
+  onReportClick(event){
     this.getDaily();
   }
 
   onIndicatorsRowSelect(event){
     const sourceId = event.data.sourceId;
     let queryParams: Params = { sourceId: sourceId };
-    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onSquadRowSelect(event){
     const squadId = event.data.id;
     let queryParams: Params = { squadId: squadId };
-    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/squads/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
-  onBackClick(event){    
+  onBackClick(event){
     //let queryParams: Params = { featureId: null };
-    //this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });                 
+    //this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     this.location.back();
   }
   onEditClick(event){
     let queryParams: Params = { };
-    this.router.navigate(['/pages/features/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/features/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onIncidentRowSelect(event){
     const incidentId = event.data.id;
     let queryParams: Params = { incidentId: incidentId };
-    this.router.navigate(['/pages/incidents/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/incidents/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
   onPortfolioRowSelect(event){
     const portfolioId = event.data.id;
     let queryParams: Params = { portfolioId: portfolioId };
-    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
   ngOnDestroy(): void {
-    
-  }     
-  onDeleteClick(event){    
+
+  }
+  onDeleteClick(event){
     this.featuresGateway.deleteFeature(this.featureId).subscribe(res=>{
       this.toastr.success("Feature was deleted");
       let queryParams: Params = { featureId : null };
-      this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+      this.router.navigate(['/pages/features'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
     }, (error) => {
       this.isLoading = false;
       this.toastr.warning("Something went wrong, please try again.", "Warning")
-    });          
+    });
   }
 
 
@@ -383,7 +392,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
 
   onCalendar(ec) {
     this.echartCalendarInstance = ec;
-  }   
+  }
 
   echartSliBarInstance: any;
   sliBarOptions: any;
@@ -391,7 +400,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
     this.echartSliBarInstance = ec;
   }
 
-  ngAfterViewInit() {    
-    
+  ngAfterViewInit() {
+
   }
 }

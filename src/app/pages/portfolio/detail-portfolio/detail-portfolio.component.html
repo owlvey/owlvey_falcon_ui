@@ -2,51 +2,51 @@
     <div class="col-md-12" >
         <nb-card >
           <nb-card-header>
-            
+
               <div class="d-flex align-content-center">
-                  <h4> {{ currentSource?.name }} </h4>                                
-                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
+                  <h4> {{ currentSource?.name }} </h4>
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>
                   <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
-                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
-                  
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>
+
               </div>
           </nb-card-header>
-          <nb-card-body> 
+          <nb-card-body>
               <!--Availability-->
               <div class="row">
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label for="inputSLO" class="label col-sm-3 form-control-label">SLA</label>
-                    <input readonly="readonly" type="number" [value]="currentSource.slaValue.availability" 
+                    <input readonly="readonly" type="number" [value]="currentSource?.slaValue?.availability"
                         nbInput fullWidth id="inputSLO" placeholder="Availability"
-                        class="input-full-width size-medium shape-rectangle">                      
-                  </div>  
-                </div>       
+                        class="input-full-width size-medium shape-rectangle">
+                  </div>
+                </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.availabilitySLO" 
+                      <input readonly="readonly" type="number" [value]="currentSource?.availabilitySLO"
                           nbInput fullWidth id="inputSLO" placeholder="Availability"
-                          class="input-full-width size-medium shape-rectangle">                      
-                    </div>  
-                  </div>       
+                          class="input-full-width size-medium shape-rectangle">
+                    </div>
+                  </div>
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputAvailability" class="label col-sm-3 form-control-label">Availability</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.availability" 
+                        <input readonly="readonly" type="number" [value]="currentSource.availability"
                             nbInput fullWidth id="inputAvailability" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">                                                     
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
                   </div>
-                                               
+
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputBudget" class="label form-control-label">Availability Error Budget</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.availabilityErrorBudget" 
+                        <input readonly="readonly" type="number" [value]="currentSource.availabilityErrorBudget"
                             nbInput fullWidth id="inputBudget" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">                      
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
-                  </div>                  
+                  </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -58,11 +58,11 @@
                           Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.availability - currentSource.previousAvailability)  | number:'1.1-5'}}</i>
                         </div>
                       </label>
-                      <input readonly="readonly" type="number" [value]="currentSource.previousAvailability" 
+                      <input readonly="readonly" type="number" [value]="currentSource.previousAvailability"
                           nbInput fullWidth id="inputBudget" placeholder="Availability"
-                          class="input-full-width size-medium shape-rectangle">                      
+                          class="input-full-width size-medium shape-rectangle">
                     </div>
-                </div>                                  
+                </div>
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label class="label form-control-label">
@@ -73,11 +73,11 @@
                         Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.availability - currentSource.beforeAvailability)  | number:'1.1-5'}}</i>
                       </div>
                     </label>
-                    <input readonly="readonly" type="number" [value]="currentSource.beforeAvailability" 
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeAvailability"
                         nbInput fullWidth id="inputBudget" placeholder="Availability"
-                        class="input-full-width size-medium shape-rectangle">                      
+                        class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>                                  
+                </div>
 
 
               </div>
@@ -87,36 +87,36 @@
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label for="inputSLO" class="label col-sm-3 form-control-label">SLA</label>
-                    <input readonly="readonly" type="number" [value]="currentSource.slaValue.latency" 
+                    <input readonly="readonly" type="number" [value]="currentSource.slaValue?.latency"
                         nbInput fullWidth id="inputSLO" placeholder="Availability"
-                        class="input-full-width size-medium shape-rectangle">                      
-                  </div>  
-                </div>       
+                        class="input-full-width size-medium shape-rectangle">
+                  </div>
+                </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.latencySLO" 
+                      <input readonly="readonly" type="number" [value]="currentSource?.latencySLO"
                           nbInput fullWidth id="inputSLO" placeholder="latency"
-                          class="input-full-width size-medium shape-rectangle">                      
-                    </div>  
-                  </div>       
+                          class="input-full-width size-medium shape-rectangle">
+                    </div>
+                  </div>
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputAvailability" class="label col-sm-3 form-control-label">Latency</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.latency" 
+                        <input readonly="readonly" type="number" [value]="currentSource?.latency"
                             nbInput fullWidth id="inputAvailability" placeholder="latency"
-                            class="input-full-width size-medium shape-rectangle">                                                     
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
                   </div>
-                                               
+
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputBudget" class="label form-control-label">Latency Error Budget</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.latencyErrorBudget" 
+                        <input readonly="readonly" type="number" [value]="currentSource.latencyErrorBudget"
                             nbInput fullWidth id="inputBudget" placeholder="Latency"
-                            class="input-full-width size-medium shape-rectangle">                      
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
-                  </div>                  
+                  </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -128,11 +128,11 @@
                           Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.latency - currentSource.previousLatency)  | number:'1.1-5'}}</i>
                         </div>
                       </label>
-                      <input readonly="readonly" type="number" [value]="currentSource.previousLatency" 
+                      <input readonly="readonly" type="number" [value]="currentSource.previousLatency"
                           nbInput fullWidth id="inputBudget" placeholder="latency"
-                          class="input-full-width size-medium shape-rectangle">                      
+                          class="input-full-width size-medium shape-rectangle">
                     </div>
-                </div>                                  
+                </div>
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label class="label form-control-label">
@@ -143,11 +143,11 @@
                         Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.latency - currentSource.beforeLatency)  | number:'1.1-5'}}</i>
                       </div>
                     </label>
-                    <input readonly="readonly" type="number" [value]="currentSource.beforeLatency" 
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeLatency"
                         nbInput fullWidth id="inputBudget" placeholder="latency"
-                        class="input-full-width size-medium shape-rectangle">                      
+                        class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>                                  
+                </div>
 
 
               </div>
@@ -155,33 +155,33 @@
               <!--Experience-->
               <div class="row">
                 <div class="col-sm-2">
-                  
-                </div>       
+
+                </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="inputSLO" class="label col-sm-3 form-control-label">SLO</label>
-                      <input readonly="readonly" type="number" [value]="currentSource.experienceSLO" 
+                      <input readonly="readonly" type="number" [value]="currentSource.experienceSLO"
                           nbInput fullWidth id="inputSLO" placeholder="experience"
-                          class="input-full-width size-medium shape-rectangle">                      
-                    </div>  
-                  </div>       
+                          class="input-full-width size-medium shape-rectangle">
+                    </div>
+                  </div>
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputAvailability" class="label col-sm-3 form-control-label">Experience</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.experience" 
+                        <input readonly="readonly" type="number" [value]="currentSource.experience"
                             nbInput fullWidth id="inputAvailability" placeholder="experience"
-                            class="input-full-width size-medium shape-rectangle">                                                     
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
                   </div>
-                                               
+
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label for="inputBudget" class="label form-control-label">Experience Error Budget</label>
-                        <input readonly="readonly" type="number" [value]="currentSource.experienceErrorBudget" 
+                        <input readonly="readonly" type="number" [value]="currentSource.experienceErrorBudget"
                             nbInput fullWidth id="inputBudget" placeholder="Availability"
-                            class="input-full-width size-medium shape-rectangle">                      
+                            class="input-full-width size-medium shape-rectangle">
                       </div>
-                  </div>                  
+                  </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -193,11 +193,11 @@
                           Previous | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.experience - currentSource.previousExperience)  | number:'1.1-5'}}</i>
                         </div>
                       </label>
-                      <input readonly="readonly" type="number" [value]="currentSource.previousExperience" 
+                      <input readonly="readonly" type="number" [value]="currentSource.previousExperience"
                           nbInput fullWidth id="inputBudget" placeholder="experience"
-                          class="input-full-width size-medium shape-rectangle">                      
+                          class="input-full-width size-medium shape-rectangle">
                     </div>
-                </div>                                  
+                </div>
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label class="label form-control-label">
@@ -208,37 +208,37 @@
                         Before | <i class='fas fa-arrow-down text-danger'> {{ (currentSource.experience - currentSource.beforeExperience)  | number:'1.1-5'}}</i>
                       </div>
                     </label>
-                    <input readonly="readonly" type="number" [value]="currentSource.beforeExperience" 
+                    <input readonly="readonly" type="number" [value]="currentSource.beforeExperience"
                         nbInput fullWidth id="inputBudget" placeholder="Experience"
-                        class="input-full-width size-medium shape-rectangle">                      
+                        class="input-full-width size-medium shape-rectangle">
                   </div>
-                </div>                                  
+                </div>
 
 
               </div>
 
-              <div class="row">                
-                <div class="col-sm-2">                  
+              <div class="row">
+                <div class="col-sm-2">
                   <div class="form-group">
                     <label for="groupText" class="label form-control-label"> Group </label>
-                    <input readonly="readonly" type="text" [value]="currentSource?.group" 
+                    <input readonly="readonly" type="text" [value]="currentSource?.group"
                         nbInput fullWidth id="groupText" placeholder="group"
-                        class="input-full-width size-medium shape-rectangle">                     
+                        class="input-full-width size-medium shape-rectangle">
                   </div>
                 </div>
-                
-              </div>         
+
+              </div>
               <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
                       <label for="inputAvailability" class="label col-sm-3 form-control-label">Leaders</label>
-                      <input readonly="readonly" type="text" [value]="currentSource?.leaders" 
+                      <input readonly="readonly" type="text" [value]="currentSource?.leaders"
                           nbInput fullWidth id="inputAvailability" placeholder="Leaders"
-                          class="input-full-width size-medium shape-rectangle">                         
+                          class="input-full-width size-medium shape-rectangle">
                     </div>
                 </div>
               </div>
-  
+
           </nb-card-body>
         </nb-card>
       </div>
@@ -246,12 +246,12 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card>
-        <nb-card-header>          
-          Features             
+        <nb-card-header>
+          Features
         </nb-card-header>
-        <nb-card-body>                        
-            <ng2-smart-table [settings]="settings" 
-                [source]="source" 
+        <nb-card-body>
+            <ng2-smart-table [settings]="settings"
+                [source]="source"
                 (userRowSelect)="onFeaturesRowSelect($event)">
             </ng2-smart-table>
         </nb-card-body>
@@ -264,159 +264,141 @@
     <div class="col-12">
         <nb-card size="medium" style="height: 50rem">
           <nb-tabset fullWidth>
-            <nb-tab tabTitle="Daily Report" >      
-              
-              <nb-tabset fullWidth>                
-               <nb-tab tabTitle="Availability" >                          
+            <nb-tab tabTitle="Daily Report" >
+
+              <nb-tabset fullWidth>
+               <nb-tab tabTitle="Availability" >
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="availabilitySeries" target="average" all="Availability" [pieces]="availabilityPieces"></ngx-daily-detail-chart>                            
+                        <ngx-daily-detail-chart [dataItems]="availabilitySeries" target="average" all="Availability" [pieces]="availabilityPieces"></ngx-daily-detail-chart>
                     </div>
                   </div>
-               
+
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-calendar-chart [dataItems]="calendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
-                        </ngx-daily-calendar-chart>                                                           
+                        </ngx-daily-calendar-chart>
                     </div>
-                  </div>                    
-                
+                  </div>
 
-                  
-                </nb-tab>   
+
+
+                </nb-tab>
                 <nb-tab tabTitle="Latency" >
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-latency-daily-detail-chart [dataItems]="latencySeries" target="average" all="Latency" [pieces]="latencyPieces"></ngx-latency-daily-detail-chart>                            
+                        <ngx-latency-daily-detail-chart [dataItems]="latencySeries" target="average" all="Latency" [pieces]="latencyPieces"></ngx-latency-daily-detail-chart>
                     </div>
-                  </div>                  
+                  </div>
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-calendar-chart [dataItems]="latencyCalendarSerie" style="height: 15rem;"  [pieces]="latencyPieces">
-                        </ngx-daily-calendar-chart>                                                           
+                        </ngx-daily-calendar-chart>
                     </div>
-                  </div>                    
+                  </div>
                 </nb-tab>
 
                 <nb-tab tabTitle="Experience" >
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-detail-chart [dataItems]="experienceSeries" target="average" all="Experience" [pieces]="experiencePieces"></ngx-daily-detail-chart>                            
+                        <ngx-daily-detail-chart [dataItems]="experienceSeries" target="average" all="Experience" [pieces]="experiencePieces"></ngx-daily-detail-chart>
                     </div>
-                  </div>                  
+                  </div>
 
-                             
 
-                  
+
+
                   <div class="row">
                     <div class="col-sm-12">
                         <ngx-daily-calendar-chart [dataItems]="experienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
-                        </ngx-daily-calendar-chart>                                                           
+                        </ngx-daily-calendar-chart>
                     </div>
-                  </div>                    
-                </nb-tab>                  
-              </nb-tabset>       
-                
-                
-            </nb-tab>   
+                  </div>
+                </nb-tab>
+              </nb-tabset>
+
+
+            </nb-tab>
             <nb-tab tabTitle="Daily Debt Report" >
-              <nb-tabset fullWidth>                
+              <nb-tabset fullWidth>
                 <nb-tab tabTitle="Availability" >
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-debt-chart [dataItems]="availabilityDetailSeries"></ngx-daily-debt-chart>    
+                        <ngx-daily-debt-chart [dataItems]="availabilityDetailSeries"></ngx-daily-debt-chart>
                     </div>
-                  </div>  
-                </nb-tab>                        
-                
+                  </div>
+                </nb-tab>
+
                 <nb-tab tabTitle="Latency" >
                   <div class="row">
                     <div class="col-sm-12">
-                      <ngx-latency-daily-debt-chart [dataItems]="latencyDetailSeries"></ngx-latency-daily-debt-chart>    
+                      <ngx-latency-daily-debt-chart [dataItems]="latencyDetailSeries"></ngx-latency-daily-debt-chart>
                     </div>
-                  </div>  
-                </nb-tab>                        
+                  </div>
+                </nb-tab>
 
                 <nb-tab tabTitle="Experience" >
 
                   <div class="row">
                     <div class="col-sm-12">
-                        <ngx-daily-debt-chart [dataItems]="experienceDetailSeries"></ngx-daily-debt-chart>    
+                        <ngx-daily-debt-chart [dataItems]="experienceDetailSeries"></ngx-daily-debt-chart>
                     </div>
-                  </div>  
-                </nb-tab>                        
-              </nb-tabset>              
-            </nb-tab> 
+                  </div>
+                </nb-tab>
+              </nb-tabset>
+            </nb-tab>
             <nb-tab tabTitle="Annual Report" >
 
-              <div class="d-flex" style="margin-bottom: 1rem;">                
+              <div class="d-flex" style="margin-bottom: 1rem;">
                 <button
-                  type="button"                   
+                  type="button"
                   nbButton status="primary" (click)="onAnnualReport($event)"
                   class="btn btn-sm btn-outline-primary ml-auto"> Load Annual Report
-                  </button>                                            
+                  </button>
               </div>
-              <nb-tabset fullWidth>                
+              <nb-tabset fullWidth>
                 <nb-tab tabTitle="Availability" >
                   <ngx-daily-calendar-chart [dataItems]="annualCalendarSerie" style="height: 15rem;"  [pieces]="availabilityPieces">
-                  </ngx-daily-calendar-chart>                 
+                  </ngx-daily-calendar-chart>
                 </nb-tab>
                 <nb-tab tabTitle="Latency" >
                   <ngx-latency-daily-calendar-chart [dataItems]="annualLatencyCalendarSerie" style="height: 15rem;"  [pieces]="latencyPieces">
-                  </ngx-latency-daily-calendar-chart>                 
+                  </ngx-latency-daily-calendar-chart>
                 </nb-tab>
                 <nb-tab tabTitle="Experience" >
                   <ngx-daily-calendar-chart [dataItems]="annualExperienceCalendarSerie" style="height: 15rem;"  [pieces]="experiencePieces">
-                  </ngx-daily-calendar-chart>                 
+                  </ngx-daily-calendar-chart>
                 </nb-tab>
               </nb-tabset>
-              
+
 
             </nb-tab>
-            <nb-tab tabTitle="Feature Report" >                            
+            <nb-tab tabTitle="Feature Report" >
               <div class="d-flex" style="margin-bottom: 1rem;">
-                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>                                
+                <b> Feature : {{ currentFeature?.name ||  'Select feature'  }} </b>
                   <button
-                  type="button" 
+                  type="button"
                   [disabled]="!currentFeature"
                   nbButton status="primary" (click)="onFeatureDetail($event)"
                   class="btn btn-sm btn-outline-primary ml-auto"> Feature Detail
-                  </button>                                            
+                  </button>
               </div>
-              <nb-tabset fullWidth>                
-               <nb-tab tabTitle="Availability" >
-                <div class="row">
-                  <div class="col-md-12">
-                      <ng2-smart-table [settings]="indicatorSettings" [source]="availabilityIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                      </ng2-smart-table>   
-                  </div>
-                </div>  
-               </nb-tab>
-               <nb-tab tabTitle="Latency" >
-                <div class="row">
-                  <div class="col-md-12">
-                      <ng2-smart-table [settings]="indicatorSettings" [source]="latencyIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                      </ng2-smart-table>   
-                  </div>
-                </div>  
-               </nb-tab>
-               <nb-tab tabTitle="Experience" >
-                <div class="row">
-                  <div class="col-md-12">
-                      <ng2-smart-table [settings]="indicatorSettings" [source]="experienceIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
-                      </ng2-smart-table>   
-                  </div>
-                </div>                  
-              </nb-tab>   
-              </nb-tabset>                                         
-            </nb-tab>            
-            <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >              
-                <div echarts [options]="sliOptions" style="height: 30rem;" 
+
+              <div class="row">
+                <div class="col-md-12">
+                    <ng2-smart-table [settings]="indicatorSettings" [source]="qualityIndicatorSource" (userRowSelect)="onIndicatorsRowSelect($event)">
+                    </ng2-smart-table>
+                </div>
+              </div>
+
+            </nb-tab>
+            <!-- <nb-tab tabTitle="Feature Availability Debt" style="display: none;" >
+                <div echarts [options]="sliOptions" style="height: 30rem;"
                   class="echart" (chartInit)="onSliChatInit($event)"></div>
             </nb-tab> -->
-                    
-            
-            <nb-tab tabTitle="Dependencies" >                            
+
+
+            <nb-tab tabTitle="Dependencies" >
               <div class="row">
                 <div class="col-md-12">
                     <div class="network-canvas"
@@ -424,17 +406,17 @@
                     [visNetworkData]="visNetworkData"
                     [visNetworkOptions]="visNetworkOptions"
                     (initialized)="networkInitialized()">
-                  </div>                    
+                  </div>
                 </div>
-              </div>                  
+              </div>
           </nb-tab>
             <nb-tab tabTitle="Squads">
                 <p>
-                    <b> Feature : {{ currentFeature?.name }}</b>                
-                </p>                
+                    <b> Feature : {{ currentFeature?.name }}</b>
+                </p>
                 <ng2-smart-table [settings]="squadsSettings" [source]="squadSource" (userRowSelect)="onSquadRowSelect($event)">
                 </ng2-smart-table>
-                
+
             </nb-tab>
           </nb-tabset>
 
