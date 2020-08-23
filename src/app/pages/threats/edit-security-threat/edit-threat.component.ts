@@ -6,6 +6,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { RisksGateway } from '../../../@core/data/risks.gateway';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,88 +18,54 @@ import { RisksGateway } from '../../../@core/data/risks.gateway';
 export class EditSecurityThreatComponent implements OnInit {
 
   isLoading: boolean = false;
-  sources: any[];
   actionConfirmWord: string;
-  customerId: any;
-  squads: any[];
-  themeSubscription: any;
-
-  settings = {
-    mode: 'external',
-    columns: {      
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false,
-      },
-      features:{
-        title: 'Features',
-        type: 'number',
-        filter: false,
-      },
-      points: {
-        title: 'Points',
-        type: 'number',
-        filter: false,
-        width: '3em'
-      },
-      members:{
-        title: 'Members',
-        type: 'number',
-        filter: false,
-        width: '3em'
-      }
-
-    },
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-    },
-  };
-
-  source: LocalDataSource = new LocalDataSource();
+  createForm: FormGroup;
+  threatId: number;
+  currentSource: object;
   constructor(
     protected location: Location,
+    protected riskGateway: RisksGateway,
+    protected toastr: NbToastrService,
     protected theme: NbThemeService,
-    protected router: Router, 
-    private toastr: NbToastrService,
-    private riskGateway: RisksGateway,
-    protected activatedRoute: ActivatedRoute) {       
-    
-  }      
-  
-  ngOnInit(): void {
-    this.getSecurityThreats();
-  }
-  getReliabilityThreats(){
-
-  }
-  onCreateSecurity(event){
-    
-  }
-  onCreateReliability(event){
-
-  }
-  getSecurityThreats() {
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      const echartsColors: any = config.variables.echarts;
-         
-      this.riskGateway.getSecurityThreats().subscribe(data => {
-        this.source.load(data);
+    protected router: Router,
+    protected fb: FormBuilder,
+    protected activatedRoute: ActivatedRoute) {
+      this.isLoading = false;
+    }
+    ngOnInit(): void {
+      this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+        this.threatId = parseInt(paramMap.get('threatId'));
+        this.loadSource();
+      });
+      this.createForm = this.fb.group({
+        name: ['', Validators.required],
+        description: ['', Validators.required]
       });
 
-    });
-  }  
-  onSecurityThreatRowSelect(item) {    
-    const squadId = item.id;
-    const queryParams: Params = { squadId: squadId};
-    const extras: any = {
-      relativeTo: this.activatedRoute,
-      queryParams: queryParams,
-      queryParamsHandling: 'merge'
     }
-    this.router.navigate(['/pages/threats/security/detail'], extras);
-  }
+    loadSource(){
+      this.riskGateway.getSecurityThreat(this.threatId).subscribe(data=>{
+        this.createForm.get("name").setValue(data.name);
+        this.createForm.get("description").setValue(data.description);
+      });
+    }
+    goBack(){
+      this.location.back();
+    }
+    onSubmit() {
+      if (!this.createForm.valid) {
+        this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
+        return;
+      }
+      this.isLoading = true;
+      let  defer = this.riskGateway.putSecurityThreat(this.threatId, this.createForm.value);
+      defer.subscribe((data) => {
+          this.toastr.success("Product Created Success");
+          this.isLoading = false;
+          this.location.back();
+        }, (error) => {
+          this.isLoading = false;
+          this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });
+    }
 }

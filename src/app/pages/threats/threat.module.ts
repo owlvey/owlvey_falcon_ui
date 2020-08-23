@@ -14,7 +14,7 @@ import { ChartModule } from 'angular2-chartjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule  } from "./../../@controls/controls.module";
 
-import {      
+import {
   NbActionsModule,
   NbButtonModule,
   NbCardModule,
@@ -24,13 +24,24 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  NbTreeGridModule
+  NbTreeGridModule,
+  NbTabsetModule,
+  NbAlertModule,
 } from '@nebular/theme';
 
 @NgModule({
   declarations: [ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent, EditSecurityThreatComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, ThreatRoutingModule, Ng2SmartTableModule, 
-    NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule, NbActionsModule]
+  imports: [FormsModule,
+    ReactiveFormsModule, CommonModule, ThreatRoutingModule, Ng2SmartTableModule,
+    NbCardModule,
+    NgxEchartsModule,
+    ChartModule,
+    NbDatepickerModule,
+    NgxChartsModule,
+    NbRadioModule,
+    NbButtonModule,
+    NbTabsetModule,
+    NbAlertModule,
+    NbCardModule, ControlsModule]
 })
 export class ThreatModule { }

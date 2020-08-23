@@ -6,7 +6,7 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
 import { FormatService } from '../../../@core/utils/format.service';
@@ -195,7 +195,7 @@ export class DetailPortfolioComponent implements OnInit {
     private sourcesGateway: SourcesGateway,
     private toastr: NbToastrService,
     private featuresGateway: FeaturesGateway,
-    private portfolioGateway: PortfoliosGateway,
+    private portfolioGateway: JourneysGateway,
     private theme: NbThemeService,
     private format: FormatService,
     private router: Router,
@@ -261,7 +261,7 @@ export class DetailPortfolioComponent implements OnInit {
       if (c.group == "products"){
         return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
       }
-      else if (c.group == "services"){
+      else if (c.group == "journeys"){
         let service_node = {
           id: c.id,
           value: 12,

@@ -39,38 +39,38 @@
           <div class="col-sm-6">
                 <div class="form-group">
                   <label for="inputName" class="label col-sm-3 form-control-label">Name</label>
-                  <input readonly="readonly" type="text" [value]="currentUser?.name" 
+                  <input readonly="readonly" type="text" [value]="currentUser?.name"
                       nbInput fullWidth id="inputName" placeholder="name"
-                      class="input-full-width size-medium shape-rectangle">                         
+                      class="input-full-width size-medium shape-rectangle">
                 </div>
-          </div>          
+          </div>
           <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputName" class="label col-sm-3 form-control-label">Slack Member</label>
-                <input readonly="readonly" type="text" [value]="currentUser?.slackMember" 
+                <input readonly="readonly" type="text" [value]="currentUser?.slackMember"
                     nbInput fullWidth id="inputName" placeholder="slack member"
-                    class="input-full-width size-medium shape-rectangle">                         
+                    class="input-full-width size-medium shape-rectangle">
               </div>
-          </div>                                  
-        </div>   
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-6">
                 <div class="form-group">
                   <label for="inputAvatar" class="label col-sm-3 form-control-label">Avatar</label>
-                  <input readonly="readonly" type="text" [value]="currentUser?.avatar" 
+                  <input readonly="readonly" type="text" [value]="currentUser?.avatar"
                       nbInput fullWidth id="inputAvatar" placeholder="avatar"
-                      class="input-full-width size-medium shape-rectangle">                         
+                      class="input-full-width size-medium shape-rectangle">
                 </div>
-          </div>                
+          </div>
           <div class="col-sm-6">
               <div class="form-group">
                 <label for="inputAvatar" class="label col-sm-3 form-control-label">Email</label>
-                <input readonly="readonly" type="text" [value]="currentUser?.email" 
+                <input readonly="readonly" type="text" [value]="currentUser?.email"
                     nbInput fullWidth id="inputAvatar" placeholder="email"
-                    class="input-full-width size-medium shape-rectangle">                         
+                    class="input-full-width size-medium shape-rectangle">
               </div>
-        </div>                                  
-        </div>   
+        </div>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
@@ -91,7 +91,7 @@
     </div>
   </div>
 
-  
+
 <div class="row">
   <div class="col-md-12">
       <nb-card>
@@ -99,7 +99,7 @@
           Service Leadership
         </nb-card-header>
         <nb-card-body>
-            <ng2-smart-table [settings]="serviceSettings" [source]="serviceSource" (userRowSelect)="onServiceRowSelect($event)">
+            <ng2-smart-table [settings]="journeySettings" [source]="journeySource" (userRowSelect)="onServiceRowSelect($event)">
             </ng2-smart-table>
         </nb-card-body>
       </nb-card>

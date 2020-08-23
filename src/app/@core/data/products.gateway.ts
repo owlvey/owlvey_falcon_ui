@@ -22,7 +22,7 @@ export class ProductsGateway {
   }
   getProduct(productId: number): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}`);
-  }  
+  }
 
   getGraphAvailabilityView(productId: number, start: Date, end: Date): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `products/${productId}/reports/graph/availability?start=${start.toISOString()}&end=${end.toISOString()}`);
@@ -52,10 +52,10 @@ export class ProductsGateway {
   }
 
   getProductServiceGroupDashboard(productId: number, start: Date, end: Date): Observable<any>{
-    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/dashboard/services/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
-  }  
+    return this.owlveyGateway.get(this.baseUrl + `products/${productId}/dashboard/journeys/groups?start=${start.toISOString()}&end=${end.toISOString()}`);
+  }
 
-  
+
   //#region Syncs
 
   getSyncs(productId: number) : Observable<any> {
@@ -73,7 +73,7 @@ export class ProductsGateway {
   }
   deleteSync(productId: number, name: string): Observable<any> {
     return this.http.delete(this.baseUrl +  `products/${productId}/sync/${name}`);
-  }  
+  }
   exportToExcel(productId: number, start: Date, end: Date): Observable<any>{
     return this.http.get(this.baseUrl + `products/${productId}/reports/excel?start=${start.toISOString()}&end=${end.toISOString()}`,
        { responseType: 'blob'});
@@ -89,8 +89,8 @@ export class ProductsGateway {
   }
 
   importsItems(productId: number, model: any): Observable<any>{
-    return this.http.post(this.baseUrl + `products/${productId}/imports/items`, model);        
-  } 
+    return this.http.post(this.baseUrl + `products/${productId}/imports/items`, model);
+  }
 
   //#endregion
 }

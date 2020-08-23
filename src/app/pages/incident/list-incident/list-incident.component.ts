@@ -5,7 +5,7 @@ import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { NbThemeService } from '@nebular/theme';
 import { IncidentsGateway } from '../../../@core/data/incident.gateway';
@@ -17,15 +17,15 @@ import { IncidentsGateway } from '../../../@core/data/incident.gateway';
 })
 export class ListIncidentComponent extends ProductBaseComponent {
 
-  isLoading: boolean = false;  
+  isLoading: boolean = false;
   actionConfirmWord: string;
-  currentProduct: any;  
+  currentProduct: any;
   productId = 0;
   customerId = 0;
   startDate: Date = new Date();
-  endDate: Date;  
+  endDate: Date;
 
-  settings = {    
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -36,61 +36,61 @@ export class ListIncidentComponent extends ProductBaseComponent {
     },
     columns: {
       id: {
-        title: 'Id',        
-        filter: true,        
+        title: 'Id',
+        filter: true,
         editable: false,
         width: '2em',
-        sort: true,   
-        sortDirection: 'asc'     
-      },      
+        sort: true,
+        sortDirection: 'asc'
+      },
       title: {
-        title: 'Title',        
-        filter: true,                
-        editable: false,        
-      },      
+        title: 'Title',
+        filter: true,
+        editable: false,
+      },
       start: {
-        title: 'Start',              
-        filter: true,        
+        title: 'Start',
+        filter: true,
         editable: false,
         width: '20em'
-      },      
+      },
       ttms:{
-        title: 'TTM',        
+        title: 'TTM',
         filter: true,
         width: '20em',
         editable: false
-      },           
+      },
       featuresCount:{
-        title: 'Features',        
+        title: 'Features',
         filter: true,
         width: '2em',
         editable: false
-      },           
+      },
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
   options: any = {};
-  series: Array<any> = [];  
+  series: Array<any> = [];
 
   constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,        
-    protected productGateway: ProductsGateway,    
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
     protected incidentGateway: IncidentsGateway,
     protected theme: NbThemeService,
     private datePipe: DatePipe,
-    protected router: Router, 
-    protected activatedRoute: ActivatedRoute) {       
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
-    }     
-  onChangeQueryParameters(paramMap: ParamMap): void {                 
-      super.onChangeQueryParameters(paramMap);        
+    }
+  onChangeQueryParameters(paramMap: ParamMap): void {
+      super.onChangeQueryParameters(paramMap);
       this.loadIncidents();
   }
   onNgOnInit(): void {
-      
-  } 
+
+  }
   loadIncidents(){
     this.incidentGateway.getIncidents(this.productId).subscribe(data=>{
 
@@ -100,18 +100,18 @@ export class ListIncidentComponent extends ProductBaseComponent {
         }
       );
       this.source.load(data);
-    });    
+    });
   }
   onUserRowSelect(event){
     let queryParams: Params = { incidentId: event.data.id };
-        this.router.navigate(['/pages/incidents/detail'], { 
+        this.router.navigate(['/pages/incidents/detail'], {
           relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
-    );     
+    );
   }
   onCreate(event){
     let queryParams: Params = {  };
-    this.router.navigate(['/pages/incidents/create'], { 
+    this.router.navigate(['/pages/incidents/create'], {
       relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' }
-    );     
+    );
   }
 }

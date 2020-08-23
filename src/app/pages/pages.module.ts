@@ -9,7 +9,7 @@ import { SourceModule } from './source/source.module';
 import { CustomerModule} from './customer/customer.module';
 import { SyncModule } from './sync/sync.module';
 import { PortfolioModule} from './portfolio/portfolio.module';
-import { ServiceGroupModule } from './serviceGroup/serviceGroup.module';
+import { JourneyGroupModule } from './journeyGroup/journeyGroupModule';
 import { SquadModule } from './squad/squad.module';
 import { ThreatModule } from './threats/threat.module'
 import { RiskModule } from './risks/risks.module'
@@ -36,13 +36,13 @@ import { TooltipComponent } from './common/components/tooltipComponent';
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    NbCheckboxModule,    
+    NbCheckboxModule,
     ECommerceModule,
     MiscellaneousModule,
     SourceModule,
     CustomerModule,
     PortfolioModule,
-    ServiceGroupModule,
+    JourneyGroupModule,
     SquadModule,
     UserModule,
     ThreatModule,

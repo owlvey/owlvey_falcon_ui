@@ -54,7 +54,7 @@ import { MockDataModule } from './mock/mock-data.module';
 import { FeaturesGateway } from './data/features.gateway';
 import { UsersGateway } from './data/users.gateway';
 import { RisksGateway } from './data/risks.gateway';
-import { PortfoliosGateway } from './data/portfolios.gateway';
+import { JourneysGateway } from './data/portfolios.gateway';
 import { SquadsGateway }  from './data/squads.gateway';
 import { FormatService } from './utils/format.service';
 import { EnvironmentService } from './utils/env.service';
@@ -110,11 +110,11 @@ const DATA_SERVICES = [
   { provide: ProductsGateway, useClass: ProductsGateway },
   { provide: SourcesGateway, useClass: SourcesGateway },
   { provide: FeaturesGateway, useClass: FeaturesGateway },
-  { provide: PortfoliosGateway, useClass: PortfoliosGateway },
+  { provide: JourneysGateway, useClass: JourneysGateway },
   { provide: SquadsGateway, useClass: SquadsGateway },
   { provide: UsersGateway, useClass: UsersGateway },
   { provide: RisksGateway, useClass: RisksGateway },
-  
+
   { provide: FormatService, useClass: FormatService },
   { provide: EnvironmentService, useClass: EnvironmentService } ,
   { provide: IncidentsGateway, useClass: IncidentsGateway },

@@ -7,35 +7,35 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { NbThemeService } from '@nebular/theme';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { FormatService } from '../../../@core/utils/format.service';
 
 
 @Component({
-  selector: 'app-annual-serviceGroup',
-  templateUrl: './annual-serviceGroup.component.html',
-  styleUrls: ['./annual-serviceGroup.component.scss']
+  selector: 'app-annual-journeyGroup',
+  templateUrl: './annual-journeyGroup.component.html',
+  styleUrls: ['./annual-journeyGroup.component.scss']
 })
-export class AnnualServiceGroupComponent extends ProductBaseComponent {
+export class AnnualJourneyGroupComponent extends ProductBaseComponent {
   constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,        
-    protected productGateway: ProductsGateway,        
-    protected portfoliosGateway : PortfoliosGateway,
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
+    protected journeysGateway : JourneysGateway,
     protected theme: NbThemeService,
     protected format: FormatService,
-    protected router: Router, 
-    protected activatedRoute: ActivatedRoute) {       
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
-  }   
+  }
   dailyTitle: string =  "Please select a group";
-  series: Array<any> = [];    
-  latencySeries: Array<any> = [];    
-  experienceSeries: Array<any> = [];    
-  calendarSerie : Array<any> = [];  
-  latencyCalendarSerie : Array<any> = [];  
-  experienceCalendarSerie : Array<any> = [];  
-  
+  series: Array<any> = [];
+  latencySeries: Array<any> = [];
+  experienceSeries: Array<any> = [];
+  calendarSerie : Array<any> = [];
+  latencyCalendarSerie : Array<any> = [];
+  experienceCalendarSerie : Array<any> = [];
+
   sourceAvailability: LocalDataSource = new LocalDataSource();
   sourceLatency: LocalDataSource = new LocalDataSource();
   sourceExperience: LocalDataSource = new LocalDataSource();
@@ -45,7 +45,7 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       edit:false,
       delete:false
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Group',
         type: 'string',
@@ -56,104 +56,104 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
         type: 'number',
         filter: false,
         width: '3em',
-      },         
+      },
       janHtml: {
         title: 'Jan',
         type: 'html',
         filter: false,
         width: '3em',
         compareFunction:this.format.compareIconNumberColumn,
-      },   
+      },
       febHtml: {
         title: 'Feb',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       marHtml: {
         title: 'Mar',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       aprHtml: {
         title: 'Apr',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       mayHtml: {
         title: 'May',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },  
+      },
       junHtml: {
         title: 'Jun',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       julHtml: {
         title: 'Jul',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       augHtml: {
         title: 'Aug',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       sepHtml: {
         title: 'Sep',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       octHtml: {
         title: 'Oct',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       novHtml: {
         title: 'Nov',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
       decHtml: {
         title: 'Dec',
         type: 'html',
         filter: false,
         width: '4em',
         compareFunction:this.format.compareIconNumberColumn,
-      },         
+      },
     },
   };
 
-  onChangeQueryParameters(paramMap: ParamMap): void {       
-    super.onChangeQueryParameters(paramMap);      
-    this.portfoliosGateway.getPortfoliosGroupAnnual(this.productId, this.startDate).subscribe( data=>{
-      
+  onChangeQueryParameters(paramMap: ParamMap): void {
+    super.onChangeQueryParameters(paramMap);
+    this.journeysGateway.getPortfoliosGroupAnnual(this.productId, this.startDate).subscribe( data=>{
+
       const availability = data.availability;
       const latency = data.latency;
       const experience = data.experience;
-      
+
       let result = [availability, latency, experience].map(group=>{
-        const temp = group.map(c =>{                  
+        const temp = group.map(c =>{
           c.janHtml = this.format.buildDebtColumnValueSingle(c.jan, '');
           c.febHtml = this.format.buildDebtColumnValue(c.feb, c.jan);
           c.marHtml = this.format.buildDebtColumnValue(c.mar, c.feb);
@@ -170,11 +170,11 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
         });
         return temp;
       })
-            
+
       this.sourceAvailability.load(result[0]);
       this.sourceLatency.load(result[1]);
       this.sourceExperience.load(result[2]);
-      this.series = data.series.availabilityDetail;      
+      this.series = data.series.availabilityDetail;
       this.latencySeries = data.series.latencyDetail;
       this.experienceSeries = data.series.experienceDetail;
 
@@ -183,11 +183,11 @@ export class AnnualServiceGroupComponent extends ProductBaseComponent {
       this.experienceCalendarSerie = [data.series.experience];
     });
   }
-  
+
   onRowSelect(event){
-    const group = event.data.name;  
+    const group = event.data.name;
     this.dailyTitle = group;
-    this.portfoliosGateway.getPortfoliosGroupAnnualCalendar(this.productId, group, this.startDate).subscribe(data=>{
+    this.journeysGateway.getPortfoliosGroupAnnualCalendar(this.productId, group, this.startDate).subscribe(data=>{
       this.calendarSerie = data;
     });
   }

@@ -16,6 +16,18 @@ export class RisksGateway {
   getSecurityThreats(): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `risks/security/threats`);
   }
+  getSecurityThreat(id: number): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `risks/security/threats/${id}`);
+  }
+  deleteSecurityThreat(id: number): Observable<any> {
+    return this.owlveyGateway.delete(this.baseUrl + `risks/security/threats/${id}`);
+  }
+  postSecurityThreat(name: string): Observable<any> {
+    return this.owlveyGateway.post(this.baseUrl + `risks/security/threats`, {name: name});
+  }
+  putSecurityThreat(id: number, model: any): Observable<any> {
+    return this.owlveyGateway.put(this.baseUrl + `risks/security/threats/${id}`, model);
+  }
   getReliabilityThreats(): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `risks/security/threats`);
   }

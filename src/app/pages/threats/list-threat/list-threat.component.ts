@@ -23,32 +23,19 @@ export class ListThreatComponent implements OnInit {
   squads: any[];
   themeSubscription: any;
 
-  settings = {
+  securitySettings = {
     mode: 'external',
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
         filter: false,
       },
-      features:{
-        title: 'Features',
+      tags:{
+        title: 'Tags',
         type: 'number',
         filter: false,
-      },
-      points: {
-        title: 'Points',
-        type: 'number',
-        filter: false,
-        width: '3em'
-      },
-      members:{
-        title: 'Members',
-        type: 'number',
-        filter: false,
-        width: '3em'
       }
-
     },
     actions: {
       add: false,
@@ -57,17 +44,17 @@ export class ListThreatComponent implements OnInit {
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  securitySource: LocalDataSource = new LocalDataSource();
   constructor(
     protected location: Location,
     protected theme: NbThemeService,
-    protected router: Router, 
+    protected router: Router,
     private toastr: NbToastrService,
     private riskGateway: RisksGateway,
-    protected activatedRoute: ActivatedRoute) {       
-    
-  }      
-  
+    protected activatedRoute: ActivatedRoute) {
+
+  }
+
   ngOnInit(): void {
     this.getSecurityThreats();
   }
@@ -75,7 +62,8 @@ export class ListThreatComponent implements OnInit {
 
   }
   onCreateSecurity(event){
-    
+    let queryParams: Params = {  };
+    this.router.navigate(['/pages/threats/security/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onCreateReliability(event){
 
@@ -84,16 +72,16 @@ export class ListThreatComponent implements OnInit {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
-         
+
       this.riskGateway.getSecurityThreats().subscribe(data => {
-        this.source.load(data);
+        this.securitySource.load(data);
       });
 
     });
-  }  
-  onSecurityThreatRowSelect(item) {    
-    const squadId = item.id;
-    const queryParams: Params = { squadId: squadId};
+  }
+  onSecurityThreatRowSelect(item) {
+    const threatId = item.data.id;
+    const queryParams: Params = { threatId: threatId};
     const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,

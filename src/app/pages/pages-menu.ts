@@ -4,20 +4,20 @@ import { environment } from '../../environments/environment';
 let DEV_MENU = [];
 if (environment.showDevMenu) {
   DEV_MENU = [
-      
+
   ];
 }
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Home',
-    icon: 'home-outline',    
+    icon: 'home-outline',
     home: true,
   },
   // {
   //   title: 'Organization Performance',
   //   icon: 'home-outline',
-  // },  
+  // },
   // {
   //   title: 'Operation Performance',
   //   icon: 'home-outline',
@@ -34,7 +34,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Threats',
     icon: 'person-outline',
   },
-        
+
   {
     title: 'Products',
     group: true,
@@ -47,7 +47,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Squads',
     icon: 'people-outline',
   },
-  
+
   {
     title: 'Groups',
     icon: 'award-outline',
@@ -71,7 +71,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Services',
     icon: 'archive-outline',
-  },  
+  },
   {
     title: 'Administration',
     group: true,
@@ -83,12 +83,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Sync',
     icon: 'upload-outline',
-  },  
+  },
   {
     title: 'Migrations',
     icon: 'upload-outline',
   },
-  
+
   ...DEV_MENU,
 ];
 
@@ -97,4 +97,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Incidents',
     icon: 'activity-outline',
   },
-*/ 
+*/

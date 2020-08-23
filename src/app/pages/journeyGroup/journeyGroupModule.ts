@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ListserviceGroupComponent } from "./list-serviceGroup/list-serviceGroup.component";
-import { AnnualServiceGroupComponent } from "./annual-serviceGroup/annual-serviceGroup.component";
+import { ListJourneyGroupComponent } from "./list-journeyGroup/list-journeyGroup.component";
+import { AnnualJourneyGroupComponent } from "./annual-journeyGroup/annual-journeyGroup.component";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxEchartsModule } from "ngx-echarts";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { ChartModule } from "angular2-chartjs";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ControlsModule } from "./../../@controls/controls.module";
-import { ServiceGroupRoutingModule } from "./serviceGroup.routing.module";
+import { ControlsModule } from "../../@controls/controls.module";
+import { ServiceGroupRoutingModule } from "./journeyGroup.routing.module";
 
 import {
   NbActionsModule,
@@ -27,8 +27,8 @@ import {
 
 @NgModule({
   declarations: [
-    ListserviceGroupComponent,
-    AnnualServiceGroupComponent,
+    ListJourneyGroupComponent,
+    AnnualJourneyGroupComponent,
   ],
   imports: [
     FormsModule,
@@ -47,4 +47,4 @@ import {
     ControlsModule
   ]
 })
-export class ServiceGroupModule {}
+export class JourneyGroupModule {}

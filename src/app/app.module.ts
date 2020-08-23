@@ -93,7 +93,7 @@ import { environment } from '../environments/environment';
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {
         // avoid CORS attack
-        const whiteList = ["/accounts", "/customers", "/products", "/squads", "/services", "/features",
+        const whiteList = ["/accounts", "/customers", "/products", "/squads", "/journeys", "/features",
                            "/sources", "/incidents", "/users", "/migrations", "/sourceItems", "/cache",
                           "/risks"];
         let found = false;

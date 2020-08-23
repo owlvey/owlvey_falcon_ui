@@ -6,7 +6,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
@@ -20,10 +20,10 @@ import { strictEqual } from 'assert';
   styleUrls: ['./detail-sync.component.scss']
 })
 export class DetailSyncComponent  extends ProductBaseComponent{
-  isLoading: boolean = false;  
+  isLoading: boolean = false;
   source: any;
   name: string;
-  
+
   constructor(
     protected location: Location,
     private toastr: NbToastrService,
@@ -31,7 +31,7 @@ export class DetailSyncComponent  extends ProductBaseComponent{
     protected productGateway: ProductsGateway,
     protected sourcesGateway: SourcesGateway,
     protected featuresGateway: FeaturesGateway,
-    protected portfolioGateway: PortfoliosGateway,
+    protected portfolioGateway: JourneysGateway,
     protected theme: NbThemeService,
     protected router: Router,
     protected visNetworkService: VisNetworkService,
@@ -41,8 +41,8 @@ export class DetailSyncComponent  extends ProductBaseComponent{
 
   onChangeQueryParameters(paramMap: ParamMap): void {
     this.name = paramMap.get('name');
-    super.onChangeQueryParameters(paramMap);    
-    this.loadSync(); 
+    super.onChangeQueryParameters(paramMap);
+    this.loadSync();
   }
 
   public loadSync(){
@@ -51,7 +51,7 @@ export class DetailSyncComponent  extends ProductBaseComponent{
       });
   }
 
-  onEditClick(event){    
+  onEditClick(event){
     let queryParams: Params = {  };
     this.router.navigate(['/pages/sync/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
@@ -61,12 +61,12 @@ export class DetailSyncComponent  extends ProductBaseComponent{
        this.productGateway.deleteSync(this.productId, this.name).subscribe(data=>{
           this.toastr.success("Portfolio was deleted");
           let queryParams: Params = { name : null };
-          this.router.navigate(['/pages/sync'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+          this.router.navigate(['/pages/sync'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
        }, error =>{
         this.isLoading = false;
         this.toastr.warning("Something went wrong, please try again.", "Warning")
        })
     }
   }
- 
+
 }
