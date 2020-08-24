@@ -100,7 +100,7 @@ export class ListFeatureComponent extends ProductBaseComponent {
         width: "3em",
         editable: false
       },
-      serviceCount:{
+      journeyCount:{
         title: "Journeys",
         type: "number",
         filter: true,

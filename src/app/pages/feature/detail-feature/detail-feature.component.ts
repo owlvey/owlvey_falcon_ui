@@ -246,7 +246,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
 
       this.squadSource.load(feature.squads);
       this.incidentSource.load(feature.incidents);
-      this.portfolioSource.load(feature.services);
+      this.portfolioSource.load(feature.journeys);
       this.renderSliBarOptions();
     });
   }
