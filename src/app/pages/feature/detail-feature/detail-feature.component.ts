@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy, DebugElement } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
@@ -341,6 +341,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onIndicatorsRowSelect(event){
+
     const sourceId = event.data.sourceId;
     let queryParams: Params = { sourceId: sourceId };
     this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });

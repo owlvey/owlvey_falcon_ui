@@ -13,6 +13,11 @@ export class RisksGateway {
               private envService: EnvironmentService) {
     this.baseUrl = envService.getUrl(environment.api, environment.type);
   }
+
+  getSecurityRisks(): Observable<any> {
+    return this.owlveyGateway.get(this.baseUrl + `risks/security`);
+  }
+
   getSecurityThreats(): Observable<any> {
     return this.owlveyGateway.get(this.baseUrl + `risks/security/threats`);
   }

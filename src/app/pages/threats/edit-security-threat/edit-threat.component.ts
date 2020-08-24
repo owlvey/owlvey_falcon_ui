@@ -39,7 +39,10 @@ export class EditSecurityThreatComponent implements OnInit {
       });
       this.createForm = this.fb.group({
         name: ['', Validators.required],
-        description: ['', Validators.required]
+        description: ['', Validators.required],
+        reference: ['', Validators.required],
+        avatar: ['', Validators.required],
+        tags: ['', Validators.required],
       });
 
     }
@@ -47,6 +50,9 @@ export class EditSecurityThreatComponent implements OnInit {
       this.riskGateway.getSecurityThreat(this.threatId).subscribe(data=>{
         this.createForm.get("name").setValue(data.name);
         this.createForm.get("description").setValue(data.description);
+        this.createForm.get("reference").setValue(data.reference);
+        this.createForm.get("avatar").setValue(data.avatar);
+        this.createForm.get("tags").setValue(data.tags);
       });
     }
     goBack(){

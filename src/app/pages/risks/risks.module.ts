@@ -12,7 +12,7 @@ import { ChartModule } from 'angular2-chartjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule  } from "./../../@controls/controls.module";
 
-import {      
+import {
   NbActionsModule,
   NbButtonModule,
   NbCardModule,
@@ -22,13 +22,15 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
-  NbTreeGridModule
+  NbTreeGridModule,
+  NbTabsetModule,
+  NbAlertModule,
 } from '@nebular/theme';
 
 @NgModule({
   declarations: [ListRiskComponent, CreateSecurityRiskComponent, DetailSecurityRiskComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RiskRoutingModule, Ng2SmartTableModule, 
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RiskRoutingModule, Ng2SmartTableModule,
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule, NbActionsModule]
+    NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule, NbActionsModule, NbTabsetModule]
 })
 export class RiskModule { }

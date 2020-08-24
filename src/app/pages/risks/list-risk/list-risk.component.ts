@@ -23,32 +23,19 @@ export class ListRiskComponent implements OnInit {
   squads: any[];
   themeSubscription: any;
 
-  settings = {
+  securitySettings = {
     mode: 'external',
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
         filter: false,
       },
-      features:{
-        title: 'Features',
+      tags:{
+        title: 'Tags',
         type: 'number',
         filter: false,
-      },
-      points: {
-        title: 'Points',
-        type: 'number',
-        filter: false,
-        width: '3em'
-      },
-      members:{
-        title: 'Members',
-        type: 'number',
-        filter: false,
-        width: '3em'
       }
-
     },
     actions: {
       add: false,
@@ -57,17 +44,18 @@ export class ListRiskComponent implements OnInit {
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  securitySource: LocalDataSource = new LocalDataSource();
+
   constructor(
     protected location: Location,
     protected theme: NbThemeService,
-    protected router: Router, 
+    protected router: Router,
     private toastr: NbToastrService,
     private riskGateway: RisksGateway,
-    protected activatedRoute: ActivatedRoute) {       
-    
-  }      
-  
+    protected activatedRoute: ActivatedRoute) {
+
+  }
+
   ngOnInit(): void {
     this.getSecurityThreats();
   }
@@ -75,7 +63,7 @@ export class ListRiskComponent implements OnInit {
 
   }
   onCreateSecurity(event){
-    
+
   }
   onCreateReliability(event){
 
@@ -84,14 +72,14 @@ export class ListRiskComponent implements OnInit {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
-         
-      this.riskGateway.getSecurityThreats().subscribe(data => {
-        this.source.load(data);
+
+      this.riskGateway.getSecurityRisks().subscribe(data => {
+        this.securitySource.load(data);
       });
 
     });
-  }  
-  onSecurityThreatRowSelect(item) {    
+  }
+  onSecurityThreatRowSelect(item) {
     const squadId = item.id;
     const queryParams: Params = { squadId: squadId};
     const extras: any = {

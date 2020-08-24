@@ -455,6 +455,7 @@ export class DetailPortfolioComponent implements OnInit {
           let c = {
             id : item.id,
             source : item.source,
+            sourceId: item.sourceId,
             availability : item.measure.availability,
             total : item.measure.total,
             latency: item.measure.latency,
