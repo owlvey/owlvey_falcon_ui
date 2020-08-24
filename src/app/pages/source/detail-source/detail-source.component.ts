@@ -382,5 +382,12 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
     let queryParams: Params = { featureId : featureId };
     this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
+  onNewSecurityRisk(event){
+    let queryParams: Params = { };
+    this.router.navigate(['/pages/risks/security/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
+  onNewReliabilityRisk(event){
+
+  }
 
 }
