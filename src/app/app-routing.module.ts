@@ -1,15 +1,17 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import {
+  NbAuthComponent,
+  NbLoginComponent,
+  NbLogoutComponent,
+} from '@nebular/auth';
+
+
 import { OwlveyAuthComponent } from './@theme/components/auth/auth.component';
 import { OwlveyLoginComponent } from './@theme/components/auth/login/login.component';
 import { OwlveyLogoutComponent } from './@theme/components/auth/logout/logout.component';
 
-import { AuthGuard } from './auth-guard.service';
-
-// https://akveo.github.io/nebular/docs/auth/redirect-after-login#redirect-user
-// https://stackoverflow.com/questions/47088385/how-to-customize-login
-
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
@@ -26,7 +28,7 @@ const routes: Routes = [
       {
         path: 'login',
         component: OwlveyLoginComponent,
-      },      
+      },
       {
         path: 'logout',
         component: OwlveyLogoutComponent,

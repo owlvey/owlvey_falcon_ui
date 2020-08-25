@@ -11,7 +11,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule  } from "../../@controls/controls.module";
-import { VisModule } from 'ngx-vis'
 import {
   NbActionsModule,
   NbButtonModule,
@@ -30,6 +29,6 @@ import {
   declarations: [ListUserComponent, DetailUserComponent, EditUserComponent, CreateUserComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, UserRoutingModule, Ng2SmartTableModule,
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule, NbCheckboxModule, VisModule]
+    NbCardModule, ControlsModule, NbCheckboxModule]
 })
 export class UserModule { }

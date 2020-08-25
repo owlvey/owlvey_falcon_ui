@@ -91,10 +91,3 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   ...DEV_MENU,
 ];
-
-/*
-{
-    title: 'Incidents',
-    icon: 'activity-outline',
-  },
-*/

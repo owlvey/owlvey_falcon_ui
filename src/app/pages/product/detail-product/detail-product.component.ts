@@ -10,13 +10,13 @@ import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
-import { VisEdges, VisNetworkData, VisNetworkOptions,  VisNetworkService,  VisNode,  VisNodes, VisNodeOptions } from 'ngx-vis'
+import { Edge, Data, DataSet, Options,  VisNetworkService,  Node  } from 'ngx-vis'
 import { NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { strictEqual } from 'assert';
 
-class ExampleNetworkData implements VisNetworkData {
-  public nodes: VisNodes;
-  public edges: VisEdges;
+class ExampleNetworkData implements Data {
+  public nodes: DataSet<Node>;
+  public edges: DataSet<Edge>;
 }
 
 @Component({
@@ -35,18 +35,16 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   themeSubscription: any;
 
   public visNetworkAvailability: string = 'networkIdAvailability';
-  public visNetworkAvailabilityData: VisNetworkData;
-  public visNetworkAvailabilityOptions: VisNetworkOptions;
+  public visNetworkAvailabilityData: Data;
+  public visNetworkAvailabilityOptions: Options;
 
   public visNetworkLatency: string = 'networkIdLatency';
-  public visNetworkLatencyData: VisNetworkData;
-  public visNetworkLatencyOptions: VisNetworkOptions;
+  public visNetworkLatencyData: Data;
+  public visNetworkLatencyOptions: Options;
 
   public visNetworkExperience: string = 'networkIdExperience';
-  public visNetworkExperienceData: VisNetworkData;
-  public visNetworkExperienceOptions: VisNetworkOptions;
-
-
+  public visNetworkExperienceData: Data;
+  public visNetworkExperienceOptions: Options;
 
   colors: any;
 
@@ -149,8 +147,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new VisNodes(nodeData);
-    const edges = new VisEdges(edgeData);
+    const nodes = new DataSet<Node>(nodeData);
+    const edges = new DataSet<Edge>(edgeData);
     let visNetworkData = {
       nodes,
       edges,

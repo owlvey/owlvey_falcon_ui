@@ -10,7 +10,6 @@ import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
-import { VisEdges, VisNetworkData, VisNetworkOptions,  VisNetworkService,  VisNode,  VisNodes, VisNodeOptions } from 'ngx-vis'
 import { NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { strictEqual } from 'assert';
 
@@ -34,7 +33,6 @@ export class DetailSyncComponent  extends ProductBaseComponent{
     protected portfolioGateway: JourneysGateway,
     protected theme: NbThemeService,
     protected router: Router,
-    protected visNetworkService: VisNetworkService,
     protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
     }

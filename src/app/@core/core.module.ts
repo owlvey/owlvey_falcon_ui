@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy, NbOAuth2AuthStrategy, NbOAuth2ResponseType, NbAuthOAuth2Token, NbOAuth2GrantType, NbOAuth2ClientAuthMethod } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -9,6 +9,7 @@ import {
   AnalyticsService,
   LayoutService,
   PlayerService,
+  SeoService,
   StateService,
 } from './utils';
 import { UserData } from './data/users';
@@ -23,12 +24,14 @@ import { OrdersProfitChartData } from './data/orders-profit-chart';
 import { TrafficBarData } from './data/traffic-bar';
 import { ProfitBarAnimationChartData } from './data/profit-bar-animation-chart';
 import { TemperatureHumidityData } from './data/temperature-humidity';
+import { SolarData } from './data/solar';
 import { TrafficChartData } from './data/traffic-chart';
 import { StatsBarData } from './data/stats-bar';
 import { CountryOrderData } from './data/country-order';
 import { StatsProgressBarData } from './data/stats-progress-bar';
 import { VisitorsAnalyticsData } from './data/visitors-analytics';
 import { SecurityCamerasData } from './data/security-cameras';
+
 import { UserService } from './mock/users.service';
 import { ElectricityService } from './mock/electricity.service';
 import { SmartTableService } from './mock/smart-table.service';
@@ -41,29 +44,29 @@ import { OrdersProfitChartService } from './mock/orders-profit-chart.service';
 import { TrafficBarService } from './mock/traffic-bar.service';
 import { ProfitBarAnimationChartService } from './mock/profit-bar-animation-chart.service';
 import { TemperatureHumidityService } from './mock/temperature-humidity.service';
+import { SolarService } from './mock/solar.service';
 import { TrafficChartService } from './mock/traffic-chart.service';
 import { StatsBarService } from './mock/stats-bar.service';
 import { CountryOrderService } from './mock/country-order.service';
 import { StatsProgressBarService } from './mock/stats-progress-bar.service';
 import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
+import { MockDataModule } from './mock/mock-data.module';
+
+import { EnvironmentService } from './utils/env.service';
+import { FormatService } from './utils/format.service';
 import { CustomersGateway }  from './data/customers.gateway';
 import { ProductsGateway }  from './data/products.gateway';
 import { SourcesGateway }  from './data/sources.gateway';
-import { MockDataModule } from './mock/mock-data.module';
 import { FeaturesGateway } from './data/features.gateway';
 import { UsersGateway } from './data/users.gateway';
 import { RisksGateway } from './data/risks.gateway';
 import { JourneysGateway } from './data/portfolios.gateway';
 import { SquadsGateway }  from './data/squads.gateway';
-import { FormatService } from './utils/format.service';
-import { EnvironmentService } from './utils/env.service';
 import { IncidentsGateway } from './data/incident.gateway';
-import { environment as env } from '../../environments/environment';
 import { CustomerEventHub } from './hubs/customer.eventhub';
 import { OwlveyGateway } from './data/owlvey.gateway';
 import { CacheManager } from './data/cache.manager';
-
 
 const socialLinks = [
   {
@@ -100,12 +103,17 @@ const DATA_SERVICES = [
   { provide: TrafficBarData, useClass: TrafficBarService },
   { provide: ProfitBarAnimationChartData, useClass: ProfitBarAnimationChartService },
   { provide: TemperatureHumidityData, useClass: TemperatureHumidityService },
+  { provide: SolarData, useClass: SolarService },
   { provide: TrafficChartData, useClass: TrafficChartService },
   { provide: StatsBarData, useClass: StatsBarService },
   { provide: CountryOrderData, useClass: CountryOrderService },
   { provide: StatsProgressBarData, useClass: StatsProgressBarService },
   { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
+
+  { provide: FormatService, useClass: FormatService },
+
+  { provide: EnvironmentService, useClass: EnvironmentService } ,
   { provide: CustomersGateway, useClass: CustomersGateway },
   { provide: ProductsGateway, useClass: ProductsGateway },
   { provide: SourcesGateway, useClass: SourcesGateway },
@@ -115,8 +123,6 @@ const DATA_SERVICES = [
   { provide: UsersGateway, useClass: UsersGateway },
   { provide: RisksGateway, useClass: RisksGateway },
 
-  { provide: FormatService, useClass: FormatService },
-  { provide: EnvironmentService, useClass: EnvironmentService } ,
   { provide: IncidentsGateway, useClass: IncidentsGateway },
   { provide: CacheManager, useClass: CacheManager },
   { provide: OwlveyGateway, useClass: OwlveyGateway },
@@ -154,10 +160,11 @@ export const NB_CORE_PROVIDERS = [
   AnalyticsService,
   LayoutService,
   PlayerService,
-  StateService
+  StateService,
+  SeoService
 ];
 
-@ NgModule({
+@NgModule({
   imports: [
     CommonModule,
   ],
@@ -167,12 +174,12 @@ export const NB_CORE_PROVIDERS = [
   declarations: [],
 })
 export class CoreModule {
-  constructor(@ Optional() @ SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
-  static forRoot(): ModuleWithProviders {
-    return < ModuleWithProviders>{
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
       ngModule: CoreModule,
       providers: [
         ...NB_CORE_PROVIDERS,

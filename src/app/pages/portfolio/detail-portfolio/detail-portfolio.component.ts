@@ -8,7 +8,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
-import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
+import { Data, Options, DataSet, VisNetworkService, Node, Edge } from 'ngx-vis';
 import { FormatService } from '../../../@core/utils/format.service';
 
 
@@ -322,8 +322,8 @@ export class DetailPortfolioComponent implements OnInit {
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new VisNodes(nodeData);
-    const edges = new VisEdges(edgeData);
+    const nodes = new DataSet<Node>(nodeData);
+    const edges = new DataSet<Edge>(edgeData);
     this.visNetworkData = {
       nodes,
       edges,
@@ -606,8 +606,8 @@ export class DetailPortfolioComponent implements OnInit {
 
 
   public visNetwork: string = 'networkId1';
-  public visNetworkData: VisNetworkData;
-  public visNetworkOptions: VisNetworkOptions;
+  public visNetworkData: Data;
+  public visNetworkOptions: Options;
   colors: any;
   graphData = {};
 

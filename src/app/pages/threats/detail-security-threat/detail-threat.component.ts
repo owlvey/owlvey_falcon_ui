@@ -21,7 +21,7 @@ export class DetailSecurityThreatComponent implements OnInit {
   actionConfirmWord: string;
 
   threatId: number;
-  currentSource: object;
+  currentSource: any;
   constructor(
     protected location: Location,
     protected riskGateway: RisksGateway,
@@ -45,7 +45,7 @@ export class DetailSecurityThreatComponent implements OnInit {
           this.currentSource = data;
       });
     }
-    onEditClick(){
+    onEditClick(event){
       const queryParams: Params = { };
       const extras: any = {
         relativeTo: this.activatedRoute,
@@ -54,7 +54,7 @@ export class DetailSecurityThreatComponent implements OnInit {
       }
       this.router.navigate(['/pages/threats/security/edit'], extras);
     }
-    onDeleteClick(){
+    onDeleteClick(event){
       if (window.confirm('Are you sure you want to delete?')) {
         this.riskGateway.deleteSecurityThreat(this.threatId).subscribe(data=>{
           this.toastr.success("Portfolio was deleted");
@@ -71,7 +71,7 @@ export class DetailSecurityThreatComponent implements OnInit {
 
       }
     }
-    onBackClick(){
+    onBackClick(event){
       this.location.back();
     }
 }
