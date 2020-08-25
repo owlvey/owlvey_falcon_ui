@@ -88,11 +88,9 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
             from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
         }
       });
-      const nodes = new DataSet<Node>(nodeData);
-      const edges = new DataSet<Edge>(edgeData);
       this.visNetworkData = {
-        nodes,
-        edges,
+        nodes: nodeData,
+        edges: edgeData,
       };
 
       this.visNetworkOptions = {

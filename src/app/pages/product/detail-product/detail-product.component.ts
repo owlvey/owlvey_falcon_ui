@@ -10,14 +10,10 @@ import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
-import { Edge, Data, DataSet, Options,  VisNetworkService,  Node  } from 'ngx-vis'
+import { Edge, Data, DataSet, Options,  VisNetworkService } from 'ngx-vis'
 import { NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { strictEqual } from 'assert';
 
-class ExampleNetworkData implements Data {
-  public nodes: DataSet<Node>;
-  public edges: DataSet<Edge>;
-}
 
 @Component({
   selector: 'app-detail-product',
@@ -31,12 +27,12 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   currentSource : any= {};
 
   source: LocalDataSource = new LocalDataSource();
-  graphData = {};
   themeSubscription: any;
 
   public visNetworkAvailability: string = 'networkIdAvailability';
   public visNetworkAvailabilityData: Data;
   public visNetworkAvailabilityOptions: Options;
+
 
   public visNetworkLatency: string = 'networkIdLatency';
   public visNetworkLatencyData: Data;
@@ -147,11 +143,9 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new DataSet<Node>(nodeData);
-    const edges = new DataSet<Edge>(edgeData);
     let visNetworkData = {
-      nodes,
-      edges,
+      nodes: nodeData,
+      edges: edgeData,
     };
 
     let visNetworkOptions = {
@@ -276,6 +270,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   }
 
   public networkAvailabilityInitialized(): void {
+
     // now we can use the service to register on events
     this.visNetworkService.on(this.visNetworkAvailability, 'click');
     // stop adjustments
@@ -290,11 +285,13 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         });
   }
   public networkLatencyInitialized(): void {
+
     this.visNetworkService.on(this.visNetworkLatency, 'click');
     this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
   public networkExperienceInitialized(): void {
     this.visNetworkService.on(this.visNetworkExperience, 'click');
+
     this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
 

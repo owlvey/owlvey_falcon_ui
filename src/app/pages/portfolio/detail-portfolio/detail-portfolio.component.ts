@@ -186,6 +186,19 @@ export class DetailPortfolioComponent implements OnInit {
     },
   };
 
+  //#region Graph Dependencies
+
+  public visNetwork: string = 'networkId1';
+  public visNetworkData: Data;
+  public visNetworkOptions: Options;
+
+  colors: any;
+
+
+  //#endregion
+
+
+
 
 
   constructor(
@@ -221,7 +234,10 @@ export class DetailPortfolioComponent implements OnInit {
       const echarts: any = config.variables.echarts;
 
       this.portfolioGateway.getPortfolioGraph(this.portfolioId, this.startDate, this.endDate).subscribe( data =>{
-        this.buildGraph(data);
+        var result = this.buildGraph(data);
+        this.visNetworkData = result.data;
+        this.visNetworkOptions = result.options;
+
       });
 
     });
@@ -232,18 +248,12 @@ export class DetailPortfolioComponent implements OnInit {
       return;
     }
     setTimeout(() => {
-
-      try {
         this.visNetworkService.setOptions(this.visNetwork, { physics: false });
         this.visNetworkService.moveTo( this.visNetwork , {
                     position: {x:-300, y:-300},
                     scale: 1,
                     animation: true
-        } );
-      } catch (error) {
-        console.log(error);
-      }
-
+        });
     }, 3000);
 
     const fgText = this.colors.fgText;
@@ -302,6 +312,9 @@ export class DetailPortfolioComponent implements OnInit {
                   highlight:{background:successLight, border: primaryLight},
                   hover:{background:successLight, border: primaryLight}}};
       }
+      else {
+        throw new Error(`group not found ${c.group}`);
+      }
     });
     var edgeData = data.edges.map(c=>{
       const ava = String(c.value);
@@ -322,14 +335,13 @@ export class DetailPortfolioComponent implements OnInit {
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new DataSet<Node>(nodeData);
-    const edges = new DataSet<Edge>(edgeData);
-    this.visNetworkData = {
-      nodes,
-      edges,
+
+    let NetworkData = {
+      nodes: nodeData,
+      edges: edgeData,
     };
 
-    this.visNetworkOptions = {
+    let NetworkOptions = {
       physics:{
         enabled: true,
         forceAtlas2Based: {
@@ -387,6 +399,11 @@ export class DetailPortfolioComponent implements OnInit {
         enabled: false
       }
     };
+    return {
+      data: NetworkData,
+      options: NetworkOptions
+    };
+
   }
 
   getPortfolio(){
@@ -585,7 +602,7 @@ export class DetailPortfolioComponent implements OnInit {
               }
           }
       ]
-  };
+    };
 
   }
 
@@ -604,15 +621,10 @@ export class DetailPortfolioComponent implements OnInit {
     this.echartCalendarInstance = ec;
   }
 
-
-  public visNetwork: string = 'networkId1';
-  public visNetworkData: Data;
-  public visNetworkOptions: Options;
-  colors: any;
-  graphData = {};
-
   public networkInitialized(): void {
 
+    this.visNetworkService.on(this.visNetwork, 'click');
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
 
   onFeatureDetail(event){

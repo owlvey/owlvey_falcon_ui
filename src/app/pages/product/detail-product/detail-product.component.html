@@ -4,9 +4,9 @@
           <nb-card-header>
               <div class="d-flex align-content-center">
                   <h5> {{ currentProduct?.name }} </h5>
-                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>                
+                  <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>
                   <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
-                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>                            
+                  <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>
               </div>
           </nb-card-header>
           <nb-card-body>
@@ -14,9 +14,9 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                               <label for="inputLeaders" class="label col-sm-3 form-control-label">Leaders</label>
-                              <input readonly="readonly" type="text" [value]="currentProduct?.leaders" 
+                              <input readonly="readonly" type="text" [value]="currentProduct?.leaders"
                                   nbInput fullWidth id="inputLeaders" placeholder="Leaders"
-                                  class="input-full-width size-medium shape-rectangle">                         
+                                  class="input-full-width size-medium shape-rectangle">
                             </div>
                         </div>
                 </div>
@@ -27,7 +27,7 @@
 
 <nb-card>
     <nb-card-header>
-        Reliability Diagrams 
+        Reliability Diagrams
     </nb-card-header>
 
     <nb-card-body>
@@ -53,6 +53,6 @@
                 [visNetworkOptions]="visNetworkExperienceOptions"
                 (initialized)="networkExperienceInitialized()"></div>
             </nb-tab>
-        </nb-tabset>                
+        </nb-tabset>
     </nb-card-body>
 </nb-card>
