@@ -26,6 +26,7 @@ import {
   NbUserModule,
   NbTreeGridModule,
   NbTabsetModule,
+
   NbAlertModule,
 } from '@nebular/theme';
 
@@ -42,6 +43,7 @@ import {
     NbButtonModule,
     NbTabsetModule,
     NbAlertModule,
+    NbSelectModule,
     NbCardModule, ControlsModule]
 })
 export class ThreatModule { }

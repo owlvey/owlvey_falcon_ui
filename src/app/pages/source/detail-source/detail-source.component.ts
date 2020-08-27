@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbThemeService, NbToastrService } from '@nebular/theme';
-import { map, min, max } from 'rxjs/operators';
+import { NbThemeService, NbToastrService, NbWindowService, NbWindowConfig } from '@nebular/theme';
 import { FormatService } from '../../../@core/utils/format.service';
-import { BaseDetailSourceComponent } from '../base-detail-source-component';
-
+import { RisksGateway } from 'app/@core/data/risks.gateway';
+import { CreateSecuritySourceComponent } from '../create-security-risk/create-security-source.component';
 
 
 @Component({
@@ -17,8 +16,13 @@ import { BaseDetailSourceComponent } from '../base-detail-source-component';
   templateUrl: './detail-source.component.html',
   styleUrls: ['./detail-source.component.scss']
 })
-export class DetailSourceComponent  extends BaseDetailSourceComponent implements OnInit, AfterViewInit {
+export class DetailSourceComponent
+implements OnInit, AfterViewInit, OnDestroy {
 
+  sourceId = 0;
+  productId = 0;
+  startDate: Date = new Date();
+  endDate: Date;
 
   isLoading: boolean = false;
   sources: any[];
@@ -60,22 +64,85 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
   };
   source: LocalDataSource = new LocalDataSource();
 
+
+  //#region Security Risk
+  ListSecurityThreats = [];
+  currentThreat: any = null;
+  currentThreatIndex: number = 0;
+  @ViewChild('securityRiskTemplate', { read: TemplateRef, static: true }) securityRiskTemplate: TemplateRef<HTMLElement>;
+
+  //#endregion
   constructor(
-    location: Location,
-    customerGateway: CustomersGateway,
-    productGateway: ProductsGateway,
-    sourcesGateway: SourcesGateway,
-    toastr: NbToastrService,
-    theme: NbThemeService,
-    format: FormatService,
-    router: Router,
-    activatedRoute: ActivatedRoute) {
-      super(location, customerGateway, productGateway, sourcesGateway, toastr, theme, format, router, activatedRoute);
+    protected location: Location,
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
+    protected sourcesGateway: SourcesGateway,
+    protected toastr: NbToastrService,
+    protected theme: NbThemeService,
+    protected format: FormatService,
+    protected router: Router,
+    protected riskGateway: RisksGateway,
+    protected activatedRoute: ActivatedRoute,
+    protected windowService: NbWindowService) {
+      this.endDate = new Date();
+      this.startDate = new Date();
+      this.startDate.setDate(this.startDate.getDate() - 365);
     }
+  ngOnDestroy(): void {
+
+  }
 
   ngOnInit() {
-    super.baseOnInit();
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+        this.productId = parseInt(paramMap.get('productId'));
+        this.sourceId = parseInt(paramMap.get('sourceId'));
+        this.startDate = new Date(paramMap.get('start'));
+        this.endDate = new Date(paramMap.get('end'));
+        this.getSource();
+        this.getSecurityThreats();
+    });
   }
+  onBackClick($event){
+    this.location.back();
+  }
+
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.sourcesGateway.deleteSource(this.sourceId).subscribe(res=>{
+        this.toastr.success("Source was deleted");
+        let queryParams: Params = { sourceId : null };
+        this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }, (error) => {
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });
+
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  //#region Risk
+  getSecurityThreats(){
+    this.riskGateway.getSecurityThreats().subscribe(data=>{
+      this.ListSecurityThreats = data;
+      if (this.ListSecurityThreats.length > 0){
+        this.currentThreat = this.ListSecurityThreats[0];
+      }
+    });
+  }
+  onNextSecurityThreat(event){
+    if (this.currentThreatIndex < this.ListSecurityThreats.length){
+      this.currentThreatIndex += 1;
+    }
+    this.currentThreat = this.ListSecurityThreats[this.currentThreatIndex];
+  }
+  onPreviousSecurityThreat(event){
+    if (this.currentThreatIndex > 0 ){
+      this.currentThreatIndex -= 1;
+    }
+    this.currentThreat = this.ListSecurityThreats[this.currentThreatIndex];
+  }
+  //#endregion
 
   getSource(){
     this.sourcesGateway.getSourceWithDetail(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
@@ -383,11 +450,23 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
     this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onNewSecurityRisk(event){
-    let queryParams: Params = { };
-    this.router.navigate(['/pages/risks/security/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+    this.windowService.open(
+      CreateSecuritySourceComponent,
+      {
+        title: `Register Source Security Risk`,
+        hasBackdrop: false,
+        closeOnEsc: false,
+        context : {
+          currentSource: JSON.parse(JSON.stringify(this.currentSource))
+        },
+      },
+    );
+
   }
   onNewReliabilityRisk(event){
 
   }
+  onNewSecurityRiskSave(event){
 
+  }
 }

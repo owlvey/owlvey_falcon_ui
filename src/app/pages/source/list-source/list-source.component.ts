@@ -112,8 +112,38 @@ export class ListSourceComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      latency: {
+        title: 'Latency',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
       correlation: {
         title: 'Correlation',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      references: {
+        title: 'Refs',
         type: 'number',
         filter: true,
         width: '3em'

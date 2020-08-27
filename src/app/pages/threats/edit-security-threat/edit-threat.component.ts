@@ -22,6 +22,9 @@ export class EditSecurityThreatComponent implements OnInit {
   createForm: FormGroup;
   threatId: number;
   currentSource: object;
+
+  skillLevel = "0";
+
   constructor(
     protected location: Location,
     protected riskGateway: RisksGateway,

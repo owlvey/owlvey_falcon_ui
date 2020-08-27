@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbIconModule } from '@nebular/theme';
+import { NbMenuModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -34,6 +34,7 @@ import { SyncModule } from './sync/sync.module';
     HomeModule,
     SyncModule,
     NbIconModule,
+    NbSelectModule,
   ],
   declarations: [
     PagesComponent,

@@ -36,17 +36,24 @@ import {
   NbTreeGridModule,
 } from '@nebular/theme';
 import { EditSourceComponent } from './edit-source/edit-source.component';
+import { CreateSecuritySourceComponent } from './create-security-risk/create-security-source.component';
 
+const ENTRY_COMPONENTS = [
+  CreateSecuritySourceComponent,
+];
 
 @NgModule({
   declarations: [CreateSourceComponent, CreateLatencyItemsSourceComponent,
     CreateIntItemsSourceComponent,
     ItemsSourceComponent, CreatePropItemsSourceComponent,
     DetailSourceComponent, ListSourceComponent, EditSourceComponent,
-    TreeMapSourceComponent],
+    TreeMapSourceComponent, CreateSecuritySourceComponent],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule,
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-     NbCardModule, ControlsModule, NbRadioModule, NbTooltipModule, NbIconModule, NbTabsetModule],
+     NbCardModule, ControlsModule, NbSelectModule,  NbRadioModule, NbTooltipModule,
+     NbIconModule, NbTabsetModule],
+  entryComponents: [
+    ],
 })
 export class SourceModule { }
 

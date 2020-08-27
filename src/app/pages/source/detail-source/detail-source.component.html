@@ -47,6 +47,14 @@
             </div>
             <div class="col-sm-2">
               <div class="form-group">
+                  <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
+                  <input readonly="readonly" type="number" [value]="currentSource?.quality?.total"
+                      nbInput fullWidth id="inputAvailability"
+                      class="input-full-width size-medium shape-rectangle">
+                </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
                   <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
                   <input readonly="readonly" type="number" [value]="currentSource?.quality?.good"
                       nbInput fullWidth id="inputAvailability"
@@ -55,15 +63,7 @@
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
-                    <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
-                    <input readonly="readonly" type="number" [value]="currentSource?.quality?.total"
-                        nbInput fullWidth id="inputAvailability"
-                        class="input-full-width size-medium shape-rectangle">
-                  </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                  <label for="inputGood" class="label col-sm-3 form-control-label">Delta</label>
+                  <label for="inputGood" class="label col-sm-3 form-control-label">Bad</label>
                   <input readonly="readonly" type="number" [value]="currentSource?.quality?.delta"
                       nbInput fullWidth id="inputAvailability" placeholder="Delta"
                       class="input-full-width size-medium shape-rectangle">
@@ -91,7 +91,7 @@
         <div class="col-6">
           <div class="row justify-content-end ">
             <div class="col-md-auto">
-              <span> Register new item </span>
+              <span> Show Detail </span>
             </div>
             <div class="col-md-auto">
               <button type="button" nbButton status="primary" (click)="onAvaialbilityItemsClick($event)"> Availability </button>
@@ -305,3 +305,12 @@
       </nb-card-body>
   </nb-card>
 </div>
+
+
+<ng-template #securityRiskTemplate>
+  <div style="width: 60rem; height: 30rem;">
+
+  </div>
+
+
+</ng-template>
