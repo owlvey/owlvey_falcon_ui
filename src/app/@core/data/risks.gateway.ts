@@ -30,6 +30,9 @@ export class RisksGateway {
   postSecurityThreat(name: string): Observable<any> {
     return this.owlveyGateway.post(this.baseUrl + `risks/security/threats`, {name: name});
   }
+  postSecurityRisk(model: any): Observable<any> {
+      return this.owlveyGateway.post(this.baseUrl + `risks/security`, model);
+  }
   putSecurityThreat(id: number, model: any): Observable<any> {
     return this.owlveyGateway.put(this.baseUrl + `risks/security/threats/${id}`, model);
   }
