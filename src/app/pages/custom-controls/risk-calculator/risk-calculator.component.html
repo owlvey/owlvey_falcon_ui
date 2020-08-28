@@ -1,0 +1,263 @@
+<div class="row" >
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-4">
+            <h6> Owasp Risk Score </h6>
+          </div>
+          <div class="col-4">
+
+          </div>
+          <div class="col-4">
+            Likehood {{likeHood}} * Impact {{impact}} = Risk {{risk}} {{riskLabel}}
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+          <div class="row">
+            <div class="col-3">
+              <b>Threat Agent Factors {{ ThreatAgentFactors }}</b>
+              <div class="form-group">
+                <label  class="label form-control-label">
+                  Skill Level
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="agentSkillLevel"
+                   (selectedChange)="selectedChange($event)"
+                   placeholder="Select" fullWidth  >
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - No technical skills</nb-option>
+                  <nb-option value="3">3 - Some technical skills </nb-option>
+                  <nb-option value="5">5 - Advanced computer user </nb-option>
+                  <nb-option value="6">6 - Network and programming skills </nb-option>
+                  <nb-option value="9">9 - Security penetration skills </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label  class="label form-control-label">
+                  Motive
+                </label>
+
+                <nb-select [disabled]="isReadOnly" [(selected)]="motive"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Low or no reward </nb-option>
+                  <nb-option value="4">4 - Possible reward </nb-option>
+                  <nb-option value="9">9 - High reward </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Opportunity
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="opportunity"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - Full access or expensive resources </nb-option>
+                  <nb-option value="4">4 - Special access or resources required  </nb-option>
+                  <nb-option value="7">7 - Some access or resources required </nb-option>
+                  <nb-option value="9">9 - No access or resources required </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Size
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="size"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="2">2 - Developers or system administrators </nb-option>
+                  <nb-option value="4">4 - Intranet users  </nb-option>
+                  <nb-option value="5">5 - Partners </nb-option>
+                  <nb-option value="6">6 - Authenticated users </nb-option>
+                  <nb-option value="9">9 - Anonymous Internet users </nb-option>
+                </nb-select>
+              </div>
+            </div>
+            <div class="col-3">
+              <b>Vulnerability Factors {{VulnerabilityFactors}}</b>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Easy of discovery
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="easyDiscovery"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Practically impossible </nb-option>
+                  <nb-option value="3">3 - Difficult  </nb-option>
+                  <nb-option value="7">7 - Easy </nb-option>
+                  <nb-option value="9">9 - Automated tools available </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Easy of Exploit
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="easyExploit"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Theoretical </nb-option>
+                  <nb-option value="3">3 - Difficult  </nb-option>
+                  <nb-option value="7">5 - Easy </nb-option>
+                  <nb-option value="9">9 - Automated tools available </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Awareness
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="awareness"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Unknown </nb-option>
+                  <nb-option value="3">4 - Hidden  </nb-option>
+                  <nb-option value="7">6 - Obvious </nb-option>
+                  <nb-option value="9">9 - Public knowledge </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Intrusion Detection
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="intrusionDetection"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Active detection in application </nb-option>
+                  <nb-option value="3">3 - Logged and reviewed  </nb-option>
+                  <nb-option value="8">8 - logged without review </nb-option>
+                  <nb-option value="9">9 - Not logged </nb-option>
+                </nb-select>
+              </div>
+            </div>
+            <div class="col-3">
+              <b>Technical Impact Factors</b>
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Loss of Confidentiality
+                </label>
+                <nb-select  [disabled]="isReadOnly" [(selected)]="lossConfidentiality"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="2">2 - Minimal non-sensitive data disclosed </nb-option>
+                  <nb-option value="3">6 - Minimal critical data disclosed, extensive non-sensitive data disclosed  </nb-option>
+                  <nb-option value="7">7 - Extensive critical data disclosed </nb-option>
+                  <nb-option value="9">9 - All data disclosed </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Loss of Integrity
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="lossIntegrity"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Minimal slightly corrupt data </nb-option>
+                  <nb-option value="3">3 - Minimal seriously corrupt data  </nb-option>
+                  <nb-option value="5">5 - Extensive slightly corrupt data </nb-option>
+                  <nb-option value="7">7 - Extensive seriously corrupt data </nb-option>
+                  <nb-option value="9">9 - All data totally corrupt </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Loss of Availability
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="lossAvailability"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Minimal secondary services interrupted </nb-option>
+                  <nb-option value="5">5 - Minimal primary services interrupted, extensive secondary services interrupted  </nb-option>
+                  <nb-option value="7">7 - Extensive primary services interrupted </nb-option>
+                  <nb-option value="7">9 - All services completely lost </nb-option>
+                </nb-select>
+
+              </div>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Loss of Accountability
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="lossAccountability"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Fully traceable </nb-option>
+                  <nb-option value="7">7 - Possibly traceable  </nb-option>
+                  <nb-option value="9">9 - Completely anonymous </nb-option>
+                </nb-select>
+              </div>
+            </div>
+            <div class="col-3">
+              <b>Business Impact Factors {{BusinessImpactFactors}}</b>
+              <div class="form-group">
+                <label for="cbprivacyviolation" class="label form-control-label">
+                  Financial Damage
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="financialDamage"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Less than the cost to fix the vulnerability </nb-option>
+                  <nb-option value="3">3 - Minor effect on annual profit  </nb-option>
+                  <nb-option value="7">7 - Significant effect on annual profit </nb-option>
+                  <nb-option value="9">9 - Bankruptcy </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Reputation Damage
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="reputationDamage"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="1">1 - Minimal damage </nb-option>
+                  <nb-option value="4">4 - Loss of major accounts </nb-option>
+                  <nb-option value="7">5 - Loss of goodwill </nb-option>
+                  <nb-option value="9">9 - Brand damage </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Non-compliance
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="nonCompliance"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="2">2 - Minor violation </nb-option>
+                  <nb-option value="5">5 - Clear violation </nb-option>
+                  <nb-option value="7">7 - High profile violation </nb-option>
+                </nb-select>
+              </div>
+              <div class="form-group">
+                <label class="label form-control-label">
+                  Privacy Violation
+                </label>
+                <nb-select [disabled]="isReadOnly" [(selected)]="privacyViolation"
+                (selectedChange)="selectedChange($event)"
+                 placeholder="Select" fullWidth>
+                  <nb-option value="0">0 - N/A</nb-option>
+                  <nb-option value="3">3 - One individual </nb-option>
+                  <nb-option value="5">5 - Hundreds of people </nb-option>
+                  <nb-option value="7">7 - Thousend of people </nb-option>
+                  <nb-option value="9">9 - Millions of people </nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>
+

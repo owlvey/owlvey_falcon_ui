@@ -34,13 +34,16 @@ import {
   NbUserModule,
   NbTabsetModule,
   NbTreeGridModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbStepperModule,
+  NbRouteTabsetModule,
 } from '@nebular/theme';
 import { EditSourceComponent } from './edit-source/edit-source.component';
 import { CreateSecuritySourceComponent } from './create-security-risk/create-security-source.component';
+import { CustomControlsModule } from '../custom-controls/custom-control.module';
+import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculator/risk-calculator.component';
 
-const ENTRY_COMPONENTS = [
-  CreateSecuritySourceComponent,
-];
 
 @NgModule({
   declarations: [CreateSourceComponent, CreateLatencyItemsSourceComponent,
@@ -48,12 +51,19 @@ const ENTRY_COMPONENTS = [
     ItemsSourceComponent, CreatePropItemsSourceComponent,
     DetailSourceComponent, ListSourceComponent, EditSourceComponent,
     TreeMapSourceComponent, CreateSecuritySourceComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule,
+  imports: [
+     NbDialogModule.forChild(),
+     NbWindowModule.forChild(),
+     FormsModule,
+     ReactiveFormsModule,
+     CommonModule, SourceRoutingModule, Ng2SmartTableModule,
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
      NbCardModule, ControlsModule, NbSelectModule,  NbRadioModule, NbTooltipModule,
-     NbIconModule, NbTabsetModule],
+     NbIconModule, NbTabsetModule, NbRouteTabsetModule, NbStepperModule, CustomControlsModule],
   entryComponents: [
-    ],
+    CreateSecuritySourceComponent, RiskCalculatorControlComponent
+  ],
+
 })
 export class SourceModule { }
 

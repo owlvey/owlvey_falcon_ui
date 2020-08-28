@@ -29,6 +29,7 @@ import {
 
   NbAlertModule,
 } from '@nebular/theme';
+import { CustomControlsModule } from '../custom-controls/custom-control.module';
 
 @NgModule({
   declarations: [ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent, EditSecurityThreatComponent],
@@ -44,6 +45,8 @@ import {
     NbTabsetModule,
     NbAlertModule,
     NbSelectModule,
-    NbCardModule, ControlsModule]
+    NbCardModule,
+    ControlsModule,
+    CustomControlsModule]
 })
 export class ThreatModule { }

@@ -453,9 +453,9 @@ implements OnInit, AfterViewInit, OnDestroy {
     this.windowService.open(
       CreateSecuritySourceComponent,
       {
-        title: `Register Source Security Risk`,
+        title: `Craete security risk for ${this.currentSource.name}`,
         hasBackdrop: false,
-        closeOnEsc: false,
+        closeOnEsc: true,
         context : {
           currentSource: JSON.parse(JSON.stringify(this.currentSource))
         },
