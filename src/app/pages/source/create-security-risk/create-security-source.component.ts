@@ -99,11 +99,12 @@ export class CreateSecuritySourceComponent  {
       this.currentThreat = data;
     });
     this.stepper.next();
-
   }
   onPreviousSecurityThreat(event){}
   onNextSecurityThreat(event){}
-  onNewSecurityRiskSave(event){}
+  onNewSecurityRiskSave(event){
+
+  }
 
   close() {
     this.windowRef.close();
