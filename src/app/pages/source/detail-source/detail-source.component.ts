@@ -8,7 +8,9 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService, NbWindowService, NbWindowConfig } from '@nebular/theme';
 import { FormatService } from '../../../@core/utils/format.service';
 import { RisksGateway } from 'app/@core/data/risks.gateway';
-import { CreateSecuritySourceComponent } from '../create-security-risk/create-security-source.component';
+import { CreateSecuritySourceComponent } from './../../risks/create-security-risk/create-security-source.component';
+import { debug } from 'console';
+import { CreateReliabilitySourceComponent } from 'app/pages/risks/create-reliability-risk/create-reliability-source.component';
 
 
 @Component({
@@ -19,7 +21,7 @@ import { CreateSecuritySourceComponent } from '../create-security-risk/create-se
 export class DetailSourceComponent
 implements OnInit, AfterViewInit, OnDestroy {
 
-  sourceId = 0;
+  sourceId: number = 0;
   productId = 0;
   startDate: Date = new Date();
   endDate: Date;
@@ -65,13 +67,9 @@ implements OnInit, AfterViewInit, OnDestroy {
   source: LocalDataSource = new LocalDataSource();
 
 
-  //#region Security Risk
-  ListSecurityThreats = [];
-  currentThreat: any = null;
-  currentThreatIndex: number = 0;
-  @ViewChild('securityRiskTemplate', { read: TemplateRef, static: true }) securityRiskTemplate: TemplateRef<HTMLElement>;
 
-  //#endregion
+
+
   constructor(
     protected location: Location,
     protected customerGateway: CustomersGateway,
@@ -99,9 +97,163 @@ implements OnInit, AfterViewInit, OnDestroy {
         this.startDate = new Date(paramMap.get('start'));
         this.endDate = new Date(paramMap.get('end'));
         this.getSource();
-        this.getSecurityThreats();
+        this.getRisks();
     });
   }
+  //#region  Risk
+
+  reliabilitySettings = {
+    mode: 'external',
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,
+      },
+      ettr:{
+        title: 'ETTR',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      userImpact:{
+        title: 'User Impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      ettFail:{
+        title: 'Time To Fail',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      incidentsPerYear : {
+        title: 'Incidents Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      badMinutesPerYear  : {
+        title: 'Bad Minutes Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+  };
+  reliabilitySource : LocalDataSource = new LocalDataSource();
+
+  securitySettings = {
+    mode: 'external',
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false,
+      },
+      risk:{
+        title: 'Risk',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      threatAgentFactor:{
+        title: 'Threat Agent',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      vulnerabilityFactor:{
+        title: 'Vulnerability',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      likeHood:{
+        title: 'Likehood',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      technicalImpact:{
+        title: 'Technical impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      businessImpact:{
+        title: 'Business impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      impact:{
+        title: 'Impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+  };
+  securitySource : LocalDataSource = new LocalDataSource();
+  onSecurityRiskSelect(item){
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/risks/security/detail'], extras);
+  }
+  onReliabilityRiskSelect(item){
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/risks/reliability/detail'], extras);
+  }
+  getRisks(){
+    this.riskGateway.getSecurityRisksBySource(this.sourceId).subscribe(data=>{
+      this.securitySource.load(data);
+    });
+    this.riskGateway.getReliabilityRisksBySource(this.sourceId).subscribe(data=>{
+      this.reliabilitySource.load(data);
+    });
+  }
+  //#endregion
   onBackClick($event){
     this.location.back();
   }
@@ -121,28 +273,6 @@ implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  //#region Risk
-  getSecurityThreats(){
-    this.riskGateway.getSecurityThreats().subscribe(data=>{
-      this.ListSecurityThreats = data;
-      if (this.ListSecurityThreats.length > 0){
-        this.currentThreat = this.ListSecurityThreats[0];
-      }
-    });
-  }
-  onNextSecurityThreat(event){
-    if (this.currentThreatIndex < this.ListSecurityThreats.length){
-      this.currentThreatIndex += 1;
-    }
-    this.currentThreat = this.ListSecurityThreats[this.currentThreatIndex];
-  }
-  onPreviousSecurityThreat(event){
-    if (this.currentThreatIndex > 0 ){
-      this.currentThreatIndex -= 1;
-    }
-    this.currentThreat = this.ListSecurityThreats[this.currentThreatIndex];
-  }
-  //#endregion
 
   getSource(){
     this.sourcesGateway.getSourceWithDetail(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
@@ -464,7 +594,17 @@ implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onNewReliabilityRisk(event){
-
+    this.windowService.open(
+      CreateReliabilitySourceComponent,
+      {
+        title: `Craete reliability risk for ${this.currentSource.name}`,
+        hasBackdrop: false,
+        closeOnEsc: true,
+        context : {
+          currentSource: JSON.parse(JSON.stringify(this.currentSource))
+        },
+      },
+    );
   }
   onNewSecurityRiskSave(event){
 

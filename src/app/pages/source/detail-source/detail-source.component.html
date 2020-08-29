@@ -247,13 +247,30 @@
             <button type="button" nbButton status="primary" (click)="onNewReliabilityRisk($event)"> Reliability </button>
           </div>
         </div>
-
       </div>
-
     </div>
   </nb-card-header>
   <nb-card-body>
-
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Security">
+        <div class="row">
+          <div class="col-12">
+            <ng2-smart-table [settings]="securitySettings" [source]="securitySource"
+              (userRowSelect)="onSecurityRiskSelect($event)">
+            </ng2-smart-table>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Reliability">
+        <div class="row">
+          <div class="col-12">
+            <ng2-smart-table [settings]="reliabilitySettings" [source]="reliabilitySource"
+              (userRowSelect)="onReliabilityRiskSelect($event)">
+            </ng2-smart-table>
+          </div>
+        </div>
+      </nb-tab>
+    </nb-tabset>
   </nb-card-body>
 </nb-card>
 
@@ -264,10 +281,10 @@
   <nb-card-body>
       <div class="row">
         <div class="col-sm-12">
-
           <nb-tabset fullWidth>
             <nb-tab tabTitle="Features">
-              <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
+              <ng2-smart-table [settings]="settings" [source]="source"
+                               (userRowSelect)="onUserRowSelect($event)">
               </ng2-smart-table>
             </nb-tab>
             <nb-tab tabTitle="Scalability">
@@ -307,10 +324,3 @@
 </div>
 
 
-<ng-template #securityRiskTemplate>
-  <div style="width: 60rem; height: 30rem;">
-
-  </div>
-
-
-</ng-template>

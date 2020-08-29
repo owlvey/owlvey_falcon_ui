@@ -1,10 +1,11 @@
+<form (ngSubmit)="onNewReliabilityRiskSave();" [formGroup]="createForm">
 <div style="width: 80rem; height: 40rem;" class="owlvey-window">
   <nb-stepper  #stepper>
     <nb-step  label="Choose a threat">
       <div class="row">
         <div class="col-12">
-          <ng2-smart-table [settings]="securitySettings" [source]="securitySource"
-              (userRowSelect)="onSecurityThreatRowSelect($event)">
+          <ng2-smart-table [settings]="dataSettings" [source]="dataSource"
+              (userRowSelect)="onThreatRowSelect($event)">
           </ng2-smart-table>
         </div>
       </div>
@@ -16,14 +17,14 @@
             <div class="col-sm-7">
               <div class="form-group">
                 <label for="inputSLO" class="label col-sm-3 form-control-label">Name</label>
-                <input type="text" [value]="currentThreat?.name"
+                <input type="text"  name="name" formControlName="name"
                     nbInput fullWidth placeholder="name"
                     class="input-full-width size-medium shape-rectangle">
               </div>
             </div>
             <div class="col-sm-4">
               <label for="inputSLO" class="label col-sm-3 form-control-label">Tags</label>
-              <input type="text" [value]="currentThreat?.tags"
+              <input type="text" name="tags" formControlName="tags"
                     nbInput fullWidth placeholder="name"
                     class="input-full-width size-medium shape-rectangle">
             </div>
@@ -41,7 +42,7 @@
                 <label for="inputSLO" class="label col-sm-3 form-control-label">Description</label>
                 <div>
                   <textarea rows="5" nbInput fullWidth shape="round"
-                    [ngModel]="currentThreat?.description"
+                    name="description" formControlName="description"
                     placeholder="Description" style="width: 100%; height: 100%;">
                   </textarea>
                 </div>
@@ -63,14 +64,15 @@
     </nb-step>
     <nb-step label="Confirrm">
       <div class="row">
-        <app-control-risk-calculator controlReadOnly="false" [(dataItems)]="currentThreat"></app-control-risk-calculator>
+        <app-control-reliability-calculator controlReadOnly="false" [(dataItems)]="currentThreat"></app-control-reliability-calculator>
       </div>
       <div class="row justify-content-end">
         <div class="col-2">
           <button status="warning" nbButton outline nbStepperPrevious>prev</button>
-          <button status="success" nbButton outline nbStepperNext (click)="onNewSecurityRiskSave($event)">Save</button>
+          <button type="submit" status="success" nbButton outline nbStepperNext>Save</button>
         </div>
       </div>
     </nb-step>
   </nb-stepper>
 </div>
+</form>

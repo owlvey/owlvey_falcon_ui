@@ -40,7 +40,6 @@ import {
   NbRouteTabsetModule,
 } from '@nebular/theme';
 import { EditSourceComponent } from './edit-source/edit-source.component';
-import { CreateSecuritySourceComponent } from './create-security-risk/create-security-source.component';
 import { CustomControlsModule } from '../custom-controls/custom-control.module';
 import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculator/risk-calculator.component';
 
@@ -50,7 +49,7 @@ import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculat
     CreateIntItemsSourceComponent,
     ItemsSourceComponent, CreatePropItemsSourceComponent,
     DetailSourceComponent, ListSourceComponent, EditSourceComponent,
-    TreeMapSourceComponent, CreateSecuritySourceComponent],
+    TreeMapSourceComponent],
   imports: [
      NbDialogModule.forChild(),
      NbWindowModule.forChild(),
@@ -61,7 +60,7 @@ import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculat
      NbCardModule, ControlsModule, NbSelectModule,  NbRadioModule, NbTooltipModule,
      NbIconModule, NbTabsetModule, NbRouteTabsetModule, NbStepperModule, CustomControlsModule],
   entryComponents: [
-    CreateSecuritySourceComponent, RiskCalculatorControlComponent
+    RiskCalculatorControlComponent
   ],
 
 })

@@ -22,6 +22,76 @@ export class ListThreatComponent implements OnInit {
   customerId: any;
   squads: any[];
   themeSubscription: any;
+  reliabilitySettings ={
+    mode: 'external',
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false,
+      },
+      ettd:{
+        title: 'Detect',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      ette:{
+        title: 'Engage',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      ettf:{
+        title: 'Fix',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      ettFail:{
+        title: 'Fail Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      userImpact:{
+        title: 'Percentage Impacted Users',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      incidentsPerYear:{
+        title: 'Incidents Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      badMinutesPerYear :{
+        title: 'Bad Minutes Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      tags:{
+        title: 'Tags',
+        type: 'number',
+        filter: false,
+      }
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    }
+  };
+  reliabilitySource: LocalDataSource = new LocalDataSource();
 
   securitySettings = {
     mode: 'external',
@@ -106,16 +176,26 @@ export class ListThreatComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSecurityThreats();
+    this.getReliabilityThreats();
   }
-  getReliabilityThreats(){
 
-  }
   onCreateSecurity(event){
     let queryParams: Params = {  };
     this.router.navigate(['/pages/threats/security/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
   onCreateReliability(event){
-
+    const queryParams: Params = { };
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/threats/reliability/create'], extras);
+  }
+  getReliabilityThreats(){
+    this.riskGateway.getReliabilityThreats().subscribe(data=>{
+      this.reliabilitySource.load(data);
+    });
   }
   getSecurityThreats() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -127,6 +207,16 @@ export class ListThreatComponent implements OnInit {
       });
 
     });
+  }
+  onReliabilityThreatRowSelect(item){
+    const threatId = item.data.id;
+    const queryParams: Params = { threatId: threatId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/threats/reliability/detail'], extras);
   }
   onSecurityThreatRowSelect(item) {
     const threatId = item.data.id;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListRiskComponent } from './list-risk/list-risk.component';
-import { CreateSecurityRiskComponent } from './create-security-risk/create-risk.component';
+import { EditSecurityRiskComponent } from './edit-security-risk/edit-risk.component';
 import { DetailSecurityRiskComponent } from './detail-security-risk/detail-risk.component';
 
 import { RiskRoutingModule } from "./risks.routing.module";
@@ -25,12 +25,39 @@ import {
   NbTreeGridModule,
   NbTabsetModule,
   NbAlertModule,
+  NbStepperModule,
+  NbRouteTabsetModule,
 } from '@nebular/theme';
+import { CustomControlsModule } from '../custom-controls/custom-control.module';
+import { CreateSecuritySourceComponent } from './create-security-risk/create-security-source.component';
+import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculator/risk-calculator.component';
+import { CreateReliabilitySourceComponent } from './create-reliability-risk/create-reliability-source.component';
+import { ReliabilityCalculatorControlComponent } from '../custom-controls/reliability-calculator/reliability-calculator.component';
+import { DetailReliabilityRiskComponent } from './detail-reliability-risk/detail-reliability-source.component';
+import { EditReliabilityRiskComponent } from './edit-reliability-risk/edit-risk.component';
+
 
 @NgModule({
-  declarations: [ListRiskComponent, CreateSecurityRiskComponent, DetailSecurityRiskComponent],
+  declarations: [
+    ListRiskComponent,
+    EditSecurityRiskComponent,
+    DetailSecurityRiskComponent,
+    CreateSecuritySourceComponent,
+    CreateReliabilitySourceComponent,
+    DetailReliabilityRiskComponent,
+    EditReliabilityRiskComponent
+  ],
   imports: [FormsModule, ReactiveFormsModule, CommonModule, RiskRoutingModule, Ng2SmartTableModule,
     NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-    NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule, NbActionsModule, NbTabsetModule]
+    NbCardModule, ControlsModule, NbCheckboxModule, NbIconModule,
+    NbActionsModule,
+    NbTabsetModule,
+    NbRouteTabsetModule,
+    NbStepperModule,
+    CustomControlsModule],
+  entryComponents: [
+    CreateSecuritySourceComponent, RiskCalculatorControlComponent,
+    CreateReliabilitySourceComponent, ReliabilityCalculatorControlComponent
+  ]
 })
 export class RiskModule { }

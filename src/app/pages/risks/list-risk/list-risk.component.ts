@@ -27,8 +27,34 @@ export class ListRiskComponent implements OnInit {
     mode: 'external',
     columns: {
       name: {
-        title: 'Name',
+        title: 'Risk Name',
         type: 'string',
+        filter: false,
+      },
+      source:{
+        title: 'Source Name',
+        type: 'string',
+        filter: false,
+      },
+      risk:{
+        title: 'Risk',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      likeHood:{
+        title: 'Likehood',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      impact:{
+        title: 'Impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
         filter: false,
       },
       tags:{
@@ -46,6 +72,64 @@ export class ListRiskComponent implements OnInit {
 
   securitySource: LocalDataSource = new LocalDataSource();
 
+
+  reliabilitySettings = {
+      mode: 'external',
+      pager: {
+        perPage: 5
+      },
+      columns: {
+        name: {
+          title: 'Name',
+          type: 'string',
+          filter: true,
+        },
+        ettr:{
+          title: 'ETTR',
+          type: 'number',
+          width: '2em',
+          sort:true,
+          filter: true,
+        },
+        userImpact:{
+          title: 'User Impact',
+          type: 'number',
+          width: '2em',
+          sort:true,
+          filter: true,
+        },
+        ettFail:{
+          title: 'Time To Fail',
+          type: 'number',
+          width: '2em',
+          sort:true,
+          filter: true,
+        },
+        incidentsPerYear : {
+          title: 'Incidents Per Year',
+          type: 'number',
+          width: '2em',
+          sort:true,
+          filter: true,
+        },
+        badMinutesPerYear  : {
+          title: 'Bad Minutes Per Year',
+          type: 'number',
+          width: '2em',
+          sort:true,
+          filter: true,
+        },
+      },
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+      },
+    };
+
+  reliabilitySource: LocalDataSource = new LocalDataSource();
+
+
   constructor(
     protected location: Location,
     protected theme: NbThemeService,
@@ -57,10 +141,23 @@ export class ListRiskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSecurityThreats();
+    this.getSecurityRisks();
+    this.getReliabilityRisks();
   }
-  getReliabilityThreats(){
-
+  getReliabilityRisks(){
+    this.riskGateway.getReliabilityRisks().subscribe(data => {
+      this.reliabilitySource.load(data);
+    });
+  }
+  onReliablityRowSelect(item){
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/risks/reliability/detail'], extras);
   }
   onCreateSecurity(event){
 
@@ -68,25 +165,19 @@ export class ListRiskComponent implements OnInit {
   onCreateReliability(event){
 
   }
-  getSecurityThreats() {
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      const echartsColors: any = config.variables.echarts;
-
-      this.riskGateway.getSecurityRisks().subscribe(data => {
-        this.securitySource.load(data);
-      });
-
+  getSecurityRisks() {
+    this.riskGateway.getSecurityRisks().subscribe(data => {
+      this.securitySource.load(data);
     });
   }
   onSecurityThreatRowSelect(item) {
-    const squadId = item.id;
-    const queryParams: Params = { squadId: squadId};
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
     const extras: any = {
       relativeTo: this.activatedRoute,
       queryParams: queryParams,
       queryParamsHandling: 'merge'
     }
-    this.router.navigate(['/pages/threats/security/detail'], extras);
+    this.router.navigate(['/pages/risks/security/detail'], extras);
   }
 }

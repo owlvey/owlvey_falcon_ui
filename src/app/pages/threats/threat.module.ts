@@ -6,6 +6,8 @@ import { DetailSecurityThreatComponent } from './detail-security-threat/detail-t
 import { EditSecurityThreatComponent } from './edit-security-threat/edit-threat.component';
 
 
+
+
 import { ThreatRoutingModule } from "./threat.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -30,9 +32,14 @@ import {
   NbAlertModule,
 } from '@nebular/theme';
 import { CustomControlsModule } from '../custom-controls/custom-control.module';
+import { CreateReliabilityThreatComponent } from './create-reliability-threat/create-reliability.component';
+import { DetailReliabilityThreatComponent } from './detail-reliability-threat/detail-threat.component';
+import { EditReliabilityThreatComponent } from './edit-reliability-threat/edit-threat.component';
 
 @NgModule({
-  declarations: [ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent, EditSecurityThreatComponent],
+  declarations: [ListThreatComponent, CreateSecurityThreatComponent, DetailSecurityThreatComponent,
+    EditSecurityThreatComponent, CreateReliabilityThreatComponent, DetailReliabilityThreatComponent,
+    EditReliabilityThreatComponent],
   imports: [FormsModule,
     ReactiveFormsModule, CommonModule, ThreatRoutingModule, Ng2SmartTableModule,
     NbCardModule,

@@ -1,22 +1,20 @@
-import { Component, OnInit, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
-import { SquadsGateway } from '../../../@core/data/squads.gateway';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NbWindowRef, NbStepperComponent, NbToastrService, NbThemeService } from '@nebular/theme';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NbToastrService, NbThemeService } from '@nebular/theme';
-import { CustomersGateway } from '../../../@core/data/customers.gateway';
-import { RisksGateway } from '../../../@core/data/risks.gateway';
+import { RisksGateway } from 'app/@core/data/risks.gateway';
+import { debug } from 'console';
+import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { SourcesGateway } from 'app/@core/data/sources.gateway';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 
 @Component({
-  selector: 'app-detail-security-risk',
-  templateUrl: './detail-risk.component.html',
-  styleUrls: ['./detail-risk.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-detail-reliability-source',
+  templateUrl: './detail-reliability-source.component.html',
+  styleUrls: ['./detail-reliability-source.component.scss']
 })
-export class DetailSecurityRiskComponent implements OnInit {
-
+export class DetailReliabilityRiskComponent  {
   isLoading: boolean = false;
   riskId: number;
   themeSubscription: any;
@@ -38,8 +36,7 @@ export class DetailSecurityRiskComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.riskId = parseInt(paramMap.get('riskId'));
-      this.getSecurityRisk();
-
+      this.getRisk();
     });
   }
   getSource(sourceId){
@@ -47,8 +44,8 @@ export class DetailSecurityRiskComponent implements OnInit {
       this.currentSource = data;
     });
   }
-  getSecurityRisk(){
-    this.riskGateway.getSecurityRisk(this.riskId).subscribe(data=>{
+  getRisk(){
+    this.riskGateway.getReliabilityRisk(this.riskId).subscribe(data=>{
       this.currentRisk = data;
       this.getSource(this.currentRisk.sourceId);
     });
@@ -58,7 +55,7 @@ export class DetailSecurityRiskComponent implements OnInit {
   }
   onDeleteClick(event){
     if (window.confirm('Are you sure you want to delete?')) {
-      this.riskGateway.deleteSecurityRisk(this.riskId).subscribe(res=>{
+      this.riskGateway.deleteReliabilityRisk(this.riskId).subscribe(res=>{
         this.toastr.success("risk was deleted");
         let queryParams: Params = { sourceId : null };
         this.router.navigate(['/pages/risks'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
@@ -77,6 +74,6 @@ export class DetailSecurityRiskComponent implements OnInit {
       queryParams: queryParams,
       queryParamsHandling: 'merge'
     }
-    this.router.navigate(['/pages/risks/security/edit'], extras);
+    this.router.navigate(['/pages/risks/reliability/edit'], extras);
   }
 }

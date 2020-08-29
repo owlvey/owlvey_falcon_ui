@@ -13,6 +13,9 @@
             </ng2-smart-table>
           </nb-tab>
           <nb-tab tabTitle="Reliability Risks" >
+            <ng2-smart-table [settings]="reliabilitySettings" [source]="reliabilitySource"
+              (userRowSelect)="onReliablityRowSelect($event)">
+            </ng2-smart-table>
           </nb-tab>
         </nb-tabset>
       </nb-card-body>
