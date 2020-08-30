@@ -102,7 +102,6 @@ export class RiskCalculatorControlComponent implements OnInit {
   @Input()
   set dataItems(data: any){
     if (data){
-      debugger;
       this.agentSkillLevel =  data.agentSkillLevel.toString();
       this.motive = data.motive.toString();
       this.opportunity = data.opportunity.toString();

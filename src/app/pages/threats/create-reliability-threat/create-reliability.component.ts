@@ -36,6 +36,13 @@ export class CreateReliabilityThreatComponent implements OnInit {
     goBack(){
       this.location.back();
     }
+
+    onCreateDefault(event){
+      this.riskGateway.postReliabilityThreatDefault().subscribe(data=>{
+        this.toastr.success("Success");
+        this.location.back();
+      });
+    }
     onSubmit() {
       if (!this.createForm.valid) {
         this.toastr.warning("Please check the form fields are filled correctly.", "Warning")

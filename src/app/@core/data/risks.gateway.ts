@@ -60,6 +60,12 @@ export class RisksGateway {
   postSecurityThreat(name: string): Observable<any> {
     return this.owlveyGateway.post(this.baseUrl + `risks/security/threats`, {name: name});
   }
+  postSecurityThreatDefault(): Observable<any> {
+    return this.owlveyGateway.post(this.baseUrl + `risks/security/threats/default`, {});
+  }
+  postReliabilityThreatDefault(): Observable<any> {
+    return this.owlveyGateway.post(this.baseUrl + `risks/reliability/threats/default`, {});
+  }
   postSecurityRisk(model: any): Observable<any> {
       return this.owlveyGateway.post(this.baseUrl + `risks/security`, model);
   }
