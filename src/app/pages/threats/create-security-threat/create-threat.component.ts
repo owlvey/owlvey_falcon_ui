@@ -36,6 +36,14 @@ export class CreateSecurityThreatComponent implements OnInit {
     goBack(){
       this.location.back();
     }
+
+    onCreateDefault(event){
+      this.riskGateway.postSecurityThreatDefault().subscribe(data=>{
+          this.toastr.success("Success");
+          this.location.back();
+      });
+    }
+
     onSubmit() {
       if (!this.createForm.valid) {
         this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
@@ -44,7 +52,7 @@ export class CreateSecurityThreatComponent implements OnInit {
       this.isLoading = true;
       let  defer = this.riskGateway.postSecurityThreat(this.createForm.value.name);
       defer.subscribe((data) => {
-          this.toastr.success("Product Created Success");
+          this.toastr.success("Success");
           this.isLoading = false;
           this.location.back();
         }, (error) => {
