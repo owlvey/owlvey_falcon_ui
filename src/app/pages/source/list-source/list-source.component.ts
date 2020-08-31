@@ -50,6 +50,13 @@ export class ListSourceComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
+      availabilityDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
       latency: {
         title: 'Latency',
         type: 'number',
@@ -58,6 +65,13 @@ export class ListSourceComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
+      latencyDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
       experience: {
         title: 'Experience',
         type: 'number',
@@ -65,6 +79,13 @@ export class ListSourceComponent implements OnInit {
         width: '2em',
         sort:true,
         sortDirection: 'asc'
+      },
+      experienceDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
       },
       references: {
         title: 'Refs',
@@ -156,8 +177,6 @@ export class ListSourceComponent implements OnInit {
   endDate: Date;
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
-  latencySource: LocalDataSource = new LocalDataSource();
-  experienceSource: LocalDataSource = new LocalDataSource();
 
   totalSources: number = 0;
   totalAssigned: number = 0;
@@ -203,6 +222,9 @@ export class ListSourceComponent implements OnInit {
             c.experience = c.measure.experience;
             c.total = c.measure.total;
             c.good = c.measure.good;
+            c.availabilityDebt = c.debt.availability;
+            c.latencyDebt = c.debt.latency;
+            c.experienceDebt = c.debt.experience;
             return c;
           }
         );
