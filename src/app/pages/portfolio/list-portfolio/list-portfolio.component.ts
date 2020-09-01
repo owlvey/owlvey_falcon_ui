@@ -24,6 +24,100 @@ export class ListPortfolioComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date;
 
+  managementSettings={
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {
+      availabilitySLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      availabilityHtml: {
+        title: 'Availability',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      latencySLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      latencyHtml: {
+        title: 'Latency',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      experienceSLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      experienceHtml: {
+        title: 'Experience',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true
+      },
+      securityRiskLabel: {
+        title: 'Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      lead: {
+        title: 'Lead',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },
+      featuresCount: {
+        title: 'Fea...',
+        type: 'string',
+        filter: true,
+        width: '2em',
+      },
+    },
+  };
   settings = {
     actions:{
       add:false,
@@ -110,18 +204,7 @@ export class ListPortfolioComponent implements OnInit {
         type: 'string',
         filter: true
       },
-      lead: {
-        title: 'Lead',
-        type: 'string',
-        filter: true,
-        width: '6em',
-      },
-      featuresCount: {
-        title: 'Fea...',
-        type: 'string',
-        filter: true,
-        width: '2em',
-      },
+
     },
   };
 

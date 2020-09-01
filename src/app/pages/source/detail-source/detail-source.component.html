@@ -21,56 +21,151 @@
               </div>
           </div>
           <div class="row">
-              <div class="col-sm-2">
+            <div class="col-sm-2">
                 <div class="form-group">
-                    <label for="txtGroup" class="label col-sm-3 form-control-label">Availability</label>
-                    <input readonly="readonly" type="text" [value]="currentSource?.quality?.availability"
-                        nbInput fullWidth id="txtGroup" placeholder="group"
+                    <label for="txtGroup" class="label form-control-label">Availability SLO</label>
+                    <input readonly="readonly" type="text" [value]="currentSource?.slo?.availability"
+                        nbInput fullWidth  placeholder="group"
                         class="input-full-width size-medium shape-rectangle">
                   </div>
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
-                    <label  class="label col-sm-3 form-control-label">Latency</label>
-                    <input readonly="readonly" type="text" [value]="currentSource?.quality?.latency"
+                    <label  class="label form-control-label">Latency SLO</label>
+                    <input readonly="readonly" type="text" [value]="currentSource?.slo?.latency"
                         nbInput fullWidth  placeholder="kind"
                         class="input-full-width size-medium shape-rectangle">
                   </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
-                  <label  class="label col-sm-3 form-control-label">Experiecne</label>
-                  <input readonly="readonly" type="text" [value]="currentSource?.quality?.experience"
+                  <label  class="label form-control-label">Experience</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.slo?.experience"
                       nbInput fullWidth  placeholder="kind"
                       class="input-full-width size-medium shape-rectangle">
                 </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
-                  <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
-                  <input readonly="readonly" type="number" [value]="currentSource?.quality?.total"
-                      nbInput fullWidth id="inputAvailability"
+                  <label  class="label form-control-label">Security Risk Label</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.securityRiskLabel"
+                      nbInput fullWidth  placeholder="kind"
                       class="input-full-width size-medium shape-rectangle">
                 </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
-                  <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
-                  <input readonly="readonly" type="number" [value]="currentSource?.quality?.good"
-                      nbInput fullWidth id="inputAvailability"
+                  <label  class="label form-control-label">Reliability Risk Label</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.reliabilityRiskLabel"
+                      nbInput fullWidth  placeholder="kind"
+                      class="input-full-width size-medium shape-rectangle">
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label  class="label form-control-label">Availability Debt</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.debt?.availability"
+                    nbInput fullWidth  placeholder="Debt"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label  class="label form-control-label">Latency Debt</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.debt?.latency"
+                    nbInput fullWidth  placeholder="Debt"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label  class="label form-control-label">Experience Debt</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.debt?.experience"
+                    nbInput fullWidth  placeholder="Debt"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                  <label  class="label form-control-label">Security Risk</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.securityRisk"
+                      nbInput fullWidth  placeholder="kind"
                       class="input-full-width size-medium shape-rectangle">
                 </div>
             </div>
             <div class="col-sm-2">
-                <div class="form-group">
-                  <label for="inputGood" class="label col-sm-3 form-control-label">Bad</label>
-                  <input readonly="readonly" type="number" [value]="currentSource?.quality?.delta"
-                      nbInput fullWidth id="inputAvailability" placeholder="Delta"
+              <div class="form-group">
+                  <label  class="label form-control-label">Reliability Risk </label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.reliabilityRisk"
+                      nbInput fullWidth  placeholder="kind"
                       class="input-full-width size-medium shape-rectangle">
                 </div>
             </div>
-
+            <div class="col-sm-2">
+              <div class="form-group">
+                  <label  class="label form-control-label">Minutes in Budget </label>
+                  <input readonly="readonly" type="text" [value]="365.25 * 24 * 60 * (1- currentSource?.slo?.availability)"
+                      nbInput fullWidth  placeholder="kind"
+                      class="input-full-width size-medium shape-rectangle">
+                </div>
+            </div>
           </div>
+
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                  <label for="txtGroup" class="label col-sm-3 form-control-label">Availability</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.quality?.availability"
+                      nbInput fullWidth id="txtGroup" placeholder="group"
+                      class="input-full-width size-medium shape-rectangle">
+                </div>
+          </div>
+          <div class="col-sm-2">
+              <div class="form-group">
+                  <label  class="label col-sm-3 form-control-label">Latency</label>
+                  <input readonly="readonly" type="text" [value]="currentSource?.quality?.latency"
+                      nbInput fullWidth  placeholder="kind"
+                      class="input-full-width size-medium shape-rectangle">
+                </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+                <label  class="label col-sm-3 form-control-label">Experiecne</label>
+                <input readonly="readonly" type="text" [value]="currentSource?.quality?.experience"
+                    nbInput fullWidth  placeholder="kind"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+                <label for="inputTotal" class="label col-sm-3 form-control-label">Total</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.quality?.total"
+                    nbInput fullWidth id="inputAvailability"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+                <label for="inputGood" class="label col-sm-3 form-control-label">Good</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.quality?.good"
+                    nbInput fullWidth id="inputAvailability"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+          </div>
+          <div class="col-sm-2">
+              <div class="form-group">
+                <label for="inputGood" class="label col-sm-3 form-control-label">Bad</label>
+                <input readonly="readonly" type="number" [value]="currentSource?.quality?.delta"
+                    nbInput fullWidth id="inputAvailability" placeholder="Delta"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+          </div>
+
+        </div>
 
 
 
@@ -229,6 +324,51 @@
   </nb-card-body>
 </nb-card>
 
+
+<nb-card>
+  <nb-card-header>
+    <h6>
+      Dependency Analysis
+    </h6>
+
+  </nb-card-header>
+  <nb-card-body>
+      <div class="row">
+        <div class="col-sm-12">
+          <nb-tabset fullWidth>
+            <nb-tab tabTitle="Journeys">
+              <ng2-smart-table [settings]="journeySettings" [source]="journeySource"
+                               (userRowSelect)="onUserRowSelect($event)">
+              </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Features">
+              <ng2-smart-table [settings]="settings" [source]="source"
+                               (userRowSelect)="onUserRowSelect($event)">
+              </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Scalability">
+              <div class="row">
+                <div class="col-sm-12">
+                    <div echarts [options]="optionsDailyScalability" class="echart"></div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                  <div class="col-sm-12">
+                      <div echarts [options]="optionsScalability" class="echart"></div>
+                  </div>
+              </div>
+            </nb-tab>
+          </nb-tabset>
+
+        </div>
+      </div>
+  </nb-card-body>
+</nb-card>
+
+
+
+
 <nb-card>
   <nb-card-header>
     <div class="row">
@@ -273,54 +413,3 @@
     </nb-tabset>
   </nb-card-body>
 </nb-card>
-
-<nb-card>
-  <nb-card-header>
-    Additional Analysis
-  </nb-card-header>
-  <nb-card-body>
-      <div class="row">
-        <div class="col-sm-12">
-          <nb-tabset fullWidth>
-            <nb-tab tabTitle="Features">
-              <ng2-smart-table [settings]="settings" [source]="source"
-                               (userRowSelect)="onUserRowSelect($event)">
-              </ng2-smart-table>
-            </nb-tab>
-            <nb-tab tabTitle="Scalability">
-              <div class="row">
-                <div class="col-sm-12">
-                    <div echarts [options]="optionsDailyScalability" class="echart"></div>
-                </div>
-              </div>
-              <br/>
-              <div class="row">
-                  <div class="col-sm-12">
-                      <div echarts [options]="optionsScalability" class="echart"></div>
-                  </div>
-              </div>
-            </nb-tab>
-          </nb-tabset>
-
-        </div>
-      </div>
-  </nb-card-body>
-</nb-card>
-
-
-<div style="display: none" >
-  <nb-card>
-      <nb-card-header>
-        Clues
-      </nb-card-header>
-      <nb-card-body>
-          <div class="row">
-            <div class="col-sm-12">
-                <div echarts [options]="clueBarOptions" style="height: 30rem;" class="echart" (chartInit)="onClueBar($event)"></div>
-            </div>
-          </div>
-      </nb-card-body>
-  </nb-card>
-</div>
-
-

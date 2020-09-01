@@ -29,20 +29,26 @@ export class ListFeatureComponent extends ProductBaseComponent {
       perPage: 30
     },
     columns: {
-      id: {
-        title: "Id",
-        type: "number",
-        filter: true,
-        width: "3em",
-        editable: false
-      },
       name: {
         title: "Name",
         type: "string",
         filter: true,
         editable: false
       },
-
+      securityRiskLabel: {
+        title: 'Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
       availability: {
         title: "Availability",
         type: "number",
@@ -69,7 +75,7 @@ export class ListFeatureComponent extends ProductBaseComponent {
         title: "Debt",
         type: "number",
         filter: true,
-        width: "3em",
+        width: "2em",
         editable: false
       },
       experience: {
@@ -93,6 +99,26 @@ export class ListFeatureComponent extends ProductBaseComponent {
         width: "3em",
         editable: false
       },
+    }
+  };
+
+  source: LocalDataSource = new LocalDataSource();
+  manageSettings = {
+    actions: {
+      add: false,
+      edit: false,
+      delete: false
+    },
+    pager: {
+      perPage: 30
+    },
+    columns: {
+      name: {
+        title: "Name",
+        type: "string",
+        filter: true,
+        editable: false
+      },
       indicatorsCount: {
         title: "Sources",
         type: "number",
@@ -111,23 +137,12 @@ export class ListFeatureComponent extends ProductBaseComponent {
         title: "Squads",
         type: "number",
         filter: true,
-        width: "3em",
+        width: "2em",
         editable: false
       }
     }
   };
-
-  /*
-  mttm: {
-        title: 'MTTM',
-        type: 'number',
-        filter: true,
-        width: '12em',
-        editable: false
-      },
-  */
-
-  source: LocalDataSource = new LocalDataSource();
+  manageSource: LocalDataSource = new LocalDataSource();
 
   constructor(
     protected location: Location,
@@ -159,7 +174,8 @@ export class ListFeatureComponent extends ProductBaseComponent {
           c.experienceDebt = c.debt.experience;
           return c;
         });
-        this.source.load(data);
+        this.source.load(target);
+        this.manageSource.load(target);
     });
   }
 

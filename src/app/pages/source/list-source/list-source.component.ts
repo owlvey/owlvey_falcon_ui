@@ -42,6 +42,20 @@ export class ListSourceComponent implements OnInit {
         type: 'custom',
         renderComponent: TooltipComponent
       },
+      securityRiskLabel: {
+        title: 'Estimated Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Estimated Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
       availability: {
         title: 'Availability',
         type: 'number',

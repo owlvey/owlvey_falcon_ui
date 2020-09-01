@@ -49,7 +49,7 @@ implements OnInit, AfterViewInit, OnDestroy {
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 10
     },
     columns: {
       id:{
@@ -65,6 +65,42 @@ implements OnInit, AfterViewInit, OnDestroy {
     },
   };
   source: LocalDataSource = new LocalDataSource();
+
+  journeySettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 10
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        filter: true,
+      },
+      availabilitySLO:{
+        title: 'Availability SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      latencySLO:{
+        title: 'Latency SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      experienceSLO:{
+        title: 'Experience SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+    },
+  };
+  journeySource: LocalDataSource = new LocalDataSource();
 
 
 
@@ -302,10 +338,8 @@ implements OnInit, AfterViewInit, OnDestroy {
         return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
       });
 
-
-      let tmpFeatures = [];
-      Object.keys(this.currentSource.features).forEach( k => tmpFeatures.push( { "id": this.currentSource.features[k], "name": k }) );
-      this.source.load(tmpFeatures);
+      this.source.load(this.currentSource.features);
+      this.journeySource.load(this.currentSource.journeys);
 
       let tmpSource = [ ['tvalue', 'name'] ];
       for (let key in this.currentSource.clues) {
@@ -338,10 +372,7 @@ implements OnInit, AfterViewInit, OnDestroy {
         ]
       };
     });
-    this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      const echarts: any = config.variables.echarts;
-    });
+
 
   }
 

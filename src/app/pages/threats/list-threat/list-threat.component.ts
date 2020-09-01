@@ -52,7 +52,7 @@ export class ListThreatComponent implements OnInit {
         filter: true,
       },
       ettFail:{
-        title: 'Fail Per Year',
+        title: 'Time To Fail',
         type: 'number',
         width: '2em',
         sort:true,

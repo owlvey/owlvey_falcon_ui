@@ -113,25 +113,6 @@ export class DetailPortfolioComponent implements OnInit {
 
   qualityIndicatorSource : LocalDataSource = new LocalDataSource();
 
-
-  squadsSettings = {
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 5
-    },
-    columns: {
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false
-      }
-    }
-  };
-
   indicatorSettings = {
     actions:{
       add:false,
@@ -183,8 +164,41 @@ export class DetailPortfolioComponent implements OnInit {
         width: '3em',
         editable: false,
       },
+      securityRiskLabel: {
+        title: 'Security Risk',
+        type: 'string',
+        filter: false,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Reliability Risk',
+        type: 'string',
+        filter: false,
+        width: '3em',
+        sort:true,
+      },
     },
   };
+
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }
+    }
+  };
+
 
   //#region Graph Dependencies
 
@@ -476,7 +490,9 @@ export class DetailPortfolioComponent implements OnInit {
             availability : item.measure.availability,
             total : item.measure.total,
             latency: item.measure.latency,
-            experience: item.measure.experience
+            experience: item.measure.experience,
+            securityRiskLabel: item.securityRiskLabel,
+            reliabilityRiskLabel: item.reliabilityRiskLabel
           };
           return c;
         });
