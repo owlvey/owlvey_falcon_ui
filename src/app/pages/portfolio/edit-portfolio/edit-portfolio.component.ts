@@ -7,7 +7,7 @@ import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -22,7 +22,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
 
   editForm: FormGroup;
   source: LocalDataSource = new LocalDataSource();
-  
+
   settings = {
     mode: 'external',
     actions:{
@@ -35,11 +35,11 @@ export class EditPortfolioComponent extends ProductBaseComponent {
     },
     edit: {
       editButtonContent: '<i class="nb-trash"></i>'
-    },    
+    },
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       mapId: {
         title: 'Id',
         type: 'number',
@@ -66,7 +66,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         filter: false,
         width: '3em',
         editable: false
-      },      
+      },
     },
   };
 
@@ -131,7 +131,7 @@ export class EditPortfolioComponent extends ProductBaseComponent {
         type: 'string',
         filter: true,
         editable: false
-      },     
+      },
     },
   };
 
@@ -172,8 +172,8 @@ export class EditPortfolioComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,
     protected theme: NbThemeService,
     protected router: Router,
-    protected activatedRoute: ActivatedRoute,    
-    protected portfolioGateway: PortfoliosGateway,
+    protected activatedRoute: ActivatedRoute,
+    protected portfolioGateway: JourneysGateway,
     protected featureGateway: FeaturesGateway,
     protected toastr: NbToastrService,
     protected sourceGateway: SourcesGateway ) {
@@ -190,17 +190,17 @@ export class EditPortfolioComponent extends ProductBaseComponent {
 
   loadSource(){
     this.portfolioGateway.getPortfolioWithAvailabilities(this.portfolioId, this.startDate, this.endDate).subscribe(data=>{
-      
+
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("avatar").setValue(data.avatar);
       this.editForm.get("availabilitySLO").setValue(data.availabilitySLO);
       this.editForm.get("latencySLO").setValue(data.latencySLO);
       this.editForm.get("experienceSLO").setValue(data.experienceSLO);
-      this.editForm.get("leaders").setValue(data.leaders);      
-      this.editForm.get("group").setValue(data.group);      
-      this.editForm.get("availabilitySLA").setValue(data.slaValue.availability); 
-      this.editForm.get("latencySLA").setValue(data.slaValue.latency); 
+      this.editForm.get("leaders").setValue(data.leaders);
+      this.editForm.get("group").setValue(data.group);
+      this.editForm.get("availabilitySLA").setValue(data.slaValue.availability);
+      this.editForm.get("latencySLA").setValue(data.slaValue.latency);
       this.source.load(data.features);
     });
   }
@@ -218,26 +218,26 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       availabilitySLO: ['', Validators.required],
       latencySLO: ['', Validators.required],
       experienceSLO: ['', Validators.required],
-      leaders: [''],      
+      leaders: [''],
       group: [''],
       availabilitySLA: ['', Validators.required],
       latencySLA: ['', Validators.required],
     });
   }
-  onDelete(event){    
+  onDelete(event){
     const featureId =  event.data.id;
     this.portfolioGateway.unRegisterFeature(this.portfolioId, featureId).subscribe(data=>{
       this.loadSource();
       this.loadNewFeatures();
-    });    
+    });
   }
   onSubmit() {
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
-    this.isLoading = true;    
-    const model = this.editForm.value;    
+    this.isLoading = true;
+    const model = this.editForm.value;
     let  defer = this.portfolioGateway.putPortfolio(this.portfolioId, model);
     defer.subscribe((data) => {
         this.toastr.success("Portfolio Modified Success");

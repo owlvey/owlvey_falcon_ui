@@ -6,8 +6,6 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { environment as env } from '../environments/environment';
-
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -16,11 +14,15 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbIconModule,
 } from '@nebular/theme';
-
-import { NbAuthModule, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2ResponseType, NbOAuth2GrantType, NbAuthOAuth2Token, NbAuthJWTInterceptor, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService, NbDummyAuthStrategyOptions, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbAuthService, NbOAuth2AuthStrategy, NbAuthOAuth2Token, NbOAuth2GrantType, NbOAuth2ClientAuthMethod, NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthJWTInterceptor } from '@nebular/auth';
+import { environment as env } from '../environments/environment';
 import { AuthGuard } from './auth-guard.service';
-import { environment } from '../environments/environment';
+import { VisModule } from 'ngx-vis';
+
+/** TODO: remove when work-around is not needed*/
+import 'hammerjs';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +31,8 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    ThemeModule.forRoot(),
+    VisModule,
+    NbIconModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -87,14 +90,16 @@ import { environment } from '../environments/environment';
         },
 
       }
-    })
+    }),
+    ThemeModule.forRoot(),
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: function ( req : HttpRequest<any>) {
         // avoid CORS attack
-        const whiteList = ["/accounts", "/customers", "/products", "/squads", "/services", "/features",
-                           "/sources", "/incidents", "/users", "/migrations", "/sourceItems", "/cache"];
+        const whiteList = ["/accounts", "/customers", "/products", "/squads", "/journeys", "/features",
+                           "/sources", "/incidents", "/users", "/migrations", "/sourceItems", "/cache",
+                          "/risks"];
         let found = false;
         whiteList.forEach(item=>{
            if ( req.url.indexOf(item) > -1 ){

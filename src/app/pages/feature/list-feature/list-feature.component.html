@@ -16,12 +16,23 @@
         </div>
       </nb-card-header>
       <nb-card-body>
-       
-          <ng2-smart-table
-                        [settings]="settings"
-                        [source]="source"
-                        (userRowSelect)="onUserRowSelect($event)">
-          </ng2-smart-table>
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="Quality" >
+            <ng2-smart-table
+            [settings]="settings"
+            [source]="source"
+            (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+          <nb-tab tabTitle="Management" >
+            <ng2-smart-table
+            [settings]="manageSettings"
+            [source]="manageSource"
+            (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+        </nb-tabset>
+
       </nb-card-body>
     </nb-card>
   </div>

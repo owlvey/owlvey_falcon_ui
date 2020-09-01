@@ -1,0 +1,78 @@
+<form (ngSubmit)="onNewSecurityRiskSave();" [formGroup]="createForm">
+<div style="width: 80rem; height: 40rem;" class="owlvey-window">
+  <nb-stepper  #stepper>
+    <nb-step  label="Choose a threat">
+      <div class="row">
+        <div class="col-12">
+          <ng2-smart-table [settings]="securitySettings" [source]="securitySource"
+              (userRowSelect)="onSecurityThreatRowSelect($event)">
+          </ng2-smart-table>
+        </div>
+      </div>
+    </nb-step>
+    <nb-step label="Description">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="form-group">
+                <label for="inputSLO" class="label col-sm-3 form-control-label">Name</label>
+                <input type="text"  name="name" formControlName="name"
+                    nbInput fullWidth placeholder="name"
+                    class="input-full-width size-medium shape-rectangle">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label for="inputSLO" class="label col-sm-3 form-control-label">Tags</label>
+              <input type="text" name="tags" formControlName="tags"
+                    nbInput fullWidth placeholder="name"
+                    class="input-full-width size-medium shape-rectangle">
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <label class="label col-sm-3 form-control-label">Reference</label>
+                <br/>
+                <a [href]="currentThreat?.reference" target="_blank">Link</a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="form-group">
+                <label for="inputSLO" class="label col-sm-3 form-control-label">Description</label>
+                <div>
+                  <textarea rows="5" nbInput fullWidth shape="round"
+                    name="description" formControlName="description"
+                    placeholder="Description" style="width: 100%; height: 100%;">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <img [src]="currentThreat?.avatar" width="60%" height="80%" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <div class="col-2">
+          <button status="warning" nbButton outline nbStepperPrevious>prev</button>
+          <button status="success" nbButton outline nbStepperNext>next</button>
+        </div>
+      </div>
+
+    </nb-step>
+    <nb-step label="Confirrm">
+      <div class="row">
+        <app-control-risk-calculator controlReadOnly="false" [(dataItems)]="currentThreat"></app-control-risk-calculator>
+      </div>
+      <div class="row justify-content-end">
+        <div class="col-2">
+          <button status="warning" nbButton outline nbStepperPrevious>prev</button>
+          <button type="submit" status="success" nbButton outline nbStepperNext>Save</button>
+        </div>
+      </div>
+    </nb-step>
+  </nb-stepper>
+</div>
+</form>

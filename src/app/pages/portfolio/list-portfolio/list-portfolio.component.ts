@@ -5,7 +5,7 @@ import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService } from '@nebular/theme';
 import { FormatService } from '../../../@core/utils/format.service';
 
@@ -16,15 +16,109 @@ import { FormatService } from '../../../@core/utils/format.service';
 })
 export class ListPortfolioComponent implements OnInit {
 
-  isLoading: boolean = false;  
+  isLoading: boolean = false;
   actionConfirmWord: string;
-  currentProduct: any;  
+  currentProduct: any;
   productId = 0;
   customerId = 0;
   startDate: Date = new Date();
-  endDate: Date;  
+  endDate: Date;
 
-  settings = {    
+  managementSettings={
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {
+      availabilitySLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      availabilityHtml: {
+        title: 'Availability',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      latencySLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      latencyHtml: {
+        title: 'Latency',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      experienceSLO: {
+        title: 'SLO',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
+      experienceHtml: {
+        title: 'Experience',
+        type: 'html',
+        filter: true,
+        width: '3em',
+        editable: false,
+        sort:true,
+        sortDirection: 'asc',
+        compareFunction:this.format.compareIconNumberColumn,
+      },
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true
+      },
+      securityRiskLabel: {
+        title: 'Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      lead: {
+        title: 'Lead',
+        type: 'string',
+        filter: true,
+        width: '6em',
+      },
+      featuresCount: {
+        title: 'Fea...',
+        type: 'string',
+        filter: true,
+        width: '2em',
+      },
+    },
+  };
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -33,23 +127,23 @@ export class ListPortfolioComponent implements OnInit {
     pager: {
       perPage: 1000
     },
-    columns: {  
+    columns: {
       availabilitySLA: {
         title: 'SLA',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },               
+      },
       availabilitySLO: {
         title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },      
+      },
       availabilityHtml: {
-        title: 'Availability',                
+        title: 'Availability',
         type: 'html',
         filter: true,
         width: '3em',
@@ -57,23 +151,23 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },            
+      },
       latencySLA: {
         title: 'SLA',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      }, 
+      },
       latencySLO: {
         title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      }, 
+      },
       latencyHtml: {
-        title: 'Latency',                
+        title: 'Latency',
         type: 'html',
         filter: true,
         width: '3em',
@@ -81,16 +175,16 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },            
+      },
       experienceSLO: {
         title: 'SLO',
         type: 'number',
         filter: true,
         width: '3em',
         editable: false
-      },         
+      },
       experienceHtml: {
-        title: 'Experience',                
+        title: 'Experience',
         type: 'html',
         filter: true,
         width: '3em',
@@ -98,7 +192,7 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
-      },            
+      },
       group:{
         title: 'Group',
         type: 'string',
@@ -109,24 +203,13 @@ export class ListPortfolioComponent implements OnInit {
         title: 'Name',
         type: 'string',
         filter: true
-      },     
-      lead: {
-        title: 'Lead',
-        type: 'string',
-        filter: true,
-        width: '6em',
-      },      
-      featuresCount: {
-        title: 'Fea...',
-        type: 'string',
-        filter: true,
-        width: '2em',
-      },            
+      },
+
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
-  options: any = {};  
+  options: any = {};
   serviceGroup: string;
   themeSubscription: any;
 
@@ -134,56 +217,56 @@ export class ListPortfolioComponent implements OnInit {
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private portfolioGateway: PortfoliosGateway,    
-    private router: Router, 
-    private theme: NbThemeService,    
-    private format: FormatService, 
-    private activatedRoute: ActivatedRoute) { 
-      
-    }        
+    private portfolioGateway: JourneysGateway,
+    private router: Router,
+    private theme: NbThemeService,
+    private format: FormatService,
+    private activatedRoute: ActivatedRoute) {
+
+    }
 
 
-  ngOnInit() {    
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {                        
-      this.productId = parseInt(paramMap.get('productId'));            
-      this.customerId = parseInt(paramMap.get('customerId'));      
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      this.productId = parseInt(paramMap.get('productId'));
+      this.customerId = parseInt(paramMap.get('customerId'));
       this.startDate = new Date(paramMap.get('start'));
-      this.endDate = new Date(paramMap.get('end'));      
-      this.serviceGroup = paramMap.get('group');      
-      this.getProduct(this.productId);      
-    });          
-  }  
+      this.endDate = new Date(paramMap.get('end'));
+      this.serviceGroup = paramMap.get('group');
+      this.getProduct(this.productId);
+    });
+  }
   getProduct(productId: number){
     this.productGateway.getProduct(productId).subscribe(data=>{
       this.currentProduct = data;
-      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{           
-        let newData = portfolios.map(c=> {  
+      this.portfolioGateway.getPortfoliosWithAvailabilities(productId, this.startDate, this.endDate, this.serviceGroup).subscribe(portfolios=>{
+        let newData = portfolios.map(c=> {
           c.availabilitySLA = c.slaValue.availability;
           c.latencySLA = c.slaValue.latency;
-          c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);          
-          c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);                    
-          c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);                    
+          c.availabilityHtml = this.format.buildStatusColumn(c.availability, c.availabilityErrorBudget , [c.availabilitySLO],['text-danger', 'text-success']);
+          c.latencyHtml = this.format.buildLatencyColumn(c.latency, c.latencySLO);
+          c.experienceHtml = this.format.buildStatusColumn(c.experience, c.experienceErrorBudget , [c.experienceSLO], ['text-danger', 'text-success']);
           c.lead = this.format.extractLead(c.leaders);
           return c;
-        });                
-        
+        });
+
         this.source.load(newData);
       });
-    });     
+    });
   }
- 
-  onCreate(event){    
+
+  onCreate(event){
     let queryParams: Params = {  };
-    this.router.navigate(['/pages/portfolios/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/portfolios/create'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
-  onAnnual(event){    
+  onAnnual(event){
     let queryParams: Params = {  };
-    this.router.navigate(['/pages/portfolios/annual'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+    this.router.navigate(['/pages/portfolios/annual'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
-  
-  onUserRowSelect(event): void {    
+
+  onUserRowSelect(event): void {
     const sourceId = event.data.id;
     let queryParams: Params = { portfolioId: sourceId };
-    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
-  }  
+    this.router.navigate(['/pages/portfolios/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
 }

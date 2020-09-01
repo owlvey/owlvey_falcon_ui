@@ -22,40 +22,40 @@ export class DetailUserComponent implements OnInit {
   userId: number;
   isLoading: boolean = false;
 
-  serviceSettings: any = {
+  journeySettings: any = {
     actions:{
       add:false,
       edit:false,
       delete:false
     },
-    columns: {      
+    columns: {
       customer: {
         title: 'customer',
         type: 'string',
         filter: false,
         width: '20em',
-      },  
+      },
       product: {
         title: 'product',
         type: 'string',
         filter: false,
         width: '20em',
-      },  
+      },
       service: {
         title: 'service',
         type: 'string',
         filter: false
-      },  
+      },
       slo: {
         title: 'slo',
         type: 'number',
         filter: false,
         width: '5em',
-      },      
+      },
     },
   };
 
-  serviceSource: LocalDataSource = new LocalDataSource();
+  journeySource: LocalDataSource = new LocalDataSource();
 
   productSettings: any = {
     actions:{
@@ -63,28 +63,28 @@ export class DetailUserComponent implements OnInit {
       edit:false,
       delete:false
     },
-    columns: {      
+    columns: {
       customerName: {
         title: 'customer',
         type: 'string',
         filter: false,
         width: '20em',
-      },  
+      },
       name: {
         title: 'product',
         type: 'string',
         filter: false
-      },  
+      },
       servicesCount: {
         title: 'services',
         type: 'number',
         filter: false,
         width: '5em',
-      },      
+      },
     },
   };
 
-  
+
 
   productSource: LocalDataSource = new LocalDataSource();
 
@@ -94,30 +94,30 @@ export class DetailUserComponent implements OnInit {
       edit:false,
       delete:false
     },
-    columns: {      
+    columns: {
       customer: {
         title: 'customer',
         type: 'string',
         filter: false,
         width: '20em',
-      },  
+      },
       product: {
         title: 'product',
         type: 'string',
         filter: false,
         width: '20em',
-      },  
+      },
       feature: {
         title: 'feature',
         type: 'string',
-        filter: false,        
-      },  
+        filter: false,
+      },
       squad: {
         title: 'squad',
         type: 'string',
         filter: false,
         width: '20em',
-      },        
+      },
     },
   };
 
@@ -136,7 +136,7 @@ export class DetailUserComponent implements OnInit {
       this.userGateway.getUser(this.userId).subscribe(data => {
         this.currentUser = data;
         this.productSource.load(data.products);
-        this.serviceSource.load(data.services);
+        this.journeySource.load(data.services);
         this.featureSource.load(data.features);
       });
     });

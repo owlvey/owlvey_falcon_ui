@@ -28,6 +28,7 @@ export class CreateLatencyItemsSourceComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   startDate: Date;
   endDate: Date;
+  group: string;
   constructor(
     private location: Location,
     private customerGateway: CustomersGateway,
@@ -47,6 +48,7 @@ export class CreateLatencyItemsSourceComponent implements OnInit {
       this.sourceId = parseInt(paramMap.get('sourceId'));
       this.startDate = new Date(paramMap.get('start'));
       this.endDate = new Date(paramMap.get('end'));
+      this.group = paramMap.get("group");
     });
 
     var d = new Date();

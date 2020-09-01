@@ -7,7 +7,7 @@ import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 
@@ -28,10 +28,10 @@ export class EditFeatureComponent extends ProductBaseComponent {
       position: 'right',
       add:false,
       edit:true,
-      delete:false,      
-    },    
+      delete:false,
+    },
     edit: {
-      editButtonContent: '<i class="nb-trash"></i>',      
+      editButtonContent: '<i class="nb-trash"></i>',
     },
     pager: {
       perPage: 10
@@ -44,7 +44,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
         width: '3em',
         editable: false
       },
-      
+
       group: {
         title: 'Group',
         type: 'string',
@@ -60,7 +60,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       source: {
         title: 'Source',
         type: 'string',
-        filter: true,        
+        filter: true,
       }
     },
   };
@@ -183,8 +183,8 @@ export class EditFeatureComponent extends ProductBaseComponent {
     protected productGateway: ProductsGateway,
     protected theme: NbThemeService,
     protected router: Router,
-    protected activatedRoute: ActivatedRoute,    
-    protected portfolioGateway: PortfoliosGateway,
+    protected activatedRoute: ActivatedRoute,
+    protected portfolioGateway: JourneysGateway,
     protected sourceGateway: SourcesGateway,
     protected toastr: NbToastrService,
     protected featureGateway: FeaturesGateway ) {
@@ -211,7 +211,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
       this.editForm.get("id").setValue(data.id);
       this.editForm.get("name").setValue(data.name);
       this.editForm.get("description").setValue(data.description);
-      this.editForm.get("avatar").setValue(data.avatar);      
+      this.editForm.get("avatar").setValue(data.avatar);
       this.source.load(data.indicators);
       this.squadsSource.load(data.squads);
     });
@@ -252,7 +252,7 @@ export class EditFeatureComponent extends ProductBaseComponent {
     });
   }
   //#endregion
-  
+
 
   onUnRegisterSquad(event){
     const squadId = event.data.id;
@@ -266,16 +266,16 @@ export class EditFeatureComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      avatar: ['', Validators.required]      
+      avatar: ['', Validators.required]
     });
   }
-  onSubmit() {    
+  onSubmit() {
     if (!this.editForm.valid) {
       this.toastr.warning("Please check the form fields are filled correctly.", "Warning")
       return;
     }
     this.isLoading = true;
-    const model = this.editForm.value;    
+    const model = this.editForm.value;
     let  defer = this.featureGateway.updateFeature(this.featureId, model);
     defer.subscribe((data) => {
         this.toastr.success("Feature Modified Success");

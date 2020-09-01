@@ -6,9 +6,9 @@ import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
-import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
+import { Data, Options, DataSet, VisNetworkService, Node, Edge } from 'ngx-vis';
 import { FormatService } from '../../../@core/utils/format.service';
 
 
@@ -113,25 +113,6 @@ export class DetailPortfolioComponent implements OnInit {
 
   qualityIndicatorSource : LocalDataSource = new LocalDataSource();
 
-
-  squadsSettings = {
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 5
-    },
-    columns: {
-      name: {
-        title: 'Name',
-        type: 'string',
-        filter: false
-      }
-    }
-  };
-
   indicatorSettings = {
     actions:{
       add:false,
@@ -183,8 +164,54 @@ export class DetailPortfolioComponent implements OnInit {
         width: '3em',
         editable: false,
       },
+      securityRiskLabel: {
+        title: 'Security Risk',
+        type: 'string',
+        filter: false,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Reliability Risk',
+        type: 'string',
+        filter: false,
+        width: '3em',
+        sort:true,
+      },
     },
   };
+
+  squadsSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false
+      }
+    }
+  };
+
+
+  //#region Graph Dependencies
+
+  public visNetwork: string = 'networkId1';
+  public visNetworkData: Data;
+  public visNetworkOptions: Options;
+
+  colors: any;
+
+
+  //#endregion
+
+
 
 
 
@@ -195,7 +222,7 @@ export class DetailPortfolioComponent implements OnInit {
     private sourcesGateway: SourcesGateway,
     private toastr: NbToastrService,
     private featuresGateway: FeaturesGateway,
-    private portfolioGateway: PortfoliosGateway,
+    private portfolioGateway: JourneysGateway,
     private theme: NbThemeService,
     private format: FormatService,
     private router: Router,
@@ -221,7 +248,10 @@ export class DetailPortfolioComponent implements OnInit {
       const echarts: any = config.variables.echarts;
 
       this.portfolioGateway.getPortfolioGraph(this.portfolioId, this.startDate, this.endDate).subscribe( data =>{
-        this.buildGraph(data);
+        var result = this.buildGraph(data);
+        this.visNetworkData = result.data;
+        this.visNetworkOptions = result.options;
+
       });
 
     });
@@ -232,18 +262,12 @@ export class DetailPortfolioComponent implements OnInit {
       return;
     }
     setTimeout(() => {
-
-      try {
         this.visNetworkService.setOptions(this.visNetwork, { physics: false });
         this.visNetworkService.moveTo( this.visNetwork , {
                     position: {x:-300, y:-300},
                     scale: 1,
                     animation: true
-        } );
-      } catch (error) {
-        console.log(error);
-      }
-
+        });
     }, 3000);
 
     const fgText = this.colors.fgText;
@@ -261,7 +285,7 @@ export class DetailPortfolioComponent implements OnInit {
       if (c.group == "products"){
         return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
       }
-      else if (c.group == "services"){
+      else if (c.group == "journeys"){
         let service_node = {
           id: c.id,
           value: 12,
@@ -302,6 +326,9 @@ export class DetailPortfolioComponent implements OnInit {
                   highlight:{background:successLight, border: primaryLight},
                   hover:{background:successLight, border: primaryLight}}};
       }
+      else {
+        throw new Error(`group not found ${c.group}`);
+      }
     });
     var edgeData = data.edges.map(c=>{
       const ava = String(c.value);
@@ -322,14 +349,13 @@ export class DetailPortfolioComponent implements OnInit {
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new VisNodes(nodeData);
-    const edges = new VisEdges(edgeData);
-    this.visNetworkData = {
-      nodes,
-      edges,
+
+    let NetworkData = {
+      nodes: nodeData,
+      edges: edgeData,
     };
 
-    this.visNetworkOptions = {
+    let NetworkOptions = {
       physics:{
         enabled: true,
         forceAtlas2Based: {
@@ -387,6 +413,11 @@ export class DetailPortfolioComponent implements OnInit {
         enabled: false
       }
     };
+    return {
+      data: NetworkData,
+      options: NetworkOptions
+    };
+
   }
 
   getPortfolio(){
@@ -455,10 +486,13 @@ export class DetailPortfolioComponent implements OnInit {
           let c = {
             id : item.id,
             source : item.source,
+            sourceId: item.sourceId,
             availability : item.measure.availability,
             total : item.measure.total,
             latency: item.measure.latency,
-            experience: item.measure.experience
+            experience: item.measure.experience,
+            securityRiskLabel: item.securityRiskLabel,
+            reliabilityRiskLabel: item.reliabilityRiskLabel
           };
           return c;
         });
@@ -584,7 +618,7 @@ export class DetailPortfolioComponent implements OnInit {
               }
           }
       ]
-  };
+    };
 
   }
 
@@ -603,15 +637,10 @@ export class DetailPortfolioComponent implements OnInit {
     this.echartCalendarInstance = ec;
   }
 
-
-  public visNetwork: string = 'networkId1';
-  public visNetworkData: VisNetworkData;
-  public visNetworkOptions: VisNetworkOptions;
-  colors: any;
-  graphData = {};
-
   public networkInitialized(): void {
 
+    this.visNetworkService.on(this.visNetwork, 'click');
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
 
   onFeatureDetail(event){

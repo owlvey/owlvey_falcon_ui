@@ -12,7 +12,6 @@ import { CreateIntItemsSourceComponent  } from './create-int-items-source/create
 import { CreateLatencyItemsSourceComponent  } from './create-latency-items-source/create-latency-items-source.component';
 
 
-import { LatencyDetailSourceComponent } from './latency-detail-source/latency-detail-source.component';
 import { SourceRoutingModule } from "./source.routing.module";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -35,23 +34,35 @@ import {
   NbUserModule,
   NbTabsetModule,
   NbTreeGridModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbStepperModule,
+  NbRouteTabsetModule,
 } from '@nebular/theme';
-import { LatencySourceItemsComponent } from './latency-items-source/latency-items-source.component';
 import { EditSourceComponent } from './edit-source/edit-source.component';
-import { LatencyEditSourceComponent } from './latency-edit-source/latency-edit-source.component';
+import { CustomControlsModule } from '../custom-controls/custom-control.module';
+import { RiskCalculatorControlComponent } from '../custom-controls/risk-calculator/risk-calculator.component';
 
 
 @NgModule({
   declarations: [CreateSourceComponent, CreateLatencyItemsSourceComponent,
     CreateIntItemsSourceComponent,
-    LatencyEditSourceComponent,
     ItemsSourceComponent, CreatePropItemsSourceComponent,
-    LatencyDetailSourceComponent,  LatencySourceItemsComponent,
     DetailSourceComponent, ListSourceComponent, EditSourceComponent,
     TreeMapSourceComponent],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, SourceRoutingModule, Ng2SmartTableModule,
+  imports: [
+     NbDialogModule.forChild(),
+     NbWindowModule.forChild(),
+     FormsModule,
+     ReactiveFormsModule,
+     CommonModule, SourceRoutingModule, Ng2SmartTableModule,
      NbCardModule, NgxEchartsModule, ChartModule, NbDatepickerModule, NgxChartsModule, NbButtonModule,
-     NbCardModule, ControlsModule, NbRadioModule, NbTooltipModule, NbIconModule, NbTabsetModule],
+     NbCardModule, ControlsModule, NbSelectModule,  NbRadioModule, NbTooltipModule,
+     NbIconModule, NbTabsetModule, NbRouteTabsetModule, NbStepperModule, CustomControlsModule],
+  entryComponents: [
+    RiskCalculatorControlComponent
+  ],
+
 })
 export class SourceModule { }
 

@@ -5,7 +5,7 @@ import { CustomersGateway } from './../../../@core/data/customers.gateway';
 import { SourcesGateway } from './../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 
 @Component({
   selector: 'app-list-home',
@@ -18,7 +18,7 @@ export class ListHomeComponent implements OnInit {
     private location: Location,
     private customerGateway: CustomersGateway,
     private productGateway: ProductsGateway,
-    private portfolioGateway: PortfoliosGateway,
+    private portfolioGateway: JourneysGateway,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
 

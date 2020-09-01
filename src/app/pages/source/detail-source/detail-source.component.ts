@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, AfterViewInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
-import { NbThemeService, NbToastrService } from '@nebular/theme';
-import { map, min, max } from 'rxjs/operators';
+import { NbThemeService, NbToastrService, NbWindowService, NbWindowConfig } from '@nebular/theme';
 import { FormatService } from '../../../@core/utils/format.service';
-import { BaseDetailSourceComponent } from '../base-detail-source-component';
-
+import { RisksGateway } from 'app/@core/data/risks.gateway';
+import { CreateSecuritySourceComponent } from './../../risks/create-security-risk/create-security-source.component';
+import { debug } from 'console';
+import { CreateReliabilitySourceComponent } from 'app/pages/risks/create-reliability-risk/create-reliability-source.component';
 
 
 @Component({
@@ -17,8 +18,13 @@ import { BaseDetailSourceComponent } from '../base-detail-source-component';
   templateUrl: './detail-source.component.html',
   styleUrls: ['./detail-source.component.scss']
 })
-export class DetailSourceComponent  extends BaseDetailSourceComponent implements OnInit, AfterViewInit {
+export class DetailSourceComponent
+implements OnInit, AfterViewInit, OnDestroy {
 
+  sourceId: number = 0;
+  productId = 0;
+  startDate: Date = new Date();
+  endDate: Date;
 
   isLoading: boolean = false;
   sources: any[];
@@ -43,7 +49,7 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
       delete:false
     },
     pager: {
-      perPage: 20
+      perPage: 10
     },
     columns: {
       id:{
@@ -60,22 +66,249 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
   };
   source: LocalDataSource = new LocalDataSource();
 
+  journeySettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 10
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        filter: true,
+      },
+      availabilitySLO:{
+        title: 'Availability SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      latencySLO:{
+        title: 'Latency SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      experienceSLO:{
+        title: 'Experience SLO',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+    },
+  };
+  journeySource: LocalDataSource = new LocalDataSource();
+
+
+
+
+
   constructor(
-    location: Location,
-    customerGateway: CustomersGateway,
-    productGateway: ProductsGateway,
-    sourcesGateway: SourcesGateway,
-    toastr: NbToastrService,
-    theme: NbThemeService,
-    format: FormatService,
-    router: Router,
-    activatedRoute: ActivatedRoute) {
-      super(location, customerGateway, productGateway, sourcesGateway, toastr, theme, format, router, activatedRoute);
+    protected location: Location,
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
+    protected sourcesGateway: SourcesGateway,
+    protected toastr: NbToastrService,
+    protected theme: NbThemeService,
+    protected format: FormatService,
+    protected router: Router,
+    protected riskGateway: RisksGateway,
+    protected activatedRoute: ActivatedRoute,
+    protected windowService: NbWindowService) {
+      this.endDate = new Date();
+      this.startDate = new Date();
+      this.startDate.setDate(this.startDate.getDate() - 365);
     }
+  ngOnDestroy(): void {
+
+  }
 
   ngOnInit() {
-    super.baseOnInit();
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+        this.productId = parseInt(paramMap.get('productId'));
+        this.sourceId = parseInt(paramMap.get('sourceId'));
+        this.startDate = new Date(paramMap.get('start'));
+        this.endDate = new Date(paramMap.get('end'));
+        this.getSource();
+        this.getRisks();
+    });
   }
+  //#region  Risk
+
+  reliabilitySettings = {
+    mode: 'external',
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,
+      },
+      ettr:{
+        title: 'ETTR',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      userImpact:{
+        title: 'User Impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      ettFail:{
+        title: 'Time To Fail',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      incidentsPerYear : {
+        title: 'Incidents Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+      badMinutesPerYear  : {
+        title: 'Bad Minutes Per Year',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: true,
+      },
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+  };
+  reliabilitySource : LocalDataSource = new LocalDataSource();
+
+  securitySettings = {
+    mode: 'external',
+    pager: {
+      perPage: 5
+    },
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: false,
+      },
+      risk:{
+        title: 'Risk',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      threatAgentFactor:{
+        title: 'Threat Agent',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      vulnerabilityFactor:{
+        title: 'Vulnerability',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      likeHood:{
+        title: 'Likehood',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      technicalImpact:{
+        title: 'Technical impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      businessImpact:{
+        title: 'Business impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+      impact:{
+        title: 'Impact',
+        type: 'number',
+        width: '2em',
+        sort:true,
+        filter: false,
+      },
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+  };
+  securitySource : LocalDataSource = new LocalDataSource();
+  onSecurityRiskSelect(item){
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/risks/security/detail'], extras);
+  }
+  onReliabilityRiskSelect(item){
+    const riskId = item.data.id;
+    const queryParams: Params = { riskId: riskId};
+    const extras: any = {
+      relativeTo: this.activatedRoute,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    }
+    this.router.navigate(['/pages/risks/reliability/detail'], extras);
+  }
+  getRisks(){
+    this.riskGateway.getSecurityRisksBySource(this.sourceId).subscribe(data=>{
+      this.securitySource.load(data);
+    });
+    this.riskGateway.getReliabilityRisksBySource(this.sourceId).subscribe(data=>{
+      this.reliabilitySource.load(data);
+    });
+  }
+  //#endregion
+  onBackClick($event){
+    this.location.back();
+  }
+
+  onDeleteClick(event){
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.sourcesGateway.deleteSource(this.sourceId).subscribe(res=>{
+        this.toastr.success("Source was deleted");
+        let queryParams: Params = { sourceId : null };
+        this.router.navigate(['/pages/sources'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }, (error) => {
+        this.toastr.warning("Something went wrong, please try again.", "Warning")
+      });
+
+    } else {
+      event.confirm.reject();
+    }
+  }
+
 
   getSource(){
     this.sourcesGateway.getSourceWithDetail(this.sourceId, this.startDate, this.endDate).subscribe(data=>{
@@ -105,10 +338,8 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
         return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
       });
 
-
-      let tmpFeatures = [];
-      Object.keys(this.currentSource.features).forEach( k => tmpFeatures.push( { "id": this.currentSource.features[k], "name": k }) );
-      this.source.load(tmpFeatures);
+      this.source.load(this.currentSource.features);
+      this.journeySource.load(this.currentSource.journeys);
 
       let tmpSource = [ ['tvalue', 'name'] ];
       for (let key in this.currentSource.clues) {
@@ -141,10 +372,7 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
         ]
       };
     });
-    this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      const echarts: any = config.variables.echarts;
-    });
+
 
   }
 
@@ -355,7 +583,7 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
 
   onEditClick(event){
     let queryParams: Params = { };
-    this.router.navigate(['/pages/sources/availability/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+    this.router.navigate(['/pages/sources/edit'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
 
   ngAfterViewInit() {
@@ -382,5 +610,34 @@ export class DetailSourceComponent  extends BaseDetailSourceComponent implements
     let queryParams: Params = { featureId : featureId };
     this.router.navigate(['/pages/features/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
   }
+  onNewSecurityRisk(event){
+    this.windowService.open(
+      CreateSecuritySourceComponent,
+      {
+        title: `Craete security risk for ${this.currentSource.name}`,
+        hasBackdrop: false,
+        closeOnEsc: true,
+        context : {
+          currentSource: JSON.parse(JSON.stringify(this.currentSource))
+        },
+      },
+    );
 
+  }
+  onNewReliabilityRisk(event){
+    this.windowService.open(
+      CreateReliabilitySourceComponent,
+      {
+        title: `Craete reliability risk for ${this.currentSource.name}`,
+        hasBackdrop: false,
+        closeOnEsc: true,
+        context : {
+          currentSource: JSON.parse(JSON.stringify(this.currentSource))
+        },
+      },
+    );
+  }
+  onNewSecurityRiskSave(event){
+
+  }
 }

@@ -10,27 +10,36 @@
               <!--
 <span class="text-info"> Quality = min(Availability, Latency) | Total: {{ totalServices }}, SLO compliance: {{ sloCompliance }}, General Quality: {{ this.efectiveness }} </span>
               -->
-              
+
             </div>
             <div class="col-sm-4">
               <div class="d-flex align-content-center">
-                <button type="button" nbButton status="primary" (click)="onAnnual($event)" class="ml-auto mr-2"> Annual </button>              
-                <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>              
+                <button type="button" nbButton status="primary" (click)="onAnnual($event)" class="ml-auto mr-2"> Annual </button>
+                <button type="button" nbButton status="primary" (click)="onCreate($event)" class="mr-2"> Create </button>
               </div>
 
             </div>
 
 
           </div>
-          
-      </nb-card-header>  
-  
+
+      </nb-card-header>
+
       <nb-card-body>
-          <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
-          </ng2-smart-table>
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="Quality">
+            <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+          <nb-tab tabTitle="Management">
+            <ng2-smart-table [settings]="managementSettings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+        </nb-tabset>
+
         </nb-card-body>
-  
+
     </nb-card>
-    
+
   </div>
 </div>

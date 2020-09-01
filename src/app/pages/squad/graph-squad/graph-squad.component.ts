@@ -8,7 +8,7 @@ import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
 import { CustomersGateway } from '../../../@core/data/customers.gateway';
-import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdges } from 'ngx-vis';
+import { Data, Options, VisNetworkService, DataSet, Node, Edge } from 'ngx-vis';
 
 
 @Component({
@@ -16,27 +16,27 @@ import { VisNetworkData, VisNetworkOptions, VisNetworkService, VisNodes, VisEdge
   templateUrl: './graph-squad.component.html',
   styleUrls: ['./graph-squad.component.scss']
 })
-export class GraphSquadComponent extends CustomerBaseComponent implements OnDestroy {  
+export class GraphSquadComponent extends CustomerBaseComponent implements OnDestroy {
   themeSubscription: any;
   public visNetwork: string = 'networkId1';
-  public visNetworkData: VisNetworkData;
-  public visNetworkOptions: VisNetworkOptions;
+  public visNetworkData: Data;
+  public visNetworkOptions: Options;
   colors: any;
 
   constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,        
-    protected squadGateway: SquadsGateway,    
+    protected customerGateway: CustomersGateway,
+    protected squadGateway: SquadsGateway,
     protected theme: NbThemeService,
-    protected toastr: NbToastrService,    
-    protected router: Router, 
+    protected toastr: NbToastrService,
+    protected router: Router,
     protected visNetworkService: VisNetworkService,
-    protected activatedRoute: ActivatedRoute) {       
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, theme, router, activatedRoute);
-    }            
+    }
   onNgOnInit(){
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {      
-      this.colors = config.variables;            
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      this.colors = config.variables;
       const echarts: any = config.variables.echarts;
       this.buildGraph();
     });
@@ -45,14 +45,14 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
     if (!this.colors){
       return;
     }
-    setTimeout(() => {            
+    setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetwork, { physics: false });
     }, 3000);
 
     const fgText = this.colors.fgText;
-    const primary = this.colors.primary;    
+    const primary = this.colors.primary;
     const primaryLight = this.colors.primaryLight;
-    const info = this.colors.info;    
+    const info = this.colors.info;
     const infoLight = this.colors.infoLight;
     const danger = this.colors.danger;
     const dangerLight = this.colors.dangerLight;
@@ -62,40 +62,38 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
     const successLight = this.colors.successLight;
 
     this.customerGateway.getSquadsGraph(this.customerId, this.startDate, this.endDate).subscribe(data=>{
-      var nodeData = data.nodes.map(c=>{ 
+      var nodeData = data.nodes.map(c=>{
         if (c.group == "squads"){
           return { id: c.id, value: 20, label: c.name, shape: 'hexagon', title: String(c.value),
                   font:{ color: fgText },
-                  color: {background:success, border: primaryLight , 
+                  color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
-                  hover:{background:successLight, border: primaryLight}}};              
+                  hover:{background:successLight, border: primaryLight}}};
         }
-        else {          
-          return { id: c.id, value: 12, label: c.name, shape: 'dot', title: c.name, 
+        else {
+          return { id: c.id, value: 12, label: c.name, shape: 'dot', title: c.name,
                   font:{ color: fgText },
-                  color: {background:success, border: primaryLight , 
+                  color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
-                  hover:{background:successLight, border: primaryLight}}};       
-        }        
+                  hover:{background:successLight, border: primaryLight}}};
+        }
       });
       var edgeData = data.edges.map(c=>{
         const ava = String(c.value);
-        if (c.value < 0){                    
-          return { label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};          
-        }         
+        if (c.value < 0){
+          return { label: ava, from: c.from, to: c.to, color:{ color: danger, highlight: dangerLight , hover: dangerLight}};
+        }
         else{
           return { label: ava,
             from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
-        }        
+        }
       });
-      const nodes = new VisNodes(nodeData);
-      const edges = new VisEdges(edgeData);
       this.visNetworkData = {
-        nodes,
-        edges,
+        nodes: nodeData,
+        edges: edgeData,
       };
 
-      this.visNetworkOptions = {      
+      this.visNetworkOptions = {
         interaction:{
           tooltipDelay: 300
         },
@@ -108,7 +106,7 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
             springLength: 100,
             damping: 0.4,
             avoidOverlap: 1.5
-          },          
+          },
           maxVelocity: 146,
           minVelocity: 0.1,
           solver: 'forceAtlas2Based',
@@ -119,15 +117,15 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
             updateInterval: 25,
             onlyDynamicEdges: false,
             fit: false
-          },          
+          },
           adaptiveTimestep: false
         },
         layout: {
-          improvedLayout:true,          
-        },        
-        nodes: {                                     
-          shape: 'dot',                    
-          font: {              
+          improvedLayout:true,
+        },
+        nodes: {
+          shape: 'dot',
+          font: {
               color: '#ffffff'
           },
           color: {
@@ -135,35 +133,35 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
             background: '#666666'
           },
           borderWidth: 2,
-          shadow:false,          
-        },        
-        edges: {            
+          shadow:false,
+        },
+        edges: {
             labelHighlightBold:false,
-            smooth: false,          
-            width: 3,    
+            smooth: false,
+            width: 3,
             font:{
               face: 'arial',
-              size: 14,     
+              size: 14,
               color: fgText,
               align: 'top'
-            },        
+            },
             arrows: 'to',
             arrowStrikethrough: true,
-            dashes: true,            
+            dashes: true,
             scaling:{
               label: true,
             }
         },
         configure:{
-          enabled: false          
+          enabled: false
         }
       };
 
     });
-  }  
+  }
   onBackClick(event){
     this.location.back();
-  }  
+  }
 
   public networkInitialized(): void {
     // now we can use the service to register on events
@@ -171,8 +169,8 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
 
     // stop adjustments
     // open your console/dev tools to see the click params
-    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{      
-      
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{
+
     });
     this.visNetworkService.click
         .subscribe((eventData: any[]) => {
@@ -186,6 +184,6 @@ export class GraphSquadComponent extends CustomerBaseComponent implements OnDest
     this.visNetworkService.off(this.visNetwork, 'click');
     if (this.themeSubscription){
       this.themeSubscription.unsubscribe();
-    }    
+    }
   }
 }

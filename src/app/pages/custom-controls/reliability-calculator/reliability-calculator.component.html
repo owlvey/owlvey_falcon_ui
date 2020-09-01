@@ -1,0 +1,66 @@
+<div class="row" >
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-4">
+            <h6> Reliability Risk Score </h6>
+          </div>
+
+          <div class="col-8">
+            Estimated Time To Repair {{ettr}} , Incidents per Year {{incidentsPerYear}}, Bad minutes per year {{badMinutesPerYear}}
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group">
+              <label for="inputSLO" class="label form-control-label">Estimated Time To Detect</label>
+              <input type="number"  [readonly]="isReadOnly" [(ngModel)]="_internalDataItems.ettd"
+                  nbInput fullWidth placeholder="name"  (change)="valueChange()"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="inputSLO" class="label form-control-label">Estimated Time To Engage</label>
+              <input type="number"  [readonly]="isReadOnly" [(ngModel)]="_internalDataItems.ette"
+                  nbInput fullWidth placeholder="name" (change)="valueChange()"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="inputSLO" class="label form-control-label">Estimated Time To Fix</label>
+              <input type="number"  [readonly]="isReadOnly" [(ngModel)]="_internalDataItems.ettf"
+                  nbInput fullWidth placeholder="name" (change)="valueChange()"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group">
+              <label for="inputSLO" class="label form-control-label">Percentage users impact (0.8)</label>
+              <input type="number" min="0" max="1"  [readonly]="isReadOnly" [(ngModel)]="_internalDataItems.userImpact"
+                  nbInput fullWidth placeholder="name" (change)="valueChange()"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="inputSLO" class="label form-control-label">Estimated time to fail (days per year)</label>
+              <input type="number"  [readonly]="isReadOnly" [(ngModel)]="_internalDataItems.ettFail"
+                  nbInput fullWidth placeholder="name" (change)="valueChange()"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>
+

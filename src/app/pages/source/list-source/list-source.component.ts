@@ -30,17 +30,110 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
+    columns: {      
       name: {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
+      },
+      securityRiskLabel: {
+        title: 'Estimated Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Estimated Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      availability: {
+        title: 'Availability',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      availabilityDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
+      latency: {
+        title: 'Latency',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      latencyDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
+      experience: {
+        title: 'Experience',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      experienceDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+    },
+  };
+
+  availabilitySettings =  {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },
+      total: {
+        title: 'Total',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
+      },
+      good: {
+        title: 'Good',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+        sortDirection: 'asc'
       },
       availability: {
         title: 'Availability',
@@ -66,54 +159,14 @@ export class ListSourceComponent implements OnInit {
         sort:true,
         sortDirection: 'asc'
       },
-      references: {
-        title: 'Refs',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
-    },
-  };
-
-  availabilitySettings =  {
-    actions:{
-      add:false,
-      edit:false,
-      delete:false
-    },
-    pager: {
-      perPage: 50
-    },
-    columns: {
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
-      name: {
-        title: 'Name',
-        type: 'custom',
-        renderComponent: TooltipComponent
-      },
-      total: {
-        title: 'Total',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        sort:true,
-        sortDirection: 'asc'
-      },
-      good: {
-        title: 'Good',
-        type: 'number',
-        filter: true,
-        width: '2em',
-        sort:true,
-        sortDirection: 'asc'
-      },
       correlation: {
         title: 'Correlation',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
+      references: {
+        title: 'Refs',
         type: 'number',
         filter: true,
         width: '3em'
@@ -126,8 +179,6 @@ export class ListSourceComponent implements OnInit {
   endDate: Date;
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
-  latencySource: LocalDataSource = new LocalDataSource();
-  experienceSource: LocalDataSource = new LocalDataSource();
 
   totalSources: number = 0;
   totalAssigned: number = 0;
@@ -173,6 +224,9 @@ export class ListSourceComponent implements OnInit {
             c.experience = c.measure.experience;
             c.total = c.measure.total;
             c.good = c.measure.good;
+            c.availabilityDebt = c.debt.availability;
+            c.latencyDebt = c.debt.latency;
+            c.experienceDebt = c.debt.experience;
             return c;
           }
         );

@@ -18,8 +18,8 @@ interface CardSettings {
   templateUrl: './doperation-product.component.html',
   styleUrls: ['./doperation-product.component.scss']
 })
-export class OperationDashboardComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {  
-  
+export class OperationDashboardComponent extends ProductBaseComponent implements AfterViewInit, OnDestroy {
+
   sources: any[];
   squads: any[];
   squadsData: any[];
@@ -35,12 +35,12 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
 
   sourceTotal: number;
   sourceStats: any;
-  serviceStats: any;    
-  featuresStats: any; 
+  serviceStats: any;
+  featuresStats: any;
   sloFails: number = 0;
   featuresCoverage: number = 0;
 
-  
+
   option: any = {};
   optionServices: any = {};
   optionFeatures: any = {};
@@ -50,27 +50,27 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
 
   themeSubscription: any;
 
-  constructor(    
+  constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,            
-    protected productGateway: ProductsGateway,        
+    protected customerGateway: CustomersGateway,
+    protected productGateway: ProductsGateway,
     protected theme: NbThemeService,
-    protected router: Router, 
-    protected activatedRoute: ActivatedRoute) {       
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, productGateway, theme, router, activatedRoute);
-    }   
-
-    ngAfterViewInit(): void {
-      
     }
 
-    onChangeQueryParameters(paramMap: ParamMap): void {                 
-      super.onChangeQueryParameters(paramMap);        
-      this.getDashboard();      
+    ngAfterViewInit(): void {
+
+    }
+
+    onChangeQueryParameters(paramMap: ParamMap): void {
+      super.onChangeQueryParameters(paramMap);
+      this.getDashboard();
     }
 
     buildOptions(solarTheme, config, targetAvailability){
-      return Object.assign({}, {            
+      return Object.assign({}, {
         series: [
           {
             name: ' ',
@@ -207,24 +207,24 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
         this.featureMaps = data.featureMaps;
         this.incidentMaps = data.incidentInformation;
         this.squadMaps = data.squadMaps;
-        this.services = data.services.map(c=> { 
+        this.services = data.services.map(c=> {
           c.title =  `SLO: ${c.slo} | Availability: ${c.availability}`;
           c.budget = Math.round( (c.availability * 1000) - (c.slo * 1000))/1000;
-          c.badgetStatus = this.getBadgeStatus(c.availability, c.slo);                  
+          c.badgetStatus = this.getBadgeStatus(c.availability, c.slo);
           return c;
          } );
         this.sourceTotal = data.sourceTotal;
-        this.sourceStats = data.sourceStats; 
+        this.sourceStats = data.sourceStats;
         this.serviceStats = data.servicesStats;
-        this.featuresStats = data.featuresStats;     
-        this.sloFails = data.sloFail;   
+        this.featuresStats = data.featuresStats;
+        this.sloFails = data.sloFail;
         this.featuresCoverage = data.featuresCoverage * 100;
         const sourceAvailability = parseFloat(data.sourceStats.mean) * 100;
-        const serviceAvailability = parseFloat(data.servicesStats.mean) * 100;        
+        const serviceAvailability = parseFloat(data.servicesStats.mean) * 100;
         const featureAvailability = parseFloat(data.featuresStats.mean) * 100;
         const sloProportion = parseFloat(data.sloProportion) * 100;
         this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
-          const solarTheme: any = config.variables.solar;  
+          const solarTheme: any = config.variables.solar;
           this.option = this.buildOptions(solarTheme, config, sourceAvailability);
           this.optionServices = this.buildOptions(solarTheme, config, serviceAvailability);
           this.optionFeatures = this.buildOptions(solarTheme, config, featureAvailability);
@@ -234,26 +234,26 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
       });
     }
 
-    onSourceClick(event){      
+    onSourceClick(event){
       alert(event);
     }
 
     private currentService : any;
-    onServiceClick(event){      
+    onServiceClick(event){
       const serviceId = event.currentTarget.id;
       this.currentService = this.services.filter(c=>c.id == event.currentTarget.id).pop();
       const featureSlo = this.currentService.featureSlo;
-      const featuresIds = this.serviceMaps[serviceId];      
+      const featuresIds = this.serviceMaps[serviceId];
       const featuresList = [];
       featuresIds.forEach(item => {
         const target = this.featuresData.filter(c=> c.id === item).pop();
-        featuresList.push(target);        
-      });     
+        featuresList.push(target);
+      });
 
-      this.features = featuresList.map(c=>{                
+      this.features = featuresList.map(c=>{
         c.budget = Math.round( (c.availability * 1000) - (featureSlo * 1000))/1000;
         c.title =  `SLO: ${featureSlo} | Availability: ${c.availability}`;
-        c.badgetStatus = this.getBadgeStatus(c.availability, featureSlo);        
+        c.badgetStatus = this.getBadgeStatus(c.availability, featureSlo);
         return c;
       });
       this.sources = [];
@@ -264,10 +264,10 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
       const budget = Math.round( (availability * 1000) - (slo * 1000))/1000;
       if (budget < 0){
         return "danger";
-      }      
-      else{            
+      }
+      else{
         return "success";
-      }              
+      }
     }
 
     private getBudget(availability: number, slo: number): number{
@@ -294,16 +294,16 @@ export class OperationDashboardComponent extends ProductBaseComponent implements
       this.sources = sourceList.map(c=>{
         c.title =  `SLO: ${indicatorSlo} | Availability: ${c.availability}`;
         c.budget = this.getBudget(c.availability, indicatorSlo);
-        c.badgetStatus = this.getBadgeStatus(c.availability, indicatorSlo);        
+        c.badgetStatus = this.getBadgeStatus(c.availability, indicatorSlo);
         return c;
       });
-      this.incident = this.incidentMaps[featureId];      
+      this.incident = this.incidentMaps[featureId];
       this.squads = this.squadsData.filter(c=> squadsIds.indexOf(c.id)> -1);
     }
 
     ngOnDestroy() {
       if (this.themeSubscription){
         this.themeSubscription.unsubscribe();
-      }      
+      }
     }
 }

@@ -18,7 +18,7 @@ export class ItemsSourceComponent implements OnInit {
 
   isLoading: boolean = false;
   actionConfirmWord: string;
-
+  currentSource: any = null;
   productId = 0;
   customerId = 0;
   sourceId: number;
@@ -46,19 +46,19 @@ export class ItemsSourceComponent implements OnInit {
       target: {
         title: 'Target',
         type: 'date',
-        width: '9rem',
+        width: '12rem',
         filter: true,
         sort: true,
         sortDirection: 'asc'
       },
-      good: {
-        title: 'Good',
+      total: {
+        title: 'Total',
         width: '6rem',
         type: 'number',
         filter: true
       },
-      total: {
-        title: 'Total',
+      good: {
+        title: 'Good',
         width: '6rem',
         type: 'number',
         filter: true
@@ -121,6 +121,9 @@ export class ItemsSourceComponent implements OnInit {
   }
 
   getSourceItems(){
+    this.sourcesGateway.getSource(this.sourceId).subscribe(data=>{
+      this.currentSource = data;
+    });
 
     let promise = null;
     if (this.group == "Availability"){
@@ -134,7 +137,7 @@ export class ItemsSourceComponent implements OnInit {
     }
     promise.subscribe(data=>{
       const transform  = data.map(c =>{
-        c.target =  this.formatService.getGridDateFromDate(new Date(c.target));
+        c.target =  this.formatService.getGridDateTimeFromDate(new Date(c.target));
         c.createdOn = this.formatService.getGridDateFromDate(new Date(c.createdOn));
         return c;
       });

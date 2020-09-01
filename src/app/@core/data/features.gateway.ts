@@ -20,7 +20,7 @@ export class FeaturesGateway {
   }
 
   getFeaturesUnregistered(portfolioId: number): Observable<any> {
-    return this.owlveyGateway.get(this.baseUrl + `services/${portfolioId}/features/complement`);
+    return this.owlveyGateway.get(this.baseUrl + `journeys/${portfolioId}/features/complement`);
   }
 
   getIndicatorsComplement(featureId: number): Observable<any> {

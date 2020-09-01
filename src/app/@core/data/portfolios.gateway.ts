@@ -6,7 +6,7 @@ import { environment } from './../../../environments/environment';
 import { OwlveyGateway } from './owlvey.gateway';
 
 @Injectable()
-export class PortfoliosGateway{
+export class JourneysGateway{
     baseUrl: string;
   constructor(private http: HttpClient,
               private owlveyGateway : OwlveyGateway,
@@ -16,62 +16,62 @@ export class PortfoliosGateway{
     }
 
     postPortfolio(model: any){
-        return this.owlveyGateway.post(this.baseUrl + `services`, model);
+        return this.owlveyGateway.post(this.baseUrl + `journeys`, model);
     }
 
     deletePortfolio(portfolioId: number){
-        return this.owlveyGateway.delete(this.baseUrl + `services/${portfolioId}`);
+        return this.owlveyGateway.delete(this.baseUrl + `journeys/${portfolioId}`);
     }
 
     putPortfolio(portflioId: number, model: any): Observable<any>{
-        return this.owlveyGateway.put(this.baseUrl + `services/${portflioId}`, model);
+        return this.owlveyGateway.put(this.baseUrl + `journeys/${portflioId}`, model);
     }
 
     unRegisterFeature(portfolioId: number, featureId: number): Observable<any>{
-        return this.owlveyGateway.delete(this.baseUrl + `services/${portfolioId}/features/${featureId}`);
+        return this.owlveyGateway.delete(this.baseUrl + `journeys/${portfolioId}/features/${featureId}`);
     }
     registerFeature(portfolioId: number, featureId: number){
-        return this.owlveyGateway.put(this.baseUrl + `services/${portfolioId}/features/${featureId}`, {});        
+        return this.owlveyGateway.put(this.baseUrl + `journeys/${portfolioId}/features/${featureId}`, {});
     }
 
     getPortfoliosGroup(productId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/serviceGroup?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/journeyGroup?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}`);
     }
     getPortfoliosGroupAnnual(productId: number, start: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual?productId=${productId}&start=${start.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/reports/journeyGroup/annual?productId=${productId}&start=${start.toISOString()}`);
     }
     getPortfoliosAnnual(productId: number, start: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/reports/annual?productId=${productId}&start=${start.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/reports/annual?productId=${productId}&start=${start.toISOString()}`);
     }
     getPortfoliosGroupAnnualCalendar(productId: number, group: string, start: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/reports/serviceGroup/annual/calendar?productId=${productId}&group=${group}&start=${start.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/reports/journeyGroup/annual/calendar?productId=${productId}&group=${group}&start=${start.toISOString()}`);
     }
 
     getServicesDailyReport(productId: number, start: Date, end: Date, group?: String): Observable<any> {
         group = group && group || "";
         return this.owlveyGateway.get(
-          this.baseUrl + 
-            `services/reports/debt/daily/series?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
+          this.baseUrl +
+            `journeys/reports/debt/daily/series?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`,
         );
       }
-    
+
     getPortfolios(productId: number): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services?productId=${productId}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys?productId=${productId}`);
     }
     getPortfoliosWithAvailabilities(productId: number, start: Date, end: Date, group? : string): Observable<any>{
         group = group && group || "";
-        return this.owlveyGateway.get(this.baseUrl + `services?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys?productId=${productId}&start=${start.toISOString()}&end=${end.toISOString()}&group=${group}`);
     }
     getPortfolio(portflioId: number): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/${portflioId}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/${portflioId}`);
     }
     getPortfolioGraph(portfolioId: number, start: Date, end: Date): Observable<any> {
-        return this.owlveyGateway.get(this.baseUrl + `services/${portfolioId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/${portfolioId}/reports/graph?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
     getPortfolioWithAvailabilities(portflioId: number, start: Date, end: Date): Observable<any>{
-        return this.owlveyGateway.get(this.baseUrl + `services/${portflioId}?start=${start.toISOString()}&end=${end.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/${portflioId}?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
     getDaily(portfolioId: number, start: Date, end: Date): Observable<any> {
-        return this.owlveyGateway.get(this.baseUrl + `services/${portfolioId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
+        return this.owlveyGateway.get(this.baseUrl + `journeys/${portfolioId}/reports/daily/series?start=${start.toISOString()}&end=${end.toISOString()}`);
     }
 }

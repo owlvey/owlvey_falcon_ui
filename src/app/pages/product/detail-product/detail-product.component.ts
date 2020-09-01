@@ -6,18 +6,14 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ProductsGateway } from '../../../@core/data/products.gateway';
 import { SourcesGateway } from '../../../@core/data/sources.gateway';
 import { FeaturesGateway } from '../../../@core/data/features.gateway';
-import { PortfoliosGateway } from '../../../@core/data/portfolios.gateway';
+import { JourneysGateway } from '../../../@core/data/portfolios.gateway';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { ProductBaseComponent } from '../../common/components/base-product.components';
 import { CustomerBaseComponent } from '../../common/components/base-customer.component';
-import { VisEdges, VisNetworkData, VisNetworkOptions,  VisNetworkService,  VisNode,  VisNodes, VisNodeOptions } from 'ngx-vis'
+import { Edge, Data, DataSet, Options,  VisNetworkService } from 'ngx-vis'
 import { NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { strictEqual } from 'assert';
 
-class ExampleNetworkData implements VisNetworkData {
-  public nodes: VisNodes;
-  public edges: VisEdges;
-}
 
 @Component({
   selector: 'app-detail-product',
@@ -31,22 +27,20 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   currentSource : any= {};
 
   source: LocalDataSource = new LocalDataSource();
-  graphData = {};
   themeSubscription: any;
 
   public visNetworkAvailability: string = 'networkIdAvailability';
-  public visNetworkAvailabilityData: VisNetworkData;
-  public visNetworkAvailabilityOptions: VisNetworkOptions;
+  public visNetworkAvailabilityData: Data;
+  public visNetworkAvailabilityOptions: Options;
+
 
   public visNetworkLatency: string = 'networkIdLatency';
-  public visNetworkLatencyData: VisNetworkData;
-  public visNetworkLatencyOptions: VisNetworkOptions;
+  public visNetworkLatencyData: Data;
+  public visNetworkLatencyOptions: Options;
 
   public visNetworkExperience: string = 'networkIdExperience';
-  public visNetworkExperienceData: VisNetworkData;
-  public visNetworkExperienceOptions: VisNetworkOptions;
-
-
+  public visNetworkExperienceData: Data;
+  public visNetworkExperienceOptions: Options;
 
   colors: any;
 
@@ -58,7 +52,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     protected productGateway: ProductsGateway,
     protected sourcesGateway: SourcesGateway,
     protected featuresGateway: FeaturesGateway,
-    protected portfolioGateway: PortfoliosGateway,
+    protected portfolioGateway: JourneysGateway,
     protected theme: NbThemeService,
     protected router: Router,
     protected visNetworkService: VisNetworkService,
@@ -81,7 +75,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
 
   onNgOnInit(): void {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      this.colors = config.variables;     
+      this.colors = config.variables;
       this.buildAvailabilityGraph();
       this.buildLatencyGraph();
       this.buildExperienceGraph();
@@ -104,10 +98,10 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
       if (c.group == "products"){
         return { id: c.id, label: c.name, group: "0", shape: 'diamond' };
       }
-      else if (c.group == "services"){
+      else if (c.group == "journeys"){
         if (c.budget >= 0 )
-        {            
-          return { id: c.id, value: 12, 
+        {
+          return { id: c.id, value: 12,
                 label: c.name, shape: 'hexagon', title: String(c.value),
                 font:{ color: fgText },
                 color: {background:success, border: primaryLight ,
@@ -115,7 +109,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
                 hover:{background:successLight, border: primaryLight}}};
         }
         else{
-          return { id: c.id, value: 12, 
+          return { id: c.id, value: 12,
                 label: c.name, shape: 'hexagon', title: String(c.value),
                 font:{ color: fgText },
                 color: {background: danger, border: primaryLight,
@@ -124,8 +118,8 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
         }
       }
       else if (c.group == "features"){
-        return { id: c.id, value: 10, 
-                  label: `${c.name} [${c.value}]`, group: "2", shape: 'dot', title: c.name,                    
+        return { id: c.id, value: 10,
+                  label: `${c.name} [${c.value}]`, group: "2", shape: 'dot', title: c.name,
                   font:{ color: fgText },
                   color: {background:success, border: primaryLight ,
                   highlight:{background:successLight, border: primaryLight},
@@ -149,16 +143,14 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           from: c.from, to: c.to, color:{ color: success , highlight: successLight , hover: successLight}};
       }
     });
-    const nodes = new VisNodes(nodeData);
-    const edges = new VisEdges(edgeData);
     let visNetworkData = {
-      nodes,
-      edges,
+      nodes: nodeData,
+      edges: edgeData,
     };
 
     let visNetworkOptions = {
       physics:{
-        enabled: true,          
+        enabled: true,
         forceAtlas2Based: {
           gravitationalConstant: -290,
           centralGravity: 0.004,
@@ -166,7 +158,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
           springLength: 100,
           damping: 0.4,
           avoidOverlap: 1.5
-        },          
+        },
         maxVelocity: 146,
         minVelocity: 0.1,
         solver: 'forceAtlas2Based',
@@ -234,7 +226,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     if (!this.colors){ return; }
     setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetworkAvailability, { physics: false });
-    }, 4000);    
+    }, 4000);
     this.productGateway.getGraphAvailabilityView(this.productId, this.startDate, this.endDate).subscribe(data=>{
       const result = this.buildGraphControl(data);
       this.visNetworkAvailabilityData = result.data;
@@ -245,7 +237,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     if (!this.colors){ return; }
     setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetworkLatency, { physics: false });
-    }, 4000);    
+    }, 4000);
     this.productGateway.getGraphLatencyView(this.productId, this.startDate, this.endDate).subscribe(data=>{
       const result = this.buildGraphControl(data);
       this.visNetworkLatencyData = result.data;
@@ -256,7 +248,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
     if (!this.colors){ return; }
     setTimeout(() => {
       this.visNetworkService.setOptions(this.visNetworkExperience, { physics: false });
-    }, 4000);    
+    }, 4000);
     this.productGateway.getGraphExperienceView(this.productId, this.startDate, this.endDate).subscribe(data=>{
       const result = this.buildGraphControl(data);
       this.visNetworkExperienceData = result.data;
@@ -278,6 +270,7 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
   }
 
   public networkAvailabilityInitialized(): void {
+
     // now we can use the service to register on events
     this.visNetworkService.on(this.visNetworkAvailability, 'click');
     // stop adjustments
@@ -291,13 +284,15 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
             }
         });
   }
-  public networkLatencyInitialized(): void {    
-    this.visNetworkService.on(this.visNetworkLatency, 'click');    
-    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });    
+  public networkLatencyInitialized(): void {
+
+    this.visNetworkService.on(this.visNetworkLatency, 'click');
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
-  public networkExperienceInitialized(): void {    
-    this.visNetworkService.on(this.visNetworkExperience, 'click');    
-    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });   
+  public networkExperienceInitialized(): void {
+    this.visNetworkService.on(this.visNetworkExperience, 'click');
+
+    this.visNetworkService.stabilizationIterationsDone.subscribe((eventData: any[])=>{ });
   }
 
   onEditClick(event) {
@@ -324,11 +319,11 @@ export class DetailProductComponent  extends CustomerBaseComponent  implements O
       this.productGateway.deleteProduct(this.productId).subscribe(res=>{
         this.toastr.success("Product was deleted");
         let queryParams: Params = { productId : null };
-        this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });     
+        this.router.navigate(['/pages/products'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }, (error) => {
         this.isLoading = false;
         this.toastr.warning("Something went wrong, please try again.", "Warning")
-      });      
+      });
     } else {
       event.confirm.reject();
     }

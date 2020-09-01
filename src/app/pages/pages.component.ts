@@ -14,21 +14,19 @@ import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent {
+
   menu = MENU_ITEMS;
 
-  private currentCustomer: number;
-  private currentProduct: number;
 
   constructor(private menuService: NbMenuService, private router: Router, private activatedRoute: ActivatedRoute,
     private themeService: NbThemeService) {
 
   }
-
   private onCustomerAndProductMustSelected(){
     console.log(JSON.stringify( this.activatedRoute.snapshot.queryParams));
-    alert('please select customer and product');    
-    this.router.navigateByUrl('/pages/home');    
+    alert('please select customer and product');
+    this.router.navigateByUrl('/pages/home');
   }
 
   getParameterByName(name, url?: string) {
@@ -41,10 +39,10 @@ export class PagesComponent implements OnInit {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  ngOnInit(){    
+  ngOnInit(){
     this.themeService.changeTheme("dark"); // change theme
-    this.menuService.onItemClick().subscribe((e) => {      
-      
+    this.menuService.onItemClick().subscribe((e) => {
+
       const currentCustomer =  parseInt(this.getParameterByName("customerId"));
       const currentProduct = parseInt(this.getParameterByName("productId"));
       if (e.item.title == 'Sources'){
@@ -93,7 +91,7 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/users'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
-      
+
       if (e.item.title == 'Features'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = { };
@@ -118,6 +116,14 @@ export class PagesComponent implements OnInit {
         const queryParams: Params = { };
         this.router.navigate(['/pages/customers'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
+      if (e.item.title == 'Threats'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/threats'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
+      if (e.item.title == 'Risks'){
+        const queryParams: Params = { };
+        this.router.navigate(['/pages/risks'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
       if (e.item.title == 'Migrations'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/migrations'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
@@ -131,14 +137,14 @@ export class PagesComponent implements OnInit {
       // if (e.item.title == 'Organization Performance'){
       //   const queryParams: Params = { };
       //   this.router.navigate(['/pages/customers/dashboard'],
-      //    { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
+      //    { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       // }
 
       if (e.item.title == 'Home'){
         const queryParams: Params = { };
         this.router.navigate(['/pages/home'],
-         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });        
-      }      
+         { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
+      }
 
       if (e.item.title == 'Operation Performance'){
         const queryParams: Params = { };
@@ -146,7 +152,7 @@ export class PagesComponent implements OnInit {
          { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
       }
 
-      if (e.item.title == 'Squads'){                
+      if (e.item.title == 'Squads'){
         if (currentCustomer){
           const queryParams: Params = { };
           this.router.navigate(['/pages/squads'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
@@ -155,7 +161,7 @@ export class PagesComponent implements OnInit {
           this.onCustomerAndProductMustSelected();
         }
       }
-      if (e.item.title == 'Sync'){        
+      if (e.item.title == 'Sync'){
         if (currentProduct && currentCustomer){
           const queryParams: Params = {  };
           this.router.navigate(['/pages/sync'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
@@ -166,4 +172,5 @@ export class PagesComponent implements OnInit {
       }
     });
   }
+
 }

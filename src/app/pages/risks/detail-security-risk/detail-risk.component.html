@@ -1,0 +1,74 @@
+<nb-card>
+  <nb-card-header>
+    <div class="d-flex align-content-center">
+      <h4> Risk: {{ currentRisk?.name }}  Source: {{ currentSource?.name }}</h4>
+      <button type="button" nbButton status="primary" (click)="onEditClick($event)" class="ml-auto mr-2"> Edit </button>
+      <button type="button" nbButton status="danger" (click)="onDeleteClick($event)"  class="mr-2"> Delete </button>
+      <button type="button" nbButton status="primary" (click)="onBackClick($event)" class="mr-2"> Back </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="form-group">
+              <label for="inputSLO" class="label col-sm-3 form-control-label">Name</label>
+              <input readonly="readonly" type="text" [value]="currentRisk?.name"
+                  nbInput fullWidth  placeholder="name"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="inputSLO" class="label col-sm-3 form-control-label">Reference</label>
+              <br/>
+              <a [href]="currentRisk?.reference" target="_blank">Link</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="inputSLO" class="label col-sm-3 form-control-label">Description</label>
+              <input readonly="readonly" type="text" [value]="currentRisk?.description"
+                  nbInput fullWidth  placeholder="name"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="inputSLO" class="label col-sm-3 form-control-label">Tags</label>
+              <input readonly="readonly" type="text" [value]="currentRisk?.tags"
+                  nbInput fullWidth  placeholder="name"
+                  class="input-full-width size-medium shape-rectangle">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row justify-content-md-center">
+          <div class="col-sm-8">
+            <img [src]="currentSource?.avatar" width="80%" height="80%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+
+</nb-card>
+
+<nb-card>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <app-control-reliability-calculator [dataItems]="currentRisk"></app-control-reliability-calculator>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+
+

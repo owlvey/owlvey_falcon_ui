@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+          <div class="d-flex align-content-center">
+              <h5>Threats</h5>
+              <button type="button" nbButton status="primary" (click)="onCreateReliability($event)" class="ml-auto mr-2"> Reliabiliity </button>
+              <button type="button" nbButton status="primary" (click)="onCreateSecurity($event)" class="mr-2"> Security </button>
+          </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="Security Threats" >
+            <ng2-smart-table [settings]="securitySettings" [source]="securitySource" (userRowSelect)="onSecurityThreatRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+          <nb-tab tabTitle="Reliability Threats" >
+            <ng2-smart-table [settings]="reliabilitySettings" [source]="reliabilitySource" (userRowSelect)="onReliabilityThreatRowSelect($event)">
+            </ng2-smart-table>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+
+
+    </nb-card>
+  </div>
+</div>
+

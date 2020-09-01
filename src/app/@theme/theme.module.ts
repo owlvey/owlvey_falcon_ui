@@ -18,17 +18,19 @@ import {
   NbAlertModule,
   NbCheckboxModule,
   NbInputModule,
-  NbBadgeModule,  
+  NbBadgeModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
   FooterComponent,
-  HeaderComponent,
   SearchInputComponent,
   TinyMCEComponent,
 } from './components';
+
+import { HeaderComponent } from './components/header/header.component';
+
 import {
   CapitalizePipe,
   PluralPipe,
@@ -46,12 +48,14 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 
+
+import { NbAuthModule } from '@nebular/auth';
+import { RouterModule } from '@angular/router';
+
 import { OwlveyLoginComponent } from './components/auth/login/login.component'
 import { OwlveyAuthComponent } from './components/auth/auth.component'
 import { OwlveyLogoutComponent } from './components/auth/logout/logout.component'
-import { NbAuthModule } from '@nebular/auth';
-import { RouterModule } from '@angular/router';
-import { OwlveyTileComponent } from './components/tile/tile.component';
+
 import { OwlveyRegisterComponent } from './components/auth/register/register.component';
 import { OwlveyResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { OwlveyRequestPasswordComponent } from './components/auth/request-password/request-password.component';
@@ -91,7 +95,7 @@ const COMPONENTS = [
   OwlveyLoginComponent,
   OwlveyResetPasswordComponent,
   OwlveyLogoutComponent,
-  OwlveyTileComponent,
+
 ];
 const PIPES = [
   CapitalizePipe,
@@ -107,15 +111,15 @@ const PIPES = [
   declarations: [...COMPONENTS, ...PIPES],
 })
 export class ThemeModule {
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
+  static forRoot(): ModuleWithProviders<ThemeModule> {
+    return {
       ngModule: ThemeModule,
       providers: [
         ...NbThemeModule.forRoot(
           {
             name: 'default',
           },
-          [ DARK_THEME, DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME ],
+          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
         ).providers,
       ],
     };
