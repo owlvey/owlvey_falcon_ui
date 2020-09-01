@@ -30,13 +30,7 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
+    columns: {      
       name: {
         title: 'Name',
         type: 'custom',
@@ -119,13 +113,7 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {
-      id:{
-        title: 'Id',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
+    columns: {      
       name: {
         title: 'Name',
         type: 'custom',
