@@ -14,6 +14,10 @@
                         <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)">
                         </ng2-smart-table>
                     </nb-tab>
+                    <nb-tab tabTitle="Management" >
+                        <ng2-smart-table [settings]="managementSettings" [source]="managementSource" (userRowSelect)="onUserRowSelect($event)">
+                        </ng2-smart-table>
+                    </nb-tab>
                     <nb-tab tabTitle="Interactions {{availabilityAvg}} | Interactions {{availabilityInteractionsGood}} / {{availabilityInteractionsTotal}} = {{availabilityInteractionAvg}}" >
                         <ng2-smart-table [settings]="availabilitySettings" [source]="availabilitySource" (userRowSelect)="onUserRowSelect($event)">
                         </ng2-smart-table>

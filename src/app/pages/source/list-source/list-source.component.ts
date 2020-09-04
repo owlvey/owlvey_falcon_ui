@@ -36,20 +36,7 @@ export class ListSourceComponent implements OnInit {
         type: 'custom',
         renderComponent: TooltipComponent
       },
-      securityRiskLabel: {
-        title: 'Estimated Security Risk',
-        type: 'string',
-        filter: true,
-        width: '3em',
-        sort:true,
-      },
-      reliabilityRiskLabel: {
-        title: 'Estimated Reliability Risk',
-        type: 'string',
-        filter: true,
-        width: '3em',
-        sort:true,
-      },
+     
       availability: {
         title: 'Availability',
         type: 'number',
@@ -94,13 +81,7 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '2em',
         sort:true,
-      },
-      references: {
-        title: 'Refs',
-        type: 'number',
-        filter: true,
-        width: '3em'
-      },
+      },      
     },
   };
 
@@ -165,6 +146,44 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '3em'
       },
+    },
+  };
+
+  managementSettings = {
+    actions:{
+      add:false,
+      edit:false,
+      delete:false
+    },
+    pager: {
+      perPage: 50
+    },
+    columns: {      
+      name: {
+        title: 'Name',
+        type: 'custom',
+        renderComponent: TooltipComponent
+      },      
+      securityRiskLabel: {
+        title: 'Estimated Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Estimated Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      correlation: {
+        title: 'Correlation',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
       references: {
         title: 'Refs',
         type: 'number',
@@ -172,13 +191,14 @@ export class ListSourceComponent implements OnInit {
         width: '3em'
       },
     },
-  };
+  }
 
 
   startDate: Date;
   endDate: Date;
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
+  managementSource: LocalDataSource = new LocalDataSource();
 
   totalSources: number = 0;
   totalAssigned: number = 0;
@@ -237,6 +257,7 @@ export class ListSourceComponent implements OnInit {
         this.totalAssigned = referencesSources.length;
         this.availabilitySource.load(avaialabilitySources);
         this.source.load(sources);
+        this.managementSource.load(sources);
       });
     });
   }
