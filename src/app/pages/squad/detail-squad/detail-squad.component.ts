@@ -19,11 +19,11 @@ import { BaseComponent } from '../../common/components/base-component';
 })
 export class DetailSquadComponent extends CustomerBaseComponent {
 
-  isLoading: boolean = false;    
+  isLoading: boolean = false;
   actionConfirmWord: string;
-  currentSquad: any;  
+  currentSquad: any;
   squadId = 0;
-  series: Array<any> = [];  
+  series: Array<any> = [];
   source: LocalDataSource = new LocalDataSource();
 
   membersSource: LocalDataSource = new LocalDataSource();
@@ -34,7 +34,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
   @Input()
   set showAll(event){
     this._showAll = !this._showAll;
-       
+
   }
   get showAll(){
     return this._showAll;
@@ -55,16 +55,16 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         filter: true,
         width: '3em',
         editable: false
-      },          
+      },
       email: {
         title: 'Email',
         type: 'html',
-        filter: true,        
+        filter: true,
         editable: false
-      },                
+      },
     },
   };
-  settings = {    
+  settings = {
     actions:{
       add:false,
       edit:false,
@@ -73,44 +73,44 @@ export class DetailSquadComponent extends CustomerBaseComponent {
     pager: {
       perPage: 20
     },
-    columns: {      
+    columns: {
       product: {
         title: 'Product',
         type: 'html',
-        filter: false,        
+        filter: false,
         editable: false
-      },                
-      service: {
-        title: 'Service',
+      },
+      journey: {
+        title: 'Journey',
         type: 'html',
-        filter: false,        
+        filter: false,
         editable: false
-      },                
+      },
       name: {
         title: 'Feature',
         type: 'string',
-        filter: false,        
+        filter: false,
         editable: false
-      },       
+      },
       availabilitySLO: {
         title: 'SLO',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
-      },             
+      },
       availability: {
         title: 'Availability',
         type: 'number',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false
       },
       availabilityDebt: {
         title: 'Debt',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
@@ -118,65 +118,65 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       latencySLO: {
         title: 'SLO',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
-      },        
+      },
       latency: {
         title: 'Latency',
         type: 'number',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false
-      },             
+      },
       latencyDebt: {
         title: 'Debt',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
-      },           
+      },
       experienceSLO: {
         title: 'SLO',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
-      },          
+      },
       experience: {
         title: 'Experience',
         type: 'number',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false
-      },             
+      },
       experienceDebt: {
         title: 'Debt',
         type: 'html',
-        filter: false,        
+        filter: false,
         width: '3em',
         editable: false,
         compareFunction:this.format.compareIconNumberColumn,
-      }                     
+      }
     },
-  };  
+  };
     constructor(
       protected location: Location,
-      protected customerGateway: CustomersGateway,        
-      private squadGateway: SquadsGateway,    
+      protected customerGateway: CustomersGateway,
+      private squadGateway: SquadsGateway,
       protected theme: NbThemeService,
       private toastr: NbToastrService,
       protected format: FormatService,
-      protected router: Router, 
-      protected activatedRoute: ActivatedRoute) {       
+      protected router: Router,
+      protected activatedRoute: ActivatedRoute) {
         super(location, customerGateway, theme, router, activatedRoute);
-      }        
-  
+      }
+
   onChangeQueryParameters(paramMap: ParamMap){
-    this.squadId = parseInt(paramMap.get('squadId'));     
+    this.squadId = parseInt(paramMap.get('squadId'));
     this.getSquad();
   }
   onNgOnInit(){
@@ -184,7 +184,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
   }
   getSquad(){
     this.squadGateway.getSquadDetailQuality(this.squadId, this.startDate, this.endDate).subscribe(data=>{
-      this.currentSquad = data;  
+      this.currentSquad = data;
 
       data.members.forEach((e, i) => {
         e.email = `<img src="${e.avatar}" class="avatar avatar-sm mr-2" />${e.email}`;
@@ -211,17 +211,17 @@ export class DetailSquadComponent extends CustomerBaseComponent {
         }
       });
 
-      this.membersSource.load(data.members); 
-      this.source.load(data.features);      
+      this.membersSource.load(data.members);
+      this.source.load(data.features);
 
     });
   }
-  
+
   onBackClick(event){
     this.location.back();
-  }  
+  }
 
-  onSquadRowSelect(event){    
+  onSquadRowSelect(event){
     const featureId = event.data.id;
     let queryParams: Params = { featureId: featureId };
     let extras: any = {
@@ -229,10 +229,10 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       queryParams: queryParams,
       queryParamsHandling: 'merge'
     }
-    this.router.navigate(['/pages/features/detail'], extras);   
+    this.router.navigate(['/pages/features/detail'], extras);
   }
 
-  
+
   onEditClick(event) {
     let queryParams: Params = {  };
     let extras: any = {
@@ -240,7 +240,7 @@ export class DetailSquadComponent extends CustomerBaseComponent {
       queryParams: queryParams,
       queryParamsHandling: 'merge'
     }
-    this.router.navigate(['/pages/squads/edit'], extras);     
+    this.router.navigate(['/pages/squads/edit'], extras);
   }
   deleteSquad() {
     this.squadGateway.deleteSquad(this.squadId)

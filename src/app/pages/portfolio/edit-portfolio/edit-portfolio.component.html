@@ -2,38 +2,38 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-              <h4>Edit Portfolio</h4>
+              <h4>Edit Journey</h4>
             </nb-card-header>
             <nb-card-body>
               <form (ngSubmit)="onSubmit();" [formGroup]="editForm">
                 <div class="form-group">
                   <label>Name</label>
                   <input type="text" name="name" formControlName="name" class="form-control" />
-        
+
                   <label>Avatar</label>
                   <input type="text" name="avatar" formControlName="avatar" class="form-control" />
 
-                  <label>Availability SLA</label>                  
-                  <input type="text" name="availabilitySLA" formControlName="availabilitySLA" class="form-control" type="number" />          
+                  <label>Availability SLA</label>
+                  <input type="number" name="availabilitySLA" formControlName="availabilitySLA" class="form-control" type="number" />
 
-                  <label>Latency SLA</label>                                    
-                  <input type="text" name="latencySLA" formControlName="latencySLA" class="form-control" type="number" />          
-                          
-                  <label>Availability Slo</label>                  
-                  <input type="text" name="availabilitySLO" formControlName="availabilitySLO" class="form-control" type="number" />          
+                  <label>Latency SLA</label>
+                  <input type="number" name="latencySLA" formControlName="latencySLA" class="form-control" type="number" />
 
-                  <label>Latency Slo</label>                                    
-                  <input type="text" name="latencySLO" formControlName="latencySLO" class="form-control" type="number" />          
+                  <label>Availability Slo</label>
+                  <input type="number" name="availabilitySLO" formControlName="availabilitySLO" class="form-control" type="number" />
 
-                  <label>Experience Slo</label>                                    
-                  <input type="text" name="experienceSLO" formControlName="experienceSLO" class="form-control" type="number" />          
+                  <label>Latency Slo</label>
+                  <input type="number" name="latencySLO" formControlName="latencySLO" class="form-control" type="number" />
+
+                  <label>Experience Slo</label>
+                  <input type="number" name="experienceSLO" formControlName="experienceSLO" class="form-control" type="number" />
 
                   <label>Group</label>
-                  <input type="text" name="group" formControlName="group" class="form-control" type="text" />          
+                  <input type="text" name="group" formControlName="group" class="form-control" type="text" />
 
                   <label>Leaders</label>
-                  <input type="text" name="leaders" formControlName="leaders" class="form-control" type="text" />                  
-                </div>                      
+                  <input type="text" name="leaders" formControlName="leaders" class="form-control" type="text" />
+                </div>
                 <div class="text-right">
                   <button type="button" nbbutton class="appearance-filled size-medium status-info shape-rectangle transitions mr-2" (click)="onBackClick($event)" [disabled]="isLoading">Back</button>
                   <button type="submit" nbbutton class="appearance-filled size-medium status-primary shape-rectangle transitions" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button>
@@ -51,7 +51,7 @@
         <nb-card-header>
           <h5> Current Features</h5>
         </nb-card-header>
-        <nb-card-body>                        
+        <nb-card-body>
             <ng2-smart-table [settings]="settings" [source]="source"
               (userRowSelect)="onFeaturesRowSelect($event)"
               (edit)="onDelete($event)">
@@ -67,12 +67,11 @@
         <nb-card-header>
           <h5> Register Features</h5>
         </nb-card-header>
-        <nb-card-body>                        
+        <nb-card-body>
             <ng2-smart-table [settings]="newSettings" [source]="sourceNewFeatures" (edit)="onFeaturesRowSelect($event)" >
             </ng2-smart-table>
         </nb-card-body>
       </nb-card>
     </div>
 </div>
-  
-  
+
