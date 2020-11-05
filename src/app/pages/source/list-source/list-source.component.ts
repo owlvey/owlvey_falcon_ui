@@ -30,7 +30,7 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'custom',
@@ -102,7 +102,7 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '2em',
         sort:true,
-      },      
+      },
     },
   };
 
@@ -115,7 +115,7 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'custom',
@@ -185,12 +185,12 @@ export class ListSourceComponent implements OnInit {
     pager: {
       perPage: 50
     },
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'custom',
         renderComponent: TooltipComponent
-      },      
+      },
       securityRiskLabel: {
         title: 'Estimated Security Risk',
         type: 'string',
@@ -282,7 +282,6 @@ export class ListSourceComponent implements OnInit {
         this.totalAssigned = referencesSources.length;
         this.availabilitySource.load(avaialabilitySources);
         this.source.load(sources);
-        this.managementSource.load(sources);
       });
     });
   }
