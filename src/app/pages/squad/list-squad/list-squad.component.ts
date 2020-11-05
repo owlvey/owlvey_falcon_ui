@@ -25,7 +25,7 @@ export class ListSquadComponent extends CustomerBaseComponent {
 
   settings = {
     mode: 'external',
-    columns: {      
+    columns: {
       name: {
         title: 'Name',
         type: 'string',
@@ -60,30 +60,47 @@ export class ListSquadComponent extends CustomerBaseComponent {
   source: LocalDataSource = new LocalDataSource();
   constructor(
     protected location: Location,
-    protected customerGateway: CustomersGateway,        
+    protected customerGateway: CustomersGateway,
     private squadGateway: SquadsGateway,
     protected theme: NbThemeService,
-    protected router: Router, 
+    protected router: Router,
     private toastr: NbToastrService,
-    protected activatedRoute: ActivatedRoute) {       
+    protected activatedRoute: ActivatedRoute) {
       super(location, customerGateway, theme, router, activatedRoute);
-    }      
+    }
 
-  onChangeQueryParameters(paramMap: ParamMap): void {       
-    super.onChangeQueryParameters(paramMap);  
-    this.getSquads();    
+  onChangeQueryParameters(paramMap: ParamMap): void {
+    super.onChangeQueryParameters(paramMap);
+    this.getSquads();
   }
   onNgOnInit(): void {
-      
+
   }
   getSquads() {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       const echartsColors: any = config.variables.echarts;
-      
+
       this.squadGateway.getSquadsWithPoints(this.customerId, this.startDate, this.endDate).subscribe(data => {
+        data.sort(
+          (a, b) => {
+            let result = 0;
+            if (a.debt.availability != b.debt.availability ){
+                result = a.debt.availability - b.debt.availability;
+            }
+            else if (a.debt.latency != b.debt.latency ){
+                result = b.debt.latency - a.debt.latency;
+            }
+            else if (a.debt.experience != b.debt.experience ){
+                result = a.debt.experience - b.debt.experience;
+            }
+            else{
+              result = 0;
+            }
+            return result;
+          }
+        );
         this.source.load(data);
-        data.sort((a, b) => (a.points < b.points) ? 1 : (a.points === b.points) ? ((a.features < b.features) ? 1 : -1) : -1 )
         this.squads = data;
       });
 
@@ -126,8 +143,8 @@ export class ListSquadComponent extends CustomerBaseComponent {
     }
     this.router.navigate(['/pages/squads/create'], extras);
   }
-  
-  onSquadRowSelect(item) {    
+
+  onSquadRowSelect(item) {
     const squadId = item.id;
     const queryParams: Params = { squadId: squadId};
     const extras: any = {

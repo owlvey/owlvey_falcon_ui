@@ -215,13 +215,13 @@ export class EditPortfolioComponent extends ProductBaseComponent {
       id: [''],
       name: ['', Validators.required],
       avatar: ['', Validators.required],
-      availabilitySLO: ['', Validators.required],
-      latencySLO: ['', Validators.required],
-      experienceSLO: ['', Validators.required],
+      availabilitySLO: [0.99, Validators.required],
+      latencySLO: [1000, Validators.required],
+      experienceSLO: [0.99, Validators.required],
       leaders: [''],
       group: [''],
-      availabilitySLA: ['', Validators.required],
-      latencySLA: ['', Validators.required],
+      availabilitySLA: [0.99, Validators.required],
+      latencySLA: [1000, Validators.required],
     });
   }
   onDelete(event){

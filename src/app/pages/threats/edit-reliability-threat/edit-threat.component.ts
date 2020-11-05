@@ -79,7 +79,7 @@ export class EditReliabilityThreatComponent implements OnInit {
       this.isLoading = true;
       let model = this.createForm.value;
       var target = Object.assign(this.currentSource, model);
-      let  defer = this.riskGateway.putReliabilityThreat(this.threatId, target);
+      let  defer = this.riskGateway.putSecurityThreat(this.threatId, target);
       defer.subscribe((data) => {
           this.toastr.success("Product Created Success");
           this.isLoading = false;

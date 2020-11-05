@@ -152,6 +152,13 @@ export class ListPortfolioComponent implements OnInit {
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
       },
+      availabilityDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       latencySLA: {
         title: 'SLA',
         type: 'number',
@@ -176,6 +183,13 @@ export class ListPortfolioComponent implements OnInit {
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
       },
+      latencyDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
+      },
       experienceSLO: {
         title: 'SLO',
         type: 'number',
@@ -192,6 +206,13 @@ export class ListPortfolioComponent implements OnInit {
         sort:true,
         sortDirection: 'asc',
         compareFunction:this.format.compareIconNumberColumn,
+      },
+      experienceDebt: {
+        title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '3em',
+        editable: false
       },
       group:{
         title: 'Group',
@@ -222,6 +243,9 @@ export class ListPortfolioComponent implements OnInit {
     private theme: NbThemeService,
     private format: FormatService,
     private activatedRoute: ActivatedRoute) {
+
+    }
+
 
     }
 

@@ -238,7 +238,9 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
           availability : item.measure.availability,
           total : item.measure.total,
           latency: item.measure.latency,
-          experience: item.measure.experience
+
+          experience: item.measure.experience,
+          sourceId: item.sourceId
         };
         return c;
       });
@@ -327,12 +329,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
           return [ this.format.extractDateStringFromUtc(c.date), c.oAve * 100];
         });
       });
-
     });
-
-
-
-
 
   }
 

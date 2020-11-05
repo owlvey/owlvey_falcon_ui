@@ -58,7 +58,8 @@
               "lodash",
               "zrender/lib/svg/svg",
               "zrender/lib/vml/vml",
-              "style-loader!leaflet/dist/leaflet.css"              
+
+              "style-loader!leaflet/dist/leaflet.css"
             ]
           },
           "configurations": {
@@ -66,7 +67,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
+                  "maximumWarning": "6kb"
                 }
               ],
               "optimization": true,
@@ -89,7 +90,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
+                  "maximumWarning": "6kb"
                 }
               ],
               "optimization": true,
@@ -112,7 +113,8 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
+                  "maximumWarning": "6kb"
+
                 }
               ],
               "optimization": true,
@@ -135,7 +137,8 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
+                  "maximumWarning": "6kb"
+
                 }
               ],
               "optimization": true,
@@ -146,7 +149,8 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
+              "buildOptimizer": true,
+
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

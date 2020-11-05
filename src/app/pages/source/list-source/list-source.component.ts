@@ -36,7 +36,21 @@ export class ListSourceComponent implements OnInit {
         type: 'custom',
         renderComponent: TooltipComponent
       },
-     
+
+      securityRiskLabel: {
+        title: 'Estimated Security Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
+      reliabilityRiskLabel: {
+        title: 'Estimated Reliability Risk',
+        type: 'string',
+        filter: true,
+        width: '3em',
+        sort:true,
+      },
       availability: {
         title: 'Availability',
         type: 'number',
@@ -77,6 +91,13 @@ export class ListSourceComponent implements OnInit {
       },
       experienceDebt: {
         title: 'Debt',
+        type: 'number',
+        filter: true,
+        width: '2em',
+        sort:true,
+      },
+      references: {
+        title: 'Refs',
         type: 'number',
         filter: true,
         width: '2em',
@@ -146,6 +167,12 @@ export class ListSourceComponent implements OnInit {
         filter: true,
         width: '3em'
       },
+      references: {
+        title: 'Refs',
+        type: 'number',
+        filter: true,
+        width: '3em'
+      },
     },
   };
 
@@ -198,8 +225,6 @@ export class ListSourceComponent implements OnInit {
   endDate: Date;
   source: LocalDataSource = new LocalDataSource();
   availabilitySource: LocalDataSource = new LocalDataSource();
-  managementSource: LocalDataSource = new LocalDataSource();
-
   totalSources: number = 0;
   totalAssigned: number = 0;
 
