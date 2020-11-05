@@ -247,6 +247,9 @@ export class ListPortfolioComponent implements OnInit {
     }
 
 
+    }
+
+
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
       this.productId = parseInt(paramMap.get('productId'));

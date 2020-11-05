@@ -238,6 +238,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
           availability : item.measure.availability,
           total : item.measure.total,
           latency: item.measure.latency,
+
           experience: item.measure.experience,
           sourceId: item.sourceId
         };
@@ -329,6 +330,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
         });
       });
     });
+
   }
 
   onReportClick(event){
@@ -336,6 +338,7 @@ export class DetailFeatureComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onIndicatorsRowSelect(event){
+
     const sourceId = event.data.sourceId;
     let queryParams: Params = { sourceId: sourceId };
     this.router.navigate(['/pages/sources/detail'], { relativeTo: this.activatedRoute, queryParams: queryParams, queryParamsHandling: 'merge' });
