@@ -247,7 +247,7 @@ export class ListPortfolioComponent implements OnInit {
     }
 
 
-    }
+
 
 
   ngOnInit() {
